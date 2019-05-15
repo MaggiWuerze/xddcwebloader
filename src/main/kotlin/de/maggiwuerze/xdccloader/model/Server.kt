@@ -23,6 +23,7 @@ class Server(
 
         @Column(nullable = true)
         @OneToMany(cascade = [CascadeType.ALL])
+        @JoinColumn(name = "id")
         val channels: List<Channel>? = null
 
 )

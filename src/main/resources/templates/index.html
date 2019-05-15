@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head lang="en">
+
     <meta charset="UTF-8"/>
-    <title>Web based XDCC Download Manager (ReactJS + Spring Data REST)</title>
-    <link rel="stylesheet" href="/main.css" />    
+    <title>ReactJS + Spring Data REST</title>
+
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css"/>
 
 </head>
 <body>
 
-    <div id="react"></div>
+<div class="row">
 
-    <script src="built/bundle.js"></script>
+    <div class=" left-sidebar container col-md-2 col-sm-2">
+        <div></div>
+    </div>
+    <div class="left-column container">
+        <div></div>
+    </div>
+    <div class="right-column container">
+        <div id="react"></div>
+    </div>
+
+</div>
+
+
+<!--ReactJs-->
+<script src="/built/bundle.js"></script>
+<!--misc dependencies-->
+<script src="/webjars/jquery/jquery.min.js"/>
+<script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"/>
+<script src="/webjars/font-awesome/js/all.min.js"/>
+
 
 </body>
 </html>

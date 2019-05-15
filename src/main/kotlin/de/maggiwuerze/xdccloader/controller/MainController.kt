@@ -15,6 +15,13 @@ class MainController{
 
     }
 
+    @RequestMapping("/login")
+    fun login() : String{
+
+        return "login"
+
+    }
+
 
 
 

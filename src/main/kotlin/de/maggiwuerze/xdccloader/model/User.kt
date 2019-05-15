@@ -12,8 +12,11 @@ class User (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id : Long,
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var name : String,
+
+    @Column(nullable = false, unique = true)
+    var password : String,
 
     @Column(nullable = false)
     var creationDate : LocalDateTime

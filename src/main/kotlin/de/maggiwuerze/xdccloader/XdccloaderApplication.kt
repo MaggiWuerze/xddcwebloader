@@ -1,6 +1,5 @@
 package de.maggiwuerze.xdccloader
 
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
@@ -9,8 +8,7 @@ import org.springframework.boot.runApplication
 open class XdccloaderApplication
 
 fun main(args: Array<String>) {
-//    runApplication<XdccloaderApplication>(*args)
-    SpringApplication.run(XdccloaderApplication::class.java, *args)
+    runApplication<XdccloaderApplication>(*args)
 
 }
 
