@@ -1,6 +1,24 @@
 'use strict';
 
-import Tabs from 'react-bootstrap/Tabs';
+import {
+    Col,
+    Container,
+    Tab,
+    Tabs,
+    Navbar,
+    Nav,
+    NavDropdown,
+    Form,
+    FormControl,
+    Button,
+    Row,
+    ListGroup,
+    OverlayTrigger,
+    Popover,
+    InputGroup,
+    ProgressBar,
+    ButtonGroup, Table, Card, Modal
+} from 'react-bootstrap';
 
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -14,32 +32,34 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {users: [], attributes: [], pageSize: 2, links: {}};
+        this.state = {downloads: [], attributes: [], pageSize: 99, links: {}};
         this.updatePageSize = this.updatePageSize.bind(this);
         this.onCreate = this.onCreate.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.onNavigate = this.onNavigate.bind(this);
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     // tag::follow-2[]
     loadFromServer(pageSize) {
         follow(client, root, [
-            {rel: 'users', params: {size: pageSize}}]
-        ).then(userCollection => {
+            {rel: 'downloads', params: {size: pageSize}}]
+        ).then(downloadCollection => {
             return client({
                 method: 'GET',
-                path: userCollection.entity._links.profile.href,
+                path: downloadCollection.entity._links.profile.href,
                 headers: {'Accept': 'application/schema+json'}
             }).then(schema => {
                 this.schema = schema.entity;
-                return userCollection;
+                return downloadCollection;
             });
-        }).done(userCollection => {
+        }).done(downloadCollection => {
             this.setState({
-                users: userCollection.entity._embedded.users,
+                downloads: downloadCollection.entity._embedded.downloads,
                 attributes: Object.keys(this.schema.properties),
                 pageSize: pageSize,
-                links: userCollection.entity._links
+                links: downloadCollection.entity._links
             });
         });
     }
@@ -108,39 +128,69 @@ class App extends React.Component {
 
     // end::follow-1[]
 
+    handleShow() {
+        this.setState({show: true});
+    }
+
+    handleClose() {
+
+        this.setState({show: false});
+    }
+
     render() {
+        console.log(this.state.attributes);
+
         return (
-            <div>
-                <CreateDialog attributes={this.state.attributes} onCreate={this.onCreate}/>
-
-                <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-                    <Tab eventKey="home" title="Active Downloads">
-                        <UserList users={this.state.users}
-                                  links={this.state.links}
-                                  pageSize={this.state.pageSize}
-                                  onNavigate={this.onNavigate}
-                                  onDelete={this.onDelete}
-                                  updatePageSize={this.updatePageSize}/>
-
-                    </Tab>
-                    <Tab eventKey="profile" title="Profile">
-                        <Sonnet/>
-                    </Tab>
-                    <Tab eventKey="contact" title="Contact" disabled>
-                        <Sonnet/>
-                    </Tab>
-                </Tabs>;
-            </div>
+            <React.Fragment>
+                <Navbar bg="dark" expand="lg">
+                    <Navbar.Brand href="#home">XDCC Loader</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="mr-auto">
+                            {/*<Nav.Link href="">Home</Nav.Link>*/}
+                            <NavDropdown title="Create new..." id="basic-nav-dropdown">
+                                <NavDropdown.Item onClick={this.handleShow}>Download</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => alert("creating channel")}>Channel</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => alert("creating Server")}>Server</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+                <Container fluid>
+                    <Row>
+                        <Col md={4}>
+                            <p>Left Column</p>
+                        </Col>
+                        <Col md={8} className={"right-column"}>
+                            <Tabs defaultActiveKey="activeDownloads" id="uncontrolled-tab-example">
+                                <Tab eventKey="activeDownloads" title="Active Downloads">
+                                    <DownloadList downloads={this.state.downloads}
+                                                  onDelete={this.onDelete}
+                                                  updatePageSize={this.updatePageSize}/>
+                                </Tab>
+                                <Tab eventKey="completedDownloads" title="Completed">
+                                </Tab>
+                                <Tab eventKey="failedDownloads" title="Failed">
+                                </Tab>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                </Container>
+                {/*modal contents*/}
+                <NewCreateDialog modaltitle="Create new Download" attributes={this.state.attributes}
+                                 show={this.state.show} onClose={this.handleClose} Create={this.onCreate}/>
+            </React.Fragment>
         )
     }
 }
 
-// tag::create-dialog[]
-class CreateDialog extends React.Component {
+class NewCreateDialog extends React.Component {
 
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        console.log(props.modaltitle);
+
     }
 
     handleSubmit(e) {
@@ -162,167 +212,103 @@ class CreateDialog extends React.Component {
 
     render() {
         const inputs = this.props.attributes.map(attribute =>
-            <p key={attribute}>
-                <input type="text" placeholder={attribute} ref={attribute} className="field"/>
-            </p>
+
+            <InputGroup className="mb-3" key={attribute}>
+                <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                    placeholder={attribute}
+                    ref={attribute}
+                    aria-label={attribute}
+                />
+            </InputGroup>
         );
 
         return (
-            <div>
-                <a role="button" className="btn btn-success" href="#createUser">Create New User</a>
+            <Modal centered show={this.props.show} onHide={this.handleClose}>
+                <Modal.Header>
+                    <Modal.Title>{this.props.modaltitle}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {inputs}
+                </Modal.Body>
 
-                <div id="createUser" className="modalDialog">
-                    <div>
-                        <a href="#" title="Close" className="close">X</a>
-
-                        <h2>Create new user</h2>
-
-                        <form>
-                            {inputs}
-                            <button type="button" className="btn btn-success" onClick={this.handleSubmit}>Create a
-                                User
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => this.props.onClose()}>
+                        Close
+                    </Button>
+                    <Button variant="success" onClick={this.handleSubmit}>Create a
+                        Download</Button>
+                </Modal.Footer>
+            </Modal>
         )
+
     }
+
 
 }
 
-// end::create-dialog[]
-
-class UserList extends React.Component {
+class DownloadList extends React.Component {
 
     constructor(props) {
         super(props);
-        this.handleNavFirst = this.handleNavFirst.bind(this);
-        this.handleNavPrev = this.handleNavPrev.bind(this);
-        this.handleNavNext = this.handleNavNext.bind(this);
-        this.handleNavLast = this.handleNavLast.bind(this);
-        this.handleInput = this.handleInput.bind(this);
     }
 
-    // tag::handle-page-size-updates[]
-    handleInput(e) {
-        e.preventDefault();
-        const pageSize = ReactDOM.findDOMNode(this.refs.pageSize).value;
-        if (/^[0-9]+$/.test(pageSize)) {
-            this.props.updatePageSize(pageSize);
-        } else {
-            ReactDOM.findDOMNode(this.refs.pageSize).value =
-                pageSize.substring(0, pageSize.length - 1);
-        }
-    }
-
-    // end::handle-page-size-updates[]
-
-    // tag::handle-nav[]
-    handleNavFirst(e) {
-        e.preventDefault();
-        this.props.onNavigate(this.props.links.first.href);
-    }
-
-    handleNavPrev(e) {
-        e.preventDefault();
-        this.props.onNavigate(this.props.links.prev.href);
-    }
-
-    handleNavNext(e) {
-        e.preventDefault();
-        this.props.onNavigate(this.props.links.next.href);
-    }
-
-    handleNavLast(e) {
-        e.preventDefault();
-        this.props.onNavigate(this.props.links.last.href);
-    }
-
-    // end::handle-nav[]
-
-    // tag::user-list-render[]
     render() {
-        const users = this.props.users.map(user =>
-            <User key={user._links.self.href} user={user} onDelete={this.props.onDelete}/>
+        const downloads = this.props.downloads.map(download =>
+            <Download key={download._links.self.href} download={download} onDelete={this.props.onDelete}/>
         );
 
-        const navLinks = [];
-        if ("first" in this.props.links) {
-            navLinks.push(<button className="btn btn-light" key="first"
-                                  onClick={this.handleNavFirst}>&lt;&lt;</button>);
-        }
-        if ("prev" in this.props.links) {
-            navLinks.push(<button className="btn btn-light" key="prev" onClick={this.handleNavPrev}>&lt;</button>);
-        }
-        if ("next" in this.props.links) {
-            navLinks.push(<button className="btn btn-light" key="next" onClick={this.handleNavNext}>&gt;</button>);
-        }
-        if ("last" in this.props.links) {
-            navLinks.push(<button className="btn btn-light" key="last" onClick={this.handleNavLast}>&gt;&gt;</button>);
-        }
 
         return (
-            <div className="table-responsive">
-                <input ref="pageSize" defaultValue={this.props.pageSize} onInput={this.handleInput}/>
-                <table className="table">
-                    <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <th>Hash</th>
-                        <th>Date</th>
-                        <th></th>
-                    </tr>
-                    {users}
-                    </tbody>
-                </table>
-                <div className="btn-group" role="group">
-                    {navLinks}
-                </div>
+            <div style={{'overflow': 'scroll', 'height': '-webkit-fill-available', 'padding-bottom': '15%'}}>
+                {downloads}
             </div>
         )
     }
 
-    // end::user-list-render[]
 }
 
-// tag::user[]
-class User extends React.Component {
+class Download extends React.Component {
 
     constructor(props) {
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
+        this.state = {now: 45};
     }
 
     handleDelete() {
-        this.props.onDelete(this.props.user);
+        this.props.onDelete(this.props.download);
     }
 
     render() {
         return (
-            <tr>
-                <td>{this.props.user.name}</td>
-                <td>{this.props.user.password}</td>
-                <td>{this.props.user.creationDate}</td>
-                <td>
-                    <div className="btn-group" role="group">
-                        <button className="btn btn-outline-info">
-                            <i className="far fa-info-circle"></i>
-                        </button>
-                        <button className="btn btn-outline-danger" onClick={this.handleDelete}>
-                            <i className="far fa-trash-alt"></i>
-                        </button>
-                        {/*<button className="btn btn-danger" onClick={this.handleDelete}>*/}
-                        {/*    <span className="fas fa-trash"/>*/}
-                        {/*</button>*/}
-                    </div>
-                </td>
-            </tr>
+
+            <Card style={{margin: '10px'}}>
+                <Card.Header>{this.props.download.filename}</Card.Header>
+                <Card.Body>
+                    <Container fluid>
+                        <InputGroup>
+                            <ProgressBar style={{height: '30px', width: '90%'}} animated
+                                         now={this.props.download.progress}
+                                         label={this.props.download.status + ' ' + this.props.download.progress}/>
+                            <InputGroup.Append>
+                                <Button size="sm" style={{color: 'white', height: '30px'}} variant="warning">
+                                    <i className="fas fa-pause"></i>
+                                </Button>
+                                <Button size="sm" style={{height: '30px'}} variant="danger">
+                                    <i className="fas fa-ban"></i>
+                                </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+                    </Container>
+                </Card.Body>
+            </Card>
         )
     }
 }
 
-// end::user[]
 
 ReactDOM.render(
     <App/>,

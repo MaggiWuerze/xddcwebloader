@@ -8,9 +8,10 @@ import javax.persistence.*
 @Entity
 class Server(
 
+
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long,
+        val id: Long,
 
         @Column(nullable = false)
         var name: String,
@@ -21,9 +22,7 @@ class Server(
         @Column(nullable = false)
         var creationDate: LocalDateTime,
 
-        @Column(nullable = true)
         @OneToMany(cascade = [CascadeType.ALL])
-        @JoinColumn(name = "id")
-        val channels: List<Channel>? = null
+        var channels: MutableList<Channel> ?= mutableListOf()
 
 )

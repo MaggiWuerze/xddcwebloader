@@ -15,8 +15,7 @@
  */
 package de.maggiwuerze.xdccloader.events
 
-import de.maggiwuerze.xdccloader.model.User
-
+import de.maggiwuerze.xdccloader.model.Download
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.rest.core.annotation.HandleAfterCreate
 import org.springframework.data.rest.core.annotation.HandleAfterDelete
@@ -27,44 +26,47 @@ import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
 
 /**
- * @author Greg Turnquist
+ * @author Daniel Prange
  */
 // tag::code[]
 @Component
-@RepositoryEventHandler(User::class)
+@RepositoryEventHandler(Download::class)
 class EventHandler
-
 @Autowired
 constructor(private val websocket: SimpMessagingTemplate, private val entityLinks: EntityLinks) {
 
-    val MESSAGE_PREFIX : String = "/topic"
+    val MESSAGE_PREFIX: String = "/topic"
 
     @HandleAfterCreate
-    fun newEmployee(user: User) {
+    fun newDownload(download: Download) {
         this.websocket.convertAndSend(
-                MESSAGE_PREFIX + "/newEmployee", getPath(user))
+                MESSAGE_PREFIX + "/newDownload", getPath(download))
+
+        println("created Download with id: " +  download.id)
+
     }
 
     @HandleAfterDelete
-    fun deleteEmployee(user : User) {
+    fun deleteDownload(download: Download) {
         this.websocket.convertAndSend(
-                MESSAGE_PREFIX + "/deleteEmployee", getPath(user))
+                MESSAGE_PREFIX + "/deleteDownload", getPath(download))
     }
 
     @HandleAfterSave
-    fun updateEmployee(user : User) {
+    fun updateDownload(download: Download) {
         this.websocket.convertAndSend(
-                MESSAGE_PREFIX + "/updateEmployee", getPath(user))
+                MESSAGE_PREFIX + "/updateDownload", getPath(download))
+        println("saved Download with id: " +  download.id)
     }
 
     /**
-     * Take an [Employee] and get the URI using Spring Data REST's [EntityLinks].
+     * Take an [Download] and get the URI using Spring Data REST's [EntityLinks].
      *
-     * @param employee
+     * @param Download
      */
-    private fun getPath(user : User): String {
-        return this.entityLinks.linkForSingleResource(user.javaClass,
-                user.id).toUri().path
+    private fun getPath(download: Download): String {
+        return this.entityLinks.linkForSingleResource(download.javaClass,
+                download.id).toUri().path
     }
 
 }

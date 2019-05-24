@@ -4,9 +4,8 @@ import java.time.LocalDateTime;
 import lombok.Data;
 import javax.persistence.*
 
-@Data
 @Entity
-class Channel(
+data class Channel(
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +15,6 @@ class Channel(
         var name: String,
 
         @Column(nullable = false)
-        var creationDate: LocalDateTime
+        var date: LocalDateTime
 
 )

@@ -8,10 +8,6 @@ import javax.persistence.*
 @Entity
 class User (
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id : Long,
-
     @Column(nullable = false, unique = true)
     var name : String,
 
@@ -21,4 +17,10 @@ class User (
     @Column(nullable = false)
     var creationDate : LocalDateTime
 
-)
+){
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
+
+}

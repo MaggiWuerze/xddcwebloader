@@ -1,16 +1,63 @@
 /*input.field {*/
+
+
 /*    width: 90%;*/
+
+
 /*}*/
+
 
 /*table {*/
+
+
 /*    border-collapse: collapse;*/
+
+
 /*}*/
 
+
 /*td, th {*/
+
+
 /*    border: 1px solid #999;*/
+
+
 /*    padding: 0.5rem;*/
+
+
 /*    text-align: left;*/
+
+
 /*}*/
+
+
+/*content*/
+
+.main {
+    position: fixed !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.left-column {
+    /*background: #000bff;*/
+}
+
+.right-column {
+    top: 0;
+    bottom: 0;
+}
+
+.downloadlist{
+
+overflow: scroll;
+height: '-webkit-fill-available';
+padding-bottom: 15%;
+
+}
 
 /*Classes for creating dialogs*/
 
@@ -21,9 +68,9 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0,0,0,0.8);
+    /*background: rgba(0,0,0,0.8);*/
     z-index: 99999;
-    opacity:0;
+    opacity: 0;
     -webkit-transition: opacity 400ms ease-in;
     -moz-transition: opacity 400ms ease-in;
     transition: opacity 400ms ease-in;
@@ -31,11 +78,11 @@
 }
 
 .modalDialog:target {
-    opacity:1;
+    /*opacity:1;*/
     pointer-events: auto;
 }
 
-.modalDialog > div {
+.modalDialog>div {
     width: 400px;
     position: relative;
     margin: 10% auto;
@@ -66,4 +113,6 @@
     box-shadow: 1px 1px 3px #000;
 }
 
-.close:hover { background: #00d9ff; }
+.close:hover {
+    background: #00d9ff;
+}
