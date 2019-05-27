@@ -17,10 +17,7 @@ package de.maggiwuerze.xdccloader.events
 
 import de.maggiwuerze.xdccloader.model.Download
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.rest.core.annotation.HandleAfterCreate
-import org.springframework.data.rest.core.annotation.HandleAfterDelete
-import org.springframework.data.rest.core.annotation.HandleAfterSave
-import org.springframework.data.rest.core.annotation.RepositoryEventHandler
+import org.springframework.data.rest.core.annotation.*
 import org.springframework.hateoas.EntityLinks
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
@@ -34,6 +31,10 @@ import org.springframework.stereotype.Component
 class EventHandler
 @Autowired
 constructor(private val websocket: SimpMessagingTemplate, private val entityLinks: EntityLinks) {
+
+    init {
+        println("started eventhandler!")
+    }
 
     val MESSAGE_PREFIX: String = "/topic"
 
@@ -57,6 +58,15 @@ constructor(private val websocket: SimpMessagingTemplate, private val entityLink
         this.websocket.convertAndSend(
                 MESSAGE_PREFIX + "/updateDownload", getPath(download))
         println("saved Download with id: " +  download.id)
+    }
+
+    @HandleAfterLinkSave
+    fun afterLinkSave(download: Download){
+
+        println("linkSaved Download with id: " +  download.id)
+        this.websocket.convertAndSend(
+                MESSAGE_PREFIX + "/linkSavedDownload", getPath(download))
+
     }
 
     /**

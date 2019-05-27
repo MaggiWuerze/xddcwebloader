@@ -23,8 +23,8 @@ import {
 const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('./client');
-
 const follow = require('./follow'); // function to hop multiple links by "rel"
+const stompClient = require('./websocket-listener');
 
 const root = '/api';
 
@@ -33,10 +33,9 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {downloads: [], attributes: [], pageSize: 99, links: {}};
-        this.updatePageSize = this.updatePageSize.bind(this);
         this.onCreate = this.onCreate.bind(this);
         this.onDelete = this.onDelete.bind(this);
-        this.onNavigate = this.onNavigate.bind(this);
+        this.handleSocketCall = this.handleSocketCall.bind(this);
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
     }
@@ -68,22 +67,25 @@ class App extends React.Component {
 
     // tag::create[]
     onCreate(newUser) {
-        follow(client, root, ['users']).then(userCollection => {
+        follow(client, root, ['downloads']).then(downloadCollection => {
             return client({
                 method: 'POST',
-                path: userCollection.entity._links.self.href,
+                path: downloadCollection.entity._links.self.href,
                 entity: newUser,
                 headers: {'Content-Type': 'application/json'}
             })
         }).then(response => {
             return follow(client, root, [
-                {rel: 'users', params: {'size': this.state.pageSize}}]);
+                {rel: 'downloads', params: {'size': 99}}]);
         }).done(response => {
-            if (typeof response.entity._links.last !== "undefined") {
-                this.onNavigate(response.entity._links.last.href);
-            } else {
-                this.onNavigate(response.entity._links.self.href);
-            }
+
+            alert(response);
+
+            // if (typeof response.entity._links.last !== "undefined") {
+            //     this.onNavigate(response.entity._links.last.href);
+            // } else {
+            //     this.onNavigate(response.entity._links.self.href);
+            // }
         });
     }
 
@@ -98,32 +100,20 @@ class App extends React.Component {
 
     // end::delete[]
 
-    // tag::navigate[]
-    onNavigate(navUri) {
-        client({method: 'GET', path: navUri}).done(userCollection => {
-            this.setState({
-                users: userCollection.entity._embedded.users,
-                attributes: this.state.attributes,
-                pageSize: this.state.pageSize,
-                links: userCollection.entity._links
-            });
-        });
+    handleSocketCall(type){
+
+        console.log(type);
+
     }
-
-    // end::navigate[]
-
-    // tag::update-page-size[]
-    updatePageSize(pageSize) {
-        if (pageSize !== this.state.pageSize) {
-            this.loadFromServer(pageSize);
-        }
-    }
-
-    // end::update-page-size[]
 
     // tag::follow-1[]
     componentDidMount() {
         this.loadFromServer(this.state.pageSize);
+        stompClient.register([
+            {route: '/topic/newDownload', callback: this.handleSocketCall("new")},
+            {route: '/topic/updateDownload', callback: this.handleSocketCall("update")},
+            {route: '/topic/deleteDownload', callback: this.handleSocketCall("delete")}
+        ]);
     }
 
     // end::follow-1[]
@@ -178,7 +168,7 @@ class App extends React.Component {
                 </Container>
                 {/*modal contents*/}
                 <NewCreateDialog modaltitle="Create new Download" attributes={this.state.attributes}
-                                 show={this.state.show} onClose={this.handleClose} Create={this.onCreate}/>
+                                 show={this.state.show} onClose={this.handleClose} onCreate={this.onCreate}/>
             </React.Fragment>
         )
     }
@@ -262,7 +252,7 @@ class DownloadList extends React.Component {
 
 
         return (
-            <div style={{'overflow': 'scroll', 'height': '-webkit-fill-available', 'padding-bottom': '15%'}}>
+            <div style={{'overflow': 'scroll', 'height': '-webkit-fill-available', 'paddingBottom': '15%'}}>
                 {downloads}
             </div>
         )
