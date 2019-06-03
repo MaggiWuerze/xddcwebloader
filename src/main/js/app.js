@@ -19,6 +19,7 @@ import {
     ProgressBar,
     ButtonGroup, Table, Card, Modal
 } from 'react-bootstrap';
+import axios from 'axios';
 
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -40,53 +41,67 @@ class App extends React.Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+    // componentDidCatch(error, info) {
+    //     // Display fallback UI
+    //     this.setState({ hasError: true });
+    //     // You can also log the error to an error reporting service
+    //     console.log(error, info);
+    // }
+
     // tag::follow-2[]
     loadFromServer(pageSize) {
-        follow(client, root, [
-            {rel: 'downloads', params: {size: pageSize}}]
-        ).then(downloadCollection => {
-            return client({
-                method: 'GET',
-                path: downloadCollection.entity._links.profile.href,
-                headers: {'Accept': 'application/schema+json'}
-            }).then(schema => {
-                this.schema = schema.entity;
-                return downloadCollection;
+
+        axios.get('http://localhost:8080/data/downloads/')
+            .then((response) => {
+                this.setState({
+                    downloads: response.data
+                });
+            })
+            .catch( (error) => {
+                console.log(error);
             });
-        }).done(downloadCollection => {
-            this.setState({
-                downloads: downloadCollection.entity._embedded.downloads,
-                attributes: Object.keys(this.schema.properties),
-                pageSize: pageSize,
-                links: downloadCollection.entity._links
-            });
-        });
+
+        // follow(client, root, [
+        //     {rel: 'downloads', params: {size: pageSize}}]
+        // ).then(downloadCollection => {
+        //     return client({
+        //         method: 'GET',
+        //         path: downloadCollection.entity._links.profile.href,
+        //         headers: {'Accept': 'application/schema+json'}
+        //     }).then(schema => {
+        //         this.schema = schema.entity;
+        //         return downloadCollection;
+        //     });
+        // }).done(downloadCollection => {
+        //     this.setState({
+        //         downloads: downloadCollection.entity._embedded.downloads,
+        //         attributes: Object.keys(this.schema.properties),
+        //         pageSize: pageSize,
+        //         links: downloadCollection.entity._links
+        //     });
+        // });
     }
 
     // end::follow-2[]
 
     // tag::create[]
-    onCreate(newUser) {
-        follow(client, root, ['downloads']).then(downloadCollection => {
-            return client({
-                method: 'POST',
-                path: downloadCollection.entity._links.self.href,
-                entity: newUser,
-                headers: {'Content-Type': 'application/json'}
-            })
-        }).then(response => {
-            return follow(client, root, [
-                {rel: 'downloads', params: {'size': 99}}]);
-        }).done(response => {
 
-            alert(response);
+    onCreate(newDownload) {
 
-            // if (typeof response.entity._links.last !== "undefined") {
-            //     this.onNavigate(response.entity._links.last.href);
-            // } else {
-            //     this.onNavigate(response.entity._links.self.href);
-            // }
-        });
+        axios
+            .post('http://localhost:8080/data/downloads/', newDownload)
+            .then((response) => {
+
+                if (response.status.toString() != '200') {
+
+                    alert("there was an error!");
+
+                } else {
+
+                    this.handleClose();
+                }
+            });
+
     }
 
     // end::create[]
@@ -100,19 +115,56 @@ class App extends React.Component {
 
     // end::delete[]
 
-    handleSocketCall(type){
+    handleSocketCall(responseObj){
 
-        console.log(type);
+        let message = JSON.parse(responseObj.body);
+        let route = responseObj.headers.destination;
+
+        switch (route) {
+
+            case '/topic/newDownload':
+
+                console.log("new download added to list")
+                console.log(message);
+                break;
+
+            case '/topic/updateDownload':
+
+                console.log("updated downloads")
+                console.log(message);
+                console.log(this.state.downloads);
+
+                var download =  this.state.downloads.find((element) => {
+                    return element.id === message.id;
+                });
+
+                console.log(download);
+
+                break;
+
+            case '/topic/deleteDownload':
+
+                console.log("removed  deleted downloads")
+                console.log(message);
+                break;
+
+            default:
+
+
+        }
+
 
     }
+
+
 
     // tag::follow-1[]
     componentDidMount() {
         this.loadFromServer(this.state.pageSize);
         stompClient.register([
-            {route: '/topic/newDownload', callback: this.handleSocketCall("new")},
-            {route: '/topic/updateDownload', callback: this.handleSocketCall("update")},
-            {route: '/topic/deleteDownload', callback: this.handleSocketCall("delete")}
+            {route: '/topic/newDownload', callback: this.handleSocketCall},
+            {route: '/topic/updateDownload', callback: this.handleSocketCall},
+            {route: '/topic/deleteDownload', callback: this.handleSocketCall}
         ]);
     }
 
@@ -128,7 +180,6 @@ class App extends React.Component {
     }
 
     render() {
-        console.log(this.state.attributes);
 
         return (
             <React.Fragment>
@@ -142,6 +193,7 @@ class App extends React.Component {
                                 <NavDropdown.Item onClick={this.handleShow}>Download</NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => alert("creating channel")}>Channel</NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => alert("creating Server")}>Server</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => alert("creating User")}>User</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
@@ -159,8 +211,14 @@ class App extends React.Component {
                                                   updatePageSize={this.updatePageSize}/>
                                 </Tab>
                                 <Tab eventKey="completedDownloads" title="Completed">
+                                <DownloadList downloads={this.state.downloads}
+                                                  onDelete={this.onDelete}
+                                                  updatePageSize={this.updatePageSize}/>
                                 </Tab>
                                 <Tab eventKey="failedDownloads" title="Failed">
+                                <DownloadList downloads={this.state.downloads}
+                                                  onDelete={this.onDelete}
+                                                  updatePageSize={this.updatePageSize}/>
                                 </Tab>
                             </Tabs>
                         </Col>
@@ -179,43 +237,195 @@ class NewCreateDialog extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        console.log(props.modaltitle);
+        this.state = {serverList: [], channelList: [], userList:[]};
 
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        const newUser = {};
-        this.props.attributes.forEach(attribute => {
-            newUser[attribute] = ReactDOM.findDOMNode(this.refs[attribute]).value.trim();
-        });
-        this.props.onCreate(newUser);
 
-        // clear out the dialog's inputs
-        this.props.attributes.forEach(attribute => {
-            ReactDOM.findDOMNode(this.refs[attribute]).value = '';
-        });
+        const newDownload = {};
+        newDownload["serverId"] = ReactDOM.findDOMNode(this.refs["server"]).value.trim();
+        newDownload["channelId"] = ReactDOM.findDOMNode(this.refs["channel"]).value.trim();
+        newDownload["userId"] = ReactDOM.findDOMNode(this.refs["user"]).value.trim();
+        newDownload["fileRefId"] = ReactDOM.findDOMNode(this.refs["fileRefId"]).value.trim();
+        this.props.onCreate(newDownload);
 
-        // Navigate away from the dialog to hide it.
-        window.location = "#";
+        // this.props.attributes.forEach(attribute => {
+        //     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
+        // });
+
+    }
+
+    loadServerList() {
+
+        axios.get('http://localhost:8080/data/servers/')
+            .then((response) => {
+                this.setState({
+                    serverList: response.data
+                });
+            })
+            .catch( (error) => {
+                console.log(error);
+            });
+
+
+        // follow(client, root, [
+        //     {rel: 'servers'}]
+        // ).then(serverList => {
+        //     return client({
+        //         method: 'GET',
+        //         path: serverList.entity._links.profile.href,
+        //         headers: {'Accept': 'application/schema+json'}
+        //     }).then(schema => {
+        //         this.schema = schema.entity;
+        //         return serverList;
+        //     });
+        // }).done(serverList => {
+        //     this.setState({
+        //         serverList: serverList.entity._embedded.servers,
+        //     });
+        // });
+    }
+
+    loadChannelList() {
+
+        axios.get('http://localhost:8080/data/channels/')
+            .then((response) => {
+                this.setState({
+                    channelList: response.data
+                });
+            })
+            .catch( (error) => {
+                console.log(error);
+            });
+
+        // follow(client, root, [
+        //     {rel: 'channels'}]
+        // ).then(channelList => {
+        //     return client({
+        //         method: 'GET',
+        //         path: channelList.entity._links.profile.href,
+        //         headers: {'Accept': 'application/schema+json'}
+        //     }).then(schema => {
+        //         this.schema = schema.entity;
+        //         return channelList;
+        //     });
+        // }).done(channelList => {
+        //     this.setState({
+        //         channelList: channelList.entity._embedded.channels,
+        //     });
+        // });
+    }
+
+    loadUserList() {
+
+        axios.get('http://localhost:8080/data/ircUsers/')
+            .then((response) => {
+                this.setState({
+                    userList: response.data
+                });
+            })
+            .catch( (error) => {
+                console.log(error);
+            });
+
+    }
+
+    componentDidMount() {
+        this.loadServerList();
+        this.loadChannelList();
+        this.loadUserList();
     }
 
     render() {
-        const inputs = this.props.attributes.map(attribute =>
 
-            <InputGroup className="mb-3" key={attribute}>
-                <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                    placeholder={attribute}
-                    ref={attribute}
-                    aria-label={attribute}
-                />
-            </InputGroup>
+        const serverOptions = this.state.serverList.map(server =>{
+
+            //{"name": "Rizon","serverUrl": "irc.rizon.net","creationDate": "2019-05-29T14:56:37.599"}
+            let jsonServer = JSON.stringify({id: server.id, name: server.name , serverUrl: server.serverUrl , creationDate: "2019-05-29T14:56:37.599"});
+            return <option key={server.id} value={server.id}>{server.name}</option>
+
+        });
+
+        const userOptions = this.state.userList.map(user =>{
+
+            // let jsonUser = JSON.stringify({id: user.id, name: user.name});
+            return <option key={user.id} value={user.id}>{user.name}</option>
+
+        });
+
+        const channelOptions = this.state.channelList.map(channel =>{
+
+            // let jsonChannel = JSON.stringify({id: channel.id, name: channel.name});
+            return <option key={channel.id} value={channel.id}>{channel.name}</option>
+
+        });
+
+        const inputs = this.props.attributes.map(attribute =>{
+            
+            let input = "";
+            switch(attribute) {
+                case 'server':
+                    input = 
+                    <InputGroup className="mb-3" key={attribute}>
+                        <InputGroup.Prepend>
+                            <InputGroup.Text id="basic-addon1" key={attribute}>Server</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control key={ attribute } ref={attribute} as="select">
+                            {serverOptions}
+                        </Form.Control>
+                    </InputGroup>;
+                    break;
+                case 'channel':
+
+                    input = 
+                    <InputGroup className="mb-3" key={attribute}>
+                        <InputGroup.Prepend>
+                            <InputGroup.Text id="basic-addon1" key={attribute}>Channel</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control key={ attribute } ref={attribute} as="select">
+                            {channelOptions}
+                        </Form.Control>
+                    </InputGroup>;
+                    break;
+                case 'user':
+
+                    input = 
+                    <InputGroup className="mb-3" key={attribute}>
+                        <InputGroup.Prepend>
+                            <InputGroup.Text id="basic-addon1"  key={attribute}>User</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control key={ attribute } ref={attribute} as="select">
+                            {userOptions}
+                        </Form.Control>
+                    </InputGroup>;
+                    break;
+                case 'fileRefId':
+                        input =                     
+                        <InputGroup className="mb-3" key={attribute}>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="basic-addon1" key={attribute}>File Reference ID</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <FormControl
+                                placeholder={"filereference (e.g. #2421)"}
+                                ref={attribute}
+                                aria-label={attribute}
+                            />
+                        </InputGroup>;
+                break;  
+                default:
+                };
+
+                return input;
+
+                }
         );
 
+
         return (
+            // rebuild this with a custom modal content which gets the inputs as prop
+            // 
             <Modal centered show={this.props.show} onHide={this.handleClose}>
                 <Modal.Header>
                     <Modal.Title>{this.props.modaltitle}</Modal.Title>
@@ -247,12 +457,12 @@ class DownloadList extends React.Component {
 
     render() {
         const downloads = this.props.downloads.map(download =>
-            <Download key={download._links.self.href} download={download} onDelete={this.props.onDelete}/>
+            <Download key={download.id} download={download} onDelete={this.props.onDelete}/>
         );
 
 
         return (
-            <div style={{'overflow': 'scroll', 'height': '-webkit-fill-available', 'paddingBottom': '15%'}}>
+            <div style={{'overflowY': 'scroll', 'height': '-webkit-fill-available', 'paddingBottom': '15%'}}>
                 {downloads}
             </div>
         )
@@ -276,7 +486,7 @@ class Download extends React.Component {
         return (
 
             <Card style={{margin: '10px'}}>
-                <Card.Header>{this.props.download.filename}</Card.Header>
+                <Card.Header>Filename: {this.props.download.filename}</Card.Header>
                 <Card.Body>
                     <Container fluid>
                         <InputGroup>
@@ -284,10 +494,10 @@ class Download extends React.Component {
                                          now={this.props.download.progress}
                                          label={this.props.download.status + ' ' + this.props.download.progress}/>
                             <InputGroup.Append>
-                                <Button size="sm" style={{color: 'white', height: '30px'}} variant="warning">
+                                <Button size="sm" title="Pause Download" style={{color: 'white', height: '30px'}} variant="warning">
                                     <i className="fas fa-pause"></i>
                                 </Button>
-                                <Button size="sm" style={{height: '30px'}} variant="danger">
+                                <Button size="sm" title="Cancel Download" style={{height: '30px'}} variant="danger">
                                     <i className="fas fa-ban"></i>
                                 </Button>
                             </InputGroup.Append>
