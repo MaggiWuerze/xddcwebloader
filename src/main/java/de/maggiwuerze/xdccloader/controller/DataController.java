@@ -1,8 +1,10 @@
 package de.maggiwuerze.xdccloader.controller;
 
-import de.maggiwuerze.xdccloader.events.DownloadCreationEvent;
+import de.maggiwuerze.xdccloader.events.EntityCreationEvent;
+import de.maggiwuerze.xdccloader.events.download.DownloadCreationEvent;
 import de.maggiwuerze.xdccloader.model.*;
 import de.maggiwuerze.xdccloader.model.forms.DownloadForm;
+import de.maggiwuerze.xdccloader.model.forms.TargetBotForm;
 import de.maggiwuerze.xdccloader.persistency.*;
 import de.maggiwuerze.xdccloader.util.SocketEvents;
 import de.maggiwuerze.xdccloader.util.State;
@@ -32,6 +34,8 @@ class DataController {
     ChannelRepository channelRepository;
     @Autowired
     ServerRepository serverRepository;
+    @Autowired
+    TargetBotRepository targetBotRepository;
 
     @Autowired
     private SimpMessagingTemplate websocket;
@@ -58,11 +62,11 @@ class DataController {
      * @param active
      * @return a list of downloads. if active, then it return all that are still working. if not it returns all that have stopped, this includes errors
      */
-    @GetMapping("/downloads/active/{active}")
-    public ResponseEntity<List<Download>> getActiveDownloads(@PathVariable("active") boolean active) {
+    @GetMapping("/downloads/active/")
+    public ResponseEntity<List<Download>> getActiveDownloads(boolean active) {
 
         List<State> states;
-        if (active) {
+        if (!active) {
 
             states = Arrays.asList(State.UNKNOWN, State.DONE);
 
@@ -77,7 +81,7 @@ class DataController {
     }
 
     @GetMapping("/downloads/failed")
-    public ResponseEntity<List<Download>> getFailedDownloads(@PathVariable("active") boolean active) {
+    public ResponseEntity<List<Download>> getFailedDownloads() {
 
         return new ResponseEntity(downloadRepository.findAllByStatusOrderByProgressDesc(State.ERROR), HttpStatus.OK);
 
@@ -86,12 +90,10 @@ class DataController {
     @PostMapping("/downloads/")
     public ResponseEntity<?> addDownload(@RequestBody DownloadForm downloadForm) {
 
-        Optional<Server> server = serverRepository.findById(downloadForm.getServerId());
-        Optional<Channel> channel = channelRepository.findById(downloadForm.getChannelId());
-        Optional<IrcUser> ircUser = ircUserRepository.findById(downloadForm.getUserId());
+        Optional<TargetBot> targetBot = targetBotRepository.findById(downloadForm.getTargetBotId());
         String fileRefId = downloadForm.getFileRefId();
 
-        Download download = downloadRepository.save(new Download(channel.get(), server.get(), ircUser.get(), fileRefId));
+        Download download = downloadRepository.save(new Download(targetBot.get(), fileRefId));
         publishDownloadEvent(SocketEvents.NEW, download);
 
         return new ResponseEntity("Download added succcessfully", HttpStatus.OK);
@@ -126,15 +128,26 @@ class DataController {
     }
 
 
-    //USERS
+    //BOTS
+
+    @PostMapping("/bots/")
+    public ResponseEntity<?> addBot(@RequestBody TargetBotForm targetBotForm) {
+
+
+        Optional<Server> server = serverRepository.findById(targetBotForm.getServerId());
+        Optional<Channel> channel = channelRepository.findById(targetBotForm.getChannelId());
+        targetBotRepository.save(new TargetBot(server.get(), channel.get(), targetBotForm.getName(), targetBotForm.getPattern()));
+
+        return new ResponseEntity("Bot added succcessfully", HttpStatus.OK);
+    }
 
     /**
-     * @return a list of all users
+     * @return a list of all bots
      */
-    @GetMapping("/users/")
-    public ResponseEntity<List<User>> getAllUsers() {
+    @GetMapping("/bots/")
+    public ResponseEntity<List<TargetBot>> getAllBots() {
 
-        List<User> users = userRepository.findAll();
+        List<TargetBot> users = targetBotRepository.findAll();
         return new ResponseEntity(users, HttpStatus.OK);
 
     }
@@ -145,9 +158,9 @@ class DataController {
      * @return a list of all users
      */
     @GetMapping("/ircUsers/")
-    public ResponseEntity<List<IrcUser>> getAllIrcUsers() {
+    public ResponseEntity<List<TargetBot>> getAllIrcUsers() {
 
-        List<IrcUser> users = ircUserRepository.findAll();
+        List<TargetBot> users = ircUserRepository.findAll();
         return new ResponseEntity(users, HttpStatus.OK);
 
     }

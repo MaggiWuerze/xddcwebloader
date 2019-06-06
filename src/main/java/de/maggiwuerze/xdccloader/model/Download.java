@@ -16,17 +16,8 @@ public class Download {
     Long id;
 
     @ManyToOne
-    @JoinColumn(name="CHANNEL_ID")
-    Channel channel;
-
-    @ManyToOne
-    @JoinColumn(name="SERVER_ID")
-    @RestResource(rel="server")
-    Server server;
-
-    @ManyToOne
     @JoinColumn(name="USER_ID")
-    IrcUser user;
+    TargetBot targetBot;
 
     @Column(nullable = false)
     String fileRefId;
@@ -44,10 +35,11 @@ public class Download {
     @Enumerated(EnumType.STRING)
     State status = State.UNKNOWN;
 
-    public Download(Channel channel, Server server, IrcUser user, String fileRefId) {
-        this.channel = channel;
-        this.server = server;
-        this.user = user;
+    @Column(nullable = false)
+    String statusMessage = "";
+
+    public Download(TargetBot user, String fileRefId) {
+        this.targetBot = user;
         this.fileRefId = fileRefId;
     }
 
@@ -62,28 +54,12 @@ public class Download {
         this.id = id;
     }
 
-    public Channel getChannel() {
-        return channel;
+    public TargetBot getTargetBot() {
+        return targetBot;
     }
 
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public void setServer(Server server) {
-        this.server = server;
-    }
-
-    public IrcUser getUser() {
-        return user;
-    }
-
-    public void setUser(IrcUser user) {
-        this.user = user;
+    public void setTargetBot(TargetBot targetBot) {
+        this.targetBot = targetBot;
     }
 
     public String getFileRefId() {
@@ -124,5 +100,13 @@ public class Download {
 
     public void setStatus(State status) {
         this.status = status;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
     }
 }

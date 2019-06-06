@@ -1,21 +1,17 @@
 package de.maggiwuerze.xdccloader.util;
 
-import de.maggiwuerze.xdccloader.events.CustomSpringEventListener;
-import de.maggiwuerze.xdccloader.events.DownloadDoneEvent;
-import de.maggiwuerze.xdccloader.events.DownloadUpdateEvent;
+import de.maggiwuerze.xdccloader.events.download.DownloadDoneEvent;
+import de.maggiwuerze.xdccloader.events.download.DownloadUpdateEvent;
 import de.maggiwuerze.xdccloader.model.Download;
-import org.apache.commons.io.FilenameUtils;
-import org.pircbotx.dcc.FileTransfer;
 import org.pircbotx.dcc.ReceiveFileTransfer;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileTransferProgressWatcher {
 
@@ -29,25 +25,6 @@ public class FileTransferProgressWatcher {
 
 
     private ApplicationEventPublisher applicationEventPublisher;
-
-    public FileTransferProgressWatcher(ReceiveFileTransfer fileTransfer, Download download) {
-        this.fileTransfer = fileTransfer;
-        this.download = download;
-
-        try {
-
-        applicationEventPublisher =
-                new AnnotationConfigApplicationContext(
-                        CustomSpringEventListener.class);
-
-        }catch (Exception e){
-
-            logger.log(Level.WARNING, "Error in progressWatcher", e);
-
-        }
-
-        logger.info("progress watcher for download tih id :" + download.getId());
-    }
 
     public FileTransferProgressWatcher(Download download, ApplicationEventPublisher applicationEventPublisher) {
 
@@ -66,7 +43,6 @@ public class FileTransferProgressWatcher {
 
 
     }
-
 
     public void run() {
 

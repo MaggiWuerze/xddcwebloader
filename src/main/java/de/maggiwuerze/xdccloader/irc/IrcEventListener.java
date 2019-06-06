@@ -1,30 +1,42 @@
 package de.maggiwuerze.xdccloader.irc;
 
-import org.apache.commons.io.FilenameUtils;
+import de.maggiwuerze.xdccloader.events.EventPublisher;
+import de.maggiwuerze.xdccloader.model.TargetBot;
+import de.maggiwuerze.xdccloader.util.SocketEvents;
+import de.maggiwuerze.xdccloader.util.State;
 import org.pircbotx.dcc.ReceiveFileTransfer;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.events.ConnectAttemptFailedEvent;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.ExceptionEvent;
 import org.pircbotx.hooks.events.IncomingFileTransferEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+@Component
 public class IrcEventListener extends ListenerAdapter {
 
-
     Logger logger = Logger.getLogger("Class IrcEventListener");
+
+    @Autowired
+    private EventPublisher eventPublisher;
 
     @Override
     public void onConnect(ConnectEvent event) {
 
         IrcBot bot = event.getBot();
-        String message = "xdcc send " + bot.getFileRefId();
-        bot.sendIRC().message("Ginpachi-Sensei", message);
+        TargetBot targetBot = bot.getDownload().getTargetBot();
+        String message = String.format(targetBot.getPattern(), bot.getFileRefId());
+        bot.sendIRC().message(targetBot.getName(), message);
     }
 
     @Override
@@ -35,11 +47,26 @@ public class IrcEventListener extends ListenerAdapter {
     }
 
     @Override
-    public void onException(ExceptionEvent event) throws Exception {
+    public void onException(ExceptionEvent event) {
 
         event.getMessage();
 
     }
+
+    @Override
+    public void onConnectAttemptFailed(ConnectAttemptFailedEvent event) {
+
+        IrcBot bot = event.getBot();
+        bot.stopBotReconnect();
+
+        Exception exception = event.getConnectExceptions().get(event.getConnectExceptions().keySet().asList().get(0));
+        String message = String.format( State.ERROR.getExternalString(), exception.getMessage());
+
+        bot.getDownload().setStatusMessage(message);
+        eventPublisher.updateDownloadState(State.ERROR, bot.getDownload());
+
+    }
+
 
 
     @Override
@@ -49,7 +76,8 @@ public class IrcEventListener extends ListenerAdapter {
         bot.getDownload().setFilename(event.getSafeFilename());
 
         //Create this file in the temp directory
-        File downloadFile = new File("/download/" + event.getSafeFilename());
+        String path = "C:" + File.separatorChar + "ircDownload" + File.separatorChar + event.getSafeFilename();
+        File downloadFile = new File(path);
 
         //Receive the file from the user
         ReceiveFileTransfer fileTransfer = event.accept(downloadFile);

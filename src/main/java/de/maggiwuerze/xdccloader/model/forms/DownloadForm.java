@@ -2,43 +2,21 @@ package de.maggiwuerze.xdccloader.model.forms;
 
 public class DownloadForm {
 
-    Long channelId;
-
-    Long serverId;
-
-    Long userId;
+    Long targetBotId;
 
     String fileRefId;
 
-    public DownloadForm(Long channelId, Long serverId, Long userId, String fileRefId) {
-        this.channelId = channelId;
-        this.serverId = serverId;
-        this.userId = userId;
+    public DownloadForm(Long targetBotId, String fileRefId) {
+        this.targetBotId = targetBotId;
         this.fileRefId = fileRefId;
     }
 
-    public Long getChannelId() {
-        return channelId;
+    public Long getTargetBotId() {
+        return targetBotId;
     }
 
-    public void setChannelId(Long channelId) {
-        this.channelId = channelId;
-    }
-
-    public Long getServerId() {
-        return serverId;
-    }
-
-    public void setServerId(Long serverId) {
-        this.serverId = serverId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setTargetBotId(Long targetBotId) {
+        this.targetBotId = targetBotId;
     }
 
     public String getFileRefId() {

@@ -42,20 +42,30 @@
     left: 0;
 }
 
-.left-column {
-    /*background: #000bff;*/
-}
-
-.right-column {
+.column {
+    height: 100vh;
     top: 0;
     bottom: 0;
 }
 
-.downloadlist{
+.customCard {
+    height: 92vh;
+    top: 0;
+    bottom: 0;
+}
 
-overflow: scroll;
-height: '-webkit-fill-available';
-padding-bottom: 15%;
+.list{
+
+    overflow: scroll;
+    height: 84vh;
+    top: 0;
+    bottom: 0;
+
+}
+
+.tab_btn{
+
+    transform: scale(0.7);
 
 }
 

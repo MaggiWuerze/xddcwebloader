@@ -9,7 +9,8 @@ public enum State {
     TRANSMITTING("Transmitting"),
     FINALIZING("Finalizing"),
     DONE("Done"),
-    ERROR("Error code: '%s'"),
+    ERROR("Error : '%s'"),
+    RESTARTING("Restarting"),
     UNKNOWN("Unknown");
 
     String externalString;
@@ -17,5 +18,9 @@ public enum State {
     State(String externalString) {
 
         this.externalString = externalString;
+    }
+
+    public String getExternalString() {
+        return externalString;
     }
 }

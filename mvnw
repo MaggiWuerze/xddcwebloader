@@ -234,7 +234,7 @@ else
         curl -o "$wrapperJarPath" "$jarUrl"
     else
         if [ "$MVNW_VERBOSE" = true ]; then
-          echo "Falling back to using Java to download"
+          echo "Falling back to using Java to payload"
         fi
         javaClass="$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.java"
         if [ -e "$javaClass" ]; then

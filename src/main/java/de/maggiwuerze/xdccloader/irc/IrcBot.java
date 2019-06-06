@@ -2,18 +2,22 @@ package de.maggiwuerze.xdccloader.irc;
 
 import de.maggiwuerze.xdccloader.model.Channel;
 import de.maggiwuerze.xdccloader.model.Download;
-import de.maggiwuerze.xdccloader.model.IrcUser;
+import de.maggiwuerze.xdccloader.model.TargetBot;
 import de.maggiwuerze.xdccloader.model.Server;
 import de.maggiwuerze.xdccloader.util.FileTransferProgressWatcher;
 import lombok.NonNull;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
+import org.pircbotx.exception.IrcException;
+
+import java.io.IOException;
+import java.util.logging.Logger;
 
 public class IrcBot extends PircBotX {
 
     private Download download;
     private FileTransferProgressWatcher progressChecker;
-
+    Logger logger = Logger.getLogger("Class IrcBot");
 
     /**
      * Constructs a PircBotX with the provided configuration.
@@ -43,15 +47,15 @@ public class IrcBot extends PircBotX {
     }
 
     public Server getServer() {
-        return download.getServer();
+        return download.getTargetBot().getServer();
     }
 
     public Channel getChannel() {
-        return download.getChannel();
+        return download.getTargetBot().getChannel();
     }
 
-    public IrcUser getIrcUser() {
-        return download.getUser();
+    public TargetBot getIrcUser() {
+        return download.getTargetBot();
     }
 
     public String getFileRefId() {

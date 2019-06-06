@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Repository
-public interface IrcUserRepository extends PagingAndSortingRepository<TargetBot, Long> {
+public interface TargetBotRepository extends PagingAndSortingRepository<TargetBot, Long> {
 
     List<TargetBot> findAll();
 

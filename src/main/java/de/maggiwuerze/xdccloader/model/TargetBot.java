@@ -1,6 +1,7 @@
 package de.maggiwuerze.xdccloader.model;
 
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,23 +14,37 @@ import java.util.List;
 
 @Data
 @Entity
-public class IrcUser{
+public class TargetBot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(nullable = false, unique = true)
+    @ManyToOne
+    @JoinColumn(name="CHANNEL_ID")
+    Channel channel;
+
+    @ManyToOne
+    @JoinColumn(name="SERVER_ID")
+    Server server;
+
+    @Column(nullable = false)
     String name;
+
+    @Column(nullable = false)
+    String pattern;
 
     @Column(nullable = false)
     LocalDateTime creationDate = LocalDateTime.now();
 
-    public IrcUser() {
+    public TargetBot() {
     }
 
-    public IrcUser(String name) {
+    public TargetBot(Server server, Channel channel, String name, String pattern) {
         this.name = name;
+        this.pattern = pattern;
+        this.server = server;
+        this.channel = channel;
     }
 
     public Long getId() {
@@ -54,5 +69,13 @@ public class IrcUser{
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
     }
 }
