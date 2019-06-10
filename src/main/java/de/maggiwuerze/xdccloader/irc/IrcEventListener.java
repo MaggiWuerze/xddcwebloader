@@ -25,6 +25,8 @@ import java.util.logging.Logger;
 @Component
 public class IrcEventListener extends ListenerAdapter {
 
+    final String path = System.getProperty("user.home") + File.separator + "downloads";
+
     Logger logger = Logger.getLogger("Class IrcEventListener");
 
     @Autowired
@@ -49,21 +51,15 @@ public class IrcEventListener extends ListenerAdapter {
     @Override
     public void onException(ExceptionEvent event) {
 
-        event.getMessage();
+        eventPublisher.handleError(event.getBot(), event.getException());
 
     }
 
     @Override
     public void onConnectAttemptFailed(ConnectAttemptFailedEvent event) {
 
-        IrcBot bot = event.getBot();
-        bot.stopBotReconnect();
-
         Exception exception = event.getConnectExceptions().get(event.getConnectExceptions().keySet().asList().get(0));
-        String message = String.format( State.ERROR.getExternalString(), exception.getMessage());
-
-        bot.getDownload().setStatusMessage(message);
-        eventPublisher.updateDownloadState(State.ERROR, bot.getDownload());
+        eventPublisher.handleError(event.getBot(), exception);
 
     }
 
@@ -76,7 +72,7 @@ public class IrcEventListener extends ListenerAdapter {
         bot.getDownload().setFilename(event.getSafeFilename());
 
         //Create this file in the temp directory
-        String path = "C:" + File.separatorChar + "ircDownload" + File.separatorChar + event.getSafeFilename();
+//        String path = "C:" + File.separatorChar + "ircDownload" + File.separatorChar + event.getSafeFilename();
         File downloadFile = new File(path);
 
         //Receive the file from the user

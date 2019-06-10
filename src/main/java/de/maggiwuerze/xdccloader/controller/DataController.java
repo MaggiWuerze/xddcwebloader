@@ -45,6 +45,22 @@ class DataController {
 
     final String MESSAGE_PREFIX = "/topic";
 
+    //INIT
+    @GetMapping("/initialized")
+    public ResponseEntity<Boolean> getInitialized() {
+
+        return new ResponseEntity(true, HttpStatus.OK);
+
+    }
+
+    @PostMapping("/initialized/")
+    public ResponseEntity<?> setInitialized(@RequestBody Boolean initBoolean) {
+
+        
+
+        return new ResponseEntity("ok", HttpStatus.OK);
+    }
+
     //DOWNLOADS
 
     /**

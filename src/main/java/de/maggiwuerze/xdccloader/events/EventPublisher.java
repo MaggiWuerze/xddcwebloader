@@ -1,10 +1,12 @@
 package de.maggiwuerze.xdccloader.events;
 
 import de.maggiwuerze.xdccloader.events.download.DownloadUpdateEvent;
+import de.maggiwuerze.xdccloader.irc.IrcBot;
 import de.maggiwuerze.xdccloader.model.Download;
 import de.maggiwuerze.xdccloader.persistency.DownloadRepository;
 import de.maggiwuerze.xdccloader.util.SocketEvents;
 import de.maggiwuerze.xdccloader.util.State;
+import org.pircbotx.hooks.events.ConnectAttemptFailedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -38,6 +40,15 @@ public class EventPublisher {
 
         this.websocket.convertAndSend(
                 MESSAGE_PREFIX + event.getRoute(), payload);
+
+    }
+
+    public void handleError(IrcBot bot, Exception exception) {
+
+        bot.stopBotReconnect();
+        String message = String.format( State.ERROR.getExternalString(), exception.getMessage());
+        bot.getDownload().setStatusMessage(message);
+        updateDownloadState(State.ERROR, bot.getDownload());
 
     }
 }

@@ -1,4 +1,4 @@
-package de.maggiwuerze.xdccloader.events;
+package de.maggiwuerze.xdccloader.config;
 
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Component
 @EnableWebSocketMessageBroker
-class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer{
+class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 
 
     final String MESSAGE_PREFIX = "/topic";

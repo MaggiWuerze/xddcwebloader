@@ -46,7 +46,7 @@ public class FileTransferProgressWatcher {
 
     public void run() {
 
-        logger.info("starting progress watcher for download tih id :" + download.getId());
+        logger.info("starting progress watcher for download with id :" + download.getId());
 
         download.setStatus(State.TRANSMITTING);
         schedulerResult = exec.scheduleAtFixedRate(() -> {

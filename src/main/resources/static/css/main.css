@@ -56,7 +56,7 @@
 
 .list{
 
-    overflow: scroll;
+    overflow-y: scroll;
     height: 84vh;
     top: 0;
     bottom: 0;

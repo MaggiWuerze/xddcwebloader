@@ -1,5 +1,6 @@
-package de.maggiwuerze.xdccloader.security;
+package de.maggiwuerze.xdccloader.config;
 
+import de.maggiwuerze.xdccloader.security.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

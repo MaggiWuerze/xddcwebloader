@@ -30,7 +30,9 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
+            onboarding: true,
             bots: [],
             servers: [],
             channels: [],
@@ -49,6 +51,26 @@ class App extends React.Component {
     }
 
     loadFromServer() {
+
+        axios
+            .get('http://localhost:8080/data/initialized/', {
+
+                params: {
+                    active: true,
+                }
+
+            })
+            .then((response) => {
+
+                var init = response.data[0];
+                this.setState({
+                    onboarding: init
+                });
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
         axios
             .get('http://localhost:8080/data/bots/', {
@@ -274,6 +296,24 @@ class App extends React.Component {
 
     }
 
+    initComplete(){
+
+        axios
+            .post('http://localhost:8080/data/initialized/', true)
+            .then((response) => {
+
+                if (response.status.toString() != '200') {
+
+                    alert("there was an error!");
+
+                } else if (modalName) {
+
+                    this.toggleBoolean(modalName);
+                }
+            });
+
+    }
+
     componentDidMount() {
         this.loadFromServer();
         stompClient.register([
@@ -290,122 +330,134 @@ class App extends React.Component {
 
     render() {
 
-        return (
-            <React.Fragment>
-                <Navbar bg="dark" expand="lg">
-                    <Navbar.Brand href="#home">XDCC Loader</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Nav.Link onClick={() => this.toggleBoolean('showBotModal')}>Bot</Nav.Link>
-                            <Nav.Link onClick={() => this.toggleBoolean('showServerModal')}>Server</Nav.Link>
-                            <Nav.Link onClick={() => this.toggleBoolean('showChannelModal')}>Channel</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-                <Container fluid>
-                    <Row>
-                        <Col md={4} className={"column"}>
-                            <Card className={"customCard"}>
-                                <Tab.Container defaultActiveKey="bots">
-                                    <Card.Header>
-                                        <Nav fill variant="tabs">
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="bots">
+        if (this.state.onboarding) {
+
+            return (
+                <div>
+                    "hello world!"
+                    <Button size="sm" onClick={() => {this.setState({onboarding: false})}} variant="success">
+                        <i className="fas fa-thumbs-up"></i>
+                    </Button>
+                </div>
+            )
+
+        } else {
+
+            return (
+                <React.Fragment>
+                    <Navbar expand="lg">
+                        <Navbar.Brand href="#home">XDCC Loader</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="mr-auto">
+                                {/*<Nav.Link onClick={() => this.toggleBoolean('showBotModal')}>Bot</Nav.Link>*/}
+                                {/*<Nav.Link onClick={() => this.toggleBoolean('shoKxx0P456/wServerModal')}>Server</Nav.Link>*/}
+                                {/*<Nav.Link onClick={() => this.toggleBoolean('showChannelModal')}>Channel</Nav.Link>*/}
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+                    <Container fluid>
+                        <Row>
+                            <Col md={4} className={"column"}>
+                                <Card className={"customCard"}>
+                                    <Tab.Container defaultActiveKey="bots">
+                                        <Card.Header>
+                                            <Nav fill variant="tabs">
+                                                <Nav.Item>
+                                                    <Nav.Link eventKey="bots">
                                                     <span>
                                                         {"Bots (" + this.state.bots.length + ")"}&nbsp;
                                                         <Button size="sm" className={"tab_btn"} variant="success">
                                                             <i className="fas fa-plus"></i>
                                                         </Button>
                                                     </span>
-                                                </Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="servers">
+                                                    </Nav.Link>
+                                                </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link eventKey="servers">
                                                     <span>
                                                         {"Servers (" + this.state.servers.length + ")"}&nbsp;
                                                         <Button size="sm" className={"tab_btn"} variant="success">
                                                             <i className="fas fa-plus"></i>
                                                         </Button>
                                                     </span>
-                                                </Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="channels">
+                                                    </Nav.Link>
+                                                </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link eventKey="channels">
                                                     <span>
                                                         {"Channels (" + this.state.channels.length + ")"}&nbsp;
                                                         <Button size="sm" className={"tab_btn"} variant="success">
                                                             <i className="fas fa-plus"></i>
                                                         </Button>
                                                     </span>
-                                                </Nav.Link>
-                                            </Nav.Item>
-                                        </Nav>
-                                    </Card.Header>
-                                    <Card.Body>
-                                        <TabContent ref="downloadTabs" defaultActiveKey="activeDownloads"
-                                                    id="uncontrolled-tab-example">
-                                            <Tab.Pane eventKey="bots">
-                                                <BotList bots={this.state.bots} onDelete={this.onDelete()}
-                                                         onCreate={this.onCreate}/>
-                                            </Tab.Pane>
-                                            <Tab.Pane eventKey="server">
-                                            </Tab.Pane>
-                                            <Tab.Pane eventKey="channels">
-                                            </Tab.Pane>
-                                        </TabContent>
-                                    </Card.Body>
-                                </Tab.Container>
-                            </Card>
+                                                    </Nav.Link>
+                                                </Nav.Item>
+                                            </Nav>
+                                        </Card.Header>
+                                        <Card.Body>
+                                            <TabContent>
+                                                <Tab.Pane eventKey="bots">
+                                                    <BotList bots={this.state.bots} onDelete={this.onDelete()}
+                                                             onCreate={this.onCreate}/>
+                                                </Tab.Pane>
+                                                <Tab.Pane eventKey="server">
+                                                </Tab.Pane>
+                                                <Tab.Pane eventKey="channels">
+                                                </Tab.Pane>
+                                            </TabContent>
+                                        </Card.Body>
+                                    </Tab.Container>
+                                </Card>
 
-                        </Col>
-                        <Col md={8} className={"column"}>
-                            <Card className={"customCard"}>
-                                <Tab.Container defaultActiveKey="activeDownloads">
-                                    <Card.Header>
-                                        <Nav fill variant="tabs">
-                                            <Nav.Item>
-                                                <Nav.Link
-                                                    eventKey="activeDownloads">{"Active Downloads (" + this.state.downloads.length + ")"}</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link
-                                                    eventKey="completedDownloads">{"Completed (" + this.state.doneDownloads.length + ")"}</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link
-                                                    eventKey="failedDownloads">{"Failed (" + this.state.failedDownloads.length + ")"}</Nav.Link>
-                                            </Nav.Item>
-                                        </Nav>
-                                    </Card.Header>
-                                    <Card.Body>
-                                        <TabContent ref="downloadTabs" defaultActiveKey="activeDownloads"
-                                                    id="uncontrolled-tab-example">
-                                            <Tab.Pane eventKey="activeDownloads">
-                                                <DownloadList downloads={this.state.downloads}
-                                                              onDelete={this.onDelete}/>
-                                            </Tab.Pane>
-                                            <Tab.Pane eventKey="completedDownloads">
-                                                <DownloadList downloads={this.state.doneDownloads}
-                                                              onDelete={this.onDelete}/>
-                                            </Tab.Pane>
-                                            <Tab.Pane eventKey="failedDownloads">
-                                                <DownloadList downloads={this.state.failedDownloads}
-                                                              onDelete={this.onDelete}/>
-                                            </Tab.Pane>
-                                        </TabContent>
-                                    </Card.Body>
-                                </Tab.Container>
-                            </Card>
-                        </Col>
-                    </Row>
-                </Container>
-                {/*modal contents*/}
-                <CreateBotModal modaltitle="Create new Download" botAttributes={this.state.botAttributes}
-                                show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
-                                onCreate={this.onCreate}/>
-            </React.Fragment>
-        )
+                            </Col>
+                            <Col md={8} className={"column"}>
+                                <Card className={"customCard"}>
+                                    <Tab.Container defaultActiveKey="activeDownloads">
+                                        <Card.Header>
+                                            <Nav fill variant="tabs">
+                                                <Nav.Item>
+                                                    <Nav.Link
+                                                        eventKey="activeDownloads">{"Active Downloads (" + this.state.downloads.length + ")"}</Nav.Link>
+                                                </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link
+                                                        eventKey="completedDownloads">{"Completed (" + this.state.doneDownloads.length + ")"}</Nav.Link>
+                                                </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link
+                                                        eventKey="failedDownloads">{"Failed (" + this.state.failedDownloads.length + ")"}</Nav.Link>
+                                                </Nav.Item>
+                                            </Nav>
+                                        </Card.Header>
+                                        <Card.Body>
+                                            <TabContent>
+                                                <Tab.Pane eventKey="activeDownloads">
+                                                    <DownloadList downloads={this.state.downloads}
+                                                                  onDelete={this.onDelete}/>
+                                                </Tab.Pane>
+                                                <Tab.Pane eventKey="completedDownloads">
+                                                    <DownloadList downloads={this.state.doneDownloads}
+                                                                  onDelete={this.onDelete}/>
+                                                </Tab.Pane>
+                                                <Tab.Pane eventKey="failedDownloads">
+                                                    <DownloadList downloads={this.state.failedDownloads}
+                                                                  onDelete={this.onDelete}/>
+                                                </Tab.Pane>
+                                            </TabContent>
+                                        </Card.Body>
+                                    </Tab.Container>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Container>
+                    {/*modal contents*/}
+                    <CreateBotModal modaltitle="Create new Download" botAttributes={this.state.botAttributes}
+                                    show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
+                                    onCreate={this.onCreate}/>
+                </React.Fragment>
+            )
+        }
     }
 }
 
@@ -615,7 +667,7 @@ class CreateBotModal extends React.Component {
 
         return (
             // rebuild this with a custom modal content which gets the inputs as prop
-            // 
+            //
             <Modal centered show={this.props.show} onHide={this.handleClose}>
                 <Modal.Header>
                     <Modal.Title>{this.props.modaltitle}</Modal.Title>
@@ -704,7 +756,7 @@ class Download extends React.Component {
                     </Alert>
                     <Container fluid>
                         <InputGroup>
-                            <ProgressBar style={{height: '30px', width: '90%'}} animated
+                            <ProgressBar style={{height: '30px', width: '90%'}} animated={this.props.download.status == 'TRANSMITTING'}
                                          now={this.props.download.progress}
                                          label={this.props.download.status + ' (' + this.props.download.progress + '%)'}/>
                             <InputGroup.Append>

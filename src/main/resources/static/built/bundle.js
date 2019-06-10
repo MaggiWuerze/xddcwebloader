@@ -50890,6 +50890,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
+      onboarding: true,
       bots: [],
       servers: [],
       channels: [],
@@ -50913,6 +50914,19 @@ function (_React$Component) {
     value: function loadFromServer() {
       var _this2 = this;
 
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/initialized/', {
+        params: {
+          active: true
+        }
+      }).then(function (response) {
+        var init = response.data[0];
+
+        _this2.setState({
+          onboarding: init
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/bots/', {
         params: {
           active: true
@@ -51076,6 +51090,19 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "initComplete",
+    value: function initComplete() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('http://localhost:8080/data/initialized/', true).then(function (response) {
+        if (response.status.toString() != '200') {
+          alert("there was an error!");
+        } else if (modalName) {
+          _this4.toggleBoolean(modalName);
+        }
+      });
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.loadFromServer();
@@ -51098,125 +51125,118 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
-      return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"], {
-        bg: "dark",
-        expand: "lg"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Brand, {
-        href: "#home"
-      }, "XDCC Loader"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Toggle, {
-        "aria-controls": "basic-navbar-nav"
-      }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Collapse, {
-        id: "basic-navbar-nav"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
-        className: "mr-auto"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        onClick: function onClick() {
-          return _this4.toggleBoolean('showBotModal');
-        }
-      }, "Bot"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        onClick: function onClick() {
-          return _this4.toggleBoolean('showServerModal');
-        }
-      }, "Server"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        onClick: function onClick() {
-          return _this4.toggleBoolean('showChannelModal');
-        }
-      }, "Channel")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Container"], {
-        fluid: true
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Col"], {
-        md: 4,
-        className: "column"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
-        className: "customCard"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Container, {
-        defaultActiveKey: "bots"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
-        fill: true,
-        variant: "tabs"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        eventKey: "bots"
-      }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0\xA0\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
-        size: "sm",
-        className: "tab_btn",
-        variant: "success"
-      }, React.createElement("i", {
-        className: "fas fa-plus"
-      }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        eventKey: "servers"
-      }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
-        size: "sm",
-        className: "tab_btn",
-        variant: "success"
-      }, React.createElement("i", {
-        className: "fas fa-plus"
-      }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        eventKey: "channels"
-      }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
-        size: "sm",
-        className: "tab_btn",
-        variant: "success"
-      }, React.createElement("i", {
-        className: "fas fa-plus"
-      }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["TabContent"], {
-        ref: "downloadTabs",
-        defaultActiveKey: "activeDownloads",
-        id: "uncontrolled-tab-example"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
-        eventKey: "bots"
-      }, React.createElement(BotList, {
-        bots: this.state.bots,
-        onDelete: this.onDelete(),
-        onCreate: this.onCreate
-      })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
-        eventKey: "server"
-      }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
-        eventKey: "channels"
-      })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Col"], {
-        md: 8,
-        className: "column"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
-        className: "customCard"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Container, {
-        defaultActiveKey: "activeDownloads"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
-        fill: true,
-        variant: "tabs"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        eventKey: "activeDownloads"
-      }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        eventKey: "completedDownloads"
-      }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
-        eventKey: "failedDownloads"
-      }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["TabContent"], {
-        ref: "downloadTabs",
-        defaultActiveKey: "activeDownloads",
-        id: "uncontrolled-tab-example"
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
-        eventKey: "activeDownloads"
-      }, React.createElement(DownloadList, {
-        downloads: this.state.downloads,
-        onDelete: this.onDelete
-      })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
-        eventKey: "completedDownloads"
-      }, React.createElement(DownloadList, {
-        downloads: this.state.doneDownloads,
-        onDelete: this.onDelete
-      })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
-        eventKey: "failedDownloads"
-      }, React.createElement(DownloadList, {
-        downloads: this.state.failedDownloads,
-        onDelete: this.onDelete
-      }))))))))), React.createElement(CreateBotModal, {
-        modaltitle: "Create new Download",
-        botAttributes: this.state.botAttributes,
-        show: this.state.showBotModal,
-        onClose: function onClose() {
-          return _this4.toggleBoolean('showBotModal');
-        },
-        onCreate: this.onCreate
-      }));
+      if (this.state.onboarding) {
+        return React.createElement("div", null, "\"hello world!\"", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+          size: "sm",
+          onClick: function onClick() {
+            _this5.setState({
+              onboarding: false
+            });
+          },
+          variant: "success"
+        }, React.createElement("i", {
+          className: "fas fa-thumbs-up"
+        })));
+      } else {
+        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"], {
+          expand: "lg"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Brand, {
+          href: "#home"
+        }, "XDCC Loader"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Toggle, {
+          "aria-controls": "basic-navbar-nav"
+        }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Collapse, {
+          id: "basic-navbar-nav"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
+          className: "mr-auto"
+        }))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Container"], {
+          fluid: true
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Col"], {
+          md: 4,
+          className: "column"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
+          className: "customCard"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Container, {
+          defaultActiveKey: "bots"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
+          fill: true,
+          variant: "tabs"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+          eventKey: "bots"
+        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+          size: "sm",
+          className: "tab_btn",
+          variant: "success"
+        }, React.createElement("i", {
+          className: "fas fa-plus"
+        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+          eventKey: "servers"
+        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+          size: "sm",
+          className: "tab_btn",
+          variant: "success"
+        }, React.createElement("i", {
+          className: "fas fa-plus"
+        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+          eventKey: "channels"
+        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+          size: "sm",
+          className: "tab_btn",
+          variant: "success"
+        }, React.createElement("i", {
+          className: "fas fa-plus"
+        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+          eventKey: "bots"
+        }, React.createElement(BotList, {
+          bots: this.state.bots,
+          onDelete: this.onDelete(),
+          onCreate: this.onCreate
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+          eventKey: "server"
+        }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+          eventKey: "channels"
+        })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Col"], {
+          md: 8,
+          className: "column"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
+          className: "customCard"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Container, {
+          defaultActiveKey: "activeDownloads"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
+          fill: true,
+          variant: "tabs"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+          eventKey: "activeDownloads"
+        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+          eventKey: "completedDownloads"
+        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+          eventKey: "failedDownloads"
+        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+          eventKey: "activeDownloads"
+        }, React.createElement(DownloadList, {
+          downloads: this.state.downloads,
+          onDelete: this.onDelete
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+          eventKey: "completedDownloads"
+        }, React.createElement(DownloadList, {
+          downloads: this.state.doneDownloads,
+          onDelete: this.onDelete
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+          eventKey: "failedDownloads"
+        }, React.createElement(DownloadList, {
+          downloads: this.state.failedDownloads,
+          onDelete: this.onDelete
+        }))))))))), React.createElement(CreateBotModal, {
+          modaltitle: "Create new Download",
+          botAttributes: this.state.botAttributes,
+          show: this.state.showBotModal,
+          onClose: function onClose() {
+            return _this5.toggleBoolean('showBotModal');
+          },
+          onCreate: this.onCreate
+        }));
+      }
     }
   }]);
 
@@ -51229,18 +51249,18 @@ function (_React$Component2) {
   _inherits(CreateBotModal, _React$Component2);
 
   function CreateBotModal(props) {
-    var _this5;
+    var _this6;
 
     _classCallCheck(this, CreateBotModal);
 
-    _this5 = _possibleConstructorReturn(this, _getPrototypeOf(CreateBotModal).call(this, props));
-    _this5.handleSubmit = _this5.handleSubmit.bind(_assertThisInitialized(_this5));
-    _this5.state = {
+    _this6 = _possibleConstructorReturn(this, _getPrototypeOf(CreateBotModal).call(this, props));
+    _this6.handleSubmit = _this6.handleSubmit.bind(_assertThisInitialized(_this6));
+    _this6.state = {
       serverList: [],
       channelList: [],
       userList: []
     };
-    return _this5;
+    return _this6;
   }
 
   _createClass(CreateBotModal, [{
@@ -51265,10 +51285,10 @@ function (_React$Component2) {
   }, {
     key: "loadServerList",
     value: function loadServerList() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
-        _this6.setState({
+        _this7.setState({
           serverList: response.data
         });
       })["catch"](function (error) {
@@ -51293,10 +51313,10 @@ function (_React$Component2) {
   }, {
     key: "loadChannelList",
     value: function loadChannelList() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
-        _this7.setState({
+        _this8.setState({
           channelList: response.data
         });
       })["catch"](function (error) {
@@ -51321,10 +51341,10 @@ function (_React$Component2) {
   }, {
     key: "loadUserList",
     value: function loadUserList() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/ircUsers/').then(function (response) {
-        _this8.setState({
+        _this9.setState({
           userList: response.data
         });
       })["catch"](function (error) {
@@ -51341,7 +51361,7 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      var _this9 = this;
+      var _this10 = this;
 
       var serverOptions = this.state.serverList.map(function (server) {
         //{"name": "Rizon","serverUrl": "irc.rizon.net","creationDate": "2019-05-29T14:56:37.599"}
@@ -51437,7 +51457,7 @@ function (_React$Component2) {
         return input;
       });
       return (// rebuild this with a custom modal content which gets the inputs as prop
-        // 
+        //
         React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"], {
           centered: true,
           show: this.props.show,
@@ -51445,7 +51465,7 @@ function (_React$Component2) {
         }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"].Title, null, this.props.modaltitle)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"].Footer, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
           variant: "secondary",
           onClick: function onClick() {
-            return _this9.props.onClose();
+            return _this10.props.onClose();
           }
         }, "Close"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
           variant: "success",
@@ -51472,13 +51492,13 @@ function (_React$Component3) {
   _createClass(DownloadList, [{
     key: "render",
     value: function render() {
-      var _this10 = this;
+      var _this11 = this;
 
       var downloads = this.props.downloads.map(function (download) {
         return React.createElement(Download, {
           key: download.id,
           download: download,
-          onDelete: _this10.props.onDelete
+          onDelete: _this11.props.onDelete
         });
       });
       return React.createElement("div", {
@@ -51504,14 +51524,14 @@ function (_React$Component4) {
   _createClass(BotList, [{
     key: "render",
     value: function render() {
-      var _this11 = this;
+      var _this12 = this;
 
       var bots = this.props.bots.map(function (bot) {
         return React.createElement(Bot, {
           key: bot.id,
           bot: bot,
-          onDelete: _this11.props.onDelete,
-          onCreate: _this11.props.onCreate
+          onDelete: _this12.props.onDelete,
+          onCreate: _this12.props.onCreate
         });
       });
       return React.createElement("div", {
@@ -51533,16 +51553,16 @@ function (_React$Component5) {
   _inherits(Download, _React$Component5);
 
   function Download(props) {
-    var _this12;
+    var _this13;
 
     _classCallCheck(this, Download);
 
-    _this12 = _possibleConstructorReturn(this, _getPrototypeOf(Download).call(this, props));
-    _this12.handleDelete = _this12.handleDelete.bind(_assertThisInitialized(_this12));
-    _this12.state = {
+    _this13 = _possibleConstructorReturn(this, _getPrototypeOf(Download).call(this, props));
+    _this13.handleDelete = _this13.handleDelete.bind(_assertThisInitialized(_this13));
+    _this13.state = {
       now: 0
     };
-    return _this12;
+    return _this13;
   }
 
   _createClass(Download, [{
@@ -51567,7 +51587,7 @@ function (_React$Component5) {
           height: '30px',
           width: '90%'
         },
-        animated: true,
+        animated: this.props.download.status == 'TRANSMITTING',
         now: this.props.download.progress,
         label: this.props.download.status + ' (' + this.props.download.progress + '%)'
       }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Append, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
@@ -51602,17 +51622,17 @@ function (_React$Component6) {
   _inherits(Bot, _React$Component6);
 
   function Bot(props) {
-    var _this13;
+    var _this14;
 
     _classCallCheck(this, Bot);
 
-    _this13 = _possibleConstructorReturn(this, _getPrototypeOf(Bot).call(this, props));
-    _this13.handleDelete = _this13.handleDelete.bind(_assertThisInitialized(_this13));
-    _this13.handleSubmit = _this13.handleSubmit.bind(_assertThisInitialized(_this13));
-    _this13.state = {
+    _this14 = _possibleConstructorReturn(this, _getPrototypeOf(Bot).call(this, props));
+    _this14.handleDelete = _this14.handleDelete.bind(_assertThisInitialized(_this14));
+    _this14.handleSubmit = _this14.handleSubmit.bind(_assertThisInitialized(_this14));
+    _this14.state = {
       open: false
     };
-    return _this13;
+    return _this14;
   }
 
   _createClass(Bot, [{
@@ -51646,7 +51666,7 @@ function (_React$Component6) {
   }, {
     key: "render",
     value: function render() {
-      var _this14 = this;
+      var _this15 = this;
 
       var open = this.state.open;
       return React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
@@ -51655,7 +51675,7 @@ function (_React$Component6) {
         }
       }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, {
         onClick: function onClick() {
-          return _this14.setState({
+          return _this15.setState({
             open: !open
           });
         }
