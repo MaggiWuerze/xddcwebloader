@@ -49884,10 +49884,10 @@ module.exports = __webpack_require__(/*! ../package.json */ "./node_modules/stom
 /*!******************************************************************!*\
   !*** ./node_modules/stompjs/node_modules/websocket/package.json ***!
   \******************************************************************/
-/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _optional, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, config, contributors, dependencies, deprecated, description, devDependencies, directories, engines, homepage, keywords, license, main, name, repository, scripts, version, default */
+/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _optional, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browser, bugs, config, contributors, dependencies, description, devDependencies, directories, engines, homepage, keywords, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_args":[["websocket@1.0.28","c:\\Users\\dap\\workspaces\\private\\xddcwebloader"]],"_from":"websocket@latest","_id":"websocket@1.0.28","_inBundle":false,"_integrity":"sha512-00y/20/80P7H4bCYkzuuvvfDvh+dgtXi5kzDf3UcZwN6boTYaKvsrtZ5lIYm1Gsg48siMErd9M4zjSYfYFHTrA==","_location":"/stompjs/websocket","_optional":true,"_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"websocket@latest","name":"websocket","escapedName":"websocket","rawSpec":"latest","saveSpec":null,"fetchSpec":"latest"},"_requiredBy":["/stompjs"],"_resolved":"https://registry.npmjs.org/websocket/-/websocket-1.0.28.tgz","_shasum":"9e5f6fdc8a3fe01d4422647ef93abdd8d45a78d3","_spec":"websocket@latest","_where":"C:\\Users\\dap\\workspaces\\private\\xdccwebloader\\node_modules\\stompjs","author":{"name":"Brian McKelvey","email":"theturtle32@gmail.com","url":"https://github.com/theturtle32"},"browser":"lib/browser.js","bugs":{"url":"https://github.com/theturtle32/WebSocket-Node/issues"},"bundleDependencies":false,"config":{"verbose":false},"contributors":[{"name":"Iñaki Baz Castillo","email":"ibc@aliax.net","url":"http://dev.sipdoc.net"}],"dependencies":{"debug":"^2.2.0","nan":"^2.11.0","typedarray-to-buffer":"^3.1.5","yaeti":"^0.0.6"},"deprecated":false,"description":"Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.","devDependencies":{"buffer-equal":"^1.0.0","faucet":"^0.0.1","gulp":"git+https://github.com/gulpjs/gulp.git#4.0","gulp-jshint":"^2.0.4","jshint":"^2.0.0","jshint-stylish":"^2.2.1","tape":"^4.9.1"},"directories":{"lib":"./lib"},"engines":{"node":">=0.10.0"},"homepage":"https://github.com/theturtle32/WebSocket-Node","keywords":["websocket","websockets","socket","networking","comet","push","RFC-6455","realtime","server","client"],"license":"Apache-2.0","main":"index","name":"websocket","repository":{"type":"git","url":"git+https://github.com/theturtle32/WebSocket-Node.git"},"scripts":{"gulp":"gulp","install":"(node-gyp rebuild 2> builderror.log) || (exit 0)","test":"faucet test/unit"},"version":"1.0.28"};
+module.exports = {"_args":[["websocket@1.0.28","C:\\Users\\HFera\\IdeaProjects\\xddcwebloader"]],"_from":"websocket@1.0.28","_id":"websocket@1.0.28","_inBundle":false,"_integrity":"sha512-00y/20/80P7H4bCYkzuuvvfDvh+dgtXi5kzDf3UcZwN6boTYaKvsrtZ5lIYm1Gsg48siMErd9M4zjSYfYFHTrA==","_location":"/stompjs/websocket","_optional":true,"_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"websocket@1.0.28","name":"websocket","escapedName":"websocket","rawSpec":"1.0.28","saveSpec":null,"fetchSpec":"1.0.28"},"_requiredBy":["/stompjs"],"_resolved":"https://registry.npmjs.org/websocket/-/websocket-1.0.28.tgz","_spec":"1.0.28","_where":"C:\\Users\\HFera\\IdeaProjects\\xddcwebloader","author":{"name":"Brian McKelvey","email":"theturtle32@gmail.com","url":"https://github.com/theturtle32"},"browser":"lib/browser.js","bugs":{"url":"https://github.com/theturtle32/WebSocket-Node/issues"},"config":{"verbose":false},"contributors":[{"name":"Iñaki Baz Castillo","email":"ibc@aliax.net","url":"http://dev.sipdoc.net"}],"dependencies":{"debug":"^2.2.0","nan":"^2.11.0","typedarray-to-buffer":"^3.1.5","yaeti":"^0.0.6"},"description":"Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.","devDependencies":{"buffer-equal":"^1.0.0","faucet":"^0.0.1","gulp":"git+https://github.com/gulpjs/gulp.git#4.0","gulp-jshint":"^2.0.4","jshint":"^2.0.0","jshint-stylish":"^2.2.1","tape":"^4.9.1"},"directories":{"lib":"./lib"},"engines":{"node":">=0.10.0"},"homepage":"https://github.com/theturtle32/WebSocket-Node","keywords":["websocket","websockets","socket","networking","comet","push","RFC-6455","realtime","server","client"],"license":"Apache-2.0","main":"index","name":"websocket","repository":{"type":"git","url":"git+https://github.com/theturtle32/WebSocket-Node.git"},"scripts":{"gulp":"gulp","install":"(node-gyp rebuild 2> builderror.log) || (exit 0)","test":"faucet test/unit"},"version":"1.0.28"};
 
 /***/ }),
 
@@ -50932,10 +50932,28 @@ function (_React$Component) {
           active: true
         }
       }).then(function (response) {
-        response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0])) : null;
+        response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'botAttributes') : null;
 
         _this2.setState({
           bots: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
+        response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
+
+        _this2.setState({
+          servers: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
+        response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
+
+        _this2.setState({
+          channels: response.data
         });
       })["catch"](function (error) {
         console.log(error);
@@ -51042,12 +51060,14 @@ function (_React$Component) {
     }
   }, {
     key: "updateAttributes",
-    value: function updateAttributes(attributes) {
-      if (this.state.botAttributes && this.state.botAttributes.length >= 0) {
-        this.setState({
-          botAttributes: attributes
-        });
+    value: function updateAttributes(attributes, paramName) {
+      console.log("updating param: " + paramName);
+
+      if (this.state[paramName] && this.state[paramName].length >= 0) {
+        this.setState(_defineProperty({}, paramName, attributes));
       }
+
+      console.log(this.state[paramName]);
     }
   }, {
     key: "handleSocketCall",
@@ -51167,7 +51187,10 @@ function (_React$Component) {
         }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
           size: "sm",
           className: "tab_btn",
-          variant: "success"
+          variant: "success",
+          onClick: function onClick() {
+            return _this5.toggleBoolean('showBotModal');
+          }
         }, React.createElement("i", {
           className: "fas fa-plus"
         }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
@@ -51175,7 +51198,10 @@ function (_React$Component) {
         }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
           size: "sm",
           className: "tab_btn",
-          variant: "success"
+          variant: "success",
+          onClick: function onClick() {
+            return _this5.toggleBoolean('showServerModal');
+          }
         }, React.createElement("i", {
           className: "fas fa-plus"
         }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
@@ -51183,7 +51209,10 @@ function (_React$Component) {
         }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
           size: "sm",
           className: "tab_btn",
-          variant: "success"
+          variant: "success",
+          onClick: function onClick() {
+            return _this5.toggleBoolean('showChannelModal');
+          }
         }, React.createElement("i", {
           className: "fas fa-plus"
         }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
@@ -51228,11 +51257,27 @@ function (_React$Component) {
           downloads: this.state.failedDownloads,
           onDelete: this.onDelete
         }))))))))), React.createElement(CreateBotModal, {
-          modaltitle: "Create new Download",
+          modaltitle: "Create new Bot",
           botAttributes: this.state.botAttributes,
           show: this.state.showBotModal,
           onClose: function onClose() {
             return _this5.toggleBoolean('showBotModal');
+          },
+          onCreate: this.onCreate
+        }), React.createElement(CreateBotModal, {
+          modaltitle: "Create new Server",
+          botAttributes: this.state.serverAttributes,
+          show: this.state.showServerModal,
+          onClose: function onClose() {
+            return _this5.toggleBoolean('showServerModal');
+          },
+          onCreate: this.onCreate
+        }), React.createElement(CreateBotModal, {
+          modaltitle: "Create new Channel",
+          botAttributes: this.state.channelAttributes,
+          show: this.state.showChannelModal,
+          onClose: function onClose() {
+            return _this5.toggleBoolean('showChannelModal');
           },
           onCreate: this.onCreate
         }));

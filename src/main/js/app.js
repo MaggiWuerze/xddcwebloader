@@ -82,9 +82,35 @@ class App extends React.Component {
             })
             .then((response) => {
 
-                response.data[0] ? this.updateAttributes(Object.keys(response.data[0])) : null;
+                response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'botAttributes') : null;
                 this.setState({
                     bots: response.data
+                });
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        axios
+            .get('http://localhost:8080/data/servers/')
+            .then((response) => {
+
+                response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
+                this.setState({
+                    servers: response.data
+                });
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        axios
+            .get('http://localhost:8080/data/channels/')
+            .then((response) => {
+
+                response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
+                this.setState({
+                    channels: response.data
                 });
 
             })
@@ -226,13 +252,15 @@ class App extends React.Component {
 
     }
 
-    updateAttributes(attributes) {
+    updateAttributes(attributes, paramName) {
 
-        if (this.state.botAttributes && this.state.botAttributes.length >= 0) {
-            this.setState({
-                botAttributes: attributes
-            });
+        console.log("updating param: " +  paramName);
+
+        if (this.state[paramName] && this.state[paramName].length >= 0) {
+            this.setState({[paramName]: attributes});
         }
+
+        console.log(this.state[paramName]);
     }
 
     handleSocketCall(responseObj) {
@@ -296,7 +324,7 @@ class App extends React.Component {
 
     }
 
-    initComplete(){
+    initComplete() {
 
         axios
             .post('http://localhost:8080/data/initialized/', true)
@@ -335,7 +363,9 @@ class App extends React.Component {
             return (
                 <div>
                     "hello world!"
-                    <Button size="sm" onClick={() => {this.setState({onboarding: false})}} variant="success">
+                    <Button size="sm" onClick={() => {
+                        this.setState({onboarding: false})
+                    }} variant="success">
                         <i className="fas fa-thumbs-up"></i>
                     </Button>
                 </div>
@@ -367,7 +397,8 @@ class App extends React.Component {
                                                     <Nav.Link eventKey="bots">
                                                     <span>
                                                         {"Bots (" + this.state.bots.length + ")"}&nbsp;
-                                                        <Button size="sm" className={"tab_btn"} variant="success">
+                                                        <Button size="sm" className={"tab_btn"} variant="success"
+                                                                onClick={() => this.toggleBoolean('showBotModal')}>
                                                             <i className="fas fa-plus"></i>
                                                         </Button>
                                                     </span>
@@ -377,7 +408,8 @@ class App extends React.Component {
                                                     <Nav.Link eventKey="servers">
                                                     <span>
                                                         {"Servers (" + this.state.servers.length + ")"}&nbsp;
-                                                        <Button size="sm" className={"tab_btn"} variant="success">
+                                                        <Button size="sm" className={"tab_btn"} variant="success"
+                                                                onClick={() => this.toggleBoolean('showServerModal')}>
                                                             <i className="fas fa-plus"></i>
                                                         </Button>
                                                     </span>
@@ -387,7 +419,8 @@ class App extends React.Component {
                                                     <Nav.Link eventKey="channels">
                                                     <span>
                                                         {"Channels (" + this.state.channels.length + ")"}&nbsp;
-                                                        <Button size="sm" className={"tab_btn"} variant="success">
+                                                        <Button size="sm" className={"tab_btn"} variant="success"
+                                                                onClick={() => this.toggleBoolean('showChannelModal')}>
                                                             <i className="fas fa-plus"></i>
                                                         </Button>
                                                     </span>
@@ -452,8 +485,14 @@ class App extends React.Component {
                         </Row>
                     </Container>
                     {/*modal contents*/}
-                    <CreateBotModal modaltitle="Create new Download" botAttributes={this.state.botAttributes}
+                    <CreateBotModal modaltitle="Create new Bot" botAttributes={this.state.botAttributes}
                                     show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
+                                    onCreate={this.onCreate}/>
+                    <CreateBotModal modaltitle="Create new Server" botAttributes={this.state.serverAttributes}
+                                    show={this.state.showServerModal} onClose={() => this.toggleBoolean('showServerModal')}
+                                    onCreate={this.onCreate}/>
+                    <CreateBotModal modaltitle="Create new Channel" botAttributes={this.state.channelAttributes}
+                                    show={this.state.showChannelModal} onClose={() => this.toggleBoolean('showChannelModal')}
                                     onCreate={this.onCreate}/>
                 </React.Fragment>
             )
@@ -756,7 +795,8 @@ class Download extends React.Component {
                     </Alert>
                     <Container fluid>
                         <InputGroup>
-                            <ProgressBar style={{height: '30px', width: '90%'}} animated={this.props.download.status == 'TRANSMITTING'}
+                            <ProgressBar style={{height: '30px', width: '90%'}}
+                                         animated={this.props.download.status == 'TRANSMITTING'}
                                          now={this.props.download.progress}
                                          label={this.props.download.status + ' (' + this.props.download.progress + '%)'}/>
                             <InputGroup.Append>
