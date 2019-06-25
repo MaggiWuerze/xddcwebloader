@@ -1,29 +1,26 @@
 'use strict';
 
+import BotListView from './model/bot/BotListView';
+import DownloadListView from './model/download/DownloadListView';
+import ServerListView from './model/server/ServerListView';
+import ChannelListView from './model/channel/ChannelListView';
+import CreateModal from './model/CreateModal';
+
 import {
-    Alert,
     Button,
     Card,
     Col,
     Container,
-    Form,
-    FormControl,
-    InputGroup,
-    ListGroup,
-    Modal,
     Navbar,
     Nav,
-    ProgressBar,
     Row,
     Tab,
-    Tabs, TabContent
+    TabContent
 } from 'react-bootstrap';
 import axios from 'axios';
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-// const client = require('./client');
-// const follow = require('./follow'); // function to hop multiple links by "rel"
 const stompClient = require('./websocket-listener');
 
 class App extends React.Component {
@@ -254,13 +251,9 @@ class App extends React.Component {
 
     updateAttributes(attributes, paramName) {
 
-        console.log("updating param: " +  paramName);
-
         if (this.state[paramName] && this.state[paramName].length >= 0) {
             this.setState({[paramName]: attributes});
         }
-
-        console.log(this.state[paramName]);
     }
 
     handleSocketCall(responseObj) {
@@ -431,12 +424,16 @@ class App extends React.Component {
                                         <Card.Body>
                                             <TabContent>
                                                 <Tab.Pane eventKey="bots">
-                                                    <BotList bots={this.state.bots} onDelete={this.onDelete()}
+                                                    <BotListView bots={this.state.bots} onDelete={this.onDelete()}
                                                              onCreate={this.onCreate}/>
                                                 </Tab.Pane>
-                                                <Tab.Pane eventKey="server">
+                                                <Tab.Pane eventKey="servers">
+                                                    <ServerListView servers={this.state.servers} onDelete={this.onDelete()}
+                                                             onCreate={this.onCreate}/>
                                                 </Tab.Pane>
                                                 <Tab.Pane eventKey="channels">
+                                                    <ChannelListView channels={this.state.channels} onDelete={this.onDelete()}
+                                                             onCreate={this.onCreate}/>
                                                 </Tab.Pane>
                                             </TabContent>
                                         </Card.Body>
@@ -466,15 +463,15 @@ class App extends React.Component {
                                         <Card.Body>
                                             <TabContent>
                                                 <Tab.Pane eventKey="activeDownloads">
-                                                    <DownloadList downloads={this.state.downloads}
+                                                    <DownloadListView downloads={this.state.downloads}
                                                                   onDelete={this.onDelete}/>
                                                 </Tab.Pane>
                                                 <Tab.Pane eventKey="completedDownloads">
-                                                    <DownloadList downloads={this.state.doneDownloads}
+                                                    <DownloadListView downloads={this.state.doneDownloads}
                                                                   onDelete={this.onDelete}/>
                                                 </Tab.Pane>
                                                 <Tab.Pane eventKey="failedDownloads">
-                                                    <DownloadList downloads={this.state.failedDownloads}
+                                                    <DownloadListView downloads={this.state.failedDownloads}
                                                                   onDelete={this.onDelete}/>
                                                 </Tab.Pane>
                                             </TabContent>
@@ -485,13 +482,13 @@ class App extends React.Component {
                         </Row>
                     </Container>
                     {/*modal contents*/}
-                    <CreateBotModal modaltitle="Create new Bot" botAttributes={this.state.botAttributes}
+                    <CreateModal modaltitle="Create new Bot" attributes={this.state.botAttributes}
                                     show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
                                     onCreate={this.onCreate}/>
-                    <CreateBotModal modaltitle="Create new Server" botAttributes={this.state.serverAttributes}
+                    <CreateModal modaltitle="Create new Server" attributes={this.state.serverAttributes}
                                     show={this.state.showServerModal} onClose={() => this.toggleBoolean('showServerModal')}
                                     onCreate={this.onCreate}/>
-                    <CreateBotModal modaltitle="Create new Channel" botAttributes={this.state.channelAttributes}
+                    <CreateModal modaltitle="Create new Channel" attributes={this.state.channelAttributes}
                                     show={this.state.showChannelModal} onClose={() => this.toggleBoolean('showChannelModal')}
                                     onCreate={this.onCreate}/>
                 </React.Fragment>
@@ -500,430 +497,6 @@ class App extends React.Component {
     }
 }
 
-class CreateBotModal extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {serverList: [], channelList: [], userList: []};
-
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-
-        // this.name = name;
-        // this.pattern = pattern;
-        // this.serverId = serverId;
-        // this.channelId = channelId;
-        // this.fileRefId = fileRefId;
-
-        const newBot = {};
-        newBot["name"] = ReactDOM.findDOMNode(this.refs["name"]).value.trim();
-        newBot["pattern"] = ReactDOM.findDOMNode(this.refs["pattern"]).value.trim();
-        newBot["serverId"] = ReactDOM.findDOMNode(this.refs["server"]).value.trim();
-        newBot["channelId"] = ReactDOM.findDOMNode(this.refs["channel"]).value.trim();
-        newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs["fileRefId"]).value.trim();
-        this.props.onCreate(newBot, 'bot', 'showBotModal');
-
-        // this.props.botAttributes.forEach(attribute => {
-        //     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
-        // });
-
-    }
-
-    loadServerList() {
-
-        axios.get('http://localhost:8080/data/servers/')
-            .then((response) => {
-                this.setState({
-                    serverList: response.data
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-
-        // follow(client, root, [
-        //     {rel: 'servers'}]
-        // ).then(serverList => {
-        //     return client({
-        //         method: 'GET',
-        //         path: serverList.entity._links.profile.href,
-        //         headers: {'Accept': 'application/schema+json'}
-        //     }).then(schema => {
-        //         this.schema = schema.entity;
-        //         return serverList;
-        //     });
-        // }).done(serverList => {
-        //     this.setState({
-        //         serverList: serverList.entity._embedded.servers,
-        //     });
-        // });
-    }
-
-    loadChannelList() {
-
-        axios.get('http://localhost:8080/data/channels/')
-            .then((response) => {
-                this.setState({
-                    channelList: response.data
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-        // follow(client, root, [
-        //     {rel: 'channels'}]
-        // ).then(channelList => {
-        //     return client({
-        //         method: 'GET',
-        //         path: channelList.entity._links.profile.href,
-        //         headers: {'Accept': 'application/schema+json'}
-        //     }).then(schema => {
-        //         this.schema = schema.entity;
-        //         return channelList;
-        //     });
-        // }).done(channelList => {
-        //     this.setState({
-        //         channelList: channelList.entity._embedded.channels,
-        //     });
-        // });
-    }
-
-    loadUserList() {
-
-        axios.get('http://localhost:8080/data/ircUsers/')
-            .then((response) => {
-                this.setState({
-                    userList: response.data
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-    }
-
-    componentDidMount() {
-        this.loadServerList();
-        this.loadChannelList();
-        this.loadUserList();
-    }
-
-    render() {
-
-        const serverOptions = this.state.serverList.map(server => {
-
-            //{"name": "Rizon","serverUrl": "irc.rizon.net","creationDate": "2019-05-29T14:56:37.599"}
-            let jsonServer = JSON.stringify({
-                id: server.id,
-                name: server.name,
-                serverUrl: server.serverUrl,
-                creationDate: "2019-05-29T14:56:37.599"
-            });
-            return <option key={server.id} value={server.id}>{server.name}</option>
-
-        });
-
-        const userOptions = this.state.userList.map(user => {
-
-            // let jsonUser = JSON.stringify({id: user.id, name: user.name});
-            return <option key={user.id} value={user.id}>{user.name}</option>
-
-        });
-
-        const channelOptions = this.state.channelList.map(channel => {
-
-            // let jsonChannel = JSON.stringify({id: channel.id, name: channel.name});
-            return <option key={channel.id} value={channel.id}>{channel.name}</option>
-
-        });
-
-        const inputs = this.props.botAttributes.map(attribute => {
-
-                let input = "";
-                switch (attribute) {
-                    case 'server':
-                        input =
-                            <InputGroup className="mb-3" key={attribute}>
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text id="basic-addon1" key={attribute}>Server</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <Form.Control key={attribute} ref={attribute} as="select">
-                                    {serverOptions}
-                                </Form.Control>
-                            </InputGroup>;
-                        break;
-                    case 'channel':
-
-                        input =
-                            <InputGroup className="mb-3" key={attribute}>
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text id="basic-addon1" key={attribute}>Channel</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <Form.Control key={attribute} ref={attribute} as="select">
-                                    {channelOptions}
-                                </Form.Control>
-                            </InputGroup>;
-                        break;
-                    case 'user':
-
-                        input =
-                            <InputGroup className="mb-3" key={attribute}>
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text id="basic-addon1" key={attribute}>User</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <Form.Control key={attribute} ref={attribute} as="select">
-                                    {userOptions}
-                                </Form.Control>
-                            </InputGroup>;
-                        break;
-                    case 'fileRefId':
-                        input =
-                            <InputGroup className="mb-3" key={attribute}>
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text id="basic-addon1" key={attribute}>File Reference ID</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl
-                                    placeholder={"filereference (e.g. #2421)"}
-                                    ref={attribute}
-                                    aria-label={attribute}
-                                />
-                            </InputGroup>;
-                        break;
-                    default:
-                }
-                ;
-
-                return input;
-
-            }
-        );
-
-
-        return (
-            // rebuild this with a custom modal content which gets the inputs as prop
-            //
-            <Modal centered show={this.props.show} onHide={this.handleClose}>
-                <Modal.Header>
-                    <Modal.Title>{this.props.modaltitle}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {inputs}
-                </Modal.Body>
-
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => this.props.onClose()}>
-                        Close
-                    </Button>
-                    <Button variant="success" onClick={this.handleSubmit}>Create a
-                        Download</Button>
-                </Modal.Footer>
-            </Modal>
-        )
-
-    }
-
-
-}
-
-class DownloadList extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        const downloads = this.props.downloads.map(download =>
-            <Download key={download.id} download={download} onDelete={this.props.onDelete}/>
-        );
-
-
-        return (
-            <div className={'list'}>
-                {downloads}
-            </div>
-        )
-    }
-
-}
-
-class BotList extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        const bots = this.props.bots.map(bot =>
-            <Bot key={bot.id} bot={bot} onDelete={this.props.onDelete} onCreate={this.props.onCreate}/>
-        );
-
-
-        return (
-            <div style={{'overflowY': 'auto', 'height': '-webkit-fill-available', 'paddingBottom': '15%'}}>
-                {bots}
-            </div>
-        )
-    }
-
-}
-
-class Download extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.state = {now: 0};
-    }
-
-    handleDelete() {
-        this.props.onDelete(this.props.download);
-    }
-
-    render() {
-        return (
-
-            <Card style={{margin: '10px'}}>
-                <Card.Header>({this.props.download.fileRefId}) Filename: {this.props.download.filename}</Card.Header>
-                <Card.Body>
-                    <Alert show={this.props.download.status == "ERROR"} variant='danger'>
-                        {this.props.download.statusMessage}
-                    </Alert>
-                    <Container fluid>
-                        <InputGroup>
-                            <ProgressBar style={{height: '30px', width: '90%'}}
-                                         animated={this.props.download.status == 'TRANSMITTING'}
-                                         now={this.props.download.progress}
-                                         label={this.props.download.status + ' (' + this.props.download.progress + '%)'}/>
-                            <InputGroup.Append>
-                                <Button size="sm" title="Pause Download" style={{color: 'white', height: '30px'}}
-                                        variant="warning">
-                                    <i className="fas fa-stop"></i>
-                                </Button>
-                                <Button size="sm" title="Cancel Download" style={{height: '30px'}} variant="danger">
-                                    <i className="fas fa-trash"></i>
-                                </Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                    </Container>
-                </Card.Body>
-            </Card>
-        )
-    }
-}
-
-class Bot extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {
-            open: false,
-        };
-    }
-
-    handleDelete() {
-        this.props.onDelete(this.props.bot);
-    }
-
-    handleKeyDown(e) {
-        if (e.key === 'Enter') {
-            console.log(e);
-            var ref = this.props.bot.id + "-fileRefId";
-            console.log(ref);
-            var input = ReactDOM.findDOMNode(this.refs[ref]);
-            input.value = '';
-            this.handleSubmit();
-        }
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-
-        const newBot = {};
-        newBot["targetBotId"] = this.props.bot.id;
-        newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs[this.props.bot.id + "-fileRefId"]).value.trim();
-        this.props.onCreate(newBot, "downloads", null);
-
-        // this.props.botAttributes.forEach(attribute => {
-        //     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
-        // });
-
-    }
-
-    render() {
-
-        const open = this.state.open;
-        return (
-            <Card style={{margin: '10px'}}>
-                <Card.Header onClick={() => this.setState({open: !open})}>{this.props.bot.name}</Card.Header>
-                <Card.Body>
-                    {/*<Collapse in={this.state.open}>*/}
-                    <Container fluid>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>
-                                <InputGroup size="sm">
-                                    <InputGroup.Prepend>
-                                        <InputGroup.Text>Channelname</InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                    <FormControl
-                                        disabled
-                                        value={this.props.bot.channel.name}
-                                        aria-label="file reference id"
-                                    />
-                                </InputGroup>
-                                {/*{"Channelname: " + this.props.bot.channel.name}*/}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <InputGroup size="sm">
-                                    <InputGroup.Prepend>
-                                        <InputGroup.Text>Servername</InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                    <FormControl
-                                        disabled
-                                        value={this.props.bot.server.name}
-                                        aria-label="file reference id"
-                                    />
-                                </InputGroup>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <InputGroup size="sm">
-                                    <InputGroup.Prepend>
-                                        <InputGroup.Text>Bot Messagepattern</InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                    <FormControl
-                                        disabled
-                                        value={this.props.bot.pattern}
-                                        aria-label="file reference id"
-                                    />
-                                </InputGroup>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <InputGroup size="sm">
-                                    <FormControl
-                                        onKeyDown={this.handleKeyDown}
-                                        ref={this.props.bot.id + "-fileRefId"}
-                                        placeholder="fileRefId (eg. #3452)"
-                                        aria-label="file reference id"
-                                    />
-                                    <InputGroup.Append>
-                                        <Button variant="outline-secondary" onClick={this.handleSubmit}>Send</Button>
-                                    </InputGroup.Append>
-                                </InputGroup>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </Container>
-                    {/*</Collapse>*/}
-                </Card.Body>
-            </Card>
-        )
-    }
-}
 
 ReactDOM.render(
     <App/>,

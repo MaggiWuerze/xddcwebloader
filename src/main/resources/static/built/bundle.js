@@ -49884,10 +49884,10 @@ module.exports = __webpack_require__(/*! ../package.json */ "./node_modules/stom
 /*!******************************************************************!*\
   !*** ./node_modules/stompjs/node_modules/websocket/package.json ***!
   \******************************************************************/
-/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _optional, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browser, bugs, config, contributors, dependencies, description, devDependencies, directories, engines, homepage, keywords, license, main, name, repository, scripts, version, default */
+/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _optional, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, config, contributors, dependencies, deprecated, description, devDependencies, directories, engines, homepage, keywords, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_args":[["websocket@1.0.28","C:\\Users\\HFera\\IdeaProjects\\xddcwebloader"]],"_from":"websocket@1.0.28","_id":"websocket@1.0.28","_inBundle":false,"_integrity":"sha512-00y/20/80P7H4bCYkzuuvvfDvh+dgtXi5kzDf3UcZwN6boTYaKvsrtZ5lIYm1Gsg48siMErd9M4zjSYfYFHTrA==","_location":"/stompjs/websocket","_optional":true,"_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"websocket@1.0.28","name":"websocket","escapedName":"websocket","rawSpec":"1.0.28","saveSpec":null,"fetchSpec":"1.0.28"},"_requiredBy":["/stompjs"],"_resolved":"https://registry.npmjs.org/websocket/-/websocket-1.0.28.tgz","_spec":"1.0.28","_where":"C:\\Users\\HFera\\IdeaProjects\\xddcwebloader","author":{"name":"Brian McKelvey","email":"theturtle32@gmail.com","url":"https://github.com/theturtle32"},"browser":"lib/browser.js","bugs":{"url":"https://github.com/theturtle32/WebSocket-Node/issues"},"config":{"verbose":false},"contributors":[{"name":"Iñaki Baz Castillo","email":"ibc@aliax.net","url":"http://dev.sipdoc.net"}],"dependencies":{"debug":"^2.2.0","nan":"^2.11.0","typedarray-to-buffer":"^3.1.5","yaeti":"^0.0.6"},"description":"Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.","devDependencies":{"buffer-equal":"^1.0.0","faucet":"^0.0.1","gulp":"git+https://github.com/gulpjs/gulp.git#4.0","gulp-jshint":"^2.0.4","jshint":"^2.0.0","jshint-stylish":"^2.2.1","tape":"^4.9.1"},"directories":{"lib":"./lib"},"engines":{"node":">=0.10.0"},"homepage":"https://github.com/theturtle32/WebSocket-Node","keywords":["websocket","websockets","socket","networking","comet","push","RFC-6455","realtime","server","client"],"license":"Apache-2.0","main":"index","name":"websocket","repository":{"type":"git","url":"git+https://github.com/theturtle32/WebSocket-Node.git"},"scripts":{"gulp":"gulp","install":"(node-gyp rebuild 2> builderror.log) || (exit 0)","test":"faucet test/unit"},"version":"1.0.28"};
+module.exports = {"_args":[["websocket@1.0.28","c:\\Users\\dap\\workspaces\\private\\xddcwebloader"]],"_from":"websocket@latest","_id":"websocket@1.0.28","_inBundle":false,"_integrity":"sha512-00y/20/80P7H4bCYkzuuvvfDvh+dgtXi5kzDf3UcZwN6boTYaKvsrtZ5lIYm1Gsg48siMErd9M4zjSYfYFHTrA==","_location":"/stompjs/websocket","_optional":true,"_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"websocket@latest","name":"websocket","escapedName":"websocket","rawSpec":"latest","saveSpec":null,"fetchSpec":"latest"},"_requiredBy":["/stompjs"],"_resolved":"https://registry.npmjs.org/websocket/-/websocket-1.0.28.tgz","_shasum":"9e5f6fdc8a3fe01d4422647ef93abdd8d45a78d3","_spec":"websocket@latest","_where":"C:\\Users\\dap\\workspaces\\private\\xdccwebloader\\node_modules\\stompjs","author":{"name":"Brian McKelvey","email":"theturtle32@gmail.com","url":"https://github.com/theturtle32"},"browser":"lib/browser.js","bugs":{"url":"https://github.com/theturtle32/WebSocket-Node/issues"},"bundleDependencies":false,"config":{"verbose":false},"contributors":[{"name":"Iñaki Baz Castillo","email":"ibc@aliax.net","url":"http://dev.sipdoc.net"}],"dependencies":{"debug":"^2.2.0","nan":"^2.11.0","typedarray-to-buffer":"^3.1.5","yaeti":"^0.0.6"},"deprecated":false,"description":"Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.","devDependencies":{"buffer-equal":"^1.0.0","faucet":"^0.0.1","gulp":"git+https://github.com/gulpjs/gulp.git#4.0","gulp-jshint":"^2.0.4","jshint":"^2.0.0","jshint-stylish":"^2.2.1","tape":"^4.9.1"},"directories":{"lib":"./lib"},"engines":{"node":">=0.10.0"},"homepage":"https://github.com/theturtle32/WebSocket-Node","keywords":["websocket","websockets","socket","networking","comet","push","RFC-6455","realtime","server","client"],"license":"Apache-2.0","main":"index","name":"websocket","repository":{"type":"git","url":"git+https://github.com/theturtle32/WebSocket-Node.git"},"scripts":{"gulp":"gulp","install":"(node-gyp rebuild 2> builderror.log) || (exit 0)","test":"faucet test/unit"},"version":"1.0.28"};
 
 /***/ }),
 
@@ -50842,9 +50842,14 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _model_bot_BotListView__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./model/bot/BotListView */ "./src/main/js/model/bot/BotListView.js");
+/* harmony import */ var _model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./model/download/DownloadListView */ "./src/main/js/model/download/DownloadListView.js");
+/* harmony import */ var _model_server_ServerListView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./model/server/ServerListView */ "./src/main/js/model/server/ServerListView.js");
+/* harmony import */ var _model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./model/channel/ChannelListView */ "./src/main/js/model/channel/ChannelListView.js");
+/* harmony import */ var _model_CreateModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/CreateModal */ "./src/main/js/model/CreateModal.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -50870,11 +50875,14 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
+
+
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"); // const client = require('./client');
-// const follow = require('./follow'); // function to hop multiple links by "rel"
-
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
 var stompClient = __webpack_require__(/*! ./websocket-listener */ "./src/main/js/websocket-listener.js");
 
@@ -50914,7 +50922,7 @@ function (_React$Component) {
     value: function loadFromServer() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/initialized/', {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/initialized/', {
         params: {
           active: true
         }
@@ -50927,7 +50935,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/bots/', {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/bots/', {
         params: {
           active: true
         }
@@ -50940,7 +50948,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
         response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
 
         _this2.setState({
@@ -50949,7 +50957,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
         response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
 
         _this2.setState({
@@ -50958,7 +50966,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/downloads/active/', {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/downloads/active/', {
         params: {
           active: true
         }
@@ -50969,14 +50977,14 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/downloads/failed').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/downloads/failed').then(function (response) {
         _this2.setState({
           failedDownloads: response.data
         });
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/downloads/active/', {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/downloads/active/', {
         params: {
           active: false
         }
@@ -50993,7 +51001,7 @@ function (_React$Component) {
     value: function onCreate(object, objectName, modalName) {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('http://localhost:8080/data/' + objectName + '/', object).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('http://localhost:8080/data/' + objectName + '/', object).then(function (response) {
         if (response.status.toString() != '200') {
           alert("there was an error!");
         } else if (modalName) {
@@ -51061,13 +51069,9 @@ function (_React$Component) {
   }, {
     key: "updateAttributes",
     value: function updateAttributes(attributes, paramName) {
-      console.log("updating param: " + paramName);
-
       if (this.state[paramName] && this.state[paramName].length >= 0) {
         this.setState(_defineProperty({}, paramName, attributes));
       }
-
-      console.log(this.state[paramName]);
     }
   }, {
     key: "handleSocketCall",
@@ -51114,7 +51118,7 @@ function (_React$Component) {
     value: function initComplete() {
       var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('http://localhost:8080/data/initialized/', true).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('http://localhost:8080/data/initialized/', true).then(function (response) {
         if (response.status.toString() != '200') {
           alert("there was an error!");
         } else if (modalName) {
@@ -51148,7 +51152,7 @@ function (_React$Component) {
       var _this5 = this;
 
       if (this.state.onboarding) {
-        return React.createElement("div", null, "\"hello world!\"", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+        return React.createElement("div", null, "\"hello world!\"", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
           size: "sm",
           onClick: function onClick() {
             _this5.setState({
@@ -51160,31 +51164,31 @@ function (_React$Component) {
           className: "fas fa-thumbs-up"
         })));
       } else {
-        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"], {
+        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Navbar"], {
           expand: "lg"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Brand, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Navbar"].Brand, {
           href: "#home"
-        }, "XDCC Loader"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Toggle, {
+        }, "XDCC Loader"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Navbar"].Toggle, {
           "aria-controls": "basic-navbar-nav"
-        }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Navbar"].Collapse, {
+        }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Navbar"].Collapse, {
           id: "basic-navbar-nav"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"], {
           className: "mr-auto"
-        }))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Container"], {
+        }))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Container"], {
           fluid: true
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Col"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Col"], {
           md: 4,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"], {
           className: "customCard"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Container, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Container, {
           defaultActiveKey: "bots"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"], {
           fill: true,
           variant: "tabs"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
           eventKey: "bots"
-        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
@@ -51193,9 +51197,9 @@ function (_React$Component) {
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
           eventKey: "servers"
-        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
@@ -51204,9 +51208,9 @@ function (_React$Component) {
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
           eventKey: "channels"
-        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
@@ -51215,66 +51219,74 @@ function (_React$Component) {
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
           eventKey: "bots"
-        }, React.createElement(BotList, {
+        }, React.createElement(_model_bot_BotListView__WEBPACK_IMPORTED_MODULE_0__["default"], {
           bots: this.state.bots,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
-          eventKey: "server"
-        }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
+          eventKey: "servers"
+        }, React.createElement(_model_server_ServerListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          servers: this.state.servers,
+          onDelete: this.onDelete(),
+          onCreate: this.onCreate
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
           eventKey: "channels"
-        })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Col"], {
+        }, React.createElement(_model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          channels: this.state.channels,
+          onDelete: this.onDelete(),
+          onCreate: this.onCreate
+        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Col"], {
           md: 8,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"], {
           className: "customCard"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Container, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Container, {
           defaultActiveKey: "activeDownloads"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"], {
           fill: true,
           variant: "tabs"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
           eventKey: "activeDownloads"
-        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
           eventKey: "completedDownloads"
-        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Nav"].Link, {
+        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
           eventKey: "failedDownloads"
-        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
           eventKey: "activeDownloads"
-        }, React.createElement(DownloadList, {
+        }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.downloads,
           onDelete: this.onDelete
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
           eventKey: "completedDownloads"
-        }, React.createElement(DownloadList, {
+        }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.doneDownloads,
           onDelete: this.onDelete
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
           eventKey: "failedDownloads"
-        }, React.createElement(DownloadList, {
+        }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.failedDownloads,
           onDelete: this.onDelete
-        }))))))))), React.createElement(CreateBotModal, {
+        }))))))))), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
           modaltitle: "Create new Bot",
-          botAttributes: this.state.botAttributes,
+          attributes: this.state.botAttributes,
           show: this.state.showBotModal,
           onClose: function onClose() {
             return _this5.toggleBoolean('showBotModal');
           },
           onCreate: this.onCreate
-        }), React.createElement(CreateBotModal, {
+        }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
           modaltitle: "Create new Server",
-          botAttributes: this.state.serverAttributes,
+          attributes: this.state.serverAttributes,
           show: this.state.showServerModal,
           onClose: function onClose() {
             return _this5.toggleBoolean('showServerModal');
           },
           onCreate: this.onCreate
-        }), React.createElement(CreateBotModal, {
+        }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
           modaltitle: "Create new Channel",
-          botAttributes: this.state.channelAttributes,
+          attributes: this.state.channelAttributes,
           show: this.state.showChannelModal,
           onClose: function onClose() {
             return _this5.toggleBoolean('showChannelModal');
@@ -51288,27 +51300,69 @@ function (_React$Component) {
   return App;
 }(React.Component);
 
-var CreateBotModal =
+ReactDOM.render(React.createElement(App, null), document.getElementById('react'));
+
+/***/ }),
+
+/***/ "./src/main/js/model/CreateModal.js":
+/*!******************************************!*\
+  !*** ./src/main/js/model/CreateModal.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CreateModal; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var CreateModal =
 /*#__PURE__*/
-function (_React$Component2) {
-  _inherits(CreateBotModal, _React$Component2);
+function (_React$Component) {
+  _inherits(CreateModal, _React$Component);
 
-  function CreateBotModal(props) {
-    var _this6;
+  function CreateModal(props) {
+    var _this;
 
-    _classCallCheck(this, CreateBotModal);
+    _classCallCheck(this, CreateModal);
 
-    _this6 = _possibleConstructorReturn(this, _getPrototypeOf(CreateBotModal).call(this, props));
-    _this6.handleSubmit = _this6.handleSubmit.bind(_assertThisInitialized(_this6));
-    _this6.state = {
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CreateModal).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.state = {
       serverList: [],
       channelList: [],
       userList: []
     };
-    return _this6;
+    return _this;
   }
 
-  _createClass(CreateBotModal, [{
+  _createClass(CreateModal, [{
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault(); // this.name = name;
@@ -51330,66 +51384,36 @@ function (_React$Component2) {
   }, {
     key: "loadServerList",
     value: function loadServerList() {
-      var _this7 = this;
+      var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
-        _this7.setState({
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
+        _this2.setState({
           serverList: response.data
         });
       })["catch"](function (error) {
         console.log(error);
-      }); // follow(client, root, [
-      //     {rel: 'servers'}]
-      // ).then(serverList => {
-      //     return client({
-      //         method: 'GET',
-      //         path: serverList.entity._links.profile.href,
-      //         headers: {'Accept': 'application/schema+json'}
-      //     }).then(schema => {
-      //         this.schema = schema.entity;
-      //         return serverList;
-      //     });
-      // }).done(serverList => {
-      //     this.setState({
-      //         serverList: serverList.entity._embedded.servers,
-      //     });
-      // });
+      });
     }
   }, {
     key: "loadChannelList",
     value: function loadChannelList() {
-      var _this8 = this;
+      var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
-        _this8.setState({
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
+        _this3.setState({
           channelList: response.data
         });
       })["catch"](function (error) {
         console.log(error);
-      }); // follow(client, root, [
-      //     {rel: 'channels'}]
-      // ).then(channelList => {
-      //     return client({
-      //         method: 'GET',
-      //         path: channelList.entity._links.profile.href,
-      //         headers: {'Accept': 'application/schema+json'}
-      //     }).then(schema => {
-      //         this.schema = schema.entity;
-      //         return channelList;
-      //     });
-      // }).done(channelList => {
-      //     this.setState({
-      //         channelList: channelList.entity._embedded.channels,
-      //     });
-      // });
+      });
     }
   }, {
     key: "loadUserList",
     value: function loadUserList() {
-      var _this9 = this;
+      var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8080/data/ircUsers/').then(function (response) {
-        _this9.setState({
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/ircUsers/').then(function (response) {
+        _this4.setState({
           userList: response.data
         });
       })["catch"](function (error) {
@@ -51406,10 +51430,9 @@ function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      var _this10 = this;
+      var _this5 = this;
 
       var serverOptions = this.state.serverList.map(function (server) {
-        //{"name": "Rizon","serverUrl": "irc.rizon.net","creationDate": "2019-05-29T14:56:37.599"}
         var jsonServer = JSON.stringify({
           id: server.id,
           name: server.name,
@@ -51422,31 +51445,29 @@ function (_React$Component2) {
         }, server.name);
       });
       var userOptions = this.state.userList.map(function (user) {
-        // let jsonUser = JSON.stringify({id: user.id, name: user.name});
         return React.createElement("option", {
           key: user.id,
           value: user.id
         }, user.name);
       });
       var channelOptions = this.state.channelList.map(function (channel) {
-        // let jsonChannel = JSON.stringify({id: channel.id, name: channel.name});
         return React.createElement("option", {
           key: channel.id,
           value: channel.id
         }, channel.name);
       });
-      var inputs = this.props.botAttributes.map(function (attribute) {
+      var inputs = this.props.attributes.map(function (attribute) {
         var input = "";
 
         switch (attribute) {
           case 'server':
-            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], {
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
               className: "mb-3",
               key: attribute
-            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Text, {
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
               id: "basic-addon1",
               key: attribute
-            }, "Server")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Form"].Control, {
+            }, "Server")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
               key: attribute,
               ref: attribute,
               as: "select"
@@ -51454,13 +51475,13 @@ function (_React$Component2) {
             break;
 
           case 'channel':
-            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], {
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
               className: "mb-3",
               key: attribute
-            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Text, {
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
               id: "basic-addon1",
               key: attribute
-            }, "Channel")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Form"].Control, {
+            }, "Channel")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
               key: attribute,
               ref: attribute,
               as: "select"
@@ -51468,13 +51489,13 @@ function (_React$Component2) {
             break;
 
           case 'user':
-            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], {
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
               className: "mb-3",
               key: attribute
-            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Text, {
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
               id: "basic-addon1",
               key: attribute
-            }, "User")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Form"].Control, {
+            }, "User")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
               key: attribute,
               ref: attribute,
               as: "select"
@@ -51482,13 +51503,13 @@ function (_React$Component2) {
             break;
 
           case 'fileRefId':
-            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], {
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
               className: "mb-3",
               key: attribute
-            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Text, {
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
               id: "basic-addon1",
               key: attribute
-            }, "File Reference ID")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["FormControl"], {
+            }, "File Reference ID")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
               placeholder: "filereference (e.g. #2421)",
               ref: attribute,
               "aria-label": attribute
@@ -51496,6 +51517,17 @@ function (_React$Component2) {
             break;
 
           default:
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+              className: "mb-3",
+              key: attribute
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+              id: "basic-addon1",
+              key: attribute
+            }, attribute)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+              placeholder: attribute,
+              ref: attribute,
+              "aria-label": attribute
+            }));
         }
 
         ;
@@ -51503,16 +51535,16 @@ function (_React$Component2) {
       });
       return (// rebuild this with a custom modal content which gets the inputs as prop
         //
-        React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"], {
+        React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Modal"], {
           centered: true,
           show: this.props.show,
           onHide: this.handleClose
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"].Title, null, this.props.modaltitle)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Modal"].Footer, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Modal"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Modal"].Title, null, this.props.modaltitle)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Modal"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Modal"].Footer, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
           variant: "secondary",
           onClick: function onClick() {
-            return _this10.props.onClose();
+            return _this5.props.onClose();
           }
-        }, "Close"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+        }, "Close"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
           variant: "success",
           onClick: this.handleSubmit
         }, "Create a Download")))
@@ -51520,167 +51552,68 @@ function (_React$Component2) {
     }
   }]);
 
-  return CreateBotModal;
+  return CreateModal;
 }(React.Component);
 
-var DownloadList =
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/bot/BotCard.js":
+/*!******************************************!*\
+  !*** ./src/main/js/model/bot/BotCard.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BotCard; });
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var BotCard =
 /*#__PURE__*/
-function (_React$Component3) {
-  _inherits(DownloadList, _React$Component3);
+function (_React$Component) {
+  _inherits(BotCard, _React$Component);
 
-  function DownloadList(props) {
-    _classCallCheck(this, DownloadList);
+  function BotCard(props) {
+    var _this;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(DownloadList).call(this, props));
-  }
+    _classCallCheck(this, BotCard);
 
-  _createClass(DownloadList, [{
-    key: "render",
-    value: function render() {
-      var _this11 = this;
-
-      var downloads = this.props.downloads.map(function (download) {
-        return React.createElement(Download, {
-          key: download.id,
-          download: download,
-          onDelete: _this11.props.onDelete
-        });
-      });
-      return React.createElement("div", {
-        className: 'list'
-      }, downloads);
-    }
-  }]);
-
-  return DownloadList;
-}(React.Component);
-
-var BotList =
-/*#__PURE__*/
-function (_React$Component4) {
-  _inherits(BotList, _React$Component4);
-
-  function BotList(props) {
-    _classCallCheck(this, BotList);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(BotList).call(this, props));
-  }
-
-  _createClass(BotList, [{
-    key: "render",
-    value: function render() {
-      var _this12 = this;
-
-      var bots = this.props.bots.map(function (bot) {
-        return React.createElement(Bot, {
-          key: bot.id,
-          bot: bot,
-          onDelete: _this12.props.onDelete,
-          onCreate: _this12.props.onCreate
-        });
-      });
-      return React.createElement("div", {
-        style: {
-          'overflowY': 'auto',
-          'height': '-webkit-fill-available',
-          'paddingBottom': '15%'
-        }
-      }, bots);
-    }
-  }]);
-
-  return BotList;
-}(React.Component);
-
-var Download =
-/*#__PURE__*/
-function (_React$Component5) {
-  _inherits(Download, _React$Component5);
-
-  function Download(props) {
-    var _this13;
-
-    _classCallCheck(this, Download);
-
-    _this13 = _possibleConstructorReturn(this, _getPrototypeOf(Download).call(this, props));
-    _this13.handleDelete = _this13.handleDelete.bind(_assertThisInitialized(_this13));
-    _this13.state = {
-      now: 0
-    };
-    return _this13;
-  }
-
-  _createClass(Download, [{
-    key: "handleDelete",
-    value: function handleDelete() {
-      this.props.onDelete(this.props.download);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
-        style: {
-          margin: '10px'
-        }
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, "(", this.props.download.fileRefId, ") Filename: ", this.props.download.filename), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Alert"], {
-        show: this.props.download.status == "ERROR",
-        variant: "danger"
-      }, this.props.download.statusMessage), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Container"], {
-        fluid: true
-      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ProgressBar"], {
-        style: {
-          height: '30px',
-          width: '90%'
-        },
-        animated: this.props.download.status == 'TRANSMITTING',
-        now: this.props.download.progress,
-        label: this.props.download.status + ' (' + this.props.download.progress + '%)'
-      }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Append, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
-        size: "sm",
-        title: "Pause Download",
-        style: {
-          color: 'white',
-          height: '30px'
-        },
-        variant: "warning"
-      }, React.createElement("i", {
-        className: "fas fa-stop"
-      })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
-        size: "sm",
-        title: "Cancel Download",
-        style: {
-          height: '30px'
-        },
-        variant: "danger"
-      }, React.createElement("i", {
-        className: "fas fa-trash"
-      })))))));
-    }
-  }]);
-
-  return Download;
-}(React.Component);
-
-var Bot =
-/*#__PURE__*/
-function (_React$Component6) {
-  _inherits(Bot, _React$Component6);
-
-  function Bot(props) {
-    var _this14;
-
-    _classCallCheck(this, Bot);
-
-    _this14 = _possibleConstructorReturn(this, _getPrototypeOf(Bot).call(this, props));
-    _this14.handleDelete = _this14.handleDelete.bind(_assertThisInitialized(_this14));
-    _this14.handleSubmit = _this14.handleSubmit.bind(_assertThisInitialized(_this14));
-    _this14.state = {
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(BotCard).call(this, props));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.state = {
       open: false
     };
-    return _this14;
+    return _this;
   }
 
-  _createClass(Bot, [{
+  _createClass(BotCard, [{
     key: "handleDelete",
     value: function handleDelete() {
       this.props.onDelete(this.props.bot);
@@ -51711,7 +51644,7 @@ function (_React$Component6) {
   }, {
     key: "render",
     value: function render() {
-      var _this15 = this;
+      var _this2 = this;
 
       var open = this.state.open;
       return React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
@@ -51720,7 +51653,7 @@ function (_React$Component6) {
         }
       }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, {
         onClick: function onClick() {
-          return _this15.setState({
+          return _this2.setState({
             open: !open
           });
         }
@@ -51760,10 +51693,608 @@ function (_React$Component6) {
     }
   }]);
 
-  return Bot;
+  return BotCard;
 }(React.Component);
 
-ReactDOM.render(React.createElement(App, null), document.getElementById('react'));
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/bot/BotListView.js":
+/*!**********************************************!*\
+  !*** ./src/main/js/model/bot/BotListView.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BotListView; });
+/* harmony import */ var _BotCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BotCard */ "./src/main/js/model/bot/BotCard.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var BotListView =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(BotListView, _React$Component);
+
+  function BotListView(props) {
+    _classCallCheck(this, BotListView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(BotListView).call(this, props));
+  }
+
+  _createClass(BotListView, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var bots = this.props.bots.map(function (bot) {
+        return React.createElement(_BotCard__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          key: bot.id,
+          bot: bot,
+          onDelete: _this.props.onDelete,
+          onCreate: _this.props.onCreate
+        });
+      });
+      return React.createElement("div", {
+        style: {
+          'overflowY': 'auto',
+          'height': '-webkit-fill-available',
+          'paddingBottom': '15%'
+        }
+      }, bots);
+    }
+  }]);
+
+  return BotListView;
+}(React.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/channel/ChannelCard.js":
+/*!**************************************************!*\
+  !*** ./src/main/js/model/channel/ChannelCard.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ChannelCard; });
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var ChannelCard =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ChannelCard, _React$Component);
+
+  function ChannelCard(props) {
+    var _this;
+
+    _classCallCheck(this, ChannelCard);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ChannelCard).call(this, props));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(ChannelCard, [{
+    key: "handleDelete",
+    value: function handleDelete() {
+      this.props.onDelete(this.props.channel);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
+        style: {
+          margin: '10px'
+        }
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, this.props.channel.name), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Container"], {
+        fluid: true
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ListGroup"], {
+        variant: "flush"
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ListGroup"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], {
+        size: "sm"
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Text, null, "Channelname")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["FormControl"], {
+        disabled: true,
+        value: this.props.channel.name,
+        "aria-label": "file reference id"
+      })))))));
+    }
+  }]);
+
+  return ChannelCard;
+}(React.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/channel/ChannelListView.js":
+/*!******************************************************!*\
+  !*** ./src/main/js/model/channel/ChannelListView.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ListView; });
+/* harmony import */ var _ChannelCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChannelCard */ "./src/main/js/model/channel/ChannelCard.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var ListView =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ListView, _React$Component);
+
+  function ListView(props) {
+    _classCallCheck(this, ListView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ListView).call(this, props));
+  }
+
+  _createClass(ListView, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var channels = this.props.channels.map(function (channel) {
+        return React.createElement(_ChannelCard__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          key: channel.id,
+          channel: channel,
+          onDelete: _this.props.onDelete,
+          onCreate: _this.props.onCreate
+        });
+      });
+      return React.createElement("div", {
+        style: {
+          'overflowY': 'auto',
+          'height': '-webkit-fill-available',
+          'paddingBottom': '15%'
+        }
+      }, channels);
+    }
+  }]);
+
+  return ListView;
+}(React.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/download/DownloadCard.js":
+/*!****************************************************!*\
+  !*** ./src/main/js/model/download/DownloadCard.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DownloadCard; });
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var DownloadCard =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(DownloadCard, _React$Component);
+
+  function DownloadCard(props) {
+    var _this;
+
+    _classCallCheck(this, DownloadCard);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DownloadCard).call(this, props));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    _this.state = {
+      now: 0
+    };
+    return _this;
+  }
+
+  _createClass(DownloadCard, [{
+    key: "handleDelete",
+    value: function handleDelete() {
+      this.props.onDelete(this.props.download);
+    }
+  }, {
+    key: "decideAlertType",
+    value: function decideAlertType() {
+      console.log(this.props.download.status);
+
+      switch (this.props.download.status) {
+        case 'TRANSMITTING':
+          return 'info';
+          break;
+
+        case 'ERROR':
+          return 'danger';
+          break;
+
+        case "DONE":
+          return 'success';
+          break;
+
+        default:
+          return 'warning';
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
+        style: {
+          margin: '10px'
+        }
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, "#", this.props.download.id), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Alert"], {
+        show: this.props.download.status == "ERROR",
+        variant: "danger"
+      }, this.props.download.statusMessage), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Container"], {
+        fluid: true
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Subtitle, {
+        className: "mb-2 text-muted"
+      }, "File: ", this.props.download.filename, " (", this.props.download.fileRefId, ")"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ProgressBar"], {
+        style: {
+          height: '30px',
+          width: '90%'
+        },
+        animated: this.props.download.status == 'TRANSMITTING',
+        variant: this.decideAlertType(),
+        now: this.props.download.progress,
+        label: this.props.download.status + ' (' + this.props.download.progress + '%)'
+      }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Append, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+        size: "sm",
+        title: "Pause Download",
+        style: {
+          color: 'white',
+          height: '30px'
+        },
+        variant: "warning"
+      }, React.createElement("i", {
+        className: "fas fa-stop"
+      })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
+        size: "sm",
+        title: "Cancel Download",
+        style: {
+          height: '30px'
+        },
+        variant: "danger"
+      }, React.createElement("i", {
+        className: "fas fa-trash"
+      })))))));
+    }
+  }]);
+
+  return DownloadCard;
+}(React.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/download/DownloadListView.js":
+/*!********************************************************!*\
+  !*** ./src/main/js/model/download/DownloadListView.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DownloadListView; });
+/* harmony import */ var _DownloadCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DownloadCard */ "./src/main/js/model/download/DownloadCard.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var DownloadListView =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(DownloadListView, _React$Component);
+
+  function DownloadListView(props) {
+    _classCallCheck(this, DownloadListView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(DownloadListView).call(this, props));
+  }
+
+  _createClass(DownloadListView, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var downloads = this.props.downloads.map(function (download) {
+        return React.createElement(_DownloadCard__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          key: download.id,
+          download: download,
+          onDelete: _this.props.onDelete
+        });
+      });
+      return React.createElement("div", {
+        className: 'list'
+      }, downloads);
+    }
+  }]);
+
+  return DownloadListView;
+}(React.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/server/ServerCard.js":
+/*!************************************************!*\
+  !*** ./src/main/js/model/server/ServerCard.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ServerCard; });
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var ServerCard =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ServerCard, _React$Component);
+
+  function ServerCard(props) {
+    var _this;
+
+    _classCallCheck(this, ServerCard);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ServerCard).call(this, props));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(ServerCard, [{
+    key: "handleDelete",
+    value: function handleDelete() {
+      this.props.onDelete(this.props.channel);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
+        style: {
+          margin: '10px'
+        }
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Header, null, this.props.server.name), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Container"], {
+        fluid: true
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ListGroup"], {
+        variant: "flush"
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ListGroup"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], {
+        size: "sm"
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Text, null, "Servername")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["FormControl"], {
+        disabled: true,
+        value: this.props.server.name,
+        "aria-label": "file reference id"
+      })))))));
+    }
+  }]);
+
+  return ServerCard;
+}(React.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/server/ServerListView.js":
+/*!****************************************************!*\
+  !*** ./src/main/js/model/server/ServerListView.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ListView; });
+/* harmony import */ var _ServerCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ServerCard */ "./src/main/js/model/server/ServerCard.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var ListView =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ListView, _React$Component);
+
+  function ListView(props) {
+    _classCallCheck(this, ListView);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ListView).call(this, props));
+  }
+
+  _createClass(ListView, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var servers = this.props.servers.map(function (server) {
+        return React.createElement(_ServerCard__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          key: server.id,
+          server: server,
+          onDelete: _this.props.onDelete,
+          onCreate: _this.props.onCreate
+        });
+      });
+      return React.createElement("div", {
+        style: {
+          'overflowY': 'auto',
+          'height': '-webkit-fill-available',
+          'paddingBottom': '15%'
+        }
+      }, servers);
+    }
+  }]);
+
+  return ListView;
+}(React.Component);
+
+
 
 /***/ }),
 
