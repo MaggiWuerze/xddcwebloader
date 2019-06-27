@@ -11,7 +11,7 @@
     <groupId>de.maggiwuerze</groupId>
     <artifactId>demoxdccloader</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>xdccloader</name>
     <description>Web based Download Manager for xdcc file transfer with ReactJS in the frontend and Spring Data REST in
         the backend
@@ -123,6 +123,8 @@
                 <version>1.7.6</version>
                 <configuration>
                     <installDirectory>target</installDirectory>
+                    <nodeVersion>v10.15.3</nodeVersion>
+                    <npmVersion>6.9.0</npmVersion>
                 </configuration>
                 <executions>
                     <execution>
@@ -130,10 +132,7 @@
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
-                        <configuration>
-                            <nodeVersion>v10.15.3</nodeVersion>
-                            <npmVersion>6.9.0</npmVersion>
-                        </configuration>
+
                     </execution>
                     <execution>
                         <id>npm install</id>

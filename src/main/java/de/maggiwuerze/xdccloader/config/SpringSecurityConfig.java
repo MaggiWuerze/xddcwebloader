@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +34,12 @@ class SpringSecurityConfig extends WebSecurityConfigurerAdapter implements WebMv
     @Autowired
     CustomUserDetailService userDetailsService;
 
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
 
@@ -50,17 +58,35 @@ class SpringSecurityConfig extends WebSecurityConfigurerAdapter implements WebMv
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/webjars/**", "/resources/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/denied")
+                .failureUrl("/login?error=true")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/login?logout=true")
                 .logoutUrl("/logout");
+
+//        http
+//            .headers()
+//            .frameOptions().sameOrigin()
+//            .and()
+//            .csrf().disable().authorizeRequests()
+//            .antMatchers("/login*").permitAll()
+//            .anyRequest().authenticated()
+//            .and()
+//            .formLogin().loginPage("/login")
+//            .defaultSuccessUrl("/", true)
+//            .failureUrl("/login?error=true")
+//            .and()
+//            .logout()
+//            .invalidateHttpSession(true)
+//            .logoutSuccessUrl("/login")
+//            .logoutUrl("/logout");
     }
 
     @Override
@@ -80,9 +106,7 @@ class SpringSecurityConfig extends WebSecurityConfigurerAdapter implements WebMv
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider()
-
-    {
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(encoder());
@@ -90,9 +114,7 @@ class SpringSecurityConfig extends WebSecurityConfigurerAdapter implements WebMv
     }
 
     @Bean
-    public PasswordEncoder encoder()
-
-    {
+    public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(11);
     }
 

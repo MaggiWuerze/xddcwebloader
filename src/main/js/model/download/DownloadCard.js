@@ -17,7 +17,6 @@ export default class DownloadCard extends React.Component {
 
     decideAlertType() {
 
-        console.log(this.props.download.status);
         switch (this.props.download.status) {
 
             case 'TRANSMITTING':

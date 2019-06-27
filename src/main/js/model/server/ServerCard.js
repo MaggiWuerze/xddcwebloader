@@ -31,47 +31,20 @@ export default class ServerCard extends React.Component {
                                     <FormControl
                                         disabled
                                         value={this.props.server.name}
-                                        aria-label="file reference id"
-                                    />
+                                        aria-label="file reference id"/>
                                 </InputGroup>
                             </ListGroup.Item>
-                            {/*<ListGroup.Item>*/}
-                            {/*    <InputGroup size="sm">*/}
-                            {/*        <InputGroup.Prepend>*/}
-                            {/*            <InputGroup.Text>Servername</InputGroup.Text>*/}
-                            {/*        </InputGroup.Prepend>*/}
-                            {/*        <FormControl*/}
-                            {/*            disabled*/}
-                            {/*            value={this.props.bot.server.name}*/}
-                            {/*            aria-label="file reference id"*/}
-                            {/*        />*/}
-                            {/*    </InputGroup>*/}
-                            {/*</ListGroup.Item>*/}
-                            {/*<ListGroup.Item>*/}
-                            {/*    <InputGroup size="sm">*/}
-                            {/*        <InputGroup.Prepend>*/}
-                            {/*            <InputGroup.Text>Bot Messagepattern</InputGroup.Text>*/}
-                            {/*        </InputGroup.Prepend>*/}
-                            {/*        <FormControl*/}
-                            {/*            disabled*/}
-                            {/*            value={this.props.bot.pattern}*/}
-                            {/*            aria-label="file reference id"*/}
-                            {/*        />*/}
-                            {/*    </InputGroup>*/}
-                            {/*</ListGroup.Item>*/}
-                            {/*<ListGroup.Item>*/}
-                            {/*    <InputGroup size="sm">*/}
-                            {/*        <FormControl*/}
-                            {/*            onKeyDown={this.handleKeyDown}*/}
-                            {/*            ref={this.props.bot.id + "-fileRefId"}*/}
-                            {/*            placeholder="fileRefId (eg. #3452)"*/}
-                            {/*            aria-label="file reference id"*/}
-                            {/*        />*/}
-                            {/*        <InputGroup.Append>*/}
-                            {/*            <Button variant="outline-secondary" onClick={this.handleSubmit}>Send</Button>*/}
-                            {/*        </InputGroup.Append>*/}
-                            {/*    </InputGroup>*/}
-                            {/*</ListGroup.Item>*/}
+                            <ListGroup.Item>
+                                <InputGroup size="sm">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text>Server URL</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        disabled
+                                        value={this.props.server.serverUrl}
+                                        aria-label="file reference id"/>
+                                </InputGroup>
+                            </ListGroup.Item>
                         </ListGroup>
                     </Container>
                 </Card.Body>

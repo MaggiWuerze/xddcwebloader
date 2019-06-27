@@ -31,8 +31,8 @@ export default class BotCard extends React.Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault();
 
+        e.preventDefault();
         const newBot = {};
         newBot["targetBotId"] = this.props.bot.id;
         newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs[this.props.bot.id + "-fileRefId"]).value.trim();

@@ -49884,10 +49884,10 @@ module.exports = __webpack_require__(/*! ../package.json */ "./node_modules/stom
 /*!******************************************************************!*\
   !*** ./node_modules/stompjs/node_modules/websocket/package.json ***!
   \******************************************************************/
-/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _optional, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, config, contributors, dependencies, deprecated, description, devDependencies, directories, engines, homepage, keywords, license, main, name, repository, scripts, version, default */
+/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _optional, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browser, bugs, config, contributors, dependencies, description, devDependencies, directories, engines, homepage, keywords, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_args":[["websocket@1.0.28","c:\\Users\\dap\\workspaces\\private\\xddcwebloader"]],"_from":"websocket@latest","_id":"websocket@1.0.28","_inBundle":false,"_integrity":"sha512-00y/20/80P7H4bCYkzuuvvfDvh+dgtXi5kzDf3UcZwN6boTYaKvsrtZ5lIYm1Gsg48siMErd9M4zjSYfYFHTrA==","_location":"/stompjs/websocket","_optional":true,"_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"websocket@latest","name":"websocket","escapedName":"websocket","rawSpec":"latest","saveSpec":null,"fetchSpec":"latest"},"_requiredBy":["/stompjs"],"_resolved":"https://registry.npmjs.org/websocket/-/websocket-1.0.28.tgz","_shasum":"9e5f6fdc8a3fe01d4422647ef93abdd8d45a78d3","_spec":"websocket@latest","_where":"C:\\Users\\dap\\workspaces\\private\\xdccwebloader\\node_modules\\stompjs","author":{"name":"Brian McKelvey","email":"theturtle32@gmail.com","url":"https://github.com/theturtle32"},"browser":"lib/browser.js","bugs":{"url":"https://github.com/theturtle32/WebSocket-Node/issues"},"bundleDependencies":false,"config":{"verbose":false},"contributors":[{"name":"Iñaki Baz Castillo","email":"ibc@aliax.net","url":"http://dev.sipdoc.net"}],"dependencies":{"debug":"^2.2.0","nan":"^2.11.0","typedarray-to-buffer":"^3.1.5","yaeti":"^0.0.6"},"deprecated":false,"description":"Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.","devDependencies":{"buffer-equal":"^1.0.0","faucet":"^0.0.1","gulp":"git+https://github.com/gulpjs/gulp.git#4.0","gulp-jshint":"^2.0.4","jshint":"^2.0.0","jshint-stylish":"^2.2.1","tape":"^4.9.1"},"directories":{"lib":"./lib"},"engines":{"node":">=0.10.0"},"homepage":"https://github.com/theturtle32/WebSocket-Node","keywords":["websocket","websockets","socket","networking","comet","push","RFC-6455","realtime","server","client"],"license":"Apache-2.0","main":"index","name":"websocket","repository":{"type":"git","url":"git+https://github.com/theturtle32/WebSocket-Node.git"},"scripts":{"gulp":"gulp","install":"(node-gyp rebuild 2> builderror.log) || (exit 0)","test":"faucet test/unit"},"version":"1.0.28"};
+module.exports = {"_args":[["websocket@1.0.28","/home/dap/IdeaProjects/xddcwebloader"]],"_from":"websocket@1.0.28","_id":"websocket@1.0.28","_inBundle":false,"_integrity":"sha512-00y/20/80P7H4bCYkzuuvvfDvh+dgtXi5kzDf3UcZwN6boTYaKvsrtZ5lIYm1Gsg48siMErd9M4zjSYfYFHTrA==","_location":"/stompjs/websocket","_optional":true,"_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"websocket@1.0.28","name":"websocket","escapedName":"websocket","rawSpec":"1.0.28","saveSpec":null,"fetchSpec":"1.0.28"},"_requiredBy":["/stompjs"],"_resolved":"https://registry.npmjs.org/websocket/-/websocket-1.0.28.tgz","_spec":"1.0.28","_where":"/home/dap/IdeaProjects/xddcwebloader","author":{"name":"Brian McKelvey","email":"theturtle32@gmail.com","url":"https://github.com/theturtle32"},"browser":"lib/browser.js","bugs":{"url":"https://github.com/theturtle32/WebSocket-Node/issues"},"config":{"verbose":false},"contributors":[{"name":"Iñaki Baz Castillo","email":"ibc@aliax.net","url":"http://dev.sipdoc.net"}],"dependencies":{"debug":"^2.2.0","nan":"^2.11.0","typedarray-to-buffer":"^3.1.5","yaeti":"^0.0.6"},"description":"Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.","devDependencies":{"buffer-equal":"^1.0.0","faucet":"^0.0.1","gulp":"git+https://github.com/gulpjs/gulp.git#4.0","gulp-jshint":"^2.0.4","jshint":"^2.0.0","jshint-stylish":"^2.2.1","tape":"^4.9.1"},"directories":{"lib":"./lib"},"engines":{"node":">=0.10.0"},"homepage":"https://github.com/theturtle32/WebSocket-Node","keywords":["websocket","websockets","socket","networking","comet","push","RFC-6455","realtime","server","client"],"license":"Apache-2.0","main":"index","name":"websocket","repository":{"type":"git","url":"git+https://github.com/theturtle32/WebSocket-Node.git"},"scripts":{"gulp":"gulp","install":"(node-gyp rebuild 2> builderror.log) || (exit 0)","test":"faucet test/unit"},"version":"1.0.28"};
 
 /***/ }),
 
@@ -50847,9 +50847,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_server_ServerListView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./model/server/ServerListView */ "./src/main/js/model/server/ServerListView.js");
 /* harmony import */ var _model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./model/channel/ChannelListView */ "./src/main/js/model/channel/ChannelListView.js");
 /* harmony import */ var _model_CreateModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/CreateModal */ "./src/main/js/model/CreateModal.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./model/wizard/InitWizard */ "./src/main/js/model/wizard/InitWizard");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -50871,6 +50872,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -50914,6 +50916,7 @@ function (_React$Component) {
     _this.onDelete = _this.onDelete.bind(_assertThisInitialized(_this));
     _this.handleSocketCall = _this.handleSocketCall.bind(_assertThisInitialized(_this));
     _this.toggleBoolean = _this.toggleBoolean.bind(_assertThisInitialized(_this));
+    _this.finishOnboarding = _this.finishOnboarding.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -50922,12 +50925,8 @@ function (_React$Component) {
     value: function loadFromServer() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/initialized/', {
-        params: {
-          active: true
-        }
-      }).then(function (response) {
-        var init = response.data[0];
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/initialized/').then(function (response) {
+        var init = response.data;
 
         _this2.setState({
           onboarding: init
@@ -50935,7 +50934,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/bots/', {
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/bots/', {
         params: {
           active: true
         }
@@ -50948,7 +50947,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/servers/').then(function (response) {
         response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
 
         _this2.setState({
@@ -50957,7 +50956,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/channels/').then(function (response) {
         response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
 
         _this2.setState({
@@ -50966,7 +50965,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/downloads/active/', {
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/downloads/active/', {
         params: {
           active: true
         }
@@ -50977,14 +50976,14 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/downloads/failed').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/downloads/failed').then(function (response) {
         _this2.setState({
           failedDownloads: response.data
         });
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('http://localhost:8080/data/downloads/active/', {
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/downloads/active/', {
         params: {
           active: false
         }
@@ -51001,7 +51000,7 @@ function (_React$Component) {
     value: function onCreate(object, objectName, modalName) {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('http://localhost:8080/data/' + objectName + '/', object).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.post('data/' + objectName + '/', object).then(function (response) {
         if (response.status.toString() != '200') {
           alert("there was an error!");
         } else if (modalName) {
@@ -51114,16 +51113,15 @@ function (_React$Component) {
       }
     }
   }, {
-    key: "initComplete",
-    value: function initComplete() {
-      var _this4 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('http://localhost:8080/data/initialized/', true).then(function (response) {
-        if (response.status.toString() != '200') {
-          alert("there was an error!");
-        } else if (modalName) {
-          _this4.toggleBoolean(modalName);
-        }
+    key: "toggleBoolean",
+    value: function toggleBoolean(key) {
+      this.setState(_defineProperty({}, key, !this.state[key]));
+    }
+  }, {
+    key: "finishOnboarding",
+    value: function finishOnboarding() {
+      this.setState({
+        onboarding: false
       });
     }
   }, {
@@ -51142,138 +51140,129 @@ function (_React$Component) {
       }]);
     }
   }, {
-    key: "toggleBoolean",
-    value: function toggleBoolean(modalname) {
-      this.setState(_defineProperty({}, modalname, !this.state[modalname]));
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this4 = this;
 
       if (this.state.onboarding) {
-        return React.createElement("div", null, "\"hello world!\"", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
-          size: "sm",
-          onClick: function onClick() {
-            _this5.setState({
-              onboarding: false
-            });
-          },
-          variant: "success"
-        }, React.createElement("i", {
-          className: "fas fa-thumbs-up"
-        })));
+        return React.createElement(_model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          onFinish: this.finishOnboarding
+        });
       } else {
-        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Navbar"], {
-          expand: "lg"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Navbar"].Brand, {
+        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Navbar"], {
+          expand: "lg",
+          className: "bg-primary"
+        }, React.createElement("a", {
+          className: "btn btn-sm btn-danger",
+          style: {
+            color: 'gainsboro'
+          },
+          href: "/logout",
+          role: "button"
+        }, React.createElement("i", {
+          className: "fas fa-sign-out-alt fa-rotate-180"
+        })), "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Navbar"].Brand, {
           href: "#home"
-        }, "XDCC Loader"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Navbar"].Toggle, {
-          "aria-controls": "basic-navbar-nav"
-        }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Navbar"].Collapse, {
-          id: "basic-navbar-nav"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"], {
-          className: "mr-auto"
-        }))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Container"], {
+        }, "XDCC Loader")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Container"], {
           fluid: true
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Col"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Col"], {
           md: 4,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"], {
           className: "customCard"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Container, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Container, {
           defaultActiveKey: "bots"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"], {
           fill: true,
           variant: "tabs"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
           eventKey: "bots"
-        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
+        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showBotModal');
+            return _this4.toggleBoolean('showBotModal');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
+        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
           eventKey: "servers"
-        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
+        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showServerModal');
+            return _this4.toggleBoolean('showServerModal');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
+        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
           eventKey: "channels"
-        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
+        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showChannelModal');
+            return _this4.toggleBoolean('showChannelModal');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
+        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
           eventKey: "bots"
         }, React.createElement(_model_bot_BotListView__WEBPACK_IMPORTED_MODULE_0__["default"], {
           bots: this.state.bots,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
           eventKey: "servers"
         }, React.createElement(_model_server_ServerListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           servers: this.state.servers,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
           eventKey: "channels"
         }, React.createElement(_model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_3__["default"], {
           channels: this.state.channels,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Col"], {
+        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Col"], {
           md: 8,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"], {
           className: "customCard"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Container, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Container, {
           defaultActiveKey: "activeDownloads"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"], {
           fill: true,
           variant: "tabs"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
           eventKey: "activeDownloads"
-        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
+        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
           eventKey: "completedDownloads"
-        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Nav"].Link, {
+        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
           eventKey: "failedDownloads"
-        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
+        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
           eventKey: "activeDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.downloads,
           onDelete: this.onDelete
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
           eventKey: "completedDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.doneDownloads,
           onDelete: this.onDelete
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
           eventKey: "failedDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.failedDownloads,
           onDelete: this.onDelete
-        }))))))))), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        }))))))))), "/*modal contents*/", React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
           modaltitle: "Create new Bot",
           attributes: this.state.botAttributes,
           show: this.state.showBotModal,
           onClose: function onClose() {
-            return _this5.toggleBoolean('showBotModal');
+            return _this4.toggleBoolean('showBotModal');
           },
           onCreate: this.onCreate
         }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -51281,7 +51270,7 @@ function (_React$Component) {
           attributes: this.state.serverAttributes,
           show: this.state.showServerModal,
           onClose: function onClose() {
-            return _this5.toggleBoolean('showServerModal');
+            return _this4.toggleBoolean('showServerModal');
           },
           onCreate: this.onCreate
         }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -51289,7 +51278,7 @@ function (_React$Component) {
           attributes: this.state.channelAttributes,
           show: this.state.showChannelModal,
           onClose: function onClose() {
-            return _this5.toggleBoolean('showChannelModal');
+            return _this4.toggleBoolean('showChannelModal');
           },
           onCreate: this.onCreate
         }));
@@ -51996,8 +51985,6 @@ function (_React$Component) {
   }, {
     key: "decideAlertType",
     value: function decideAlertType() {
-      console.log(this.props.download.status);
-
       switch (this.props.download.status) {
         case 'TRANSMITTING':
           return 'info';
@@ -52211,6 +52198,12 @@ function (_React$Component) {
         disabled: true,
         value: this.props.server.name,
         "aria-label": "file reference id"
+      }))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ListGroup"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], {
+        size: "sm"
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Text, null, "Server URL")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["FormControl"], {
+        disabled: true,
+        value: this.props.server.serverUrl,
+        "aria-label": "file reference id"
       })))))));
     }
   }]);
@@ -52293,6 +52286,250 @@ function (_React$Component) {
 
   return ListView;
 }(React.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/wizard/InitWizard":
+/*!*********************************************!*\
+  !*** ./src/main/js/model/wizard/InitWizard ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return InitWizard; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var InitWizard =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(InitWizard, _React$Component);
+
+  function InitWizard(props) {
+    var _this;
+
+    _classCallCheck(this, InitWizard);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(InitWizard).call(this, props));
+    _this.handleFinish = _this.handleFinish.bind(_assertThisInitialized(_this));
+    _this.validateInput = _this.validateInput.bind(_assertThisInitialized(_this));
+    _this.state = {
+      email: "",
+      password: "",
+      index: 0,
+      direction: null,
+      wrap: false,
+      controls: false,
+      interval: null,
+      validated: true
+    };
+    return _this;
+  }
+
+  _createClass(InitWizard, [{
+    key: "handleSelect",
+    value: function handleSelect(selectedIndex, e) {
+      this.setState({
+        index: selectedIndex,
+        direction: e.direction
+      });
+    }
+  }, {
+    key: "handleFinish",
+    value: function handleFinish(e) {
+      e.preventDefault();
+      console.log("handleFinish!");
+      this.props.onFinish();
+    }
+  }, {
+    key: "validateInput",
+    value: function validateInput(event) {
+      event.preventDefault();
+      var form = event.currentTarget;
+      var valid = form.checkValidity();
+      console.log(form.value);
+      this.setState({
+        validated: valid
+      });
+      console.log("form ok: " + valid);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        id: "welcome",
+        style: {
+          minHeight: '100vh'
+        },
+        className: "bg-primary d-flex flex-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container text-center my-auto"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"], {
+        as: "container",
+        activeIndex: this.state.index,
+        direction: this.state.direction,
+        onSelect: this.handleSelect,
+        wrap: this.state.wrap,
+        controls: this.state.controls,
+        interval: this.state.interval,
+        indicators: false,
+        slide: false,
+        className: "bg-light",
+        style: {
+          minHeight: '40vh'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "On the following pages you can set up your first xdcc bot."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+        className: "justify-content-md-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        style: {
+          width: 105 + 'px',
+          marginRight: 50 + 'px'
+        },
+        variant: 'danger',
+        onClick: this.handleFinish
+      }, "Skip"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        style: {
+          width: 105 + 'px',
+          marginLeft: 50 + 'px'
+        },
+        variant: 'light',
+        onClick: function onClick() {
+          return _this2.setState({
+            index: 1
+          });
+        }
+      }, "Start"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "The Server"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Enter the URL to the IRC server you want to connect to"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
+        noValidate: true,
+        validated: this.state.validated
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
+        controlId: "validationCustomUsername"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+        className: "mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+        id: "basic-addon1"
+      }, "Server URL")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        required: true,
+        type: "url",
+        pattern: "https?://.+",
+        onChange: this.validateInput,
+        placeholder: "The Server URL, e.g. 'irc.rizon.net'",
+        "aria-label": "Username",
+        "aria-describedby": "basic-addon1"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
+        type: "invalid"
+      }, "Please provide a valid state.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: 'light',
+        onClick: function onClick() {
+          return _this2.setState({
+            index: 2
+          });
+        }
+      }, "Next Page")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add A Channel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now add a channel that exists on the server you just entered.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "This is the channel where you want to request your files."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
+        noValidate: true,
+        validated: this.state.validated
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
+        controlId: "validationCustomUsername"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+        className: "mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+        id: "basic-addon2"
+      }, "Channelname")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        required: true,
+        type: "text",
+        onChange: this.validateInput,
+        placeholder: "Name of the IRC Channel, e.g. '#Lobby' or '#HorribleSubs'",
+        "aria-label": "Username",
+        "aria-describedby": "basic-addon2"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
+        type: "invalid"
+      }, "Please provide a valid state.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: 'light',
+        onClick: function onClick() {
+          return _this2.setState({
+            index: 3
+          });
+        }
+      }, "Next Page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Create Your Bot"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Finally enter the name of the bot that serves your content as well as a message template that will be used to write messages to them. The message template should look somewhat like this: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, " 'xdcc send %s' "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "The ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'"), " part is where the part that identifies the file will be placed. In some cases this is something like an id (#3432) in other cases it may be the specific file name (yourfile.txt).", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "It is ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "mandatory"), " to include the ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
+        noValidate: true,
+        validated: this.state.validated
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
+        controlId: "validationCustomUsername"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+        className: "mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+        id: "basic-addon3"
+      }, "Botname")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+        required: true,
+        type: "text",
+        onChange: this.validateInput,
+        placeholder: "The name of the bot you want to send your requests to, e.g. 'Ginpachi-Sensei'",
+        "aria-label": "Username",
+        "aria-describedby": "basic-addon3"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+        className: "mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+        id: "basic-addon4"
+      }, "Messagepattern")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        required: true,
+        type: "text",
+        pattern: "(\\%s)",
+        onChange: this.validateInput,
+        placeholder: "A message template that will be used to send messages, e.g. 'xdcc send %s'",
+        "aria-label": "Messagepattern",
+        "aria-describedby": "basic-addon4"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
+        type: "invalid"
+      }, "Please provide a valid state.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: 'light',
+        onClick: function onClick() {
+          return _this2.setState({
+            index: 4
+          });
+        }
+      }, "Next Page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "That", "\'", "s it!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now your bot is ready to get files for you."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+        className: "mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+        id: "basic-addon5"
+      }, "@")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+        placeholder: "Username",
+        "aria-label": "Username",
+        "aria-describedby": "basic-addon5"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: 'success',
+        onClick: this.handleFinish
+      }, "Finish!")))))));
+    }
+  }]);
+
+  return InitWizard;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 
 

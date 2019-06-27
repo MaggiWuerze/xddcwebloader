@@ -44,16 +44,6 @@ class MainController{
 
     }
 
-    @RequestMapping(value = "/trigger", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void trigger(){
-
-        this.websocket.convertAndSend(
-                MESSAGE_PREFIX + "/newDownload", "please reload the downloadlist");
-
-
-    }
-
     @RequestMapping("/login")
     public String login(){
 

@@ -5,6 +5,7 @@ import DownloadListView from './model/download/DownloadListView';
 import ServerListView from './model/server/ServerListView';
 import ChannelListView from './model/channel/ChannelListView';
 import CreateModal from './model/CreateModal';
+import InitWizard from './model/wizard/InitWizard';
 
 import {
     Button,
@@ -45,24 +46,20 @@ class App extends React.Component {
         this.onDelete = this.onDelete.bind(this);
         this.handleSocketCall = this.handleSocketCall.bind(this);
         this.toggleBoolean = this.toggleBoolean.bind(this);
+        this.finishOnboarding = this.finishOnboarding.bind(this);
     }
 
     loadFromServer() {
 
         axios
-            .get('http://localhost:8080/data/initialized/', {
-
-                params: {
-                    active: true,
-                }
-
-            })
+            .get('data/initialized/')
             .then((response) => {
 
-                var init = response.data[0];
+                var init = response.data;
                 this.setState({
                     onboarding: init
                 });
+
 
             })
             .catch((error) => {
@@ -70,7 +67,7 @@ class App extends React.Component {
             });
 
         axios
-            .get('http://localhost:8080/data/bots/', {
+            .get('data/bots/', {
 
                 params: {
                     active: true,
@@ -89,7 +86,7 @@ class App extends React.Component {
                 console.log(error);
             });
         axios
-            .get('http://localhost:8080/data/servers/')
+            .get('data/servers/')
             .then((response) => {
 
                 response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
@@ -102,7 +99,7 @@ class App extends React.Component {
                 console.log(error);
             });
         axios
-            .get('http://localhost:8080/data/channels/')
+            .get('data/channels/')
             .then((response) => {
 
                 response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
@@ -116,7 +113,7 @@ class App extends React.Component {
             });
 
         axios
-            .get('http://localhost:8080/data/downloads/active/', {
+            .get('data/downloads/active/', {
 
                 params: {
                     active: true,
@@ -135,7 +132,7 @@ class App extends React.Component {
             });
 
         axios
-            .get('http://localhost:8080/data/downloads/failed')
+            .get('data/downloads/failed')
             .then((response) => {
 
                 this.setState({
@@ -148,7 +145,7 @@ class App extends React.Component {
             });
 
         axios
-            .get('http://localhost:8080/data/downloads/active/', {
+            .get('data/downloads/active/', {
 
                 params: {
                     active: false,
@@ -171,7 +168,7 @@ class App extends React.Component {
     onCreate(object, objectName, modalName) {
 
         axios
-            .post('http://localhost:8080/data/' + objectName + '/', object)
+            .post('data/' + objectName + '/', object)
             .then((response) => {
 
                 if (response.status.toString() != '200') {
@@ -317,25 +314,19 @@ class App extends React.Component {
 
     }
 
-    initComplete() {
+    toggleBoolean(key) {
 
-        axios
-            .post('http://localhost:8080/data/initialized/', true)
-            .then((response) => {
+        this.setState({[key]: !this.state[key]});
+    }
 
-                if (response.status.toString() != '200') {
+    finishOnboarding(){
 
-                    alert("there was an error!");
-
-                } else if (modalName) {
-
-                    this.toggleBoolean(modalName);
-                }
-            });
+        this.setState({onboarding: false});
 
     }
 
     componentDidMount() {
+
         this.loadFromServer();
         stompClient.register([
             {route: '/topic/newDownload', callback: this.handleSocketCall},
@@ -344,40 +335,24 @@ class App extends React.Component {
         ]);
     }
 
-    toggleBoolean(modalname) {
-
-        this.setState({[modalname]: !this.state[modalname]});
-    }
-
     render() {
 
         if (this.state.onboarding) {
 
             return (
-                <div>
-                    "hello world!"
-                    <Button size="sm" onClick={() => {
-                        this.setState({onboarding: false})
-                    }} variant="success">
-                        <i className="fas fa-thumbs-up"></i>
-                    </Button>
-                </div>
+
+                <InitWizard onFinish={this.finishOnboarding}/>
+
             )
 
         } else {
 
             return (
                 <React.Fragment>
-                    <Navbar expand="lg">
+                    <Navbar expand="lg" className="bg-primary">
+                        <a className="btn btn-sm btn-danger" style={{color:'gainsboro'}} href="/logout" role="button"><i className="fas fa-sign-out-alt fa-rotate-180"></i></a>
+                        &nbsp;
                         <Navbar.Brand href="#home">XDCC Loader</Navbar.Brand>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="mr-auto">
-                                {/*<Nav.Link onClick={() => this.toggleBoolean('showBotModal')}>Bot</Nav.Link>*/}
-                                {/*<Nav.Link onClick={() => this.toggleBoolean('shoKxx0P456/wServerModal')}>Server</Nav.Link>*/}
-                                {/*<Nav.Link onClick={() => this.toggleBoolean('showChannelModal')}>Channel</Nav.Link>*/}
-                            </Nav>
-                        </Navbar.Collapse>
                     </Navbar>
                     <Container fluid>
                         <Row>
@@ -481,7 +456,7 @@ class App extends React.Component {
                             </Col>
                         </Row>
                     </Container>
-                    {/*modal contents*/}
+                   /*modal contents*/
                     <CreateModal modaltitle="Create new Bot" attributes={this.state.botAttributes}
                                     show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
                                     onCreate={this.onCreate}/>

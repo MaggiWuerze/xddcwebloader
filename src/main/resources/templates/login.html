@@ -1,22 +1,102 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head></head>
-<body>
-<h1>Login</h1>
-<form name='f' action="login" method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type='text' name='username' value=''></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password' /></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-        </tr>
-    </table>
-</form>
+<head lang="en">
+
+    <meta charset="UTF-8"/>
+    <title>ReactJS + Spring Data REST</title>
+
+
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css"/>
+
+
+    <script type="text/javascript">
+
+    function start() {
+
+        var error = urlParam('error');
+
+        console.log(error);
+        if(error == 'true'){
+
+            console.log("showing error alert");
+            document.getElementById('error-alert').hidden = false;
+
+        }
+
+    }
+
+
+        function urlParam(name){
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+
+            return results ? results[1] : 0;
+        }
+
+<!--        $(function() {-->
+<!--            console.log( "ready!" );-->
+<!--        });-->
+
+<!--        $(function(){-->
+
+<!--            var error = urlParam('error');-->
+
+<!--            console.log(error);-->
+
+<!--        });-->
+
+
+    </script>
+
+
+</head>
+<body class="column" onload="start()">
+
+<section id="welcome" style="min-height:100vh;" class="bg-primary d-flex flex-column">
+    <div class="container text-center my-auto">
+        <div class="card" style="margin: auto; width: 18rem;">
+            <div class="card-body">
+                <legend class="card-title" style="text-align: center">Please Login</legend>
+
+                <form action="/login" method="post">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input input type='password' name='password' class="form-control" placeholder="Password"
+                               aria-label="Password"
+                               aria-describedby="basic-addon2">
+                    </div>
+
+                    <div class="alert alert-danger" id="error-alert" role="alert" hidden>
+                        That didn't work. Password or Username was incorrect.
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="/webjars/jquery/jquery.min.js"/>
+<script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"/>
+<script src="/webjars/font-awesome/js/all.min.js"/>
+
 </body>
 </html>

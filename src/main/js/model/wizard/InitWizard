@@ -1,0 +1,245 @@
+import React, { Component } from 'react';
+import {
+    Button,
+    Card,
+    Carousel,
+    Col,
+    Container,
+    FormControl,
+    Form,
+    InputGroup,
+    Jumbotron,
+    Row
+} from 'react-bootstrap';
+
+export default class InitWizard extends React.Component {
+
+
+    constructor(props) {
+        super(props);
+
+        this.handleFinish = this.handleFinish.bind(this);
+        this.validateInput = this.validateInput.bind(this);
+
+        this.state = {
+            email: "",
+            password: "",
+            index: 0,
+            direction: null,
+            wrap: false,
+            controls: false,
+            interval: null,
+            validated: true
+        };
+      }
+
+
+    handleSelect(selectedIndex, e) {
+        this.setState({
+          index: selectedIndex,
+          direction: e.direction,
+        });
+      }
+
+    handleFinish(e) {
+
+        e.preventDefault();
+        console.log("handleFinish!")
+        this.props.onFinish();
+    }
+
+
+    validateInput(event){
+
+        event.preventDefault();
+        const form = event.currentTarget;
+        let valid = form.checkValidity();
+
+        console.log(form.value);
+
+        this.setState({ validated: valid });
+        console.log("form ok: " + valid);
+
+    }
+
+
+    render(){
+
+    return (
+
+    <section id="welcome" style={{minHeight: '100vh'}} className="bg-primary d-flex flex-column">
+        <div className="container text-center my-auto">
+            <Carousel
+                as='container'
+                activeIndex={this.state.index}
+                direction={this.state.direction}
+                onSelect={this.handleSelect}
+                wrap={this.state.wrap}
+                controls={this.state.controls}
+                interval={this.state.interval}
+                indicators={false}
+                slide={false}
+                className="bg-light"
+                style={{minHeight: '40vh'}}>
+
+                {/*WELCOME PAGE*/}
+                <Carousel.Item>
+                    <Row>
+                        <Col>
+                            <h1>Welcome</h1>
+                            <p>On the following pages you can set up your first xdcc bot.</p>
+                        </Col>
+                    </Row>
+                    <Row className="justify-content-md-center">
+                        <Button style={{width: 105 + 'px', marginRight:50 + 'px'}} variant={'danger'} onClick={this.handleFinish}>Skip</Button>
+                        <Button style={{width: 105 + 'px', marginLeft:50 + 'px'}} variant={'light'} onClick={() => this.setState({index: 1})}>Start</Button>
+                    </Row>
+                </Carousel.Item>
+
+                {/*FIRST PAGE*/}
+                <Carousel.Item>
+                    <Row>
+                        <Col>
+                            <h2>The Server</h2>
+                            <p>Enter the URL to the IRC server you want to connect to</p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form noValidate validated={this.state.validated} >
+                            <Form.Group controlId="validationCustomUsername">
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Prepend>
+                                      <InputGroup.Text id="basic-addon1">Server URL</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <Form.Control
+                                        required
+                                        type="url"
+                                        pattern="https?://.+"
+                                        onChange={this.validateInput}
+                                        placeholder="The Server URL, e.g. 'irc.rizon.net'"
+                                        aria-label="Username"
+                                        aria-describedby="basic-addon1"
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please provide a valid state.
+                                    </Form.Control.Feedback>
+                                  </InputGroup>
+                            </Form.Group>
+                            </Form>
+                            <Button variant={'light'} onClick={() => this.setState({index: 2})}>Next Page</Button>
+                        </Col>
+                    </Row>
+                </Carousel.Item>
+
+                {/*  SECOND PAGE */}
+                <Carousel.Item>
+                    <h2>Add A Channel</h2>
+                    <p>
+                      Now add a channel that exists on the server you just entered.<br />
+                      This is the channel where you want to request your files.
+                    </p>
+                    <Form noValidate validated={this.state.validated} >
+                        <Form.Group controlId="validationCustomUsername">
+                            <InputGroup className="mb-3">
+                              <InputGroup.Prepend>
+                                <InputGroup.Text id="basic-addon2">Channelname</InputGroup.Text>
+                              </InputGroup.Prepend>
+                              <Form.Control
+                                required
+                                type="text"
+                                onChange={this.validateInput}
+                                placeholder="Name of the IRC Channel, e.g. '#Lobby' or '#HorribleSubs'"
+                                aria-label="Username"
+                                aria-describedby="basic-addon2"
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                      Please provide a valid state.
+                              </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                    </Form>
+                    <Button variant={'light'} onClick={() => this.setState({index: 3})}>Next Page</Button>
+                </Carousel.Item>
+
+                {/*  THIRD PAGE */}
+                <Carousel.Item>
+
+                    <h2>Create Your Bot</h2>
+                    <p>
+                        Finally enter the name of the bot that serves your content as well as a message template that will be used to write messages to them.
+                        The message template should look somewhat like this: <code> 'xdcc send %s' </code><br />
+                        The <code>'%s'</code> part is where the part that identifies the file will be placed.
+                        In some cases this is something like an id (#3432) in other cases it may be the specific file name (yourfile.txt).<br />
+                        It is <b>mandatory</b> to include the <code>'%s'</code>
+                    </p>
+                    <Form noValidate validated={this.state.validated} >
+                        <Form.Group controlId="validationCustomUsername">
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text id="basic-addon3">Botname</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                    required
+                                    type="text"
+                                    onChange={this.validateInput}
+                                    placeholder="The name of the bot you want to send your requests to, e.g. 'Ginpachi-Sensei'"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon3"
+                                />
+                            </InputGroup>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text id="basic-addon4">Messagepattern</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    pattern="(\%s)"
+                                    onChange={this.validateInput}
+                                    placeholder="A message template that will be used to send messages, e.g. 'xdcc send %s'"
+                                    aria-label="Messagepattern"
+                                    aria-describedby="basic-addon4"
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                      Please provide a valid state.
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                        </Form>
+                    <Button variant={'light'} onClick={() => this.setState({index: 4})}>Next Page</Button>
+
+                </Carousel.Item>
+
+                {/*  FINAL PAGE */}
+                <Carousel.Item>
+                    <Row>
+                        <Col>
+                            <h2>That{"\'"}s it!</h2>
+                            <p>Now your bot is ready to get files for you.</p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text id="basic-addon5">@</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                  placeholder="Username"
+                                  aria-label="Username"
+                                  aria-describedby="basic-addon5"
+                                />
+                            </InputGroup>
+                            <Button variant={'success'} onClick={this.handleFinish}>Finish!</Button>
+                        </Col>
+                    </Row>
+                </Carousel.Item>
+            </Carousel>
+            </div>
+        </section>
+        );
+
+    }
+
+}

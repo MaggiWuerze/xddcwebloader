@@ -56,8 +56,6 @@ class DataController {
     @PostMapping("/initialized/")
     public ResponseEntity<?> setInitialized(@RequestBody Boolean initBoolean) {
 
-        
-
         return new ResponseEntity("ok", HttpStatus.OK);
     }
 
