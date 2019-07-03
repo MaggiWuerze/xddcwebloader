@@ -51596,6 +51596,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BotCard).call(this, props));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_this));
     _this.state = {
       open: false
     };
@@ -51610,13 +51611,10 @@ function (_React$Component) {
   }, {
     key: "handleKeyDown",
     value: function handleKeyDown(e) {
+      console.log(e);
+
       if (e.key === 'Enter') {
-        console.log(e);
-        var ref = this.props.bot.id + "-fileRefId";
-        console.log(ref);
-        var input = ReactDOM.findDOMNode(this.refs[ref]);
-        input.value = '';
-        this.handleSubmit();
+        this.handleSubmit(e);
       }
     }
   }, {
@@ -51626,9 +51624,9 @@ function (_React$Component) {
       var newBot = {};
       newBot["targetBotId"] = this.props.bot.id;
       newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs[this.props.bot.id + "-fileRefId"]).value.trim();
-      this.props.onCreate(newBot, "downloads", null); // this.props.botAttributes.forEach(attribute => {
-      //     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
-      // });
+      this.props.onCreate(newBot, "downloads", null);
+      var ref = this.props.bot.id + "-fileRefId";
+      ReactDOM.findDOMNode(this.refs[ref]).value = '';
     }
   }, {
     key: "render",
@@ -52325,6 +52323,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
 var InitWizard =
 /*#__PURE__*/
 function (_React$Component) {
@@ -52335,9 +52335,19 @@ function (_React$Component) {
 
     _classCallCheck(this, InitWizard);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(InitWizard).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(InitWizard).call(this, props)); // method refs
+
     _this.handleFinish = _this.handleFinish.bind(_assertThisInitialized(_this));
-    _this.validateInput = _this.validateInput.bind(_assertThisInitialized(_this));
+    _this.validateServer = _this.validateServer.bind(_assertThisInitialized(_this));
+    _this.validateChannel = _this.validateChannel.bind(_assertThisInitialized(_this));
+    _this.validateBot = _this.validateBot.bind(_assertThisInitialized(_this)); //field refs
+
+    _this.wizardServerForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.wizardServerBtn = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.wizardChannelForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.wizardChannelBtn = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.wizardBotForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.wizardBotBtn = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.state = {
       email: "",
       password: "",
@@ -52346,7 +52356,9 @@ function (_React$Component) {
       wrap: false,
       controls: false,
       interval: null,
-      validated: true
+      ServerValid: false,
+      ChannelValid: false,
+      BotValid: false
     };
     return _this;
   }
@@ -52367,16 +52379,65 @@ function (_React$Component) {
       this.props.onFinish();
     }
   }, {
-    key: "validateInput",
-    value: function validateInput(event) {
-      event.preventDefault();
-      var form = event.currentTarget;
-      var valid = form.checkValidity();
-      console.log(form.value);
+    key: "checkValidity",
+    value: function checkValidity(input) {
+      this.resetValidity(input);
+
+      if (!input.checkValidity()) {
+        this.setInvalid(input);
+      } else {
+        this.setValid(input);
+      }
+    }
+  }, {
+    key: "setInvalid",
+    value: function setInvalid(input) {
+      input.classList.add('is-invalid');
+      input.classList.remove('is-valid');
+      input.setCustomValidity("Invalid!");
+    }
+  }, {
+    key: "setValid",
+    value: function setValid(input) {
+      input.classList.remove('is-invalid');
+      input.classList.add('is-valid');
+      input.setCustomValidity("");
+    }
+  }, {
+    key: "resetValidity",
+    value: function resetValidity(input) {
+      input.classList.remove('is-invalid');
+      input.classList.remove('is-valid');
+      input.setCustomValidity("");
+    }
+  }, {
+    key: "validateServer",
+    value: function validateServer(event) {
+      this.checkValidity(event.currentTarget);
+      var validName = document.getElementById('wizardFormServerName');
+      var validUrl = document.getElementById('wizardFormServerUrl');
       this.setState({
-        validated: valid
+        ServerValid: validName.validity.valid && validUrl.validity.valid
       });
-      console.log("form ok: " + valid);
+    }
+  }, {
+    key: "validateChannel",
+    value: function validateChannel(event) {
+      this.checkValidity(event.currentTarget);
+      var validName = document.getElementById('wizardFormChannelName');
+      this.setState({
+        ChannelValid: validName.validity.valid
+      });
+    }
+  }, {
+    key: "validateBot",
+    value: function validateBot(event) {
+      this.checkValidity(event.currentTarget);
+      var validName = document.getElementById('wizardFormBotName');
+      var validPattern = document.getElementById('wizardFormBotPattern');
+      this.setState({
+        BotValid: validName.validity.valid && validPattern.validity.valid
+      });
     }
   }, {
     key: "render",
@@ -52405,7 +52466,9 @@ function (_React$Component) {
         style: {
           minHeight: '40vh'
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "On the following pages you can set up your first xdcc bot."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
+        className: "wizardPageContainer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "On the following pages you can set up your first xdcc bot."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
         className: "justify-content-md-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         style: {
@@ -52425,70 +52488,82 @@ function (_React$Component) {
             index: 1
           });
         }
-      }, "Start"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "The Server"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Enter the URL to the IRC server you want to connect to"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
-        noValidate: true,
-        validated: this.state.validated
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
-        controlId: "validationCustomUsername"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, "Start"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
+        className: "wizardPageContainer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "The Server"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Enter the URL to the IRC server you want to connect to"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+        className: "mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+        id: "basic-addon1"
+      }, "Servername")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        id: "wizardFormServerName",
+        required: true,
+        type: "text",
+        onChange: this.validateServer,
+        placeholder: "The name of your Server, e.g. 'Rizon'",
+        "aria-label": "Username",
+        "aria-describedby": "basic-addon1"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, null, "Looks good!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
+        type: "invalid"
+      }, "Please provide a valid name for your Server.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon1"
       }, "Server URL")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        id: "wizardFormServerUrl",
         required: true,
-        type: "url",
+        type: "text",
         pattern: "https?://.+",
-        onChange: this.validateInput,
+        onChange: this.validateServer,
         placeholder: "The Server URL, e.g. 'irc.rizon.net'",
         "aria-label": "Username",
         "aria-describedby": "basic-addon1"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, null, "Looks good!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
         type: "invalid"
-      }, "Please provide a valid state.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      }, "Please provide a valid url.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: 'light',
+        ref: this.wizardServerBtn,
+        disabled: !this.state.ServerValid,
         onClick: function onClick() {
           return _this2.setState({
             index: 2
           });
         }
-      }, "Next Page")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add A Channel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now add a channel that exists on the server you just entered.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "This is the channel where you want to request your files."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
-        noValidate: true,
-        validated: this.state.validated
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
-        controlId: "validationCustomUsername"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, "Next Page")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
+        className: "wizardPageContainer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add A Channel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now add a channel that exists on the server you just entered.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "This is the channel where you want to request your files."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon2"
       }, "Channelname")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        id: "wizardFormChannelName",
         required: true,
         type: "text",
-        onChange: this.validateInput,
+        onChange: this.validateChannel,
         placeholder: "Name of the IRC Channel, e.g. '#Lobby' or '#HorribleSubs'",
         "aria-label": "Username",
         "aria-describedby": "basic-addon2"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, null, "Looks good!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
         type: "invalid"
-      }, "Please provide a valid state.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      }, "Please provide a valid name for your Channel.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: 'light',
+        ref: this.wizardChannelBtn,
+        disabled: !this.state.ChannelValid,
         onClick: function onClick() {
           return _this2.setState({
             index: 3
           });
         }
-      }, "Next Page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Create Your Bot"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Finally enter the name of the bot that serves your content as well as a message template that will be used to write messages to them. The message template should look somewhat like this: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, " 'xdcc send %s' "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "The ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'"), " part is where the part that identifies the file will be placed. In some cases this is something like an id (#3432) in other cases it may be the specific file name (yourfile.txt).", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "It is ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "mandatory"), " to include the ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
-        noValidate: true,
-        validated: this.state.validated
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
-        controlId: "validationCustomUsername"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, "Next Page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
+        className: "wizardPageContainer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Create Your Bot"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Finally enter the name of the bot that serves your content as well as a message template that will be used to write messages to them. The message template should look somewhat like this: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, " 'xdcc send %s' "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "The ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'"), " part is where the part that identifies the file will be placed. In some cases this is something like an id (#3432) in other cases it may be the specific file name (yourfile.txt).", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "It is ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "mandatory"), " to include the ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon3"
       }, "Botname")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+        id: "wizardFormBotName",
         required: true,
         type: "text",
-        onChange: this.validateInput,
+        onChange: this.validateBot,
         placeholder: "The name of the bot you want to send your requests to, e.g. 'Ginpachi-Sensei'",
         "aria-label": "Username",
         "aria-describedby": "basic-addon3"
@@ -52497,23 +52572,28 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon4"
       }, "Messagepattern")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+        id: "wizardFormBotPattern",
         required: true,
         type: "text",
-        pattern: "(\\%s)",
-        onChange: this.validateInput,
+        pattern: ".*(%s).*",
+        onChange: this.validateBot,
         placeholder: "A message template that will be used to send messages, e.g. 'xdcc send %s'",
         "aria-label": "Messagepattern",
         "aria-describedby": "basic-addon4"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
         type: "invalid"
-      }, "Please provide a valid state.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      }, "Please provide a valid state.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: 'light',
+        ref: this.wizardBotBtn,
+        disabled: !this.state.BotValid,
         onClick: function onClick() {
           return _this2.setState({
             index: 4
           });
         }
-      }, "Next Page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "That", "\'", "s it!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now your bot is ready to get files for you."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, "Next Page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
+        className: "wizardPageContainer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "That", "\'", "s it!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now your bot is ready to get files for you."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon5"

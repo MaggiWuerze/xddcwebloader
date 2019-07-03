@@ -3,55 +3,15 @@
 <head lang="en">
 
     <meta charset="UTF-8"/>
-    <title>ReactJS + Spring Data REST</title>
+    <title>Login</title>
 
 
     <link rel="stylesheet" href="/css/main.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css"/>
 
-
-    <script type="text/javascript">
-
-    function start() {
-
-        var error = urlParam('error');
-
-        console.log(error);
-        if(error == 'true'){
-
-            console.log("showing error alert");
-            document.getElementById('error-alert').hidden = false;
-
-        }
-
-    }
-
-
-        function urlParam(name){
-            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-
-            return results ? results[1] : 0;
-        }
-
-<!--        $(function() {-->
-<!--            console.log( "ready!" );-->
-<!--        });-->
-
-<!--        $(function(){-->
-
-<!--            var error = urlParam('error');-->
-
-<!--            console.log(error);-->
-
-<!--        });-->
-
-
-    </script>
-
-
 </head>
-<body class="column" onload="start()">
+<body class="column">
 
 <section id="welcome" style="min-height:100vh;" class="bg-primary d-flex flex-column">
     <div class="container text-center my-auto">
@@ -79,7 +39,7 @@
                                aria-describedby="basic-addon2">
                     </div>
 
-                    <div class="alert alert-danger" id="error-alert" role="alert" hidden>
+                    <div id="errors" th:if="${(param.error != null) and (param.error[0] == 'true')}" class="alert alert-danger" role="alert">
                         That didn't work. Password or Username was incorrect.
                     </div>
 

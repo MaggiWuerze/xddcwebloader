@@ -76,7 +76,7 @@ public class FileTransferProgressWatcher {
                 logger.log(Level.WARNING, "Error in progressWatcher", e);
             }
 
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
 
     }
 

@@ -28,6 +28,12 @@
 
 }
 
+.wizardPageContainer {
+
+padding: 15px;
+
+}
+
 .main {
     position: fixed !important;
     position: absolute;
@@ -63,6 +69,27 @@
     transform: scale(0.7);
 
 }
+
+/*input validation*/
+
+.wizardPageContainer input {
+    border-left: 3px solid;
+    border-radius: 5px;
+    transition: border-color .5s ease-out;
+}
+.wizardPageContainer input:optional {
+    border-left-color: #999;
+}
+.wizardPageContainer input:required {
+    border-left-color: palegreen;
+}
+.wizardPageContainer input:invalid {
+    border-left-color: salmon;
+}
+.wizardPageContainer input:valid {
+    border-left-color: greenyellow;
+}
+
 
 /*Classes for creating dialogs*/
 

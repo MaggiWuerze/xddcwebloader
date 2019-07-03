@@ -10,6 +10,7 @@ export default class BotCard extends React.Component {
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
         this.state = {
             open: false,
         };
@@ -20,13 +21,10 @@ export default class BotCard extends React.Component {
     }
 
     handleKeyDown(e) {
+
+        console.log(e);
         if (e.key === 'Enter') {
-            console.log(e);
-            var ref = this.props.bot.id + "-fileRefId";
-            console.log(ref);
-            var input = ReactDOM.findDOMNode(this.refs[ref]);
-            input.value = '';
-            this.handleSubmit();
+            this.handleSubmit(e);
         }
     }
 
@@ -38,9 +36,8 @@ export default class BotCard extends React.Component {
         newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs[this.props.bot.id + "-fileRefId"]).value.trim();
         this.props.onCreate(newBot, "downloads", null);
 
-        // this.props.botAttributes.forEach(attribute => {
-        //     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
-        // });
+        var ref = this.props.bot.id + "-fileRefId";
+        ReactDOM.findDOMNode(this.refs[ref]).value = '';
 
     }
 

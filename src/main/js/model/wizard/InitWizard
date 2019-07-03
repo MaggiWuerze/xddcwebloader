@@ -12,14 +12,29 @@ import {
     Row
 } from 'react-bootstrap';
 
+const ReactDOM = require('react-dom');
+
 export default class InitWizard extends React.Component {
 
 
     constructor(props) {
         super(props);
 
+        // method refs
         this.handleFinish = this.handleFinish.bind(this);
-        this.validateInput = this.validateInput.bind(this);
+        this.validateServer = this.validateServer.bind(this);
+        this.validateChannel = this.validateChannel.bind(this);
+        this.validateBot = this.validateBot.bind(this);
+
+        //field refs
+        this.wizardServerForm = React.createRef();
+        this.wizardServerBtn = React.createRef();
+
+        this.wizardChannelForm = React.createRef();
+        this.wizardChannelBtn = React.createRef();
+
+        this.wizardBotForm = React.createRef();
+        this.wizardBotBtn = React.createRef();
 
         this.state = {
             email: "",
@@ -29,7 +44,9 @@ export default class InitWizard extends React.Component {
             wrap: false,
             controls: false,
             interval: null,
-            validated: true
+            ServerValid: false,
+            ChannelValid: false,
+            BotValid: false
         };
       }
 
@@ -48,17 +65,66 @@ export default class InitWizard extends React.Component {
         this.props.onFinish();
     }
 
+    //Form Validation
+    checkValidity(input){
 
-    validateInput(event){
+        this.resetValidity(input);
 
-        event.preventDefault();
-        const form = event.currentTarget;
-        let valid = form.checkValidity();
+        if(!input.checkValidity()){
 
-        console.log(form.value);
+            this.setInvalid(input);
 
-        this.setState({ validated: valid });
-        console.log("form ok: " + valid);
+        }else{
+
+            this.setValid(input);
+
+        }
+
+    }
+    setInvalid(input){
+
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        input.setCustomValidity("Invalid!");
+
+    }
+    setValid(input){
+
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        input.setCustomValidity("");
+
+    }
+    resetValidity(input){
+
+        input.classList.remove('is-invalid');
+        input.classList.remove('is-valid');
+        input.setCustomValidity("");
+
+    }
+
+    validateServer(event){
+
+        this.checkValidity(event.currentTarget);
+        var validName = document.getElementById('wizardFormServerName');
+        var validUrl = document.getElementById('wizardFormServerUrl');
+        this.setState({ ServerValid: (validName.validity.valid && validUrl.validity.valid) });
+
+    }
+    validateChannel(event){
+
+        this.checkValidity(event.currentTarget);
+        var validName = document.getElementById('wizardFormChannelName');
+        this.setState({ ChannelValid: validName.validity.valid });
+
+    }
+    validateBot(event){
+
+
+        this.checkValidity(event.currentTarget);
+        var validName = document.getElementById('wizardFormBotName');
+        var validPattern = document.getElementById('wizardFormBotPattern');
+        this.setState({ BotValid: (validName.validity.valid && validPattern.validity.valid) });
 
     }
 
@@ -83,7 +149,7 @@ export default class InitWizard extends React.Component {
                 style={{minHeight: '40vh'}}>
 
                 {/*WELCOME PAGE*/}
-                <Carousel.Item>
+                <Carousel.Item className="wizardPageContainer">
                     <Row>
                         <Col>
                             <h1>Welcome</h1>
@@ -97,7 +163,7 @@ export default class InitWizard extends React.Component {
                 </Carousel.Item>
 
                 {/*FIRST PAGE*/}
-                <Carousel.Item>
+                <Carousel.Item className="wizardPageContainer">
                     <Row>
                         <Col>
                             <h2>The Server</h2>
@@ -106,65 +172,75 @@ export default class InitWizard extends React.Component {
                     </Row>
                     <Row>
                         <Col>
-                        <Form noValidate validated={this.state.validated} >
-                            <Form.Group controlId="validationCustomUsername">
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Prepend>
-                                      <InputGroup.Text id="basic-addon1">Server URL</InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                    <Form.Control
-                                        required
-                                        type="url"
-                                        pattern="https?://.+"
-                                        onChange={this.validateInput}
-                                        placeholder="The Server URL, e.g. 'irc.rizon.net'"
-                                        aria-label="Username"
-                                        aria-describedby="basic-addon1"
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        Please provide a valid state.
-                                    </Form.Control.Feedback>
-                                  </InputGroup>
-                            </Form.Group>
-                            </Form>
-                            <Button variant={'light'} onClick={() => this.setState({index: 2})}>Next Page</Button>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text id="basic-addon1">Servername</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                    id="wizardFormServerName"
+                                    required
+                                    type="text"
+                                    onChange={this.validateServer}
+                                    placeholder="The name of your Server, e.g. 'Rizon'"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">Please provide a valid name for your Server.</Form.Control.Feedback>
+                            </InputGroup>
+
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text id="basic-addon1">Server URL</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                    id="wizardFormServerUrl"
+                                    required
+                                    type="text"
+                                    pattern="https?://.+"
+                                    onChange={this.validateServer}
+                                    placeholder="The Server URL, e.g. 'irc.rizon.net'"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                />
+                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">Please provide a valid url.</Form.Control.Feedback>
+                            </InputGroup>
+                            <Button variant={'light'} ref={this.wizardServerBtn} disabled={!this.state.ServerValid} onClick={() => this.setState({index: 2})}>Next Page</Button>
                         </Col>
                     </Row>
                 </Carousel.Item>
 
                 {/*  SECOND PAGE */}
-                <Carousel.Item>
+                <Carousel.Item className="wizardPageContainer">
                     <h2>Add A Channel</h2>
                     <p>
                       Now add a channel that exists on the server you just entered.<br />
                       This is the channel where you want to request your files.
                     </p>
-                    <Form noValidate validated={this.state.validated} >
-                        <Form.Group controlId="validationCustomUsername">
-                            <InputGroup className="mb-3">
-                              <InputGroup.Prepend>
-                                <InputGroup.Text id="basic-addon2">Channelname</InputGroup.Text>
-                              </InputGroup.Prepend>
-                              <Form.Control
-                                required
-                                type="text"
-                                onChange={this.validateInput}
-                                placeholder="Name of the IRC Channel, e.g. '#Lobby' or '#HorribleSubs'"
-                                aria-label="Username"
-                                aria-describedby="basic-addon2"
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                      Please provide a valid state.
-                              </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
-                    </Form>
-                    <Button variant={'light'} onClick={() => this.setState({index: 3})}>Next Page</Button>
+                    <InputGroup className="mb-3">
+                      <InputGroup.Prepend>
+                        <InputGroup.Text id="basic-addon2">Channelname</InputGroup.Text>
+                      </InputGroup.Prepend>
+                      <Form.Control
+                        id="wizardFormChannelName"
+                        required
+                        type="text"
+                        onChange={this.validateChannel}
+                        placeholder="Name of the IRC Channel, e.g. '#Lobby' or '#HorribleSubs'"
+                        aria-label="Username"
+                        aria-describedby="basic-addon2"
+                      />
+                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                              Please provide a valid name for your Channel.
+                      </Form.Control.Feedback>
+                    </InputGroup>
+                    <Button variant={'light'} ref={this.wizardChannelBtn} disabled={!this.state.ChannelValid} onClick={() => this.setState({index: 3})}>Next Page</Button>
                 </Carousel.Item>
 
                 {/*  THIRD PAGE */}
-                <Carousel.Item>
-
+                <Carousel.Item className="wizardPageContainer">
                     <h2>Create Your Bot</h2>
                     <p>
                         Finally enter the name of the bot that serves your content as well as a message template that will be used to write messages to them.
@@ -173,46 +249,43 @@ export default class InitWizard extends React.Component {
                         In some cases this is something like an id (#3432) in other cases it may be the specific file name (yourfile.txt).<br />
                         It is <b>mandatory</b> to include the <code>'%s'</code>
                     </p>
-                    <Form noValidate validated={this.state.validated} >
-                        <Form.Group controlId="validationCustomUsername">
-                            <InputGroup className="mb-3">
-                                <InputGroup.Prepend>
-                                  <InputGroup.Text id="basic-addon3">Botname</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl
-                                    required
-                                    type="text"
-                                    onChange={this.validateInput}
-                                    placeholder="The name of the bot you want to send your requests to, e.g. 'Ginpachi-Sensei'"
-                                    aria-label="Username"
-                                    aria-describedby="basic-addon3"
-                                />
-                            </InputGroup>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Prepend>
-                                  <InputGroup.Text id="basic-addon4">Messagepattern</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <Form.Control
-                                    required
-                                    type="text"
-                                    pattern="(\%s)"
-                                    onChange={this.validateInput}
-                                    placeholder="A message template that will be used to send messages, e.g. 'xdcc send %s'"
-                                    aria-label="Messagepattern"
-                                    aria-describedby="basic-addon4"
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                      Please provide a valid state.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
-                        </Form>
-                    <Button variant={'light'} onClick={() => this.setState({index: 4})}>Next Page</Button>
-
-                </Carousel.Item>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                          <InputGroup.Text id="basic-addon3">Botname</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl
+                            id="wizardFormBotName"
+                            required
+                            type="text"
+                            onChange={this.validateBot}
+                            placeholder="The name of the bot you want to send your requests to, e.g. 'Ginpachi-Sensei'"
+                            aria-label="Username"
+                            aria-describedby="basic-addon3"
+                        />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                          <InputGroup.Text id="basic-addon4">Messagepattern</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control
+                            id="wizardFormBotPattern"
+                            required
+                            type="text"
+                            pattern=".*(%s).*"
+                            onChange={this.validateBot}
+                            placeholder="A message template that will be used to send messages, e.g. 'xdcc send %s'"
+                            aria-label="Messagepattern"
+                            aria-describedby="basic-addon4"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                              Please provide a valid state.
+                        </Form.Control.Feedback>
+                    </InputGroup>
+                    <Button variant={'light'} ref={this.wizardBotBtn} disabled={!this.state.BotValid} onClick={() => this.setState({index: 4})}>Next Page</Button>
+                </Carousel.Item >
 
                 {/*  FINAL PAGE */}
-                <Carousel.Item>
+                <Carousel.Item className="wizardPageContainer">
                     <Row>
                         <Col>
                             <h2>That{"\'"}s it!</h2>

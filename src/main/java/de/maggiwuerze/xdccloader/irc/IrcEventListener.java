@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 @Component
 public class IrcEventListener extends ListenerAdapter {
 
-    final String path = System.getProperty("user.home") + File.separator + "downloads";
+    final String USER_HOME = System.getProperty("user.home") + File.separator + "downloads";
 
     final Logger LOG = Logger.getLogger("Class IrcEventListener");
 
@@ -78,12 +78,14 @@ public class IrcEventListener extends ListenerAdapter {
 
         //TODO: handle folder creation
 
-        //Create this file in the temp directory
-//        String path = "C:" + File.separatorChar + "ircDownload" + File.separatorChar + event.getSafeFilename();
+        //Create this file in the user home directory
+        String path = USER_HOME + File.separatorChar + event.getSafeFilename();
         File downloadFile = new File(path);
 
         //Receive the file from the user
         ReceiveFileTransfer fileTransfer = event.accept(downloadFile);
+
+
         bot.getProgressChecker().setFileTransfer(fileTransfer);
 
         TaskExecutor taskExecutor = new SimpleAsyncTaskExecutor(event.getBot().getNick() + " transfer");

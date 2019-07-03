@@ -78,4 +78,20 @@ public class TargetBot {
     public void setPattern(String pattern) {
         this.pattern = pattern;
     }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
+    }
 }
