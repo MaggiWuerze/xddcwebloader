@@ -12,7 +12,6 @@ import de.maggiwuerze.xdccloader.util.ProgressWatcherFactory;
 import de.maggiwuerze.xdccloader.util.SocketEvents;
 import de.maggiwuerze.xdccloader.util.State;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.Configuration;
 import org.pircbotx.exception.IrcException;
 
@@ -52,7 +51,7 @@ public class CustomSpringEventListener {
         String username = RandomStringUtils.randomAlphabetic(1) + RandomStringUtils.random(7, true, true);
 
         Configuration configuration = new Configuration.Builder()
-//                .setName(event.getPayload().getTargetBot().getName()) //Set the nick of the bot. CHANGE IN YOUR CODE
+//                .setUsername(event.getPayload().getTargetBot().getUsername()) //Set the nick of the bot. CHANGE IN YOUR CODE
                 .setName(username) //Set the nick of the bot. CHANGE IN YOUR CODE
                 .addServer(event.getPayload().getTargetBot().getServer().getServerUrl()) //Join the freenode network
                 .addAutoJoinChannel(event.getPayload().getTargetBot().getChannel().getName()) //Join the official #pircbotx channel
@@ -97,7 +96,7 @@ public class CustomSpringEventListener {
 
         downloadRepository.save(event.getPayload());
 
-        eventPublisher.sendWebsocketEvent(SocketEvents.UPDATE, event.getPayload());
+        eventPublisher.sendWebsocketEvent(SocketEvents.UPDATED_DOWNLOAD, event.getPayload());
 
     }
 
@@ -108,7 +107,7 @@ public class CustomSpringEventListener {
         event.getPayload().setStatus(State.DONE);
         Download download = downloadRepository.save(event.getPayload());
 
-        eventPublisher.sendWebsocketEvent(SocketEvents.UPDATE, event.getPayload());
+        eventPublisher.sendWebsocketEvent(SocketEvents.UPDATED_DOWNLOAD, event.getPayload());
 
     }
 

@@ -1,9 +1,12 @@
 package de.maggiwuerze.xdccloader.controller;
 
-import de.maggiwuerze.xdccloader.events.EntityCreationEvent;
+import de.maggiwuerze.xdccloader.events.channel.server.ChannelCreationEvent;
 import de.maggiwuerze.xdccloader.events.download.DownloadCreationEvent;
+import de.maggiwuerze.xdccloader.events.server.ServerCreationEvent;
 import de.maggiwuerze.xdccloader.model.*;
+import de.maggiwuerze.xdccloader.model.forms.ChannelForm;
 import de.maggiwuerze.xdccloader.model.forms.DownloadForm;
+import de.maggiwuerze.xdccloader.model.forms.ServerForm;
 import de.maggiwuerze.xdccloader.model.forms.TargetBotForm;
 import de.maggiwuerze.xdccloader.persistency.*;
 import de.maggiwuerze.xdccloader.util.SocketEvents;
@@ -13,16 +16,23 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @RestController
 @RequestMapping("/data")
 class DataController {
+
+
+    Logger logger = Logger.getLogger("Class DataController");
 
     @Autowired
     UserRepository userRepository;
@@ -47,16 +57,42 @@ class DataController {
 
     //INIT
     @GetMapping("/initialized")
-    public ResponseEntity<Boolean> getInitialized() {
+    public ResponseEntity<Boolean> getInitialized(Principal principal) {
 
-        return new ResponseEntity(true, HttpStatus.OK);
+        String username = principal.getName();
+        User user = userRepository.findUserByName(username).orElse(null);
+
+
+        if(user != null){
+
+            return new ResponseEntity(user.getInitialized(), HttpStatus.OK);
+
+        }else {
+
+            return new ResponseEntity("user not found", HttpStatus.UNAUTHORIZED);
+
+        }
 
     }
 
     @PostMapping("/initialized/")
-    public ResponseEntity<?> setInitialized(@RequestBody Boolean initBoolean) {
+    public ResponseEntity<?> setInitialized(Principal principal) {
 
-        return new ResponseEntity("ok", HttpStatus.OK);
+
+        User user = userRepository.findUserByName(principal.getName()).orElse(null);
+
+        if(user != null){
+
+            user.setInitialized(true);
+            userRepository.save(user);
+
+            return new ResponseEntity("ok", HttpStatus.OK);
+
+        }else {
+
+            return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
+
+        }
     }
 
     //DOWNLOADS
@@ -65,7 +101,7 @@ class DataController {
      * @return a list of all downloads
      */
     @GetMapping("/downloads/")
-    public ResponseEntity<List<Download>> getAllDownloads() {
+    public ResponseEntity<List<Object>> getAllDownloads() {
 
         List<Download> downloads = downloadRepository.findAllByOrderByProgressDesc();
         return new ResponseEntity(downloads, HttpStatus.OK);
@@ -77,7 +113,7 @@ class DataController {
      * @return a list of downloads. if active, then it return all that are still working. if not it returns all that have stopped, this includes errors
      */
     @GetMapping("/downloads/active/")
-    public ResponseEntity<List<Download>> getActiveDownloads(boolean active) {
+    public ResponseEntity<List<Object>> getActiveDownloads(boolean active) {
 
         List<State> states;
         if (!active) {
@@ -95,7 +131,7 @@ class DataController {
     }
 
     @GetMapping("/downloads/failed")
-    public ResponseEntity<List<Download>> getFailedDownloads() {
+    public ResponseEntity<List<Object>> getFailedDownloads() {
 
         return new ResponseEntity(downloadRepository.findAllByStatusOrderByProgressDesc(State.ERROR), HttpStatus.OK);
 
@@ -107,10 +143,12 @@ class DataController {
         Optional<TargetBot> targetBot = targetBotRepository.findById(downloadForm.getTargetBotId());
         String fileRefId = downloadForm.getFileRefId();
 
-        Download download = downloadRepository.save(new Download(targetBot.get(), fileRefId));
-        publishDownloadEvent(SocketEvents.NEW, download);
+        String s = "";
 
-        return new ResponseEntity("Download added succcessfully", HttpStatus.OK);
+        Download download = downloadRepository.save(new Download(targetBot.get(), fileRefId));
+        publishEvent(SocketEvents.NEW_DOWNLOAD, download);
+
+        return new ResponseEntity("Download added succcessfully. id=[" + download.getId() + "]", HttpStatus.OK);
     }
 
 
@@ -127,6 +165,14 @@ class DataController {
 
     }
 
+    @PostMapping("/servers/")
+    public ResponseEntity<?> addServer(@RequestBody ServerForm serverForm) {
+
+        Server server = serverRepository.save(new Server(serverForm.getName(), serverForm.getServerUrl()));
+
+        return new ResponseEntity("Download added succcessfully. id=[" + server.getId() + "]", HttpStatus.OK);
+    }
+
 
     //CHANNELS
 
@@ -139,6 +185,14 @@ class DataController {
         List<Channel> channels = channelRepository.findAll();
         return new ResponseEntity(channels, HttpStatus.OK);
 
+    }
+
+    @PostMapping("/channels/")
+    public ResponseEntity<?> addChannel(@RequestBody ChannelForm channelForm) {
+
+        Channel channel = channelRepository.save(new Channel(channelForm.getName()));
+
+        return new ResponseEntity("Download added succcessfully. id=[" + channel.getId() + "]", HttpStatus.OK);
     }
 
 
@@ -185,10 +239,27 @@ class DataController {
      * @param destinationSuffix
      * @param payload
      */
-    private void publishDownloadEvent(SocketEvents destinationSuffix, Download payload) {
+    private void publishEvent(SocketEvents destinationSuffix, Object payload) {
 
-        DownloadCreationEvent downloadCreationEvent = new DownloadCreationEvent(this, payload);
-        applicationEventPublisher.publishEvent(downloadCreationEvent);
+
+        if(payload instanceof Download){
+
+            DownloadCreationEvent downloadCreationEvent = new DownloadCreationEvent(this, (Download)payload);
+            applicationEventPublisher.publishEvent(downloadCreationEvent);
+
+        }
+        if(payload instanceof Server){
+
+            ServerCreationEvent downloadCreationEvent = new ServerCreationEvent(this, (Server)payload);
+            applicationEventPublisher.publishEvent(downloadCreationEvent);
+
+        }
+        if(payload instanceof Channel){
+
+            ChannelCreationEvent downloadCreationEvent = new ChannelCreationEvent(this, (Channel)payload);
+            applicationEventPublisher.publishEvent(downloadCreationEvent);
+
+        }
 
         this.websocket.convertAndSend(
                 MESSAGE_PREFIX + destinationSuffix.getRoute(), payload);

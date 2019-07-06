@@ -30,7 +30,14 @@
 
 .wizardPageContainer {
 
-padding: 15px;
+    padding: 15px;
+
+}
+
+.wizardSpinner{
+
+    width: 5rem !important;
+    height: 5rem !important;
 
 }
 

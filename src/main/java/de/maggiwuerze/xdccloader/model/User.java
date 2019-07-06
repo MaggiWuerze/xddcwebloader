@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 
 @Data
-@Entity
+@Entity(name = "userdetail")
 public class User implements UserDetails {
 
     @Id
@@ -37,6 +37,9 @@ public class User implements UserDetails {
 
     @Column()
     Boolean locked = false;
+
+    @Column()
+    Boolean initialized = false;
 
     @Column()
     LocalDateTime expirationDate;
@@ -162,5 +165,13 @@ public class User implements UserDetails {
 
     public void setSessionValidUntil(LocalDateTime sessionValidUntil) {
         this.sessionValidUntil = sessionValidUntil;
+    }
+
+    public Boolean getInitialized() {
+        return initialized;
+    }
+
+    public void setInitialized(Boolean initialized) {
+        this.initialized = initialized;
     }
 }

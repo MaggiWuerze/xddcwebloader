@@ -50900,7 +50900,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
-      onboarding: true,
+      initialized: true,
       bots: [],
       servers: [],
       channels: [],
@@ -50929,7 +50929,7 @@ function (_React$Component) {
         var init = response.data;
 
         _this2.setState({
-          onboarding: init
+          initialized: init
         });
       })["catch"](function (error) {
         console.log(error);
@@ -50997,15 +50997,25 @@ function (_React$Component) {
     }
   }, {
     key: "onCreate",
-    value: function onCreate(object, objectName, modalName) {
+    value: function onCreate(object, objectType, modalName, callback) {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.post('data/' + objectName + '/', object).then(function (response) {
-        if (response.status.toString() != '200') {
-          alert("there was an error!");
-        } else if (modalName) {
-          _this3.toggleBoolean(modalName);
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.post('data/' + objectType + '/', object).then(function (response) {
+        switch (response.status.toString()) {
+          case '200':
+            console.log("success");
+            modalName ? _this3.toggleBoolean(modalName) : '';
+            callback(true);
+            break;
+
+          default:
+            console.log("onCreate error");
+            console.log("statuscode: " + response.status.toString());
+            callback(false);
         }
+      })["catch"](function (error) {
+        callback(false);
+        console.log(error);
       });
     }
   }, {
@@ -51119,10 +51129,33 @@ function (_React$Component) {
     }
   }, {
     key: "finishOnboarding",
-    value: function finishOnboarding() {
-      this.setState({
-        onboarding: false
+    value: function finishOnboarding(setupDone) {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.post('data/initialized/').then(function (response) {
+        switch (response.status.toString()) {
+          case '200':
+            _this4.toggleBoolean('initialized');
+
+            var newUrl = location.replace("register", "");
+            var title = "XDCC Loader";
+            console.log("newUrl: " + newUrl);
+            console.log("title: " + title);
+            var obj = {
+              Title: title,
+              Url: newUrl
+            };
+            history.pushState(obj, obj.Title, obj.Url);
+            break;
+
+          default:
+            console.log("finisch onboarding error");
+            console.log("statuscode: " + response.status.toString());
+        }
+      })["catch"](function (error) {
+        console.log(error);
       });
+      setupDone ? this.loadFromServer() : "";
     }
   }, {
     key: "componentDidMount",
@@ -51142,10 +51175,11 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
-      if (this.state.onboarding) {
+      if (!this.state.initialized) {
         return React.createElement(_model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          onCreate: this.onCreate,
           onFinish: this.finishOnboarding
         });
       } else {
@@ -51182,7 +51216,7 @@ function (_React$Component) {
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this4.toggleBoolean('showBotModal');
+            return _this5.toggleBoolean('showBotModal');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
@@ -51193,7 +51227,7 @@ function (_React$Component) {
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this4.toggleBoolean('showServerModal');
+            return _this5.toggleBoolean('showServerModal');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
@@ -51204,7 +51238,7 @@ function (_React$Component) {
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this4.toggleBoolean('showChannelModal');
+            return _this5.toggleBoolean('showChannelModal');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
@@ -51262,7 +51296,7 @@ function (_React$Component) {
           attributes: this.state.botAttributes,
           show: this.state.showBotModal,
           onClose: function onClose() {
-            return _this4.toggleBoolean('showBotModal');
+            return _this5.toggleBoolean('showBotModal');
           },
           onCreate: this.onCreate
         }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -51270,7 +51304,7 @@ function (_React$Component) {
           attributes: this.state.serverAttributes,
           show: this.state.showServerModal,
           onClose: function onClose() {
-            return _this4.toggleBoolean('showServerModal');
+            return _this5.toggleBoolean('showServerModal');
           },
           onCreate: this.onCreate
         }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -51278,7 +51312,7 @@ function (_React$Component) {
           attributes: this.state.channelAttributes,
           show: this.state.showChannelModal,
           onClose: function onClose() {
-            return _this4.toggleBoolean('showChannelModal');
+            return _this5.toggleBoolean('showChannelModal');
           },
           onCreate: this.onCreate
         }));
@@ -51621,10 +51655,10 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var newBot = {};
-      newBot["targetBotId"] = this.props.bot.id;
-      newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs[this.props.bot.id + "-fileRefId"]).value.trim();
-      this.props.onCreate(newBot, "downloads", null);
+      var download = {};
+      download["targetBotId"] = this.props.bot.id;
+      download["fileRefId"] = ReactDOM.findDOMNode(this.refs[this.props.bot.id + "-fileRefId"]).value.trim();
+      this.props.onCreate(download, "downloads", null);
       var ref = this.props.bot.id + "-fileRefId";
       ReactDOM.findDOMNode(this.refs[ref]).value = '';
     }
@@ -52340,7 +52374,12 @@ function (_React$Component) {
     _this.handleFinish = _this.handleFinish.bind(_assertThisInitialized(_this));
     _this.validateServer = _this.validateServer.bind(_assertThisInitialized(_this));
     _this.validateChannel = _this.validateChannel.bind(_assertThisInitialized(_this));
-    _this.validateBot = _this.validateBot.bind(_assertThisInitialized(_this)); //field refs
+    _this.validateFileRef = _this.validateFileRef.bind(_assertThisInitialized(_this));
+    _this.validateBot = _this.validateBot.bind(_assertThisInitialized(_this));
+    _this.createServer = _this.createServer.bind(_assertThisInitialized(_this));
+    _this.createChannel = _this.createChannel.bind(_assertThisInitialized(_this));
+    _this.createBot = _this.createBot.bind(_assertThisInitialized(_this));
+    _this.nextPage = _this.nextPage.bind(_assertThisInitialized(_this)); //field refs
 
     _this.wizardServerForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.wizardServerBtn = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -52358,7 +52397,9 @@ function (_React$Component) {
       interval: null,
       ServerValid: false,
       ChannelValid: false,
-      BotValid: false
+      BotValid: false,
+      FileRefValid: false,
+      workingInBg: false
     };
     return _this;
   }
@@ -52367,17 +52408,28 @@ function (_React$Component) {
     key: "handleSelect",
     value: function handleSelect(selectedIndex, e) {
       this.setState({
-        index: selectedIndex,
-        direction: e.direction
+        index: selectedIndex
       });
     }
   }, {
     key: "handleFinish",
     value: function handleFinish(e) {
-      e.preventDefault();
-      console.log("handleFinish!");
-      this.props.onFinish();
-    }
+      console.log("finishing Wizard");
+
+      if (this.state.FileRefValid) {
+        var fileRef = document.getElementById('wizardFormFileRef');
+        console.log("with value " + fileRef);
+        var download = {
+          targetBotId: 1,
+          fileRefId: fileRef.value
+        };
+        this.props.onCreate(download, "downloads", "", this.props.onFinish);
+      } else {
+        console.log("without setup");
+        this.props.onFinish();
+      }
+    } //Form Validation
+
   }, {
     key: "checkValidity",
     value: function checkValidity(input) {
@@ -52440,6 +52492,78 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "validateFileRef",
+    value: function validateFileRef(event) {
+      var validFileRef = document.getElementById('wizardFormFileRef');
+      this.checkValidity(event.currentTarget);
+      console.log("checking fileRef with value:" + validFileRef.value);
+      this.setState({
+        FileRefValid: validFileRef.validity.valid
+      });
+      console.log("fileRef valid:" + validFileRef.validity.valid);
+    }
+  }, {
+    key: "nextPage",
+    value: function nextPage(success) {
+      if (success) {
+        var nextIndex = this.state.index + 1;
+        this.setState({
+          index: nextIndex,
+          workingInBg: false
+        });
+      } else {
+        console.log("error!");
+        this.setState({
+          workingInBg: false,
+          wizardError: true
+        });
+      }
+    } //handle carousel page submit
+
+  }, {
+    key: "createServer",
+    value: function createServer() {
+      this.setState({
+        workingInBg: true
+      });
+      var validName = document.getElementById('wizardFormServerName').value;
+      var validUrl = document.getElementById('wizardFormServerUrl').value;
+      var server = {
+        name: validName,
+        serverUrl: validUrl
+      };
+      this.props.onCreate(server, "servers", "", this.nextPage);
+    }
+  }, {
+    key: "createChannel",
+    value: function createChannel() {
+      this.setState({
+        workingInBg: true
+      });
+      var validName = document.getElementById('wizardFormChannelName').value;
+      var channel = {
+        name: validName,
+        bla: "valid"
+      };
+      this.props.onCreate(channel, "channels", "", this.nextPage);
+    }
+  }, {
+    key: "createBot",
+    value: function createBot() {
+      this.setState({
+        workingInBg: true
+      });
+      var validName = document.getElementById('wizardFormBotName').value;
+      var validPattern = document.getElementById('wizardFormBotPattern').value;
+      var bot = {
+        name: validName,
+        pattern: validPattern,
+        serverId: 1,
+        channelId: 1
+      };
+      this.props.onCreate(bot, "bots", "", this.nextPage);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -52490,7 +52614,21 @@ function (_React$Component) {
         }
       }, "Start"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
         className: "wizardPageContainer"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "The Server"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Enter the URL to the IRC server you want to connect to"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, this.state.workingInBg && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        id: "welcome",
+        style: {
+          minHeight: '100vh'
+        },
+        className: "bg-primary d-flex flex-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container text-center my-auto"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        className: "wizardSpinner",
+        animation: "border",
+        role: "status"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Creating Server...")))), !this.state.workingInBg && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "The Server"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Enter the URL to the IRC server you want to connect to"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon1"
@@ -52504,7 +52642,7 @@ function (_React$Component) {
         "aria-describedby": "basic-addon1"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, null, "Looks good!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
         type: "invalid"
-      }, "Please provide a valid name for your Server.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, "Please provide a name for your Server.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon1"
@@ -52512,25 +52650,35 @@ function (_React$Component) {
         id: "wizardFormServerUrl",
         required: true,
         type: "text",
-        pattern: "https?://.+",
         onChange: this.validateServer,
         placeholder: "The Server URL, e.g. 'irc.rizon.net'",
         "aria-label": "Username",
         "aria-describedby": "basic-addon1"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, null, "Looks good!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
         type: "invalid"
-      }, "Please provide a valid url.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      }, "Please provide a url.")), this.state.wizardError && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Alert"], {
+        variant: 'danger'
+      }, "There was an error while creating your Server. Please inspect your values and try again"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: 'light',
         ref: this.wizardServerBtn,
         disabled: !this.state.ServerValid,
-        onClick: function onClick() {
-          return _this2.setState({
-            index: 2
-          });
-        }
-      }, "Next Page")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
+        onClick: this.createServer
+      }, "Next Page"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
         className: "wizardPageContainer"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add A Channel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now add a channel that exists on the server you just entered.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "This is the channel where you want to request your files."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, this.state.workingInBg && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        id: "welcome",
+        style: {
+          minHeight: '100vh'
+        },
+        className: "bg-primary d-flex flex-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container text-center my-auto"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        animation: "border",
+        role: "status"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Adding Channel...")))), !this.state.workingInBg && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add A Channel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now add a channel that exists on the server you just entered.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "This is the channel where you want to request your files."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon2"
@@ -52544,18 +52692,29 @@ function (_React$Component) {
         "aria-describedby": "basic-addon2"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, null, "Looks good!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control.Feedback, {
         type: "invalid"
-      }, "Please provide a valid name for your Channel.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      }, "Please provide a valid name for your Channel.")), this.state.wizardError && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Alert"], {
+        variant: 'danger'
+      }, "There was an error while adding your Channel. Please inspect your values and try again"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: 'light',
         ref: this.wizardChannelBtn,
         disabled: !this.state.ChannelValid,
-        onClick: function onClick() {
-          return _this2.setState({
-            index: 3
-          });
-        }
-      }, "Next Page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
+        onClick: this.createChannel
+      }, "Next Page"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
         className: "wizardPageContainer"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Create Your Bot"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Finally enter the name of the bot that serves your content as well as a message template that will be used to write messages to them. The message template should look somewhat like this: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, " 'xdcc send %s' "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "The ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'"), " part is where the part that identifies the file will be placed. In some cases this is something like an id (#3432) in other cases it may be the specific file name (yourfile.txt).", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "It is ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "mandatory"), " to include the ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, this.state.workingInBg && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        id: "welcome",
+        style: {
+          minHeight: '100vh'
+        },
+        className: "bg-primary d-flex flex-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container text-center my-auto"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Spinner"], {
+        animation: "border",
+        role: "status"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Adding Channel...")))), !this.state.workingInBg && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Create Your Bot"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Finally enter the name of the bot that serves your content as well as a message template that will be used to write messages to them. The message template should look somewhat like this: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, " 'xdcc send %s' "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "The ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'"), " part is where the part that identifies the file will be placed. In some cases this is something like an id (#3432) in other cases it may be the specific file name (yourfile.txt).", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "It is ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "mandatory"), " to include the ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "'%s'")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon3"
@@ -52586,25 +52745,29 @@ function (_React$Component) {
         variant: 'light',
         ref: this.wizardBotBtn,
         disabled: !this.state.BotValid,
-        onClick: function onClick() {
-          return _this2.setState({
-            index: 4
-          });
-        }
-      }, "Next Page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
+        onClick: this.createBot
+      }, "Next Page"), this.state.wizardError && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Alert"], {
+        variant: 'danger'
+      }, "There was an error while creating your Bot. Please inspect your values and try again"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Carousel"].Item, {
         className: "wizardPageContainer"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "That", "\'", "s it!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now your bot is ready to get files for you."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "That", "\'", "s it!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Now your bot is ready to get files for you."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Let", "\'", " try it."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
         className: "mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
         id: "basic-addon5"
-      }, "@")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
-        placeholder: "Username",
-        "aria-label": "Username",
-        "aria-describedby": "basic-addon5"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      }, "File reference")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+        required: true,
+        id: "wizardFormFileRef",
+        placeholder: "the ID/Name referencing your File",
+        "aria-label": "the ID or Name referencing your File",
+        "aria-describedby": "basic-addon5",
+        onChange: this.validateFileRef
+      })), !this.state.FileRefValid && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: 'danger',
+        onClick: this.handleFinish
+      }, "No Thanks!"), this.state.FileRefValid && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: 'success',
         onClick: this.handleFinish
-      }, "Finish!")))))));
+      }, "Send")))))));
     }
   }]);
 

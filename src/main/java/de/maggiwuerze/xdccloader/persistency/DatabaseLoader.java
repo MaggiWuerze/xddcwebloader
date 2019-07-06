@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 
 
-@Component
+//@Component
 class DatabaseLoader implements CommandLineRunner {
 
 
@@ -44,7 +44,7 @@ class DatabaseLoader implements CommandLineRunner {
 		String targetBotName = "Ginpachi-Sensei";
         TargetBot targetBot = this.ircUserRepository.save(new TargetBot(server, channel, targetBotName, "xdcc send %s"));
 
-        targetBotName = "CR-HOLLAND|NEW";
+        targetBotName = "CR-HOLLAND|NEW_DOWNLOAD";
         TargetBot targetBot2 = this.ircUserRepository.save(new TargetBot(server, dbChannel, targetBotName, "xdcc send %s"));
 
         downloadRepository.save(new Download(targetBot,"#34235"));

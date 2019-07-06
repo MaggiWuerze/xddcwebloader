@@ -6,19 +6,16 @@ public class TargetBotForm {
 
     String pattern;
 
-    String fileRefId;
-
     Long serverId;
 
     Long channelId;
 
-    public TargetBotForm(String name, String pattern, Long serverId, Long channelId, String fileRefId) {
+    public TargetBotForm(String name, String pattern, Long serverId, Long channelId) {
 
         this.name = name;
         this.pattern = pattern;
         this.serverId = serverId;
         this.channelId = channelId;
-        this.fileRefId = fileRefId;
     }
 
     public String getName() {
@@ -53,11 +50,4 @@ public class TargetBotForm {
         this.channelId = channelId;
     }
 
-    public String getFileRefId() {
-        return fileRefId;
-    }
-
-    public void setFileRefId(String fileRefId) {
-        this.fileRefId = fileRefId;
-    }
 }

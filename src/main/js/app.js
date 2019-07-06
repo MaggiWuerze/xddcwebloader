@@ -30,7 +30,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            onboarding: true,
+            initialized: true,
             bots: [],
             servers: [],
             channels: [],
@@ -57,7 +57,7 @@ class App extends React.Component {
 
                 var init = response.data;
                 this.setState({
-                    onboarding: init
+                    initialized: init
                 });
 
 
@@ -165,21 +165,33 @@ class App extends React.Component {
 
     }
 
-    onCreate(object, objectName, modalName) {
+    onCreate(object, objectType, modalName, callback) {
 
         axios
-            .post('data/' + objectName + '/', object)
+            .post('data/' + objectType + '/', object)
             .then((response) => {
 
-                if (response.status.toString() != '200') {
+                switch(response.status.toString()){
 
-                    alert("there was an error!");
+                    case '200':
 
-                } else if (modalName) {
+                        console.log("success");
+                        modalName ? this.toggleBoolean(modalName) : '';
+                        callback(true);
 
-                    this.toggleBoolean(modalName);
+                    break;
+
+                    default:
+
+                        console.log("onCreate error");
+                        console.log("statuscode: " + response.status.toString());
+                        callback(false);
+
                 }
-            });
+            }).catch((error) => {
+                    callback(false);
+                    console.log(error);
+                });
 
     }
 
@@ -319,9 +331,38 @@ class App extends React.Component {
         this.setState({[key]: !this.state[key]});
     }
 
-    finishOnboarding(){
+    finishOnboarding(setupDone){
 
-        this.setState({onboarding: false});
+        axios
+        .post('data/initialized/')
+        .then((response) => {
+
+            switch(response.status.toString()){
+
+                case '200':
+
+                    this.toggleBoolean('initialized');
+
+                    let newUrl = location.replace("register", "");
+                    let title = "XDCC Loader"
+                    console.log("newUrl: " + newUrl)
+                    console.log("title: " + title)
+                    var obj = { Title: title, Url: newUrl };
+                    history.pushState(obj, obj.Title, obj.Url);
+
+                break;
+
+                default:
+
+                    console.log("finisch onboarding error");
+                    console.log("statuscode: " + response.status.toString());
+
+            }
+            }).catch((error) => {
+                console.log(error);
+            });
+
+        setupDone ? this.loadFromServer() : "";
 
     }
 
@@ -337,11 +378,11 @@ class App extends React.Component {
 
     render() {
 
-        if (this.state.onboarding) {
+        if (!this.state.initialized) {
 
             return (
 
-                <InitWizard onFinish={this.finishOnboarding}/>
+                <InitWizard onCreate={this.onCreate} onFinish={this.finishOnboarding}/>
 
             )
 

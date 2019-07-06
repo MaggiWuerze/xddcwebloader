@@ -31,10 +31,10 @@ export default class BotCard extends React.Component {
     handleSubmit(e) {
 
         e.preventDefault();
-        const newBot = {};
-        newBot["targetBotId"] = this.props.bot.id;
-        newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs[this.props.bot.id + "-fileRefId"]).value.trim();
-        this.props.onCreate(newBot, "downloads", null);
+        const download = {};
+        download["targetBotId"] = this.props.bot.id;
+        download["fileRefId"] = ReactDOM.findDOMNode(this.refs[this.props.bot.id + "-fileRefId"]).value.trim();
+        this.props.onCreate(download, "downloads", null);
 
         var ref = this.props.bot.id + "-fileRefId";
         ReactDOM.findDOMNode(this.refs[ref]).value = '';

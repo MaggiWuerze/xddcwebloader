@@ -2,9 +2,11 @@ package de.maggiwuerze.xdccloader.config;
 
 import de.maggiwuerze.xdccloader.security.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,12 +30,12 @@ import java.util.*;
 
 
 //@EnableWebMvc
+@PropertySource("classpath:application.properties")
 @Configuration
 class SpringSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
     CustomUserDetailService userDetailsService;
-
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -50,11 +52,13 @@ class SpringSecurityConfig extends WebSecurityConfigurerAdapter implements WebMv
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
+
         http
                 .headers()
                 .frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/register").permitAll()
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/webjars/**", "/resources/**").permitAll()
