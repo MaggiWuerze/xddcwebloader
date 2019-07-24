@@ -3,6 +3,7 @@ package de.maggiwuerze.xdccloader.util;
 import de.maggiwuerze.xdccloader.events.download.DownloadDoneEvent;
 import de.maggiwuerze.xdccloader.events.download.DownloadUpdateEvent;
 import de.maggiwuerze.xdccloader.model.Download;
+import org.apache.commons.io.FileUtils;
 import org.pircbotx.dcc.ReceiveFileTransfer;
 import org.springframework.context.ApplicationEventPublisher;
 
@@ -52,8 +53,17 @@ public class FileTransferProgressWatcher {
         schedulerResult = exec.scheduleAtFixedRate(() -> {
 
             try {
-                long bytesTransfered = fileTransfer.getBytesTransfered();
-                long fileSize = fileTransfer.getFileSize();
+
+                long bytesTransfered = fileTransfer.getFileTransferStatus().getBytesTransfered();
+                long fileSize = fileTransfer.getFileTransferStatus().getFileSize();
+
+                if(download.getFilesize().equals("-")){
+
+                    String readableString = FilesizeFormatter.createAutoReadableString(fileSize);
+                    download.setFilesize(readableString);
+
+                }
+
 
                 Long newProgress = (long) Math.ceil(((float) bytesTransfered / fileSize) * 100);
                 download.setProgress(newProgress);
@@ -61,7 +71,7 @@ public class FileTransferProgressWatcher {
                 DownloadUpdateEvent downloadUpdateEvent = new DownloadUpdateEvent(this, download);
                 applicationEventPublisher.publishEvent(downloadUpdateEvent);
 
-                if(newProgress == 100 && fileTransfer.isFinished()){
+                if(newProgress == 100 && fileTransfer.getFileTransferStatus().isSuccessful()){
 
                     download.setStatus(State.FINALIZING);
                     DownloadDoneEvent downloadDoneEvent = new DownloadDoneEvent(this, download);
@@ -70,6 +80,7 @@ public class FileTransferProgressWatcher {
                     schedulerResult.cancel(false);
 
                 }
+
 
 
             } catch (Exception e) {

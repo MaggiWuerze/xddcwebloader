@@ -289,6 +289,42 @@ module.exports = _interopRequireDefault;
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireWildcard.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireWildcard(obj) {
+  if (obj && obj.__esModule) {
+    return obj;
+  } else {
+    var newObj = {};
+
+    if (obj != null) {
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};
+
+          if (desc.get || desc.set) {
+            Object.defineProperty(newObj, key, desc);
+          } else {
+            newObj[key] = obj[key];
+          }
+        }
+      }
+    }
+
+    newObj["default"] = obj;
+    return newObj;
+  }
+}
+
+module.exports = _interopRequireWildcard;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js":
 /*!*****************************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js ***!
@@ -2246,6 +2282,313 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
+/***/ "./node_modules/css-vendor/lib/camelize.js":
+/*!*************************************************!*\
+  !*** ./node_modules/css-vendor/lib/camelize.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports['default'] = camelize;
+var regExp = /[-\s]+(.)?/g;
+
+/**
+ * Convert dash separated strings to camel cased.
+ *
+ * @param {String} str
+ * @return {String}
+ */
+function camelize(str) {
+  return str.replace(regExp, toUpper);
+}
+
+function toUpper(match, c) {
+  return c ? c.toUpperCase() : '';
+}
+
+/***/ }),
+
+/***/ "./node_modules/css-vendor/lib/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/css-vendor/lib/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.supportedValue = exports.supportedProperty = exports.prefix = undefined;
+
+var _prefix = __webpack_require__(/*! ./prefix */ "./node_modules/css-vendor/lib/prefix.js");
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+var _supportedProperty = __webpack_require__(/*! ./supported-property */ "./node_modules/css-vendor/lib/supported-property.js");
+
+var _supportedProperty2 = _interopRequireDefault(_supportedProperty);
+
+var _supportedValue = __webpack_require__(/*! ./supported-value */ "./node_modules/css-vendor/lib/supported-value.js");
+
+var _supportedValue2 = _interopRequireDefault(_supportedValue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+exports['default'] = {
+  prefix: _prefix2['default'],
+  supportedProperty: _supportedProperty2['default'],
+  supportedValue: _supportedValue2['default']
+}; /**
+    * CSS Vendor prefix detection and property feature testing.
+    *
+    * @copyright Oleg Slobodskoi 2015
+    * @website https://github.com/jsstyles/css-vendor
+    * @license MIT
+    */
+
+exports.prefix = _prefix2['default'];
+exports.supportedProperty = _supportedProperty2['default'];
+exports.supportedValue = _supportedValue2['default'];
+
+/***/ }),
+
+/***/ "./node_modules/css-vendor/lib/prefix.js":
+/*!***********************************************!*\
+  !*** ./node_modules/css-vendor/lib/prefix.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _isInBrowser = __webpack_require__(/*! is-in-browser */ "./node_modules/is-in-browser/dist/module.js");
+
+var _isInBrowser2 = _interopRequireDefault(_isInBrowser);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var js = ''; /**
+              * Export javascript style and css style vendor prefixes.
+              * Based on "transform" support test.
+              */
+
+var css = '';
+
+// We should not do anything if required serverside.
+if (_isInBrowser2['default']) {
+  // Order matters. We need to check Webkit the last one because
+  // other vendors use to add Webkit prefixes to some properties
+  var jsCssMap = {
+    Moz: '-moz-',
+    // IE did it wrong again ...
+    ms: '-ms-',
+    O: '-o-',
+    Webkit: '-webkit-'
+  };
+  var style = document.createElement('p').style;
+  var testProp = 'Transform';
+
+  for (var key in jsCssMap) {
+    if (key + testProp in style) {
+      js = key;
+      css = jsCssMap[key];
+      break;
+    }
+  }
+}
+
+/**
+ * Vendor prefix string for the current browser.
+ *
+ * @type {{js: String, css: String}}
+ * @api public
+ */
+exports['default'] = { js: js, css: css };
+
+/***/ }),
+
+/***/ "./node_modules/css-vendor/lib/supported-property.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/css-vendor/lib/supported-property.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports['default'] = supportedProperty;
+
+var _isInBrowser = __webpack_require__(/*! is-in-browser */ "./node_modules/is-in-browser/dist/module.js");
+
+var _isInBrowser2 = _interopRequireDefault(_isInBrowser);
+
+var _prefix = __webpack_require__(/*! ./prefix */ "./node_modules/css-vendor/lib/prefix.js");
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+var _camelize = __webpack_require__(/*! ./camelize */ "./node_modules/css-vendor/lib/camelize.js");
+
+var _camelize2 = _interopRequireDefault(_camelize);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var el = void 0;
+var cache = {};
+
+if (_isInBrowser2['default']) {
+  el = document.createElement('p');
+
+  /**
+   * We test every property on vendor prefix requirement.
+   * Once tested, result is cached. It gives us up to 70% perf boost.
+   * http://jsperf.com/element-style-object-access-vs-plain-object
+   *
+   * Prefill cache with known css properties to reduce amount of
+   * properties we need to feature test at runtime.
+   * http://davidwalsh.name/vendor-prefix
+   */
+  var computed = window.getComputedStyle(document.documentElement, '');
+  for (var key in computed) {
+    if (!isNaN(key)) cache[computed[key]] = computed[key];
+  }
+}
+
+/**
+ * Test if a property is supported, returns supported property with vendor
+ * prefix if required. Returns `false` if not supported.
+ *
+ * @param {String} prop dash separated
+ * @return {String|Boolean}
+ * @api public
+ */
+function supportedProperty(prop) {
+  // For server-side rendering.
+  if (!el) return prop;
+
+  // We have not tested this prop yet, lets do the test.
+  if (cache[prop] != null) return cache[prop];
+
+  // Camelization is required because we can't test using
+  // css syntax for e.g. in FF.
+  // Test if property is supported as it is.
+  if ((0, _camelize2['default'])(prop) in el.style) {
+    cache[prop] = prop;
+  }
+  // Test if property is supported with vendor prefix.
+  else if (_prefix2['default'].js + (0, _camelize2['default'])('-' + prop) in el.style) {
+      cache[prop] = _prefix2['default'].css + prop;
+    } else {
+      cache[prop] = false;
+    }
+
+  return cache[prop];
+}
+
+/***/ }),
+
+/***/ "./node_modules/css-vendor/lib/supported-value.js":
+/*!********************************************************!*\
+  !*** ./node_modules/css-vendor/lib/supported-value.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports['default'] = supportedValue;
+
+var _isInBrowser = __webpack_require__(/*! is-in-browser */ "./node_modules/is-in-browser/dist/module.js");
+
+var _isInBrowser2 = _interopRequireDefault(_isInBrowser);
+
+var _prefix = __webpack_require__(/*! ./prefix */ "./node_modules/css-vendor/lib/prefix.js");
+
+var _prefix2 = _interopRequireDefault(_prefix);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var cache = {};
+var el = void 0;
+
+if (_isInBrowser2['default']) el = document.createElement('p');
+
+/**
+ * Returns prefixed value if needed. Returns `false` if value is not supported.
+ *
+ * @param {String} property
+ * @param {String} value
+ * @return {String|Boolean}
+ * @api public
+ */
+function supportedValue(property, value) {
+  // For server-side rendering.
+  if (!el) return value;
+
+  // It is a string or a number as a string like '1'.
+  // We want only prefixable values here.
+  if (typeof value !== 'string' || !isNaN(parseInt(value, 10))) return value;
+
+  var cacheKey = property + value;
+
+  if (cache[cacheKey] != null) return cache[cacheKey];
+
+  // IE can even throw an error in some cases, for e.g. style.content = 'bar'
+  try {
+    // Test value as it is.
+    el.style[property] = value;
+  } catch (err) {
+    cache[cacheKey] = false;
+    return false;
+  }
+
+  // Value is supported as it is.
+  if (el.style[property] !== '') {
+    cache[cacheKey] = value;
+  } else {
+    // Test value with vendor prefix.
+    value = _prefix2['default'].css + value;
+
+    // Hardcode test to convert "flex" to "-ms-flexbox" for IE10.
+    if (value === '-ms-flex') value = '-ms-flexbox';
+
+    el.style[property] = value;
+
+    // Value is supported with vendor prefix.
+    if (el.style[property] !== '') cache[cacheKey] = value;
+  }
+
+  if (!cache[cacheKey]) cache[cacheKey] = false;
+
+  // Reset style value.
+  el.style[property] = '';
+
+  return cache[cacheKey];
+}
+
+/***/ }),
+
 /***/ "./node_modules/dom-helpers/activeElement.js":
 /*!***************************************************!*\
   !*** ./node_modules/dom-helpers/activeElement.js ***!
@@ -3532,6 +3875,25 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
+/***/ "./node_modules/is-in-browser/dist/module.js":
+/*!***************************************************!*\
+  !*** ./node_modules/is-in-browser/dist/module.js ***!
+  \***************************************************/
+/*! exports provided: isBrowser, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isBrowser", function() { return isBrowser; });
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var isBrowser = (typeof window === "undefined" ? "undefined" : _typeof(window)) === "object" && (typeof document === "undefined" ? "undefined" : _typeof(document)) === 'object' && document.nodeType === 9;
+
+/* harmony default export */ __webpack_exports__["default"] = (isBrowser);
+
+
+/***/ }),
+
 /***/ "./node_modules/json3/lib/json3.js":
 /*!*****************************************!*\
   !*** ./node_modules/json3/lib/json3.js ***!
@@ -4444,6 +4806,506 @@ function isSlowBuffer (obj) {
 }).call(this);
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/lodash._getnative/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash._getnative/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * lodash 3.9.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+
+/** `Object#toString` result references. */
+var funcTag = '[object Function]';
+
+/** Used to detect host constructors (Safari > 5). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/**
+ * Checks if `value` is object-like.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/** Used for native method references. */
+var objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var fnToString = Function.prototype.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = object == null ? undefined : object[key];
+  return isNative(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in older versions of Chrome and Safari which return 'function' for regexes
+  // and Safari 8 equivalents which return 'object' for typed array constructors.
+  return isObject(value) && objToString.call(value) == funcTag;
+}
+
+/**
+ * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+ * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(1);
+ * // => false
+ */
+function isObject(value) {
+  // Avoid a V8 JIT bug in Chrome 19-20.
+  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is a native function.
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
+ * @example
+ *
+ * _.isNative(Array.prototype.push);
+ * // => true
+ *
+ * _.isNative(_);
+ * // => false
+ */
+function isNative(value) {
+  if (value == null) {
+    return false;
+  }
+  if (isFunction(value)) {
+    return reIsNative.test(fnToString.call(value));
+  }
+  return isObjectLike(value) && reIsHostCtor.test(value);
+}
+
+module.exports = getNative;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash.debounce/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash.debounce/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * lodash 3.1.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+var getNative = __webpack_require__(/*! lodash._getnative */ "./node_modules/lodash._getnative/index.js");
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/* Native method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeNow = getNative(Date, 'now');
+
+/**
+ * Gets the number of milliseconds that have elapsed since the Unix epoch
+ * (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @category Date
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => logs the number of milliseconds it took for the deferred function to be invoked
+ */
+var now = nativeNow || function() {
+  return new Date().getTime();
+};
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed invocations. Provide an options object to indicate that `func`
+ * should be invoked on the leading and/or trailing edge of the `wait` timeout.
+ * Subsequent calls to the debounced function return the result of the last
+ * `func` invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
+ * on the trailing edge of the timeout only if the the debounced function is
+ * invoked more than once during the `wait` timeout.
+ *
+ * See [David Corbacho's article](http://drupalmotion.com/article/debounce-and-throttle-visual-explanation)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options] The options object.
+ * @param {boolean} [options.leading=false] Specify invoking on the leading
+ *  edge of the timeout.
+ * @param {number} [options.maxWait] The maximum time `func` is allowed to be
+ *  delayed before it is invoked.
+ * @param {boolean} [options.trailing=true] Specify invoking on the trailing
+ *  edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // avoid costly calculations while the window size is in flux
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // invoke `sendMail` when the click event is fired, debouncing subsequent calls
+ * jQuery('#postbox').on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // ensure `batchLog` is invoked once after 1 second of debounced calls
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', _.debounce(batchLog, 250, {
+ *   'maxWait': 1000
+ * }));
+ *
+ * // cancel a debounced call
+ * var todoChanges = _.debounce(batchLog, 1000);
+ * Object.observe(models.todo, todoChanges);
+ *
+ * Object.observe(models, function(changes) {
+ *   if (_.find(changes, { 'user': 'todo', 'type': 'delete'})) {
+ *     todoChanges.cancel();
+ *   }
+ * }, ['delete']);
+ *
+ * // ...at some point `models.todo` is changed
+ * models.todo.completed = true;
+ *
+ * // ...before 1 second has passed `models.todo` is deleted
+ * // which cancels the debounced `todoChanges` call
+ * delete models.todo;
+ */
+function debounce(func, wait, options) {
+  var args,
+      maxTimeoutId,
+      result,
+      stamp,
+      thisArg,
+      timeoutId,
+      trailingCall,
+      lastCalled = 0,
+      maxWait = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = wait < 0 ? 0 : (+wait || 0);
+  if (options === true) {
+    var leading = true;
+    trailing = false;
+  } else if (isObject(options)) {
+    leading = !!options.leading;
+    maxWait = 'maxWait' in options && nativeMax(+options.maxWait || 0, wait);
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function cancel() {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    if (maxTimeoutId) {
+      clearTimeout(maxTimeoutId);
+    }
+    lastCalled = 0;
+    maxTimeoutId = timeoutId = trailingCall = undefined;
+  }
+
+  function complete(isCalled, id) {
+    if (id) {
+      clearTimeout(id);
+    }
+    maxTimeoutId = timeoutId = trailingCall = undefined;
+    if (isCalled) {
+      lastCalled = now();
+      result = func.apply(thisArg, args);
+      if (!timeoutId && !maxTimeoutId) {
+        args = thisArg = undefined;
+      }
+    }
+  }
+
+  function delayed() {
+    var remaining = wait - (now() - stamp);
+    if (remaining <= 0 || remaining > wait) {
+      complete(trailingCall, maxTimeoutId);
+    } else {
+      timeoutId = setTimeout(delayed, remaining);
+    }
+  }
+
+  function maxDelayed() {
+    complete(trailing, timeoutId);
+  }
+
+  function debounced() {
+    args = arguments;
+    stamp = now();
+    thisArg = this;
+    trailingCall = trailing && (timeoutId || !leading);
+
+    if (maxWait === false) {
+      var leadingCall = leading && !timeoutId;
+    } else {
+      if (!maxTimeoutId && !leading) {
+        lastCalled = stamp;
+      }
+      var remaining = maxWait - (stamp - lastCalled),
+          isCalled = remaining <= 0 || remaining > maxWait;
+
+      if (isCalled) {
+        if (maxTimeoutId) {
+          maxTimeoutId = clearTimeout(maxTimeoutId);
+        }
+        lastCalled = stamp;
+        result = func.apply(thisArg, args);
+      }
+      else if (!maxTimeoutId) {
+        maxTimeoutId = setTimeout(maxDelayed, remaining);
+      }
+    }
+    if (isCalled && timeoutId) {
+      timeoutId = clearTimeout(timeoutId);
+    }
+    else if (!timeoutId && wait !== maxWait) {
+      timeoutId = setTimeout(delayed, wait);
+    }
+    if (leadingCall) {
+      isCalled = true;
+      result = func.apply(thisArg, args);
+    }
+    if (isCalled && !timeoutId && !maxTimeoutId) {
+      args = thisArg = undefined;
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  return debounced;
+}
+
+/**
+ * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+ * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(1);
+ * // => false
+ */
+function isObject(value) {
+  // Avoid a V8 JIT bug in Chrome 19-20.
+  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+module.exports = debounce;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash.throttle/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash.throttle/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * lodash 3.0.4 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+var debounce = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/**
+ * Creates a throttled function that only invokes `func` at most once per
+ * every `wait` milliseconds. The throttled function comes with a `cancel`
+ * method to cancel delayed invocations. Provide an options object to indicate
+ * that `func` should be invoked on the leading and/or trailing edge of the
+ * `wait` timeout. Subsequent calls to the throttled function return the
+ * result of the last `func` call.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
+ * on the trailing edge of the timeout only if the the throttled function is
+ * invoked more than once during the `wait` timeout.
+ *
+ * See [David Corbacho's article](http://drupalmotion.com/article/debounce-and-throttle-visual-explanation)
+ * for details over the differences between `_.throttle` and `_.debounce`.
+ *
+ * @static
+ * @memberOf _
+ * @category Function
+ * @param {Function} func The function to throttle.
+ * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+ * @param {Object} [options] The options object.
+ * @param {boolean} [options.leading=true] Specify invoking on the leading
+ *  edge of the timeout.
+ * @param {boolean} [options.trailing=true] Specify invoking on the trailing
+ *  edge of the timeout.
+ * @returns {Function} Returns the new throttled function.
+ * @example
+ *
+ * // avoid excessively updating the position while scrolling
+ * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+ *
+ * // invoke `renewToken` when the click event is fired, but not more than once every 5 minutes
+ * jQuery('.interactive').on('click', _.throttle(renewToken, 300000, {
+ *   'trailing': false
+ * }));
+ *
+ * // cancel a trailing throttled call
+ * jQuery(window).on('popstate', throttled.cancel);
+ */
+function throttle(func, wait, options) {
+  var leading = true,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  if (options === false) {
+    leading = false;
+  } else if (isObject(options)) {
+    leading = 'leading' in options ? !!options.leading : leading;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+  return debounce(func, wait, { 'leading': leading, 'maxWait': +wait, 'trailing': trailing });
+}
+
+/**
+ * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+ * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(1);
+ * // => false
+ */
+function isObject(value) {
+  // Avoid a V8 JIT bug in Chrome 19-20.
+  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+module.exports = throttle;
+
 
 /***/ }),
 
@@ -8672,6 +9534,170 @@ function querystringify(obj, prefix) {
 exports.stringify = querystringify;
 exports.parse = querystring;
 
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/Popover.js":
+/*!*************************************************!*\
+  !*** ./node_modules/react-bootstrap/Popover.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _isRequiredForA11y = _interopRequireDefault(__webpack_require__(/*! prop-types-extra/lib/isRequiredForA11y */ "./node_modules/prop-types-extra/lib/isRequiredForA11y.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var defaultProps = {
+  placement: 'right'
+};
+
+function Popover(_ref) {
+  var bsPrefix = _ref.bsPrefix,
+      innerRef = _ref.innerRef,
+      placement = _ref.placement,
+      className = _ref.className,
+      style = _ref.style,
+      title = _ref.title,
+      children = _ref.children,
+      arrowProps = _ref.arrowProps,
+      _ = _ref.scheduleUpdate,
+      _1 = _ref.outOfBoundaries,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "innerRef", "placement", "className", "style", "title", "children", "arrowProps", "scheduleUpdate", "outOfBoundaries"]);
+  return _react.default.createElement("div", (0, _extends2.default)({
+    role: "tooltip",
+    ref: innerRef,
+    style: style,
+    "x-placement": placement,
+    className: (0, _classnames.default)(className, bsPrefix, "bs-popover-" + placement)
+  }, props), _react.default.createElement("div", (0, _extends2.default)({
+    className: "arrow"
+  }, arrowProps)), title && _react.default.createElement("div", {
+    className: bsPrefix + "-header h3"
+  }, title), _react.default.createElement("div", {
+    className: bsPrefix + "-body"
+  }, children));
+}
+
+Popover.defaultProps = defaultProps;
+
+var _default = (0, _ThemeProvider.createBootstrapComponent)(Popover, 'popover');
+
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/ThemeProvider.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/ThemeProvider.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.useBootstrapPrefix = useBootstrapPrefix;
+exports.createBootstrapComponent = createBootstrapComponent;
+exports.default = exports.ThemeConsumer = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _forwardRef = _interopRequireDefault(__webpack_require__(/*! @restart/context/forwardRef */ "./node_modules/@restart/context/forwardRef.js"));
+
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var ThemeContext = _react.default.createContext(new Map());
+
+var Consumer = ThemeContext.Consumer,
+    Provider = ThemeContext.Provider;
+exports.ThemeConsumer = Consumer;
+
+var ThemeProvider =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(ThemeProvider, _React$Component);
+
+  function ThemeProvider() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.prefixes = new Map();
+    Object.keys(_this.props.prefixes).forEach(function (key) {
+      _this.prefixes.set(key, _this.props.prefixes[key]);
+    });
+    return _this;
+  }
+
+  var _proto = ThemeProvider.prototype;
+
+  _proto.render = function render() {
+    return _react.default.createElement(Provider, {
+      value: this.prefixes
+    }, this.props.children);
+  };
+
+  return ThemeProvider;
+}(_react.default.Component);
+
+function useBootstrapPrefix(prefix, defaultPrefix) {
+  var prefixes = (0, _react.useContext)(ThemeContext);
+  return prefix || prefixes.get(defaultPrefix) || defaultPrefix;
+}
+
+function createBootstrapComponent(Component, opts) {
+  if (typeof opts === 'string') opts = {
+    prefix: opts
+  };
+  var isClassy = Component.prototype && Component.prototype.isReactComponent; // If it's a functional component make sure we don't break it with a ref
+
+  var _opts = opts,
+      prefix = _opts.prefix,
+      _opts$forwardRefAs = _opts.forwardRefAs,
+      forwardRefAs = _opts$forwardRefAs === void 0 ? isClassy ? 'ref' : 'innerRef' : _opts$forwardRefAs;
+  return (0, _forwardRef.default)(function (_ref, ref) {
+    var props = (0, _extends2.default)({}, _ref);
+    props[forwardRefAs] = ref;
+    var prefixes = (0, _react.useContext)(ThemeContext);
+    return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      // eslint-disable-next-line react/prop-types
+      bsPrefix: props.bsPrefix || prefixes.get(prefix) || prefix
+    }));
+  }, {
+    displayName: "Bootstrap(" + (Component.displayName || Component.name) + ")"
+  });
+}
+
+var _default = ThemeProvider;
+exports.default = _default;
 
 /***/ }),
 
@@ -40033,6 +41059,1707 @@ module.exports = exports.default;
 
 /***/ }),
 
+/***/ "./node_modules/react-popover/build/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-popover/build/index.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _cssVendor = __webpack_require__(/*! css-vendor */ "./node_modules/css-vendor/lib/index.js");
+
+var cssVendor = _interopRequireWildcard(_cssVendor);
+
+var _debug = __webpack_require__(/*! debug */ "./node_modules/react-popover/node_modules/debug/src/browser.js");
+
+var _debug2 = _interopRequireDefault(_debug);
+
+var _lodash = __webpack_require__(/*! lodash.throttle */ "./node_modules/lodash.throttle/index.js");
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _layout = __webpack_require__(/*! ./layout */ "./node_modules/react-popover/build/layout.js");
+
+var _layout2 = _interopRequireDefault(_layout);
+
+var _onResize = __webpack_require__(/*! ./on-resize */ "./node_modules/react-popover/build/on-resize.js");
+
+var _onResize2 = _interopRequireDefault(_onResize);
+
+var _platform = __webpack_require__(/*! ./platform */ "./node_modules/react-popover/build/platform.js");
+
+var _platform2 = _interopRequireDefault(_platform);
+
+var _tip = __webpack_require__(/*! ./tip */ "./node_modules/react-popover/build/tip.js");
+
+var _tip2 = _interopRequireDefault(_tip);
+
+var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-popover/build/utils.js");
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var log = (0, _debug2.default)("react-popover");
+
+var supportedCSSValue = _utils2.default.clientOnly(cssVendor.supportedValue);
+
+var jsprefix = function jsprefix(x) {
+  return "" + cssVendor.prefix.js + x;
+};
+
+var cssprefix = function cssprefix(x) {
+  return "" + cssVendor.prefix.css + x;
+};
+
+var cssvalue = function cssvalue(prop, value) {
+  return supportedCSSValue(prop, value) || cssprefix(value);
+};
+
+var coreStyle = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  display: cssvalue("display", "flex")
+};
+
+var faces = {
+  above: "down",
+  right: "left",
+  below: "up",
+  left: "right"
+
+  /* Flow mappings. Each map maps the flow domain to another domain. */
+
+};var flowToTipTranslations = {
+  row: "translateY",
+  column: "translateX"
+};
+
+var flowToPopoverTranslations = {
+  row: "translateX",
+  column: "translateY"
+};
+
+var Popover = function (_React$Component) {
+  _inherits(Popover, _React$Component);
+
+  function Popover(props) {
+    _classCallCheck(this, Popover);
+
+    var _this = _possibleConstructorReturn(this, (Popover.__proto__ || Object.getPrototypeOf(Popover)).call(this, props));
+
+    _this.checkTargetReposition = function () {
+      if (_this.measureTargetBounds()) _this.resolvePopoverLayout();
+    };
+
+    _this.checkForOuterAction = function (event) {
+      var isOuterAction = !_this.containerEl.contains(event.target) && !_this.targetEl.contains(event.target);
+      if (isOuterAction) _this.props.onOuterAction(event);
+    };
+
+    _this.onTargetResize = function () {
+      log("Recalculating layout because _target_ resized!");
+      _this.measureTargetBounds();
+      _this.resolvePopoverLayout();
+    };
+
+    _this.onPopoverResize = function () {
+      log("Recalculating layout because _popover_ resized!");
+      _this.measurePopoverSize();
+      _this.resolvePopoverLayout();
+    };
+
+    _this.onFrameScroll = function () {
+      log("Recalculating layout because _frame_ scrolled!");
+      _this.measureTargetBounds();
+      _this.resolvePopoverLayout();
+    };
+
+    _this.onFrameResize = function () {
+      log("Recalculating layout because _frame_ resized!");
+      _this.measureFrameBounds();
+      _this.resolvePopoverLayout();
+    };
+
+    _this.getContainerNodeRef = function (containerEl) {
+      Object.assign(_this, { containerEl: containerEl });
+    };
+
+    _this.state = {
+      standing: "above",
+      exited: !_this.props.isOpen, // for animation-dependent rendering, should popover close/open?
+      exiting: false, // for tracking in-progress animations
+      toggle: _this.props.isOpen || false // for business logic tracking, should popover close/open?
+    };
+    return _this;
+  }
+
+  _createClass(Popover, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      /* Our component needs a DOM Node reference to the child so that it can be
+      measured so that we can correctly layout the popover. We do not have any
+      control over the child so cannot leverage refs. We could wrap our own
+      primitive component around the child but that could lead to breaking the
+      uses layout (e.g. the child is a flex item). Leveraging findDOMNode seems
+      to be the only functional solution, despite all the general warnings not to
+      use it. We have a legitimate use-case. */
+      // eslint-disable-next-line
+      this.targetEl = _reactDom2.default.findDOMNode(this);
+      if (this.props.isOpen) this.enter();
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(propsNext) {
+      //log(`Component received props!`, propsNext)
+      var willOpen = !this.props.isOpen && propsNext.isOpen;
+      var willClose = this.props.isOpen && !propsNext.isOpen;
+
+      if (willOpen) this.open();else if (willClose) this.close();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(propsPrev, statePrev) {
+      //log(`Component did update!`)
+      var didOpen = !statePrev.toggle && this.state.toggle;
+      var didClose = statePrev.toggle && !this.state.toggle;
+
+      if (didOpen) this.enter();else if (didClose) this.exit();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      /* If the Popover is unmounted while animating,
+      clear the animation so no setState occured */
+      this.animateExitStop();
+      /* If the Popover was never opened then then tracking
+      initialization never took place and so calling untrack
+      would be an error. Also see issue 55. */
+      if (this.hasTracked) this.untrackPopover();
+    }
+  }, {
+    key: "resolvePopoverLayout",
+    value: function resolvePopoverLayout() {
+      /* Find the optimal zone to position self. Measure the size of each zone and use the one with
+      the greatest area. */
+
+      var pickerSettings = {
+        preferPlace: this.props.preferPlace,
+        place: this.props.place
+
+        /* This is a kludge that solves a general problem very specifically for Popover.
+        The problem is subtle. When Popover positioning changes such that it resolves at
+        a different orientation, its Size will change because the Tip will toggle between
+        extending Height or Width. The general problem of course is that calculating
+        zone positioning based on current size is non-trivial if the Size can change once
+        resolved to a different zone. Infinite recursion can be triggered as we noted here:
+        https://github.com/littlebits/react-popover/issues/18. As an example of how this
+        could happen in another way: Imagine the user changes the CSS styling of the popover
+        based on whether it was `row` or `column` flow. TODO: Find a solution to generally
+        solve this problem so that the user is free to change the Popover styles in any
+        way at any time for any arbitrary trigger. There may be value in investigating the
+        http://overconstrained.io community for its general layout system via the
+        constraint-solver Cassowary. */
+      };if (this.zone) this.size[this.zone.flow === "row" ? "h" : "w"] += this.props.tipSize;
+      var zone = _layout2.default.pickZone(pickerSettings, this.frameBounds, this.targetBounds, this.size);
+      if (this.zone) this.size[this.zone.flow === "row" ? "h" : "w"] -= this.props.tipSize;
+
+      var tb = this.targetBounds;
+      this.zone = zone;
+      log("zone", zone);
+
+      this.setState({
+        standing: zone.standing
+      });
+
+      var axis = _layout2.default.axes[zone.flow];
+      log("axes", axis);
+
+      var dockingEdgeBufferLength = Math.round(getComputedStyle(this.bodyEl).borderRadius.slice(0, -2)) || 0;
+      var scrollSize = _layout2.default.El.calcScrollSize(this.frameEl);
+      scrollSize.main = scrollSize[axis.main.size];
+      scrollSize.cross = scrollSize[axis.cross.size];
+
+      /* When positioning self on the cross-axis do not exceed frame bounds. The strategy to achieve
+      this is thus: First position cross-axis self to the cross-axis-center of the the target. Then,
+      offset self by the amount that self is past the boundaries of frame. */
+      var pos = _layout2.default.calcRelPos(zone, tb, this.size);
+
+      /* Offset allows users to control the distance betweent the tip and the target. */
+      pos[axis.main.start] += this.props.offset * zone.order;
+
+      /* Constrain containerEl Position within frameEl. Try not to penetrate a visually-pleasing buffer from
+      frameEl. `frameBuffer` length is based on tipSize and its offset. */
+
+      var frameBuffer = this.props.tipSize + this.props.offset;
+      var hangingBufferLength = dockingEdgeBufferLength * 2 + this.props.tipSize * 2 + frameBuffer;
+      var frameCrossStart = this.frameBounds[axis.cross.start];
+      var frameCrossEnd = this.frameBounds[axis.cross.end];
+      var frameCrossLength = this.frameBounds[axis.cross.size];
+      var frameCrossInnerLength = frameCrossLength - frameBuffer * 2;
+      var frameCrossInnerStart = frameCrossStart + frameBuffer;
+      var frameCrossInnerEnd = frameCrossEnd - frameBuffer;
+      var popoverCrossStart = pos[axis.cross.start];
+      var popoverCrossEnd = pos[axis.cross.end];
+
+      /* If the popover dose not fit into frameCrossLength then just position it to the `frameCrossStart`.
+      popoverCrossLength` will now be forced to overflow into the `Frame` */
+      if (pos.crossLength > frameCrossLength) {
+        log("popoverCrossLength does not fit frame.");
+        pos[axis.cross.start] = 0;
+
+        /* If the `popoverCrossStart` is forced beyond some threshold of `targetCrossLength` then bound
+        it (`popoverCrossStart`). */
+      } else if (tb[axis.cross.end] < hangingBufferLength) {
+        log("popoverCrossStart cannot hang any further without losing target.");
+        pos[axis.cross.start] = tb[axis.cross.end] - hangingBufferLength;
+
+        /* checking if the cross start of the target area is within the frame and it makes sense
+        to try fitting popover into the frame. */
+      } else if (tb[axis.cross.start] > frameCrossInnerEnd) {
+        log("popoverCrossStart cannot hang any further without losing target.");
+        pos[axis.cross.start] = tb[axis.cross.start] - this.size[axis.cross.size];
+
+        /* If the `popoverCrossStart` does not fit within the inner frame (honouring buffers) then
+        just center the popover in the remaining `frameCrossLength`. */
+      } else if (pos.crossLength > frameCrossInnerLength) {
+        log("popoverCrossLength does not fit within buffered frame.");
+        pos[axis.cross.start] = (frameCrossLength - pos.crossLength) / 2;
+      } else if (popoverCrossStart < frameCrossInnerStart) {
+        log("popoverCrossStart cannot reverse without exceeding frame.");
+        pos[axis.cross.start] = frameCrossInnerStart;
+      } else if (popoverCrossEnd > frameCrossInnerEnd) {
+        log("popoverCrossEnd cannot travel without exceeding frame.");
+        pos[axis.cross.start] = pos[axis.cross.start] - (pos[axis.cross.end] - frameCrossInnerEnd);
+      }
+
+      /* So far the link position has been calculated relative to the target. To calculate the absolute
+      position we need to factor the `Frame``s scroll position */
+
+      pos[axis.cross.start] += scrollSize.cross;
+      pos[axis.main.start] += scrollSize.main;
+
+      /* Apply `flow` and `order` styles. This can impact subsequent measurements of height and width
+      of the container. When tip changes orientation position due to changes from/to `row`/`column`
+      width`/`height` will be impacted. Our layout monitoring will catch these cases and automatically
+      recalculate layout. */
+      if (this.containerEl) {
+        this.containerEl.style.flexFlow = zone.flow;
+        this.containerEl.style[jsprefix("FlexFlow")] = this.containerEl.style.flexFlow;
+      }
+      this.bodyEl.style.order = zone.order;
+      this.bodyEl.style[jsprefix("Order")] = this.bodyEl.style.order;
+
+      /* Apply Absolute Positioning. */
+
+      log("pos", pos);
+      if (this.containerEl) {
+        this.containerEl.style.top = pos.y + "px";
+        this.containerEl.style.left = pos.x + "px";
+      }
+
+      /* Calculate Tip Position */
+
+      var tipCrossPos =
+      /* Get the absolute tipCrossCenter. Tip is positioned relative to containerEl
+      but it aims at targetCenter which is positioned relative to frameEl... we
+      need to cancel the containerEl positioning so as to hit our intended position. */
+      _layout2.default.centerOfBoundsFromBounds(zone.flow, "cross", tb, pos) +
+      /* centerOfBounds does not account for scroll so we need to manually add that
+      here. */
+      scrollSize.cross -
+      /* Center tip relative to self. We do not have to calcualte half-of-tip-size since tip-size
+      specifies the length from base to tip which is half of total length already. */
+      this.props.tipSize;
+
+      if (tipCrossPos < dockingEdgeBufferLength) tipCrossPos = dockingEdgeBufferLength;else if (tipCrossPos > pos.crossLength - dockingEdgeBufferLength - this.props.tipSize * 2) {
+        tipCrossPos = pos.crossLength - dockingEdgeBufferLength - this.props.tipSize * 2;
+      }
+
+      this.tipEl.style.transform = flowToTipTranslations[zone.flow] + "(" + tipCrossPos + "px)";
+      this.tipEl.style[jsprefix("Transform")] = this.tipEl.style.transform;
+    }
+  }, {
+    key: "measurePopoverSize",
+    value: function measurePopoverSize() {
+      this.size = _layout2.default.El.calcSize(this.containerEl);
+    }
+  }, {
+    key: "measureTargetBounds",
+    value: function measureTargetBounds() {
+      var newTargetBounds = _layout2.default.El.calcBounds(this.targetEl);
+
+      if (this.targetBounds && _layout2.default.equalCoords(this.targetBounds, newTargetBounds)) {
+        return false;
+      }
+
+      this.targetBounds = newTargetBounds;
+      return true;
+    }
+  }, {
+    key: "open",
+    value: function open() {
+      if (this.state.exiting) this.animateExitStop();
+      this.setState({ toggle: true, exited: false });
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.setState({ toggle: false });
+    }
+  }, {
+    key: "enter",
+    value: function enter() {
+      if (_platform2.default.isServer) return;
+      log("enter!");
+      this.trackPopover();
+      this.animateEnter();
+    }
+  }, {
+    key: "exit",
+    value: function exit() {
+      log("exit!");
+      this.animateExit();
+      this.untrackPopover();
+    }
+  }, {
+    key: "animateExitStop",
+    value: function animateExitStop() {
+      clearTimeout(this.exitingAnimationTimer1);
+      clearTimeout(this.exitingAnimationTimer2);
+      this.setState({ exiting: false });
+    }
+  }, {
+    key: "animateExit",
+    value: function animateExit() {
+      var _this2 = this;
+
+      this.setState({ exiting: true });
+      this.exitingAnimationTimer2 = setTimeout(function () {
+        setTimeout(function () {
+          if (_this2.containerEl) {
+            _this2.containerEl.style.transform = flowToPopoverTranslations[_this2.zone.flow] + "(" + _this2.zone.order * 50 + "px)";
+            _this2.containerEl.style.opacity = "0";
+          }
+        }, 0);
+      }, 0);
+
+      this.exitingAnimationTimer1 = setTimeout(function () {
+        _this2.setState({ exited: true, exiting: false });
+      }, this.props.enterExitTransitionDurationMs);
+    }
+  }, {
+    key: "animateEnter",
+    value: function animateEnter() {
+      /* Prepare `entering` style so that we can then animate it toward `entered`. */
+
+      this.containerEl.style.transform = flowToPopoverTranslations[this.zone.flow] + "(" + this.zone.order * 50 + "px)";
+      this.containerEl.style[jsprefix("Transform")] = this.containerEl.style.transform;
+      this.containerEl.style.opacity = "0";
+
+      /* After initial layout apply transition animations. */
+      /* Hack: http://stackoverflow.com/questions/3485365/how-can-i-force-webkit-to-redraw-repaint-to-propagate-style-changes */
+      this.containerEl.offsetHeight;
+
+      /* If enterExitTransitionDurationMs is falsy, tip animation should be also disabled */
+      if (this.props.enterExitTransitionDurationMs) {
+        this.tipEl.style.transition = "transform 150ms ease-in";
+        this.tipEl.style[jsprefix("Transition")] = cssprefix("transform") + " 150ms ease-in";
+      }
+      this.containerEl.style.transitionProperty = "top, left, opacity, transform";
+      this.containerEl.style.transitionDuration = this.props.enterExitTransitionDurationMs + "ms";
+      this.containerEl.style.transitionTimingFunction = "cubic-bezier(0.230, 1.000, 0.320, 1.000)";
+      this.containerEl.style.opacity = "1";
+      this.containerEl.style.transform = "translateY(0)";
+      this.containerEl.style[jsprefix("Transform")] = this.containerEl.style.transform;
+    }
+  }, {
+    key: "trackPopover",
+    value: function trackPopover() {
+      var minScrollRefreshIntervalMs = 200;
+      var minResizeRefreshIntervalMs = 200;
+
+      /* Get references to DOM elements. */
+
+      this.bodyEl = this.containerEl.querySelector(".Popover-body");
+      this.tipEl = this.containerEl.querySelector(".Popover-tip");
+
+      /* Note: frame is hardcoded to window now but we think it will
+      be a nice feature in the future to allow other frames to be used
+      such as local elements that further constrain the popover`s world. */
+
+      this.frameEl = _platform2.default.window;
+      this.hasTracked = true;
+
+      /* Set a general interval for checking if target position changed. There is no way
+      to know this information without polling. */
+      if (this.props.refreshIntervalMs) {
+        this.checkLayoutInterval = setInterval(this.checkTargetReposition, this.props.refreshIntervalMs);
+      }
+
+      /* Watch for boundary changes in all deps, and when one of them changes, recalculate layout.
+      This layout monitoring must be bound immediately because a layout recalculation can recursively
+      cause a change in boundaries. So if we did a one-time force-layout before watching boundaries
+      our final position calculations could be wrong. See comments in resolver function for details
+      about which parts can trigger recursive recalculation. */
+
+      this.onFrameScroll = (0, _lodash2.default)(this.onFrameScroll, minScrollRefreshIntervalMs);
+      this.onFrameResize = (0, _lodash2.default)(this.onFrameResize, minResizeRefreshIntervalMs);
+      this.onPopoverResize = (0, _lodash2.default)(this.onPopoverResize, minResizeRefreshIntervalMs);
+      this.onTargetResize = (0, _lodash2.default)(this.onTargetResize, minResizeRefreshIntervalMs);
+
+      this.frameEl.addEventListener("scroll", this.onFrameScroll);
+      _onResize2.default.on(this.frameEl, this.onFrameResize);
+      _onResize2.default.on(this.containerEl, this.onPopoverResize);
+      _onResize2.default.on(this.targetEl, this.onTargetResize);
+
+      /* Track user actions on the page. Anything that occurs _outside_ the Popover boundaries
+      should close the Popover. */
+
+      _platform2.default.document.addEventListener("mousedown", this.checkForOuterAction);
+      _platform2.default.document.addEventListener("touchstart", this.checkForOuterAction);
+
+      /* Kickstart layout at first boot. */
+
+      this.measurePopoverSize();
+      this.measureFrameBounds();
+      this.measureTargetBounds();
+      this.resolvePopoverLayout();
+    }
+  }, {
+    key: "untrackPopover",
+    value: function untrackPopover() {
+      clearInterval(this.checkLayoutInterval);
+      this.frameEl.removeEventListener("scroll", this.onFrameScroll);
+      _onResize2.default.off(this.frameEl, this.onFrameResize);
+      _onResize2.default.off(this.containerEl, this.onPopoverResize);
+      _onResize2.default.off(this.targetEl, this.onTargetResize);
+      _platform2.default.document.removeEventListener("mousedown", this.checkForOuterAction);
+      _platform2.default.document.removeEventListener("touchstart", this.checkForOuterAction);
+      this.hasTracked = false;
+    }
+  }, {
+    key: "measureFrameBounds",
+    value: function measureFrameBounds() {
+      this.frameBounds = _layout2.default.El.calcBounds(this.frameEl);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          _props$className = _props.className,
+          className = _props$className === undefined ? "" : _props$className,
+          _props$style = _props.style,
+          style = _props$style === undefined ? {} : _props$style,
+          tipSize = _props.tipSize;
+      var standing = this.state.standing;
+
+
+      var popoverProps = {
+        className: "Popover Popover-" + standing + " " + className,
+        style: _extends({}, coreStyle, style)
+      };
+
+      var popover = this.state.exited ? null : _react2.default.createElement(
+        "div",
+        _extends({ ref: this.getContainerNodeRef }, popoverProps),
+        _react2.default.createElement("div", { className: "Popover-body", children: this.props.body }),
+        _react2.default.createElement(_tip2.default, { direction: faces[standing], size: tipSize })
+      );
+      return [this.props.children, _platform2.default.isClient && _reactDom2.default.createPortal(popover, this.props.appendTarget)];
+    }
+  }]);
+
+  return Popover;
+}(_react2.default.Component);
+
+Popover.propTypes = {
+  body: _propTypes2.default.node.isRequired,
+  children: _propTypes2.default.element.isRequired,
+  appendTarget: _propTypes2.default.object,
+  className: _propTypes2.default.string,
+  enterExitTransitionDurationMs: _propTypes2.default.number,
+  isOpen: _propTypes2.default.bool,
+  offset: _propTypes2.default.number,
+  place: _propTypes2.default.oneOf(_layout2.default.validTypeValues),
+  preferPlace: _propTypes2.default.oneOf(_layout2.default.validTypeValues),
+  refreshIntervalMs: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.bool]),
+  style: _propTypes2.default.object,
+  tipSize: _propTypes2.default.number,
+  onOuterAction: _propTypes2.default.func
+};
+Popover.defaultProps = {
+  tipSize: 7,
+  preferPlace: null,
+  place: null,
+  offset: 4,
+  isOpen: false,
+  onOuterAction: _utils2.default.noop,
+  enterExitTransitionDurationMs: 500,
+  children: null,
+  refreshIntervalMs: 200,
+  appendTarget: _platform2.default.isClient ? _platform2.default.document.body : null
+};
+exports.default = Popover;
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/build/layout.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-popover/build/layout.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.equalCoords = exports.doesFitWithin = exports.centerOfBoundsFromBounds = exports.centerOfBounds = exports.centerOfSize = exports.axes = exports.pickZone = exports.place = exports.calcRelPos = exports.validTypeValues = exports.types = exports.El = undefined;
+
+var _platform = __webpack_require__(/*! ./platform */ "./node_modules/react-popover/build/platform.js");
+
+var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-popover/build/utils.js");
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* Axes System
+
+This allows us to at-will work in a different orientation
+without having to manually keep track of knowing if we should be using
+x or y positions. */
+
+var axes = {
+  row: {},
+  column: {}
+};
+
+axes.row.main = {
+  start: "x",
+  end: "x2",
+  size: "w"
+};
+axes.row.cross = {
+  start: "y",
+  end: "y2",
+  size: "h"
+};
+axes.column.main = axes.row.cross;
+axes.column.cross = axes.row.main;
+
+var types = [{ name: "side", values: ["start", "end"] }, { name: "standing", values: ["above", "right", "below", "left"] }, { name: "flow", values: ["column", "row"] }];
+
+var validTypeValues = types.reduce(function (xs, _ref) {
+  var values = _ref.values;
+  return xs.concat(values);
+}, []);
+
+var centerOfSize = function centerOfSize(flow, axis, size) {
+  return size[axes[flow][axis].size] / 2;
+};
+
+var centerOfBounds = function centerOfBounds(flow, axis, bounds) {
+  return bounds[axes[flow][axis].start] + bounds[axes[flow][axis].size] / 2;
+};
+
+var centerOfBoundsFromBounds = function centerOfBoundsFromBounds(flow, axis, boundsTo, boundsFrom) {
+  return centerOfBounds(flow, axis, boundsTo) - boundsFrom[axes[flow][axis].start];
+};
+
+var place = function place(flow, axis, align, bounds, size) {
+  var axisProps = axes[flow][axis];
+  return align === "center" ? centerOfBounds(flow, axis, bounds) - centerOfSize(flow, axis, size) : align === "end" ? bounds[axisProps.end] : align === "start" ? /* DOM rendering unfolds leftward. Therefore if the slave is positioned before
+                                                                                                                                                                  the master then the slave`s position must in addition be pulled back
+                                                                                                                                                                  by its [the slave`s] own length. */
+  bounds[axisProps.start] - size[axisProps.size] : null;
+};
+
+/* Element Layout Queries */
+
+var El = {};
+
+El.calcBounds = function (el) {
+  if (el === _platform.window) {
+    return {
+      x: 0,
+      y: 0,
+      x2: el.innerWidth,
+      y2: el.innerHeight,
+      w: el.innerWidth,
+      h: el.innerHeight
+    };
+  }
+
+  var b = el.getBoundingClientRect();
+
+  return {
+    x: b.left,
+    y: b.top,
+    x2: b.right,
+    y2: b.bottom,
+    w: b.right - b.left,
+    h: b.bottom - b.top
+  };
+};
+
+El.calcSize = function (el) {
+  return el === _platform.window ? { w: el.innerWidth, h: el.innerHeight } : { w: el.offsetWidth, h: el.offsetHeight };
+};
+
+El.calcScrollSize = function (el) {
+  return el === _platform.window ? {
+    w: el.scrollX || el.pageXOffset,
+    h: el.scrollY || el.pageYOffset
+  } : { w: el.scrollLeft, h: el.scrollTop
+
+    /* Misc Utilities */
+
+  };
+};var getPreferenceType = function getPreferenceType(preference) {
+  return types.reduce(function (found, type) {
+    return found ? found : type.values.indexOf(preference) !== -1 ? type.name : null;
+  }, null);
+};
+
+/* Dimension Fit Checks */
+
+var fitWithinChecker = function fitWithinChecker(dimension) {
+  return function (domainSize, itemSize) {
+    return domainSize[dimension] >= itemSize[dimension];
+  };
+};
+
+var doesWidthFitWithin = fitWithinChecker("w");
+var doesHeightFitWithin = fitWithinChecker("h");
+
+var doesFitWithin = function doesFitWithin(domainSize, itemSize) {
+  return doesWidthFitWithin(domainSize, itemSize) && doesHeightFitWithin(domainSize, itemSize);
+};
+
+/* Errors */
+
+var createPreferenceError = function createPreferenceError(givenValue) {
+  return new Error("The given layout placement of \"" + givenValue + "\" is not a valid choice. Valid choices are: " + validTypeValues.join(" | ") + ".");
+};
+
+/* Algorithm for picking the best fitting zone for popover. The current technique will loop through all zones picking the last one that fits.
+In the case that none fit we should pick the least-not-fitting zone. */
+
+var pickZone = function pickZone(opts, frameBounds, targetBounds, size) {
+  var t = targetBounds;
+  var f = frameBounds;
+  var zones = [{
+    side: "start",
+    standing: "above",
+    flow: "column",
+    order: -1,
+    w: f.x2,
+    h: t.y
+  }, {
+    side: "end",
+    standing: "right",
+    flow: "row",
+    order: 1,
+    w: f.x2 - t.x2,
+    h: f.y2
+  }, {
+    side: "end",
+    standing: "below",
+    flow: "column",
+    order: 1,
+    w: f.x2,
+    h: f.y2 - t.y2
+  }, {
+    side: "start",
+    standing: "left",
+    flow: "row",
+    order: -1,
+    w: t.x,
+    h: f.y2
+  }];
+
+  /* Order the zones by the amount of popup that would be cut out if that zone is used.
+     The first one in the array is the one that cuts the least amount.
+      const area = size.w * size.h  // Popup area is constant and it does not change the order
+  */
+  zones.forEach(function (z) {
+    // TODO Update to satisfy linter
+    // eslint-disable-next-line no-param-reassign
+    z.cutOff =
+    /* area */-Math.max(0, Math.min(z.w, size.w)) * Math.max(0, Math.min(z.h, size.h));
+  });
+  zones.sort(function (a, b) {
+    return a.cutOff - b.cutOff;
+  });
+
+  var availZones = zones.filter(function (zone) {
+    return doesFitWithin(zone, size);
+  });
+
+  /* If a place is required pick it from the available zones if possible. */
+
+  if (opts.place) {
+    var type = getPreferenceType(opts.place);
+    if (!type) throw createPreferenceError(opts.place);
+    var finder = function finder(z) {
+      return z[type] === opts.place;
+    };
+    return (0, _utils.find)(finder, availZones) || (0, _utils.find)(finder, zones);
+  }
+
+  /* If the preferred side is part of the available zones, use that otherwise
+  pick the largest available zone. If there are no available zones, pick the
+  largest zone. */
+
+  if (opts.preferPlace) {
+    var preferenceType = getPreferenceType(opts.preferPlace);
+    if (!preferenceType) throw createPreferenceError(opts.preferPlace);
+
+    // Try to fit first in zone where the pop up fit completely
+    var preferredAvailZones = availZones.filter(function (zone) {
+      return zone[preferenceType] === opts.preferPlace;
+    });
+    if (preferredAvailZones.length) return preferredAvailZones[0];
+
+    // If there are not areas where the pop up fit completely, it uses the preferred ones
+    // in order from the one the fit better
+    var preferredZones = zones.filter(function (zone) {
+      return zone[preferenceType] === opts.preferPlace;
+    });
+    if (!availZones.length && preferredZones.length) return preferredZones[0];
+  }
+
+  // Return a zone that fit completely or the one that fit the best
+  return availZones.length ? availZones[0] : zones[0];
+};
+
+/* TODO Document this. */
+
+var calcRelPos = function calcRelPos(zone, masterBounds, slaveSize) {
+  var _ref2;
+
+  var _axes$zone$flow = axes[zone.flow],
+      main = _axes$zone$flow.main,
+      cross = _axes$zone$flow.cross;
+  /* TODO: The slave is hard-coded to align cross-center with master. */
+
+  var crossAlign = "center";
+  var mainStart = place(zone.flow, "main", zone.side, masterBounds, slaveSize);
+  var mainSize = slaveSize[main.size];
+  var crossStart = place(zone.flow, "cross", crossAlign, masterBounds, slaveSize);
+  var crossSize = slaveSize[cross.size];
+
+  return _ref2 = {}, _defineProperty(_ref2, main.start, mainStart), _defineProperty(_ref2, "mainLength", mainSize), _defineProperty(_ref2, main.end, mainStart + mainSize), _defineProperty(_ref2, cross.start, crossStart), _defineProperty(_ref2, "crossLength", crossSize), _defineProperty(_ref2, cross.end, crossStart + crossSize), _ref2;
+};
+
+exports.default = {
+  El: El,
+  types: types,
+  validTypeValues: validTypeValues,
+  calcRelPos: calcRelPos,
+  place: place,
+  pickZone: pickZone,
+  axes: axes,
+  centerOfSize: centerOfSize,
+  centerOfBounds: centerOfBounds,
+  centerOfBoundsFromBounds: centerOfBoundsFromBounds,
+  doesFitWithin: doesFitWithin,
+  equalCoords: _utils.equalRecords
+};
+exports.El = El;
+exports.types = types;
+exports.validTypeValues = validTypeValues;
+exports.calcRelPos = calcRelPos;
+exports.place = place;
+exports.pickZone = pickZone;
+exports.axes = axes;
+exports.centerOfSize = centerOfSize;
+exports.centerOfBounds = centerOfBounds;
+exports.centerOfBoundsFromBounds = centerOfBoundsFromBounds;
+exports.doesFitWithin = doesFitWithin;
+exports.equalCoords = _utils.equalRecords;
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/build/on-resize.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-popover/build/on-resize.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.removeEventListener = exports.addEventListener = exports.off = exports.on = undefined;
+
+var _platform = __webpack_require__(/*! ./platform */ "./node_modules/react-popover/build/platform.js");
+
+var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-popover/build/utils.js");
+
+/* eslint no-param-reassign: 0 */
+
+var requestAnimationFrame = _platform.isServer ? _utils.noop : _platform.window.requestAnimationFrame || _platform.window.mozRequestAnimationFrame || _platform.window.webkitRequestAnimationFrame || function (fn) {
+  _platform.window.setTimeout(fn, 20);
+};
+
+var cancelAnimationFrame = _platform.isServer ? _utils.noop : _platform.window.cancelAnimationFrame || _platform.window.mozCancelAnimationFrame || _platform.window.webkitCancelAnimationFrame || _platform.window.clearTimeout;
+
+var isIE = _platform.isServer ? false : navigator.userAgent.match(/Trident/);
+
+var namespace = "__resizeDetector__";
+
+var uninitialize = function uninitialize(el) {
+  el[namespace].destroy();
+  el[namespace] = undefined;
+};
+
+var createElementHack = function createElementHack() {
+  var el = document.createElement("object");
+  el.className = "resize-sensor";
+  el.setAttribute("style", "display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;");
+  el.setAttribute("class", "resize-sensor");
+  el.setAttribute("tabindex", "-1");
+  el.type = "text/html";
+  el.data = "about:blank";
+  return el;
+};
+
+var initialize = function initialize(el) {
+  var detector = el[namespace] = {};
+  detector.listeners = [];
+
+  var onResize = function onResize(e) {
+    /* Keep in mind e.target could be el OR objEl. In this current implementation we don't seem to need to know this but its important
+    to not forget e.g. in some future refactoring scenario. */
+    if (detector.resizeRAF) cancelAnimationFrame(detector.resizeRAF);
+    detector.resizeRAF = requestAnimationFrame(function () {
+      detector.listeners.forEach(function (fn) {
+        fn(e);
+      });
+    });
+  };
+
+  if (isIE) {
+    /* We do not support ie8 and below (or ie9 in compat mode).
+    Therefore there is no presence of `attachEvent` here. */
+    el.addEventListener("onresize", onResize);
+    detector.destroy = function () {
+      el.removeEventListener("onresize", onResize);
+    };
+  } else {
+    if (getComputedStyle(el).position === "static") {
+      detector.elWasStaticPosition = true;
+      el.style.position = "relative";
+    }
+    var objEl = createElementHack();
+    objEl.onload = function () /* event */{
+      this.contentDocument.defaultView.addEventListener("resize", onResize);
+    };
+    detector.destroy = function () {
+      if (detector.elWasStaticPosition) el.style.position = "";
+      if (el.contains(objEl)) {
+        // Event handlers will be automatically removed.
+        // http://stackoverflow.com/questions/12528049/if-a-dom-element-is-removed-are-its-listeners-also-removed-from-memory
+        el.removeChild(objEl);
+      }
+    };
+
+    el.appendChild(objEl);
+  }
+};
+
+var on = function on(el, fn) {
+  /* Window object natively publishes resize events. We handle it as a
+  special case here so that users do not have to think about two APIs. */
+
+  if (el === _platform.window) {
+    _platform.window.addEventListener("resize", fn);
+    return;
+  }
+
+  /* Not caching namespace read here beacuse not guaranteed that its available. */
+
+  if (!el[namespace]) initialize(el);
+  el[namespace].listeners.push(fn);
+};
+
+var off = function off(el, fn) {
+  if (el === _platform.window) {
+    _platform.window.removeEventListener("resize", fn);
+    return;
+  }
+  var detector = el[namespace];
+  if (!detector) return;
+  var i = detector.listeners.indexOf(fn);
+  if (i !== -1) detector.listeners.splice(i, 1);
+  if (!detector.listeners.length) uninitialize(el);
+};
+
+exports.default = {
+  on: on,
+  off: off,
+  addEventListener: on,
+  removeEventListener: off
+};
+exports.on = on;
+exports.off = off;
+exports.addEventListener = on;
+exports.removeEventListener = off;
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/build/platform.js":
+/*!******************************************************!*\
+  !*** ./node_modules/react-popover/build/platform.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var isServer = typeof window === "undefined";
+var isClient = !isServer;
+var WINDOW = isClient ? window : null;
+var DOCUMENT = isClient ? document : null;
+
+exports.default = {
+  isServer: isServer,
+  isClient: isClient,
+  window: WINDOW,
+  document: DOCUMENT
+};
+exports.isServer = isServer;
+exports.isClient = isClient;
+exports.window = WINDOW;
+exports.document = DOCUMENT;
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/build/tip.js":
+/*!*************************************************!*\
+  !*** ./node_modules/react-popover/build/tip.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Tip = function Tip(props) {
+  var direction = props.direction;
+
+  var size = props.size || 24;
+  var isPortrait = direction === "up" || direction === "down";
+  var mainLength = size;
+  var crossLength = size * 2;
+  var points = direction === "up" ? "0," + mainLength + " " + mainLength + ",0, " + crossLength + "," + mainLength : direction === "down" ? "0,0 " + mainLength + "," + mainLength + ", " + crossLength + ",0" : direction === "left" ? mainLength + ",0 0," + mainLength + ", " + mainLength + "," + crossLength : "0,0 " + mainLength + "," + mainLength + ", 0," + crossLength;
+  var svgProps = {
+    className: "Popover-tip",
+    width: isPortrait ? crossLength : mainLength,
+    height: isPortrait ? mainLength : crossLength
+  };
+
+  return _react2.default.createElement(
+    "svg",
+    svgProps,
+    _react2.default.createElement("polygon", { className: "Popover-tipShape", points: points })
+  );
+};
+
+exports.default = Tip;
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/build/utils.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-popover/build/utils.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.clientOnly = exports.noop = exports.equalRecords = exports.find = undefined;
+
+var _platform = __webpack_require__(/*! ./platform */ "./node_modules/react-popover/build/platform.js");
+
+var find = function find(f, xs) {
+  return xs.reduce(function (b, x) {
+    return b ? b : f(x) ? x : null;
+  }, null);
+};
+
+var equalRecords = function equalRecords(o1, o2) {
+  for (var key in o1) {
+    if (o1[key] !== o2[key]) return false;
+  }return true;
+};
+
+var noop = function noop() {
+  return undefined;
+};
+
+var clientOnly = function clientOnly(f) {
+  return _platform.isClient ? f : noop;
+};
+
+exports.default = {
+  find: find,
+  equalRecords: equalRecords,
+  noop: noop,
+  clientOnly: clientOnly
+};
+exports.find = find;
+exports.equalRecords = equalRecords;
+exports.noop = noop;
+exports.clientOnly = clientOnly;
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/react-popover/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// http://stackoverflow.com/questions/33505992/babel-6-changes-how-it-exports-default
+
+const lib = __webpack_require__(/*! ./build */ "./node_modules/react-popover/build/index.js")
+module.exports = lib.default
+
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/node_modules/debug/src/browser.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/react-popover/node_modules/debug/src/browser.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = __webpack_require__(/*! ./debug */ "./node_modules/react-popover/node_modules/debug/src/debug.js");
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome
+               && 'undefined' != typeof chrome.storage
+                  ? chrome.storage.local
+                  : localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // NB: In an Electron preload script, document will be defined but not fully
+  // initialized. Since we know we're in Chrome, we'll just detect this case
+  // explicitly
+  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+    return true;
+  }
+
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+    // double check webkit in userAgent just in case we are in a worker
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return;
+
+  var c = 'color: ' + this.color;
+  args.splice(1, 0, c, 'color: inherit')
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-zA-Z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    r = exports.storage.debug;
+  } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if (!r && typeof process !== 'undefined' && 'env' in process) {
+    r = process.env.DEBUG;
+  }
+
+  return r;
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/node_modules/debug/src/debug.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/react-popover/node_modules/debug/src/debug.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+exports.coerce = coerce;
+exports.disable = disable;
+exports.enable = enable;
+exports.enabled = enabled;
+exports.humanize = __webpack_require__(/*! ms */ "./node_modules/react-popover/node_modules/ms/index.js");
+
+/**
+ * The currently active debug mode names, and names to skip.
+ */
+
+exports.names = [];
+exports.skips = [];
+
+/**
+ * Map of special "%n" handling functions, for the debug "format" argument.
+ *
+ * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+ */
+
+exports.formatters = {};
+
+/**
+ * Previous log timestamp.
+ */
+
+var prevTime;
+
+/**
+ * Select a color.
+ * @param {String} namespace
+ * @return {Number}
+ * @api private
+ */
+
+function selectColor(namespace) {
+  var hash = 0, i;
+
+  for (i in namespace) {
+    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
+    hash |= 0; // Convert to 32bit integer
+  }
+
+  return exports.colors[Math.abs(hash) % exports.colors.length];
+}
+
+/**
+ * Create a debugger with the given `namespace`.
+ *
+ * @param {String} namespace
+ * @return {Function}
+ * @api public
+ */
+
+function createDebug(namespace) {
+
+  function debug() {
+    // disabled?
+    if (!debug.enabled) return;
+
+    var self = debug;
+
+    // set `diff` timestamp
+    var curr = +new Date();
+    var ms = curr - (prevTime || curr);
+    self.diff = ms;
+    self.prev = prevTime;
+    self.curr = curr;
+    prevTime = curr;
+
+    // turn the `arguments` into a proper Array
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+
+    args[0] = exports.coerce(args[0]);
+
+    if ('string' !== typeof args[0]) {
+      // anything else let's inspect with %O
+      args.unshift('%O');
+    }
+
+    // apply any `formatters` transformations
+    var index = 0;
+    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
+      // if we encounter an escaped % then don't increase the array index
+      if (match === '%%') return match;
+      index++;
+      var formatter = exports.formatters[format];
+      if ('function' === typeof formatter) {
+        var val = args[index];
+        match = formatter.call(self, val);
+
+        // now we need to remove `args[index]` since it's inlined in the `format`
+        args.splice(index, 1);
+        index--;
+      }
+      return match;
+    });
+
+    // apply env-specific formatting (colors, etc.)
+    exports.formatArgs.call(self, args);
+
+    var logFn = debug.log || exports.log || console.log.bind(console);
+    logFn.apply(self, args);
+  }
+
+  debug.namespace = namespace;
+  debug.enabled = exports.enabled(namespace);
+  debug.useColors = exports.useColors();
+  debug.color = selectColor(namespace);
+
+  // env-specific initialization logic for debug instances
+  if ('function' === typeof exports.init) {
+    exports.init(debug);
+  }
+
+  return debug;
+}
+
+/**
+ * Enables a debug mode by namespaces. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} namespaces
+ * @api public
+ */
+
+function enable(namespaces) {
+  exports.save(namespaces);
+
+  exports.names = [];
+  exports.skips = [];
+
+  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+  var len = split.length;
+
+  for (var i = 0; i < len; i++) {
+    if (!split[i]) continue; // ignore empty strings
+    namespaces = split[i].replace(/\*/g, '.*?');
+    if (namespaces[0] === '-') {
+      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+    } else {
+      exports.names.push(new RegExp('^' + namespaces + '$'));
+    }
+  }
+}
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+function disable() {
+  exports.enable('');
+}
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+function enabled(name) {
+  var i, len;
+  for (i = 0, len = exports.skips.length; i < len; i++) {
+    if (exports.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (i = 0, len = exports.names.length; i < len; i++) {
+    if (exports.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Coerce `val`.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function coerce(val) {
+  if (val instanceof Error) return val.stack || val.message;
+  return val;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/react-popover/node_modules/ms/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/react-popover/node_modules/ms/index.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Helpers.
+ */
+
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} [options]
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function(val, options) {
+  options = options || {};
+  var type = typeof val;
+  if (type === 'string' && val.length > 0) {
+    return parse(val);
+  } else if (type === 'number' && isNaN(val) === false) {
+    return options.long ? fmtLong(val) : fmtShort(val);
+  }
+  throw new Error(
+    'val is not a non-empty string or a valid number. val=' +
+      JSON.stringify(val)
+  );
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str);
+  if (str.length > 100) {
+    return;
+  }
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+    str
+  );
+  if (!match) {
+    return;
+  }
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s;
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  if (ms >= d) {
+    return Math.round(ms / d) + 'd';
+  }
+  if (ms >= h) {
+    return Math.round(ms / h) + 'h';
+  }
+  if (ms >= m) {
+    return Math.round(ms / m) + 'm';
+  }
+  if (ms >= s) {
+    return Math.round(ms / s) + 's';
+  }
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  return plural(ms, d, 'day') ||
+    plural(ms, h, 'hour') ||
+    plural(ms, m, 'minute') ||
+    plural(ms, s, 'second') ||
+    ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) {
+    return;
+  }
+  if (ms < n * 1.5) {
+    return Math.floor(ms / n) + ' ' + name;
+  }
+  return Math.ceil(ms / n) + ' ' + name + 's';
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react-popper/lib/esm/Manager.js":
 /*!******************************************************!*\
   !*** ./node_modules/react-popper/lib/esm/Manager.js ***!
@@ -50846,11 +53573,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./model/download/DownloadListView */ "./src/main/js/model/download/DownloadListView.js");
 /* harmony import */ var _model_server_ServerListView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./model/server/ServerListView */ "./src/main/js/model/server/ServerListView.js");
 /* harmony import */ var _model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./model/channel/ChannelListView */ "./src/main/js/model/channel/ChannelListView.js");
-/* harmony import */ var _model_CreateModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/CreateModal */ "./src/main/js/model/CreateModal.js");
-/* harmony import */ var _model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./model/wizard/InitWizard */ "./src/main/js/model/wizard/InitWizard");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _model_bot_BotInputs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./model/bot/BotInputs */ "./src/main/js/model/bot/BotInputs.js");
+/* harmony import */ var _model_server_ServerInputs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./model/server/ServerInputs */ "./src/main/js/model/server/ServerInputs.js");
+/* harmony import */ var _model_channel_ChannelInputs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./model/channel/ChannelInputs */ "./src/main/js/model/channel/ChannelInputs.js");
+/* harmony import */ var _model_CreateModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/CreateModal */ "./src/main/js/model/CreateModal.js");
+/* harmony import */ var _model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/wizard/InitWizard */ "./src/main/js/model/wizard/InitWizard");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+/* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-popover */ "./node_modules/react-popover/index.js");
+/* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_popover__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_11__);
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -50882,11 +53614,17 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
+
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
 var stompClient = __webpack_require__(/*! ./websocket-listener */ "./src/main/js/websocket-listener.js");
+
+var version_tag = "V. 0.5";
 
 var App =
 /*#__PURE__*/
@@ -50910,13 +53648,18 @@ function (_React$Component) {
       botAttributes: [],
       channelAttributes: [],
       serverAttributes: [],
-      links: {}
+      links: {},
+      activePage: 'dashboard',
+      showBotPopover: false,
+      showServerPopover: false,
+      showChannelPopover: false
     };
     _this.onCreate = _this.onCreate.bind(_assertThisInitialized(_this));
     _this.onDelete = _this.onDelete.bind(_assertThisInitialized(_this));
     _this.handleSocketCall = _this.handleSocketCall.bind(_assertThisInitialized(_this));
     _this.toggleBoolean = _this.toggleBoolean.bind(_assertThisInitialized(_this));
     _this.finishOnboarding = _this.finishOnboarding.bind(_assertThisInitialized(_this));
+    _this.onMenuInteraction = _this.onMenuInteraction.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -50925,7 +53668,7 @@ function (_React$Component) {
     value: function loadFromServer() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/initialized/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/initialized/').then(function (response) {
         var init = response.data;
 
         _this2.setState({
@@ -50934,7 +53677,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/bots/', {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/bots/', {
         params: {
           active: true
         }
@@ -50947,7 +53690,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/servers/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/servers/').then(function (response) {
         response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
 
         _this2.setState({
@@ -50956,7 +53699,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/channels/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/channels/').then(function (response) {
         response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
 
         _this2.setState({
@@ -50965,7 +53708,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/downloads/active/', {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/downloads/active/', {
         params: {
           active: true
         }
@@ -50976,14 +53719,14 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/downloads/failed').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/downloads/failed').then(function (response) {
         _this2.setState({
           failedDownloads: response.data
         });
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get('data/downloads/active/', {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/downloads/active/', {
         params: {
           active: false
         }
@@ -51000,21 +53743,20 @@ function (_React$Component) {
     value: function onCreate(object, objectType, modalName, callback) {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.post('data/' + objectType + '/', object).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.post('data/' + objectType + '/', object).then(function (response) {
         switch (response.status.toString()) {
           case '200':
-            console.log("success");
             modalName ? _this3.toggleBoolean(modalName) : '';
-            callback(true);
+            callback ? callback(true) : '';
             break;
 
           default:
             console.log("onCreate error");
             console.log("statuscode: " + response.status.toString());
-            callback(false);
+            callback ? callback(false) : '';
         }
       })["catch"](function (error) {
-        callback(false);
+        callback ? callback(false) : '';
         console.log(error);
       });
     }
@@ -51023,6 +53765,13 @@ function (_React$Component) {
     value: function onDelete(payload, type) {// client({method: 'DELETE', path: payload._links.self.href}).done(response => {
       //     this.loadFromServer(this.state.pageSize);
       // });
+    }
+  }, {
+    key: "onMenuInteraction",
+    value: function onMenuInteraction(eventKey, event) {
+      this.setState({
+        activePage: eventKey
+      });
     }
   }, {
     key: "moveToList",
@@ -51078,13 +53827,15 @@ function (_React$Component) {
   }, {
     key: "updateAttributes",
     value: function updateAttributes(attributes, paramName) {
-      if (this.state[paramName] && this.state[paramName].length >= 0) {
+      if (this.state[paramName] && this.state[paramName].length <= 0) {
         this.setState(_defineProperty({}, paramName, attributes));
       }
     }
   }, {
     key: "handleSocketCall",
     value: function handleSocketCall(responseObj) {
+      console.log("socket call! received:");
+      console.log(responseObj);
       var message = JSON.parse(responseObj.body);
       var downloads = this.state.downloads;
       var failedDownloads = this.state.failedDownloads;
@@ -51118,8 +53869,13 @@ function (_React$Component) {
           this.removeFromListById(downloads, message.id);
           break;
 
+        case '/topic/timeout':
+          console.log("your session has timed out. please log in again");
+          window.location.href = "login?timeout=true";
+          break;
+
         default:
-          console.log("unknown event route!");
+          console.log("unknown event route! destination was: " + responseObj.headers.destination);
       }
     }
   }, {
@@ -51132,7 +53888,7 @@ function (_React$Component) {
     value: function finishOnboarding(setupDone) {
       var _this4 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.post('data/initialized/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_11___default.a.post('data/initialized/').then(function (response) {
         switch (response.status.toString()) {
           case '200':
             _this4.toggleBoolean('initialized');
@@ -51170,6 +53926,36 @@ function (_React$Component) {
       }, {
         route: '/topic/deleteDownload',
         callback: this.handleSocketCall
+      }, {
+        route: '/topic/newBot',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/updateBot',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/deleteBot',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/newServer',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/updateServer',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/deleteServer',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/newChannel',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/updateChannel',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/deleteChannel',
+        callback: this.handleSocketCall
+      }, {
+        route: '/topic/timeout',
+        callback: this.handleSocketCall
       }]);
     }
   }, {
@@ -51177,129 +53963,207 @@ function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
+      var botPopover = React.createElement(_model_bot_BotInputs__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        modaltitle: "Create new Bot",
+        attributes: this.state.botAttributes,
+        show: this.state.showBotModal,
+        onClose: function onClose() {
+          return _this5.toggleBoolean('showBotModal');
+        },
+        onCreate: this.onCreate
+      });
+      var serverPopover = React.createElement(_model_server_ServerInputs__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        modaltitle: "Create new Bot",
+        attributes: this.state.botAttributes,
+        show: this.state.showBotModal,
+        onClose: function onClose() {
+          return _this5.toggleBoolean('showBotModal');
+        },
+        onCreate: this.onCreate
+      });
+      var channelPopover = React.createElement(_model_channel_ChannelInputs__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        modaltitle: "Create new Bot",
+        attributes: this.state.botAttributes,
+        show: this.state.showBotModal,
+        onClose: function onClose() {
+          return _this5.toggleBoolean('showBotModal');
+        },
+        onCreate: this.onCreate
+      });
+
       if (!this.state.initialized) {
-        return React.createElement(_model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        return React.createElement(_model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_8__["default"], {
           onCreate: this.onCreate,
           onFinish: this.finishOnboarding
         });
       } else {
-        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Navbar"], {
-          expand: "lg",
-          className: "bg-primary"
-        }, React.createElement("a", {
-          className: "btn btn-sm btn-danger",
-          style: {
-            color: 'gainsboro'
-          },
-          href: "/logout",
-          role: "button"
-        }, React.createElement("i", {
-          className: "fas fa-sign-out-alt fa-rotate-180"
-        })), "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Navbar"].Brand, {
-          href: "#home"
-        }, "XDCC Loader")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Container"], {
+        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Container"], {
           fluid: true
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Col"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+          xs: 12,
+          md: 1,
+          className: "sidenav-column"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"], _defineProperty({
+          className: "text-center"
+        }, "className", "sidenav"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Body, {
+          className: "text-muted sidenav-body"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"], {
+          justify: true,
+          defaultActiveKey: "dashboard",
+          onSelect: this.onMenuInteraction,
+          className: "flex-column"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+          as: "span",
+          eventKey: "dashboard"
+        }, React.createElement("i", {
+          className: "fas fa-columns"
+        }), "\xA0\xA0Dashboard"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+          as: "span",
+          eventKey: "settings"
+        }, React.createElement("i", {
+          className: "fas fa-sliders-h"
+        }), "\xA0\xA0Settings"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+          as: "span",
+          eventKey: "about"
+        }, React.createElement("i", {
+          className: "fas fa-info-circle"
+        }), "\xA0\xA0About"))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Footer, {
+          className: "text-muted sidenav-footer"
+        }, React.createElement("span", null, React.createElement("i", {
+          className: "fab fa-github"
+        }), React.createElement("a", {
+          href: "https://github.com/MaggiWuerze/xddcwebloader"
+        }, "\xA0\xA0", version_tag))))), this.state.activePage == "dashboard" && React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+          xs: 12,
           md: 4,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"], {
           className: "customCard"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Container, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Container, {
           defaultActiveKey: "bots"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"], {
           fill: true,
           variant: "tabs"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
           eventKey: "bots"
-        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Button"], {
+        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_10___default.a, {
+          isOpen: this.state.showBotPopover,
+          body: botPopover,
+          place: "below",
+          enterExitTransitionDurationMs: 300,
+          onOuterAction: function onOuterAction() {
+            return _this5.toggleBoolean('showBotPopover');
+          }
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showBotModal');
+            return _this5.toggleBoolean('showBotPopover');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
+        })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
           eventKey: "servers"
-        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Button"], {
+        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_10___default.a, {
+          isOpen: this.state.showServerPopover,
+          body: serverPopover,
+          place: "below",
+          enterExitTransitionDurationMs: 300,
+          onOuterAction: function onOuterAction() {
+            return _this5.toggleBoolean('showServerPopover');
+          }
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showServerModal');
+            return _this5.toggleBoolean('showServerPopover');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
+        })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
           eventKey: "channels"
-        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Button"], {
+        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_10___default.a, {
+          isOpen: this.state.showChannelPopover,
+          body: channelPopover,
+          place: "below",
+          enterExitTransitionDurationMs: 300,
+          onOuterAction: function onOuterAction() {
+            return _this5.toggleBoolean('showChannelPopover');
+          }
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showChannelModal');
+            return _this5.toggleBoolean('showChannelPopover');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
+        })))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
           eventKey: "bots"
         }, React.createElement(_model_bot_BotListView__WEBPACK_IMPORTED_MODULE_0__["default"], {
           bots: this.state.bots,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
           eventKey: "servers"
         }, React.createElement(_model_server_ServerListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           servers: this.state.servers,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
           eventKey: "channels"
         }, React.createElement(_model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_3__["default"], {
           channels: this.state.channels,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Col"], {
-          md: 8,
+        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+          xs: 12,
+          md: 7,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"], {
           className: "customCard"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Container, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Container, {
           defaultActiveKey: "activeDownloads"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"], {
           fill: true,
           variant: "tabs"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
           eventKey: "activeDownloads"
-        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
+        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
           eventKey: "completedDownloads"
-        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Nav"].Link, {
+        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
           eventKey: "failedDownloads"
-        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
+        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
           eventKey: "activeDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.downloads,
           onDelete: this.onDelete
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
           eventKey: "completedDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.doneDownloads,
           onDelete: this.onDelete
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
           eventKey: "failedDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.failedDownloads,
           onDelete: this.onDelete
-        }))))))))), "/*modal contents*/", React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          modaltitle: "Create new Bot",
-          attributes: this.state.botAttributes,
-          show: this.state.showBotModal,
-          onClose: function onClose() {
-            return _this5.toggleBoolean('showBotModal');
-          },
-          onCreate: this.onCreate
-        }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        })))))))), this.state.activePage == 'settings' && React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+          xs: 12,
+          md: 10,
+          className: "column"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Jumbotron"], null, React.createElement("h1", null, "Settings!"), React.createElement("p", null, "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."), React.createElement("p", null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+          variant: "primary"
+        }, "Learn more"))))), this.state.activePage == 'about' && React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+          xs: 12,
+          md: 10,
+          className: "column"
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Jumbotron"], null, React.createElement("h1", null, "About!"), React.createElement("p", null, "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."), React.createElement("p", null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+          variant: "primary"
+        }, "Learn more"))))))), "/*modal contents*/", React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
           modaltitle: "Create new Server",
           attributes: this.state.serverAttributes,
           show: this.state.showServerModal,
@@ -51307,7 +54171,7 @@ function (_React$Component) {
             return _this5.toggleBoolean('showServerModal');
           },
           onCreate: this.onCreate
-        }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
           modaltitle: "Create new Channel",
           attributes: this.state.channelAttributes,
           show: this.state.showChannelModal,
@@ -51721,6 +54585,213 @@ function (_React$Component) {
 
 /***/ }),
 
+/***/ "./src/main/js/model/bot/BotInputs.js":
+/*!********************************************!*\
+  !*** ./src/main/js/model/bot/BotInputs.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BotInputs; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+/* harmony import */ var react_bootstrap_Popover__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap/Popover */ "./node_modules/react-bootstrap/Popover.js");
+/* harmony import */ var react_bootstrap_Popover__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_Popover__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var BotInputs =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(BotInputs, _React$Component);
+
+  function BotInputs(props) {
+    var _this;
+
+    _classCallCheck(this, BotInputs);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(BotInputs).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.state = {
+      serverList: [],
+      channelList: [],
+      userList: []
+    };
+    return _this;
+  }
+
+  _createClass(BotInputs, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var newBot = {};
+      newBot["name"] = ReactDOM.findDOMNode(this.refs["name"]).value.trim();
+      newBot["pattern"] = ReactDOM.findDOMNode(this.refs["pattern"]).value.trim();
+      newBot["serverId"] = ReactDOM.findDOMNode(this.refs["server"]).value.trim();
+      newBot["channelId"] = ReactDOM.findDOMNode(this.refs["channel"]).value.trim();
+      this.props.onCreate(newBot, 'bots', 'showBotPopover');
+    }
+  }, {
+    key: "loadServerList",
+    value: function loadServerList() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
+        _this2.setState({
+          serverList: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "loadChannelList",
+    value: function loadChannelList() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
+        _this3.setState({
+          channelList: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadServerList();
+      this.loadChannelList();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var serverOptions = this.state.serverList.map(function (server) {
+        var jsonServer = JSON.stringify({
+          id: server.id,
+          name: server.name,
+          serverUrl: server.serverUrl,
+          creationDate: "2019-05-29T14:56:37.599"
+        });
+        return React.createElement("option", {
+          key: server.id,
+          value: server.id
+        }, server.name);
+      });
+      var channelOptions = this.state.channelList.map(function (channel) {
+        return React.createElement("option", {
+          key: channel.id,
+          value: channel.id
+        }, channel.name);
+      });
+      var inputs = this.props.attributes.map(function (attribute) {
+        var input = "";
+
+        switch (attribute) {
+          case 'server':
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+              className: "mb-3",
+              key: attribute
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+              id: "basic-addon1",
+              key: attribute
+            }, "Server")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+              key: attribute,
+              ref: attribute,
+              as: "select"
+            }, serverOptions));
+            break;
+
+          case 'channel':
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+              className: "mb-3",
+              key: attribute
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+              id: "basic-addon1",
+              key: attribute
+            }, "Channel")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+              key: attribute,
+              ref: attribute,
+              as: "select"
+            }, channelOptions));
+            break;
+
+          case 'name':
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+              className: "mb-3",
+              key: attribute
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+              id: "basic-addon1",
+              key: attribute
+            }, attribute)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+              placeholder: attribute,
+              ref: attribute,
+              "aria-label": attribute
+            }));
+
+          case 'pattern':
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+              className: "mb-3",
+              key: attribute
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+              id: "basic-addon1",
+              key: attribute
+            }, attribute)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+              placeholder: attribute,
+              ref: attribute,
+              "aria-label": attribute
+            }));
+
+          default:
+            break;
+        }
+
+        ;
+        return input;
+      });
+      return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, this.props.modalTitle), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Footer, {
+        className: "text-muted"
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: "success",
+        onClick: this.handleSubmit
+      }, "Create a Bot"))));
+    }
+  }]);
+
+  return BotInputs;
+}(React.Component);
+
+
+
+/***/ }),
+
 /***/ "./src/main/js/model/bot/BotListView.js":
 /*!**********************************************!*\
   !*** ./src/main/js/model/bot/BotListView.js ***!
@@ -51781,11 +54852,7 @@ function (_React$Component) {
         });
       });
       return React.createElement("div", {
-        style: {
-          'overflowY': 'auto',
-          'height': '-webkit-fill-available',
-          'paddingBottom': '15%'
-        }
+        className: "list"
       }, bots);
     }
   }]);
@@ -51880,6 +54947,165 @@ function (_React$Component) {
 
 /***/ }),
 
+/***/ "./src/main/js/model/channel/ChannelInputs.js":
+/*!****************************************************!*\
+  !*** ./src/main/js/model/channel/ChannelInputs.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ChannelInputs; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var ChannelInputs =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ChannelInputs, _React$Component);
+
+  function ChannelInputs(props) {
+    var _this;
+
+    _classCallCheck(this, ChannelInputs);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ChannelInputs).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.state = {
+      serverList: [],
+      channelList: [],
+      userList: []
+    };
+    return _this;
+  }
+
+  _createClass(ChannelInputs, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var newChannel = {};
+      newBot["name"] = ReactDOM.findDOMNode(this.refs["name"]).value.trim();
+      this.props.onCreate(newChannel, 'channels', 'showChannelPopover');
+    }
+  }, {
+    key: "loadServerList",
+    value: function loadServerList() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
+        _this2.setState({
+          serverList: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "loadChannelList",
+    value: function loadChannelList() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
+        _this3.setState({
+          channelList: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadServerList();
+      this.loadChannelList();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var serverOptions = this.state.serverList.map(function (server) {
+        var jsonServer = JSON.stringify({
+          id: server.id,
+          name: server.name,
+          serverUrl: server.serverUrl,
+          creationDate: "2019-05-29T14:56:37.599"
+        });
+        return React.createElement("option", {
+          key: server.id,
+          value: server.id
+        }, server.name);
+      });
+      var channelOptions = this.state.channelList.map(function (channel) {
+        return React.createElement("option", {
+          key: channel.id,
+          value: channel.id
+        }, channel.name);
+      });
+      var inputs = this.props.attributes.map(function (attribute) {
+        var input = "";
+
+        switch (attribute) {
+          case 'name':
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+              className: "mb-3",
+              key: attribute
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+              id: "basic-addon1",
+              key: attribute
+            }, attribute)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+              placeholder: attribute,
+              ref: attribute,
+              "aria-label": attribute
+            }));
+
+          default:
+            break;
+        }
+
+        ;
+        return input;
+      });
+      return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, this.props.modalTitle), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Footer, {
+        className: "text-muted"
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: "success",
+        onClick: this.handleSubmit
+      }, "Create a Channel"))));
+    }
+  }]);
+
+  return ChannelInputs;
+}(React.Component);
+
+
+
+/***/ }),
+
 /***/ "./src/main/js/model/channel/ChannelListView.js":
 /*!******************************************************!*\
   !*** ./src/main/js/model/channel/ChannelListView.js ***!
@@ -51940,11 +55166,7 @@ function (_React$Component) {
         });
       });
       return React.createElement("div", {
-        style: {
-          'overflowY': 'auto',
-          'height': '-webkit-fill-available',
-          'paddingBottom': '15%'
-        }
+        className: "list"
       }, channels);
     }
   }]);
@@ -52048,7 +55270,7 @@ function (_React$Component) {
         fluid: true
       }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"].Subtitle, {
         className: "mb-2 text-muted"
-      }, "File: ", this.props.download.filename, " (", this.props.download.fileRefId, ")"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ProgressBar"], {
+      }, "File: ", this.props.download.filename, " (", this.props.download.fileRefId, ")", "\n", "Size: ", this.props.download.filesize, "\n"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["ProgressBar"], {
         style: {
           height: '30px',
           width: '90%'
@@ -52247,6 +55469,189 @@ function (_React$Component) {
 
 /***/ }),
 
+/***/ "./src/main/js/model/server/ServerInputs.js":
+/*!**************************************************!*\
+  !*** ./src/main/js/model/server/ServerInputs.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ServerInputs; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var ServerInputs =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ServerInputs, _React$Component);
+
+  function ServerInputs(props) {
+    var _this;
+
+    _classCallCheck(this, ServerInputs);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ServerInputs).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.state = {
+      serverList: [],
+      channelList: [],
+      userList: []
+    };
+    return _this;
+  }
+
+  _createClass(ServerInputs, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault(); // this.name = name;
+      // this.pattern = pattern;
+      // this.serverId = serverId;
+      // this.channelId = channelId;
+      // this.fileRefId = fileRefId;
+
+      var newServer = {};
+      newBot["name"] = ReactDOM.findDOMNode(this.refs["name"]).value.trim();
+      newBot["pattern"] = ReactDOM.findDOMNode(this.refs["pattern"]).value.trim();
+      newBot["serverId"] = ReactDOM.findDOMNode(this.refs["server"]).value.trim();
+      newBot["channelId"] = ReactDOM.findDOMNode(this.refs["channel"]).value.trim();
+      newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs["fileRefId"]).value.trim();
+      this.props.onCreate(newServer, 'servers', 'showServerPopover'); // this.props.botAttributes.forEach(attribute => {
+      //     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
+      // });
+    }
+  }, {
+    key: "loadServerList",
+    value: function loadServerList() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/servers/').then(function (response) {
+        _this2.setState({
+          serverList: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "loadChannelList",
+    value: function loadChannelList() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8080/data/channels/').then(function (response) {
+        _this3.setState({
+          channelList: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadServerList();
+      this.loadChannelList();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var serverOptions = this.state.serverList.map(function (server) {
+        var jsonServer = JSON.stringify({
+          id: server.id,
+          name: server.name,
+          serverUrl: server.serverUrl,
+          creationDate: "2019-05-29T14:56:37.599"
+        });
+        return React.createElement("option", {
+          key: server.id,
+          value: server.id
+        }, server.name);
+      });
+      var channelOptions = this.state.channelList.map(function (channel) {
+        return React.createElement("option", {
+          key: channel.id,
+          value: channel.id
+        }, channel.name);
+      });
+      var inputs = this.props.attributes.map(function (attribute) {
+        var input = "";
+
+        switch (attribute) {
+          case 'name':
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+              className: "mb-3",
+              key: attribute
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+              id: "basic-addon1",
+              key: attribute
+            }, attribute)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+              placeholder: attribute,
+              ref: attribute,
+              "aria-label": attribute
+            }));
+
+          case 'serverUrl':
+            input = React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+              className: "mb-3",
+              key: attribute
+            }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Prepend, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Text, {
+              id: "basic-addon1",
+              key: attribute
+            }, attribute)), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+              placeholder: attribute,
+              ref: attribute,
+              "aria-label": attribute
+            }));
+
+          default:
+            break;
+        }
+
+        ;
+        return input;
+      });
+      return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, this.props.modalTitle), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Footer, {
+        className: "text-muted"
+      }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: "success",
+        onClick: this.handleSubmit
+      }, "Create a Server"))));
+    }
+  }]);
+
+  return ServerInputs;
+}(React.Component);
+
+
+
+/***/ }),
+
 /***/ "./src/main/js/model/server/ServerListView.js":
 /*!****************************************************!*\
   !*** ./src/main/js/model/server/ServerListView.js ***!
@@ -52307,11 +55712,7 @@ function (_React$Component) {
         });
       });
       return React.createElement("div", {
-        style: {
-          'overflowY': 'auto',
-          'height': '-webkit-fill-available',
-          'paddingBottom': '15%'
-        }
+        className: "list"
       }, servers);
     }
   }]);

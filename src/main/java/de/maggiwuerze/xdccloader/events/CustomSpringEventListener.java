@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 @Component
 public class CustomSpringEventListener {
 
-    public static final int DCC_TRANSFER_BUFFER_SIZE = 1024 * 10;
+    public static final int DCC_TRANSFER_BUFFER_SIZE = 1024 * 1;
     Logger logger = Logger.getLogger("Class CustomSpringEventListener");
 
     @Autowired
@@ -52,12 +52,12 @@ public class CustomSpringEventListener {
 
         Configuration configuration = new Configuration.Builder()
 //                .setUsername(event.getPayload().getTargetBot().getUsername()) //Set the nick of the bot. CHANGE IN YOUR CODE
+//                .setDccReceiveTransferBufferSize(DCC_TRANSFER_BUFFER_SIZE)
+//                .setAutoReconnect(false)
                 .setName(username) //Set the nick of the bot. CHANGE IN YOUR CODE
                 .addServer(event.getPayload().getTargetBot().getServer().getServerUrl()) //Join the freenode network
                 .addAutoJoinChannel(event.getPayload().getTargetBot().getChannel().getName()) //Join the official #pircbotx channel
                 .setAutoReconnectAttempts(5)
-                .setDccTransferBufferSize(DCC_TRANSFER_BUFFER_SIZE)
-//                .setAutoReconnect(false)
                 .setAutoNickChange(true) //Automatically change nick when the current one is in use
                 .addListener(ircEventListener) //Add our listener that will be called on Events
                 .buildConfiguration();

@@ -1,5 +1,6 @@
 package de.maggiwuerze.xdccloader.controller;
 
+import de.maggiwuerze.xdccloader.model.Channel;
 import de.maggiwuerze.xdccloader.model.Download;
 import de.maggiwuerze.xdccloader.model.User;
 import de.maggiwuerze.xdccloader.model.forms.UserForm;
@@ -110,9 +111,11 @@ class MainController{
             }else {
 
 
+//                channelRepository.save(new Channel( "TestChannel"));
+
                 String username = userForm.getUsername();
                 String password = new BCryptPasswordEncoder(11).encode(userForm.getPassword());
-                this.userRepository.save(new User(username, password, Role.USER.getExternalString()));
+                this.userRepository.save(new User(username, password, Role.USER.getExternalString(),false));
                 model.put("noUser", false);
 
                 try {

@@ -7,7 +7,6 @@ import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 
-@Data
 @Entity
 public class Download {
 
@@ -30,6 +29,9 @@ public class Download {
 
     @Column(nullable = false)
     String filename = "unknown";
+
+    @Column(nullable = false)
+    String filesize = "-";
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -108,5 +110,13 @@ public class Download {
 
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
+    }
+
+    public String getFilesize() {
+        return filesize;
+    }
+
+    public void setFilesize(String filesize) {
+        this.filesize = filesize;
     }
 }

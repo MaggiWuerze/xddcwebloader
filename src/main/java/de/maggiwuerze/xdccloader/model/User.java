@@ -12,12 +12,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 
-@Data
 @Entity(name = "userdetail")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     Long id;
 
     @Column(nullable = false)
@@ -50,10 +49,11 @@ public class User implements UserDetails {
     @Transient
     String ROLE_PREFIX = "ROLE_";
 
-    public User(String name, String password, String userRole) {
+    public User(String name, String password, String userRole, boolean initialized) {
         this.name = name;
         this.password = password;
         this.userRole = userRole;
+        this.initialized = initialized;
     }
 
     public User() {

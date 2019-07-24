@@ -25,6 +25,7 @@
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                         </div>
                         <input type="text"
+                               autofocus
                                id="username"
                                name="username"
                                class="form-control"
@@ -47,6 +48,9 @@
 
                     <div id="errors" th:if="${(param.error != null) and (param.error[0] == 'true')}" class="alert alert-danger" role="alert">
                         That didn't work. Password or Username was incorrect.
+                    </div>
+                    <div id="timeout" th:if="${(param.timeout != null) and (param.timeout[0] == 'true')}" class="alert alert-info" role="alert">
+                        You were automatically logged out after your session timed out..
                     </div>
 
                         <div class="btn-group" role="group">

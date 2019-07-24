@@ -204,7 +204,9 @@ class DataController {
 
         Optional<Server> server = serverRepository.findById(targetBotForm.getServerId());
         Optional<Channel> channel = channelRepository.findById(targetBotForm.getChannelId());
-        targetBotRepository.save(new TargetBot(server.get(), channel.get(), targetBotForm.getName(), targetBotForm.getPattern()));
+        TargetBot bot = targetBotRepository.save(new TargetBot(server.get(), channel.get(), targetBotForm.getName(), targetBotForm.getPattern()));
+
+        publishEvent(SocketEvents.NEW_SERVER, bot);
 
         return new ResponseEntity("Bot added succcessfully", HttpStatus.OK);
     }

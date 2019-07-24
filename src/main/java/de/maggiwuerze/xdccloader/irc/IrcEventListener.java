@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Component
@@ -57,8 +58,8 @@ public class IrcEventListener extends ListenerAdapter {
         //TODO: handle errors better... if possible
         if (event.getRemainingAttempts() <= 0) {
 
-            Exception exception = event.getConnectExceptions().get(event.getConnectExceptions().keySet().asList().get(0));
-            eventPublisher.handleError(event.getBot(), exception);
+//            Exception exception = event.getConnectExceptions().get(event.getConnectExceptions().keySet().asList().get(0));
+//            eventPublisher.handleError(event.getBot(), exception);
 
         } else {
 
@@ -90,12 +91,8 @@ public class IrcEventListener extends ListenerAdapter {
 
         TaskExecutor taskExecutor = new SimpleAsyncTaskExecutor(event.getBot().getNick() + " transfer");
         taskExecutor.execute(() -> {
-            try {
-                LOG.info("transferring file");
-                fileTransfer.transfer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            LOG.info("transferring file");
+            fileTransfer.transfer();
         });
 
         if (fileTransfer == null) {

@@ -55,8 +55,10 @@ export default class DownloadCard extends React.Component {
                     </Alert>
                     <Container fluid>
                         <InputGroup>
-                            <Card.Subtitle
-                                className="mb-2 text-muted">File: {this.props.download.filename} ({this.props.download.fileRefId})</Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">
+                                File: {this.props.download.filename} ({this.props.download.fileRefId}){"\n"}
+                                Size: {this.props.download.filesize}{"\n"}
+                            </Card.Subtitle>
                             <ProgressBar style={{height: '30px', width: '90%'}}
                                          animated={this.props.download.status == 'TRANSMITTING'}
                                          variant={this.decideAlertType()}

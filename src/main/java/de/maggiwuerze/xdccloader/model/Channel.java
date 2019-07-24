@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import lombok.Data;
 import javax.persistence.*;
 
-@Data
 @Entity
 public class Channel {
 

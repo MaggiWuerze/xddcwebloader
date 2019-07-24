@@ -14,6 +14,8 @@
        url('../fonts/lato-v15-latin-regular.svg#Lato') format('svg'); /* Legacy iOS */
 }
 
+
+/*main content*/
  p, h1, h2 {
     font-family: 'Lato', sans-serif !important;
     color: gainsboro !important;
@@ -57,24 +59,91 @@
 }
 
 .customCard {
-    height: 92vh;
+    height: 100vh;
     top: 0;
     bottom: 0;
 }
 
+
+.customCard-body {
+
+/*style={{'overflowY': 'auto', 'height': '-webkit-fill-available', 'paddingBottom': '15%'}*/
+
+    overflow-y: auto;
+
+}
+
 .list{
 
-    overflow-y: scroll;
-    height: 84vh;
-    top: 0;
+    overflow-y: auto;
+    height: 91vh;
+    /*top: 0;
     bottom: 0;
-
+    paddingBottom': 20px*/
 }
 
 .tab_btn{
 
     transform: scale(0.7);
 
+}
+
+/*sidenav*/
+
+
+.sidenav {
+
+    height: 100vh;
+    border-right-color: transparent !important;
+
+}
+
+.sidenav-column {
+
+    padding-left: 0 !important;
+
+}
+
+.sidenav-body {
+
+    top: 0;
+    bottom: 0;
+    background: whitesmoke !important;
+    color: white !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+
+}
+
+.sidenav-footer {
+
+    background: whitesmoke;
+    padding-right: 0;
+    padding-left: 0;
+
+}
+
+.sidenav .active {
+
+    font-family: 'Lato', sans-serif !important;
+    color: rgb(51, 162, 255) !important;
+    background: white;
+
+}
+
+/* popovers */
+
+.Popover-body {
+  display: inline-flex;
+  flex-direction: column;
+  padding: 5px;
+  background: hsl(0, 0%, 27%);
+  color: white;
+  border-radius: 0.3rem;
+}
+
+.Popover-tipShape {
+  fill: hsl(0, 0%, 27%);
 }
 
 /*input validation*/

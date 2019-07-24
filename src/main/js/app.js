@@ -4,6 +4,9 @@ import BotListView from './model/bot/BotListView';
 import DownloadListView from './model/download/DownloadListView';
 import ServerListView from './model/server/ServerListView';
 import ChannelListView from './model/channel/ChannelListView';
+import BotInputs from './model/bot/BotInputs';
+import ServerInputs from './model/server/ServerInputs';
+import ChannelInputs from './model/channel/ChannelInputs';
 import CreateModal from './model/CreateModal';
 import InitWizard from './model/wizard/InitWizard';
 
@@ -12,17 +15,22 @@ import {
     Card,
     Col,
     Container,
+    Jumbotron,
     Navbar,
     Nav,
     Row,
     Tab,
     TabContent
 } from 'react-bootstrap';
+import Popover from 'react-popover';
+
 import axios from 'axios';
 
 const React = require('react');
 const ReactDOM = require('react-dom');
 const stompClient = require('./websocket-listener');
+
+const version_tag = "V. 0.5";
 
 class App extends React.Component {
 
@@ -40,13 +48,18 @@ class App extends React.Component {
             botAttributes: [],
             channelAttributes: [],
             serverAttributes: [],
-            links: {}
+            links: {},
+            activePage: 'dashboard',
+            showBotPopover: false,
+            showServerPopover: false,
+            showChannelPopover: false
         };
         this.onCreate = this.onCreate.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.handleSocketCall = this.handleSocketCall.bind(this);
         this.toggleBoolean = this.toggleBoolean.bind(this);
         this.finishOnboarding = this.finishOnboarding.bind(this);
+        this.onMenuInteraction = this.onMenuInteraction.bind(this);
     }
 
     loadFromServer() {
@@ -175,9 +188,8 @@ class App extends React.Component {
 
                     case '200':
 
-                        console.log("success");
                         modalName ? this.toggleBoolean(modalName) : '';
-                        callback(true);
+                        callback ? callback(true) : '';
 
                     break;
 
@@ -185,11 +197,11 @@ class App extends React.Component {
 
                         console.log("onCreate error");
                         console.log("statuscode: " + response.status.toString());
-                        callback(false);
+                        callback ? callback(false) : '';
 
                 }
             }).catch((error) => {
-                    callback(false);
+                    callback ? callback(false) : '';
                     console.log(error);
                 });
 
@@ -199,6 +211,16 @@ class App extends React.Component {
         // client({method: 'DELETE', path: payload._links.self.href}).done(response => {
         //     this.loadFromServer(this.state.pageSize);
         // });
+    }
+
+    onMenuInteraction(eventKey, event){
+
+        this.setState({
+
+            activePage: eventKey
+
+        });
+
     }
 
     moveToList(sourceList, targetList, item) {
@@ -260,17 +282,21 @@ class App extends React.Component {
 
     updateAttributes(attributes, paramName) {
 
-        if (this.state[paramName] && this.state[paramName].length >= 0) {
+        if (this.state[paramName] && this.state[paramName].length <= 0) {
             this.setState({[paramName]: attributes});
         }
     }
 
     handleSocketCall(responseObj) {
 
+        console.log("socket call! received:");
+        console.log(responseObj);
+
         let message = JSON.parse(responseObj.body);
         let downloads = this.state.downloads;
         let failedDownloads = this.state.failedDownloads;
         let doneDownloads = this.state.doneDownloads;
+
 
         switch (responseObj.headers.destination) {
 
@@ -318,9 +344,15 @@ class App extends React.Component {
                 this.removeFromListById(downloads, message.id)
                 break;
 
+            case '/topic/timeout':
+
+                console.log("your session has timed out. please log in again");
+                window.location.href = "login?timeout=true";
+                break;
+
             default:
 
-                console.log("unknown event route!")
+                console.log("unknown event route! destination was: " + responseObj.headers.destination);
         }
 
 
@@ -372,11 +404,43 @@ class App extends React.Component {
         stompClient.register([
             {route: '/topic/newDownload', callback: this.handleSocketCall},
             {route: '/topic/updateDownload', callback: this.handleSocketCall},
-            {route: '/topic/deleteDownload', callback: this.handleSocketCall}
+            {route: '/topic/deleteDownload', callback: this.handleSocketCall},
+
+            {route: '/topic/newBot', callback: this.handleSocketCall},
+            {route: '/topic/updateBot', callback: this.handleSocketCall},
+            {route: '/topic/deleteBot', callback: this.handleSocketCall},
+
+            {route: '/topic/newServer', callback: this.handleSocketCall},
+            {route: '/topic/updateServer', callback: this.handleSocketCall},
+            {route: '/topic/deleteServer', callback: this.handleSocketCall},
+
+            {route: '/topic/newChannel', callback: this.handleSocketCall},
+            {route: '/topic/updateChannel', callback: this.handleSocketCall},
+            {route: '/topic/deleteChannel', callback: this.handleSocketCall},
+
+            {route: '/topic/timeout', callback: this.handleSocketCall}
         ]);
     }
 
     render() {
+
+        const botPopover = (
+            <BotInputs modaltitle="Create new Bot" attributes={this.state.botAttributes}
+            show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
+            onCreate={this.onCreate}/>
+        );
+
+        const serverPopover = (
+            <ServerInputs modaltitle="Create new Bot" attributes={this.state.botAttributes}
+            show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
+            onCreate={this.onCreate}/>
+        );
+
+        const channelPopover = (
+            <ChannelInputs modaltitle="Create new Bot" attributes={this.state.botAttributes}
+            show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
+            onCreate={this.onCreate}/>
+        );
 
         if (!this.state.initialized) {
 
@@ -390,123 +454,198 @@ class App extends React.Component {
 
             return (
                 <React.Fragment>
-                    <Navbar expand="lg" className="bg-primary">
-                        <a className="btn btn-sm btn-danger" style={{color:'gainsboro'}} href="/logout" role="button"><i className="fas fa-sign-out-alt fa-rotate-180"></i></a>
-                        &nbsp;
-                        <Navbar.Brand href="#home">XDCC Loader</Navbar.Brand>
-                    </Navbar>
                     <Container fluid>
                         <Row>
-                            <Col md={4} className={"column"}>
-                                <Card className={"customCard"}>
-                                    <Tab.Container defaultActiveKey="bots">
-                                        <Card.Header>
-                                            <Nav fill variant="tabs">
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="bots">
-                                                    <span>
-                                                        {"Bots (" + this.state.bots.length + ")"}&nbsp;
-                                                        <Button size="sm" className={"tab_btn"} variant="success"
-                                                                onClick={() => this.toggleBoolean('showBotModal')}>
-                                                            <i className="fas fa-plus"></i>
-                                                        </Button>
-                                                    </span>
-                                                    </Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="servers">
-                                                    <span>
-                                                        {"Servers (" + this.state.servers.length + ")"}&nbsp;
-                                                        <Button size="sm" className={"tab_btn"} variant="success"
-                                                                onClick={() => this.toggleBoolean('showServerModal')}>
-                                                            <i className="fas fa-plus"></i>
-                                                        </Button>
-                                                    </span>
-                                                    </Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="channels">
-                                                    <span>
-                                                        {"Channels (" + this.state.channels.length + ")"}&nbsp;
-                                                        <Button size="sm" className={"tab_btn"} variant="success"
-                                                                onClick={() => this.toggleBoolean('showChannelModal')}>
-                                                            <i className="fas fa-plus"></i>
-                                                        </Button>
-                                                    </span>
-                                                    </Nav.Link>
-                                                </Nav.Item>
-                                            </Nav>
-                                        </Card.Header>
-                                        <Card.Body>
-                                            <TabContent>
-                                                <Tab.Pane eventKey="bots">
-                                                    <BotListView bots={this.state.bots} onDelete={this.onDelete()}
-                                                             onCreate={this.onCreate}/>
-                                                </Tab.Pane>
-                                                <Tab.Pane eventKey="servers">
-                                                    <ServerListView servers={this.state.servers} onDelete={this.onDelete()}
-                                                             onCreate={this.onCreate}/>
-                                                </Tab.Pane>
-                                                <Tab.Pane eventKey="channels">
-                                                    <ChannelListView channels={this.state.channels} onDelete={this.onDelete()}
-                                                             onCreate={this.onCreate}/>
-                                                </Tab.Pane>
-                                            </TabContent>
-                                        </Card.Body>
-                                    </Tab.Container>
+                            <Col xs={12} md={1} className="sidenav-column">
+                                <Card className="text-center" className="sidenav">
+                                  <Card.Body className="text-muted sidenav-body">
+                                    <Nav justify defaultActiveKey="dashboard" onSelect={this.onMenuInteraction} className="flex-column">
+                                        <Nav.Link as="span" eventKey="dashboard">
+                                            <i className="fas fa-columns"></i>
+                                            &nbsp;&nbsp;Dashboard
+                                        </Nav.Link>
+                                        <Nav.Link as="span" eventKey="settings">
+                                            <i className="fas fa-sliders-h"></i>
+                                            &nbsp;&nbsp;Settings
+                                        </Nav.Link>
+                                        <Nav.Link as="span" eventKey="about">
+                                            <i className="fas fa-info-circle"></i>
+                                            &nbsp;&nbsp;About
+                                        </Nav.Link>
+                                    </Nav>
+                                  </Card.Body>
+                                  <Card.Footer className="text-muted sidenav-footer">
+                                    <span>
+                                        <i className="fab fa-github"></i>
+                                        <a href="https://github.com/MaggiWuerze/xddcwebloader" >&nbsp;&nbsp;{version_tag}</a>
+                                    </span>
+                                  </Card.Footer>
                                 </Card>
+                            </Col>
 
-                            </Col>
-                            <Col md={8} className={"column"}>
-                                <Card className={"customCard"}>
-                                    <Tab.Container defaultActiveKey="activeDownloads">
-                                        <Card.Header>
-                                            <Nav fill variant="tabs">
-                                                <Nav.Item>
-                                                    <Nav.Link
-                                                        eventKey="activeDownloads">{"Active Downloads (" + this.state.downloads.length + ")"}</Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link
-                                                        eventKey="completedDownloads">{"Completed (" + this.state.doneDownloads.length + ")"}</Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link
-                                                        eventKey="failedDownloads">{"Failed (" + this.state.failedDownloads.length + ")"}</Nav.Link>
-                                                </Nav.Item>
-                                            </Nav>
-                                        </Card.Header>
-                                        <Card.Body>
-                                            <TabContent>
-                                                <Tab.Pane eventKey="activeDownloads">
-                                                    <DownloadListView downloads={this.state.downloads}
-                                                                  onDelete={this.onDelete}/>
-                                                </Tab.Pane>
-                                                <Tab.Pane eventKey="completedDownloads">
-                                                    <DownloadListView downloads={this.state.doneDownloads}
-                                                                  onDelete={this.onDelete}/>
-                                                </Tab.Pane>
-                                                <Tab.Pane eventKey="failedDownloads">
-                                                    <DownloadListView downloads={this.state.failedDownloads}
-                                                                  onDelete={this.onDelete}/>
-                                                </Tab.Pane>
-                                            </TabContent>
-                                        </Card.Body>
-                                    </Tab.Container>
-                                </Card>
-                            </Col>
+                            {/* DASHBOARD */}
+                            {this.state.activePage == "dashboard" &&
+                            <>
+                                <Col xs={12} md={4} className={"column"}>
+                                    <Card className={"customCard"}>
+                                        <Tab.Container defaultActiveKey="bots">
+                                            <Card.Header>
+                                                <Nav fill variant="tabs">
+                                                    <Nav.Item>
+                                                        <Nav.Link eventKey="bots">
+                                                        <span>
+                                                            {"Bots (" + this.state.bots.length + ")"}&nbsp;
+                                                            <Popover
+                                                              isOpen={this.state.showBotPopover}
+                                                              body={botPopover}
+                                                              place="below"
+                                                              enterExitTransitionDurationMs={300}
+                                                              onOuterAction={() => this.toggleBoolean('showBotPopover')}>
+                                                                <Button size="sm" className={"tab_btn"} variant="success"
+                                                                    onClick={() => this.toggleBoolean('showBotPopover')}>
+                                                                    <i className="fas fa-plus"></i>
+                                                                </Button>
+                                                             </Popover>
+                                                        </span>
+                                                        </Nav.Link>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <Nav.Link eventKey="servers">
+                                                        <span>
+                                                            {"Servers (" + this.state.servers.length + ")"}&nbsp;
+                                                            <Popover
+                                                              isOpen={this.state.showServerPopover}
+                                                              body={serverPopover}
+                                                              place="below"
+                                                              enterExitTransitionDurationMs={300}
+                                                              onOuterAction={() => this.toggleBoolean('showServerPopover')}>
+                                                                <Button size="sm" className={"tab_btn"} variant="success"
+                                                                    onClick={() => this.toggleBoolean('showServerPopover')}>
+                                                                    <i className="fas fa-plus"></i>
+                                                                </Button>
+                                                             </Popover>
+                                                        </span>
+                                                        </Nav.Link>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <Nav.Link eventKey="channels">
+                                                        <span>
+                                                            {"Channels (" + this.state.channels.length + ")"}&nbsp;
+                                                            <Popover
+                                                              isOpen={this.state.showChannelPopover}
+                                                              body={channelPopover}
+                                                              place="below"
+                                                              enterExitTransitionDurationMs={300}
+                                                              onOuterAction={() => this.toggleBoolean('showChannelPopover')}>
+                                                                <Button size="sm" className={"tab_btn"} variant="success"
+                                                                    onClick={() => this.toggleBoolean('showChannelPopover')}>
+                                                                    <i className="fas fa-plus"></i>
+                                                                </Button>
+                                                             </Popover>
+                                                        </span>
+                                                        </Nav.Link>
+                                                    </Nav.Item>
+                                                </Nav>
+                                            </Card.Header>
+                                            <Card.Body>
+                                                <TabContent>
+                                                    <Tab.Pane eventKey="bots">
+                                                        <BotListView bots={this.state.bots} onDelete={this.onDelete()}
+                                                                 onCreate={this.onCreate}/>
+                                                    </Tab.Pane>
+                                                    <Tab.Pane eventKey="servers">
+                                                        <ServerListView servers={this.state.servers} onDelete={this.onDelete()}
+                                                                 onCreate={this.onCreate}/>
+                                                    </Tab.Pane>
+                                                    <Tab.Pane eventKey="channels">
+                                                        <ChannelListView channels={this.state.channels} onDelete={this.onDelete()}
+                                                                 onCreate={this.onCreate}/>
+                                                    </Tab.Pane>
+                                                </TabContent>
+                                            </Card.Body>
+                                        </Tab.Container>
+                                    </Card>
+
+                                </Col>
+                                <Col xs={12} md={7} className={"column"}>
+                                    <Card className={"customCard"}>
+                                        <Tab.Container defaultActiveKey="activeDownloads">
+                                            <Card.Header>
+                                                <Nav fill variant="tabs">
+                                                    <Nav.Item>
+                                                        <Nav.Link
+                                                            eventKey="activeDownloads">{"Active Downloads (" + this.state.downloads.length + ")"}</Nav.Link>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <Nav.Link
+                                                            eventKey="completedDownloads">{"Completed (" + this.state.doneDownloads.length + ")"}</Nav.Link>
+                                                    </Nav.Item>
+                                                    <Nav.Item>
+                                                        <Nav.Link
+                                                            eventKey="failedDownloads">{"Failed (" + this.state.failedDownloads.length + ")"}</Nav.Link>
+                                                    </Nav.Item>
+                                                </Nav>
+                                            </Card.Header>
+                                            <Card.Body>
+                                                <TabContent>
+                                                    <Tab.Pane eventKey="activeDownloads">
+                                                        <DownloadListView downloads={this.state.downloads}
+                                                                      onDelete={this.onDelete}/>
+                                                    </Tab.Pane>
+                                                    <Tab.Pane eventKey="completedDownloads">
+                                                        <DownloadListView downloads={this.state.doneDownloads}
+                                                                      onDelete={this.onDelete}/>
+                                                    </Tab.Pane>
+                                                    <Tab.Pane eventKey="failedDownloads">
+                                                        <DownloadListView downloads={this.state.failedDownloads}
+                                                                      onDelete={this.onDelete}/>
+                                                    </Tab.Pane>
+                                                </TabContent>
+                                            </Card.Body>
+                                        </Tab.Container>
+                                    </Card>
+                                </Col>
+                            </>
+                            }
+
+                            {/* SETTINGS */}
+                            {this.state.activePage == 'settings' && <>
+
+                                <Col xs={12} md={10} className={"column"}>
+                                    <Jumbotron>
+                                      <h1>Settings!</h1>
+                                      <p>
+                                        This is a simple hero unit, a simple jumbotron-style component for calling
+                                        extra attention to featured content or information.
+                                      </p>
+                                      <p>
+                                        <Button variant="primary">Learn more</Button>
+                                      </p>
+                                    </Jumbotron>
+                                </Col>
+
+                            </>}
+
+                            {/* ABOUT */}
+                            {this.state.activePage == 'about' && <>
+
+                                <Col xs={12} md={10} className={"column"}>
+                                    <Jumbotron>
+                                      <h1>About!</h1>
+                                      <p>
+                                        This is a simple hero unit, a simple jumbotron-style component for calling
+                                        extra attention to featured content or information.
+                                      </p>
+                                      <p>
+                                        <Button variant="primary">Learn more</Button>
+                                      </p>
+                                    </Jumbotron>
+                                </Col>
+
+                            </>}
+
                         </Row>
                     </Container>
-                   /*modal contents*/
-                    <CreateModal modaltitle="Create new Bot" attributes={this.state.botAttributes}
-                                    show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
-                                    onCreate={this.onCreate}/>
-                    <CreateModal modaltitle="Create new Server" attributes={this.state.serverAttributes}
-                                    show={this.state.showServerModal} onClose={() => this.toggleBoolean('showServerModal')}
-                                    onCreate={this.onCreate}/>
-                    <CreateModal modaltitle="Create new Channel" attributes={this.state.channelAttributes}
-                                    show={this.state.showChannelModal} onClose={() => this.toggleBoolean('showChannelModal')}
-                                    onCreate={this.onCreate}/>
                 </React.Fragment>
             )
         }

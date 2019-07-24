@@ -2,15 +2,16 @@ package de.maggiwuerze.xdccloader.util;
 
 public enum State {
 
+    CONNECTING("Connecting"),
+    DONE("Done"),
+    ERROR("Error : '%s'"),
+    FINALIZING("Finalizing"),
     PREPARING("Preparing"),
     PREPARED("Prepared"),
     READY("Ready"),
-    CONNECTING("Connecting"),
-    TRANSMITTING("Transmitting"),
-    FINALIZING("Finalizing"),
-    DONE("Done"),
-    ERROR("Error : '%s'"),
     RESTARTING("Restarting"),
+    STOPPED("Stopped"),
+    TRANSMITTING("Transmitting"),
     UNKNOWN("Unknown");
 
     String externalString;

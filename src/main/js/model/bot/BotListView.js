@@ -17,7 +17,7 @@ export default class BotListView extends React.Component {
 
 
         return (
-            <div style={{'overflowY': 'auto', 'height': '-webkit-fill-available', 'paddingBottom': '15%'}}>
+            <div className="list">
                 {bots}
             </div>
         )

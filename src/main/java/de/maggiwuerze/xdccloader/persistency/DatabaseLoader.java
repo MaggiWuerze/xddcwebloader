@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 
 
-//@Component
+@Component
 class DatabaseLoader implements CommandLineRunner {
 
 
@@ -33,7 +33,7 @@ class DatabaseLoader implements CommandLineRunner {
 
         String username = "Bilbo";
         String password = new BCryptPasswordEncoder(11).encode("Baggins");
-        this.userRepository.save(new User(username, password, Role.USER.getExternalString()));
+        this.userRepository.save(new User(username, password, Role.USER.getExternalString(), true));
 
 
         Channel channel = channelRepository.save(new Channel("#HorribleSubs"));
@@ -47,8 +47,8 @@ class DatabaseLoader implements CommandLineRunner {
         targetBotName = "CR-HOLLAND|NEW_DOWNLOAD";
         TargetBot targetBot2 = this.ircUserRepository.save(new TargetBot(server, dbChannel, targetBotName, "xdcc send %s"));
 
-        downloadRepository.save(new Download(targetBot,"#34235"));
-        downloadRepository.save(new Download(targetBot2, "#12334"));
+        targetBotName = "CR-ARCHIVE|1080p";
+        TargetBot targetBot3 = this.ircUserRepository.save(new TargetBot(server, channel, targetBotName, "xdcc send %s"));
 
     }
 }

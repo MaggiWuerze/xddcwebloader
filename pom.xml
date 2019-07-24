@@ -10,7 +10,7 @@
     </parent>
     <groupId>de.maggiwuerze</groupId>
     <artifactId>demoxdccloader</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.5.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>xdccloader</name>
     <description>Web based Download Manager for xdcc file transfer with ReactJS in the frontend and Spring Data REST in
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>org.pircbotx</groupId>
             <artifactId>pircbotx</artifactId>
-            <version>2.1</version>
+            <version>2.3-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -94,7 +94,6 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
-
 
         <!--WEBJARS-->
         <dependency>

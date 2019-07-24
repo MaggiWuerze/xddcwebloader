@@ -7,7 +7,6 @@ import java.util.List;
 import lombok.Data;
 import javax.persistence.*;
 
-@Data
 @Entity
 public class Server{
 
@@ -23,9 +22,6 @@ public class Server{
 
         @Column(nullable = false)
         LocalDateTime creationDate = LocalDateTime.now();
-
-        @OneToMany(cascade = CascadeType.ALL)
-        List<Channel> channels = new ArrayList<>();
 
         public Server(String name, String serverUrl) {
                 this.name = name;
@@ -67,11 +63,4 @@ public class Server{
                 this.creationDate = creationDate;
         }
 
-        public List<Channel> getChannels() {
-                return channels;
-        }
-
-        public void setChannels(List<Channel> channels) {
-                this.channels = channels;
-        }
 }
