@@ -1,4 +1,4 @@
-package de.maggiwuerze.xdccloader.util;
+package de.maggiwuerze.xdccloader.events;
 
 public enum SocketEvents {
 

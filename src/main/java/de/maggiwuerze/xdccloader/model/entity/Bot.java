@@ -1,19 +1,10 @@
-package de.maggiwuerze.xdccloader.model;
-
-import lombok.Data;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+package de.maggiwuerze.xdccloader.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
-public class TargetBot {
+public class Bot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +27,10 @@ public class TargetBot {
     @Column(nullable = false)
     LocalDateTime creationDate = LocalDateTime.now();
 
-    public TargetBot() {
+    public Bot() {
     }
 
-    public TargetBot(Server server, Channel channel, String name, String pattern) {
+    public Bot(Server server, Channel channel, String name, String pattern) {
         this.name = name;
         this.pattern = pattern;
         this.server = server;

@@ -22,7 +22,6 @@ export default class BotCard extends React.Component {
 
     handleKeyDown(e) {
 
-        console.log(e);
         if (e.key === 'Enter') {
             this.handleSubmit(e);
         }

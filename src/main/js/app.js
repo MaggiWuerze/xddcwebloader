@@ -9,12 +9,15 @@ import ServerInputs from './model/server/ServerInputs';
 import ChannelInputs from './model/channel/ChannelInputs';
 import CreateModal from './model/CreateModal';
 import InitWizard from './model/wizard/InitWizard';
+import Settings from './model/settings/Settings';
 
 import {
     Button,
     Card,
     Col,
     Container,
+    Form,
+    InputGroup,
     Jumbotron,
     Navbar,
     Nav,
@@ -39,6 +42,7 @@ class App extends React.Component {
 
         this.state = {
             initialized: true,
+            user: null,
             bots: [],
             servers: [],
             channels: [],
@@ -56,6 +60,7 @@ class App extends React.Component {
         };
         this.onCreate = this.onCreate.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.onCancel = this.onCancel.bind(this);
         this.handleSocketCall = this.handleSocketCall.bind(this);
         this.toggleBoolean = this.toggleBoolean.bind(this);
         this.finishOnboarding = this.finishOnboarding.bind(this);
@@ -64,6 +69,7 @@ class App extends React.Component {
 
     loadFromServer() {
 
+        // INIT
         axios
             .get('data/initialized/')
             .then((response) => {
@@ -79,6 +85,25 @@ class App extends React.Component {
                 console.log(error);
             });
 
+        // SETTINGS
+
+        axios
+            .get('data/user/')
+            .then((response) => {
+
+                var userObject = response.data;
+                this.setState({
+                    user: userObject
+                });
+
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+
+        //BOTS,SERVERS,CHANNELS
         axios
             .get('data/bots/', {
 
@@ -125,6 +150,7 @@ class App extends React.Component {
                 console.log(error);
             });
 
+        //DOWNLOADS
         axios
             .get('data/downloads/active/', {
 
@@ -208,6 +234,57 @@ class App extends React.Component {
     }
 
     onDelete(payload, type) {
+
+        if(payload && type){
+
+            var id = payload.id;
+
+            switch(type){
+
+                case 'DL':
+                    axios
+                        .get('data/downloads/remove/', {
+
+                            params: {
+                                downloadId: payload.id,
+                            }
+
+                        })
+                        .then((response) => {
+
+                            switch(response.status.toString()){
+
+                                case '200':
+
+                                    console.log("removing from gui");
+                                    this.removeFromListById(this.state.downloads, payload.id);
+                                    this.removeFromListById(this.state.doneDownloads, payload.id);
+                                    this.removeFromListById(this.state.failedDownloads, payload.id);
+
+                                break;
+
+                                default:
+
+                                    console.log("onCreate error");
+                                    console.log("statuscode: " + response.status.toString());
+                                    callback ? callback(false) : '';
+
+                            }
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+
+                break;
+
+                default:
+
+            }
+
+        }
+
+    }
+
+    onCancel(payload, type) {
         // client({method: 'DELETE', path: payload._links.self.href}).done(response => {
         //     this.loadFromServer(this.state.pageSize);
         // });
@@ -234,12 +311,17 @@ class App extends React.Component {
 
         // this.setState(state => {
         const downloads = list;
-        downloads.push(newItem);
-        downloads.sort(function (a, b) {
-            // return (a.progress < b.progress) ? -1 : (a.progress > b.progress) ? 1 : 0;
-            //multidimension sort?
-            return a.progress - b.progress || a.date - b.date;
-        });
+        var containsDownload = false;
+
+        if (!downloads.some(e => e.id === newItem.id)) {
+          /* downloads contains an item with the same id */
+            downloads.push(newItem);
+            downloads.sort(function (a, b) {
+                //multidimension sort?
+                return a.progress - b.progress || a.date - b.date;
+            });
+        }
+
 
         return downloads;
         //     return {downloads,};
@@ -251,11 +333,6 @@ class App extends React.Component {
 
         var list = targetList.filter(item => item.id !== idToRemove);
         return list;
-
-        // this.setState(state => {
-        //     const list = targetList.filter(item => item.id !== idToRemove);
-        //     return {list,};
-        // });
 
     }
 
@@ -289,14 +366,11 @@ class App extends React.Component {
 
     handleSocketCall(responseObj) {
 
-        console.log("socket call! received:");
-        console.log(responseObj);
 
         let message = JSON.parse(responseObj.body);
         let downloads = this.state.downloads;
         let failedDownloads = this.state.failedDownloads;
         let doneDownloads = this.state.doneDownloads;
-
 
         switch (responseObj.headers.destination) {
 
@@ -341,7 +415,14 @@ class App extends React.Component {
 
             case '/topic/deleteDownload':
 
-                this.removeFromListById(downloads, message.id)
+                this.setState({
+
+                    downloads: this.removeFromListById(downloads, message.id),
+                    doneDownloads: this.removeFromListById(doneDownloads, message.id),
+                    failedDownloads: this.removeFromListById(failedDownloads, message.id)
+
+                });
+
                 break;
 
             case '/topic/timeout':
@@ -589,8 +670,11 @@ class App extends React.Component {
                                             <Card.Body>
                                                 <TabContent>
                                                     <Tab.Pane eventKey="activeDownloads">
-                                                        <DownloadListView downloads={this.state.downloads}
-                                                                      onDelete={this.onDelete}/>
+                                                        <DownloadListView
+                                                            downloads={this.state.downloads}
+                                                            onDelete={this.onDelete}
+                                                            onCancel={this.onCancel}
+                                                        />
                                                     </Tab.Pane>
                                                     <Tab.Pane eventKey="completedDownloads">
                                                         <DownloadListView downloads={this.state.doneDownloads}
@@ -611,18 +695,7 @@ class App extends React.Component {
                             {/* SETTINGS */}
                             {this.state.activePage == 'settings' && <>
 
-                                <Col xs={12} md={10} className={"column"}>
-                                    <Jumbotron>
-                                      <h1>Settings!</h1>
-                                      <p>
-                                        This is a simple hero unit, a simple jumbotron-style component for calling
-                                        extra attention to featured content or information.
-                                      </p>
-                                      <p>
-                                        <Button variant="primary">Learn more</Button>
-                                      </p>
-                                    </Jumbotron>
-                                </Col>
+                                <Settings userSettings={this.state.user.userSettings}/>
 
                             </>}
 

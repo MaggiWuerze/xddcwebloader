@@ -2,28 +2,30 @@ package de.maggiwuerze.xdccloader.controller;
 
 import de.maggiwuerze.xdccloader.events.channel.server.ChannelCreationEvent;
 import de.maggiwuerze.xdccloader.events.download.DownloadCreationEvent;
+import de.maggiwuerze.xdccloader.events.download.DownloadDeleteEvent;
+import de.maggiwuerze.xdccloader.events.download.DownloadUpdateEvent;
 import de.maggiwuerze.xdccloader.events.server.ServerCreationEvent;
-import de.maggiwuerze.xdccloader.model.*;
+import de.maggiwuerze.xdccloader.model.entity.*;
 import de.maggiwuerze.xdccloader.model.forms.ChannelForm;
 import de.maggiwuerze.xdccloader.model.forms.DownloadForm;
 import de.maggiwuerze.xdccloader.model.forms.ServerForm;
 import de.maggiwuerze.xdccloader.model.forms.TargetBotForm;
+import de.maggiwuerze.xdccloader.model.download.Download;
+import de.maggiwuerze.xdccloader.model.transport.DownloadTO;
+import de.maggiwuerze.xdccloader.model.transport.UserTO;
 import de.maggiwuerze.xdccloader.persistency.*;
-import de.maggiwuerze.xdccloader.util.SocketEvents;
-import de.maggiwuerze.xdccloader.util.State;
+import de.maggiwuerze.xdccloader.util.DownloadManager;
+import de.maggiwuerze.xdccloader.events.SocketEvents;
+import de.maggiwuerze.xdccloader.model.DownloadState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
+import java.util.*;
 import java.util.logging.Logger;
 
 
@@ -39,13 +41,13 @@ class DataController {
     @Autowired
     IrcUserRepository ircUserRepository;
     @Autowired
-    DownloadRepository downloadRepository;
-    @Autowired
     ChannelRepository channelRepository;
     @Autowired
     ServerRepository serverRepository;
     @Autowired
     TargetBotRepository targetBotRepository;
+
+    DownloadManager downloadManager = DownloadManager.getInstance();
 
     @Autowired
     private SimpMessagingTemplate websocket;
@@ -55,7 +57,7 @@ class DataController {
 
     final String MESSAGE_PREFIX = "/topic";
 
-    //INIT
+    //USERDETAILS
     @GetMapping("/initialized")
     public ResponseEntity<Boolean> getInitialized(Principal principal) {
 
@@ -63,11 +65,38 @@ class DataController {
         User user = userRepository.findUserByName(username).orElse(null);
 
 
-        if(user != null){
+        if (user != null) {
 
             return new ResponseEntity(user.getInitialized(), HttpStatus.OK);
 
-        }else {
+        } else {
+
+            return new ResponseEntity("user not found", HttpStatus.UNAUTHORIZED);
+
+        }
+
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserTO> getuser(Principal principal) {
+
+        User user = userRepository.findUserByName(principal.getName()).orElse(null);
+
+        if (user != null) {
+
+            UserTO userTO = new UserTO(user);
+            List<Bot> bots = getAllBots().getBody();
+            if (user.getUserSettings().getBotsVisibleInQuickWindow().size() != bots.size()) {
+
+                Map<Bot, Boolean> botMap = new HashMap<>();
+                bots.stream().forEach(b -> botMap.put(b, false));
+                userTO.getUserSettings().getBotsVisibleInQuickWindow().putAll(botMap);
+
+            }
+
+            return new ResponseEntity(userTO, HttpStatus.OK);
+
+        } else {
 
             return new ResponseEntity("user not found", HttpStatus.UNAUTHORIZED);
 
@@ -81,14 +110,14 @@ class DataController {
 
         User user = userRepository.findUserByName(principal.getName()).orElse(null);
 
-        if(user != null){
+        if (user != null) {
 
             user.setInitialized(true);
             userRepository.save(user);
 
             return new ResponseEntity("ok", HttpStatus.OK);
 
-        }else {
+        } else {
 
             return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
 
@@ -103,8 +132,7 @@ class DataController {
     @GetMapping("/downloads/")
     public ResponseEntity<List<Object>> getAllDownloads() {
 
-        List<Download> downloads = downloadRepository.findAllByOrderByProgressDesc();
-        return new ResponseEntity(downloads, HttpStatus.OK);
+        return new ResponseEntity(DownloadTO.getListOfTOs(downloadManager.findAllByOrderByProgressDesc()), HttpStatus.OK);
 
     }
 
@@ -115,40 +143,83 @@ class DataController {
     @GetMapping("/downloads/active/")
     public ResponseEntity<List<Object>> getActiveDownloads(boolean active) {
 
-        List<State> states;
+        List<DownloadState> states;
         if (!active) {
 
-            states = Arrays.asList(State.UNKNOWN, State.DONE);
+            states = Arrays.asList(DownloadState.UNKNOWN, DownloadState.DONE);
 
         } else {
 
-            states = Arrays.asList(State.PREPARING, State.PREPARED, State.READY, State.CONNECTING, State.TRANSMITTING, State.FINALIZING);
+            states = Arrays.asList(DownloadState.PREPARING, DownloadState.PREPARED, DownloadState.READY, DownloadState.CONNECTING, DownloadState.TRANSMITTING, DownloadState.FINALIZING);
 
         }
 
-        return new ResponseEntity(downloadRepository.findAllByStatusInOrderByProgress(states), HttpStatus.OK);
+        return new ResponseEntity(DownloadTO.getListOfTOs(downloadManager.findAllByStatusInOrderByProgress(states)), HttpStatus.OK);
 
     }
 
     @GetMapping("/downloads/failed")
     public ResponseEntity<List<Object>> getFailedDownloads() {
 
-        return new ResponseEntity(downloadRepository.findAllByStatusOrderByProgressDesc(State.ERROR), HttpStatus.OK);
+        List<DownloadTO> failedDownloads = DownloadTO.getListOfTOs(downloadManager.findAllByStatusOrderByProgressDesc(DownloadState.ERROR));
+
+        return new ResponseEntity(failedDownloads, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/downloads/remove")
+    public ResponseEntity<?> removeDownloads(Long downloadId) {
+
+        Download download = downloadManager.getById(downloadId);
+
+        if (download != null) {
+
+            download.setStatus(DownloadState.STOPPED);
+            download.getProgressWatcher().cancel(true);
+            publishEvent(SocketEvents.DELETED_DOWNLOAD, download);
+
+            return new ResponseEntity("Download marked for deletion", HttpStatus.OK);
+
+        }
+
+        return new ResponseEntity("Illegal Arguments in Request", HttpStatus.BAD_REQUEST);
 
     }
 
     @PostMapping("/downloads/")
     public ResponseEntity<?> addDownload(@RequestBody DownloadForm downloadForm) {
 
-        Optional<TargetBot> targetBot = targetBotRepository.findById(downloadForm.getTargetBotId());
+        Bot bot = targetBotRepository.findById(downloadForm.getTargetBotId()).orElse(null);
+
+        if (bot == null) {
+
+            return new ResponseEntity("Illegal Arguments in Request", HttpStatus.BAD_REQUEST);
+
+        }
+
         String fileRefId = downloadForm.getFileRefId();
+        if (fileRefId.contains(",")) {
 
-        String s = "";
+            for (String id : fileRefId.split(",")) {
 
-        Download download = downloadRepository.save(new Download(targetBot.get(), fileRefId));
-        publishEvent(SocketEvents.NEW_DOWNLOAD, download);
+                Download download = new Download(bot, id);
+                downloadManager.addDownloadToBotQueue(download);
+                publishEvent(SocketEvents.NEW_DOWNLOAD, download);
 
-        return new ResponseEntity("Download added succcessfully. id=[" + download.getId() + "]", HttpStatus.OK);
+            }
+
+
+        } else {
+
+            Download download = new Download(bot, fileRefId);
+            downloadManager.addDownloadToBotQueue(download);
+            publishEvent(SocketEvents.NEW_DOWNLOAD, download);
+
+
+        }
+
+        return new ResponseEntity("Download(s) added succcessfully.", HttpStatus.OK);
+
     }
 
 
@@ -204,7 +275,7 @@ class DataController {
 
         Optional<Server> server = serverRepository.findById(targetBotForm.getServerId());
         Optional<Channel> channel = channelRepository.findById(targetBotForm.getChannelId());
-        TargetBot bot = targetBotRepository.save(new TargetBot(server.get(), channel.get(), targetBotForm.getName(), targetBotForm.getPattern()));
+        Bot bot = targetBotRepository.save(new Bot(server.get(), channel.get(), targetBotForm.getName(), targetBotForm.getPattern()));
 
         publishEvent(SocketEvents.NEW_SERVER, bot);
 
@@ -215,9 +286,9 @@ class DataController {
      * @return a list of all bots
      */
     @GetMapping("/bots/")
-    public ResponseEntity<List<TargetBot>> getAllBots() {
+    public ResponseEntity<List<Bot>> getAllBots() {
 
-        List<TargetBot> users = targetBotRepository.findAll();
+        List<Bot> users = targetBotRepository.findAll();
         return new ResponseEntity(users, HttpStatus.OK);
 
     }
@@ -228,9 +299,9 @@ class DataController {
      * @return a list of all users
      */
     @GetMapping("/ircUsers/")
-    public ResponseEntity<List<TargetBot>> getAllIrcUsers() {
+    public ResponseEntity<List<Bot>> getAllIrcUsers() {
 
-        List<TargetBot> users = ircUserRepository.findAll();
+        List<Bot> users = ircUserRepository.findAll();
         return new ResponseEntity(users, HttpStatus.OK);
 
     }
@@ -244,21 +315,44 @@ class DataController {
     private void publishEvent(SocketEvents destinationSuffix, Object payload) {
 
 
-        if(payload instanceof Download){
+        if (payload instanceof Download) {
 
-            DownloadCreationEvent downloadCreationEvent = new DownloadCreationEvent(this, (Download)payload);
+            Long downloadId = ((Download) payload).getId();
+
+            switch (destinationSuffix) {
+
+                case UPDATED_DOWNLOAD:
+
+                    DownloadUpdateEvent downloadUpdateEvent = new DownloadUpdateEvent(this, downloadId);
+                    applicationEventPublisher.publishEvent(downloadUpdateEvent);
+                    break;
+
+                case NEW_DOWNLOAD:
+
+                    DownloadCreationEvent downloadCreationEvent = new DownloadCreationEvent(this, downloadId);
+                    applicationEventPublisher.publishEvent(downloadCreationEvent);
+                    break;
+
+                case DELETED_DOWNLOAD:
+
+                    DownloadDeleteEvent downloadDeleteEvent = new DownloadDeleteEvent(this, downloadId);
+                    applicationEventPublisher.publishEvent(downloadDeleteEvent);
+                    break;
+
+
+            }
+
+
+        }
+        if (payload instanceof Server) {
+
+            ServerCreationEvent downloadCreationEvent = new ServerCreationEvent(this, (Server) payload);
             applicationEventPublisher.publishEvent(downloadCreationEvent);
 
         }
-        if(payload instanceof Server){
+        if (payload instanceof Channel) {
 
-            ServerCreationEvent downloadCreationEvent = new ServerCreationEvent(this, (Server)payload);
-            applicationEventPublisher.publishEvent(downloadCreationEvent);
-
-        }
-        if(payload instanceof Channel){
-
-            ChannelCreationEvent downloadCreationEvent = new ChannelCreationEvent(this, (Channel)payload);
+            ChannelCreationEvent downloadCreationEvent = new ChannelCreationEvent(this, (Channel) payload);
             applicationEventPublisher.publishEvent(downloadCreationEvent);
 
         }

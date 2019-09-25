@@ -1,4 +1,4 @@
-package de.maggiwuerze.xdccloader.model;
+package de.maggiwuerze.xdccloader.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -10,20 +10,20 @@ public class XdccloaderApplication {
 
     public static void main(String[] args) {
 
-        //creating download folder in userhome
-        String path = System.getProperty("user.home") + File.separator + "downloads";
+        //creating download folder if necessary
+//        String path = File.separator + "opt" + File.separator + "xdcc" + File.separator + "data";
+        String path = File.separator + "home" + File.separator + "dap" + File.separator + "download";
         File customDir = new File(path);
 
         if (customDir.exists()) {
-            System.out.println("target folder " + customDir + " already exists");
+            System.out.println("download folder exists in " + path);
         } else if (customDir.mkdirs()) {
-            System.out.println("target folder " + customDir + " was created");
+            System.out.println("download folder was created in " + path);
         } else {
-            System.out.println("target folder " + customDir + " was not created");
+            throw new RuntimeException("target folder" + customDir + "could not created");
         }
-
-
         SpringApplication.run(XdccloaderApplication.class, args);
+
     }
 
 }

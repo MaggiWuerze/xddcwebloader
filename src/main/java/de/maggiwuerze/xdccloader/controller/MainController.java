@@ -1,18 +1,13 @@
 package de.maggiwuerze.xdccloader.controller;
 
-import de.maggiwuerze.xdccloader.model.Channel;
-import de.maggiwuerze.xdccloader.model.Download;
-import de.maggiwuerze.xdccloader.model.User;
+import de.maggiwuerze.xdccloader.model.download.Download;
+import de.maggiwuerze.xdccloader.model.entity.User;
+import de.maggiwuerze.xdccloader.model.entity.UserSettings;
 import de.maggiwuerze.xdccloader.model.forms.UserForm;
-import de.maggiwuerze.xdccloader.persistency.ChannelRepository;
-import de.maggiwuerze.xdccloader.persistency.DownloadRepository;
-import de.maggiwuerze.xdccloader.persistency.ServerRepository;
-import de.maggiwuerze.xdccloader.persistency.UserRepository;
-import de.maggiwuerze.xdccloader.util.Role;
-import de.maggiwuerze.xdccloader.util.State;
+import de.maggiwuerze.xdccloader.persistency.*;
+import de.maggiwuerze.xdccloader.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
-import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,15 +17,12 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,11 +37,7 @@ class MainController{
     @Autowired
     UserRepository userRepository;
     @Autowired
-    DownloadRepository downloadRepository;
-    @Autowired
-    ChannelRepository channelRepository;
-    @Autowired
-    ServerRepository serverRepository;
+    UserSettingsRepository userSettingsRepository;
 
     @Autowired
     private SimpMessagingTemplate websocket;
@@ -115,7 +103,8 @@ class MainController{
 
                 String username = userForm.getUsername();
                 String password = new BCryptPasswordEncoder(11).encode(userForm.getPassword());
-                this.userRepository.save(new User(username, password, Role.USER.getExternalString(),false));
+                UserSettings userSettings = userSettingsRepository.save(new UserSettings());
+                this.userRepository.save(new User(username, password, UserRole.USER.getExternalString(), true, userSettings));
                 model.put("noUser", false);
 
                 try {

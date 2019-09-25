@@ -1,11 +1,10 @@
-package de.maggiwuerze.xdccloader.model;
+package de.maggiwuerze.xdccloader.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,11 +48,15 @@ public class User implements UserDetails {
     @Transient
     String ROLE_PREFIX = "ROLE_";
 
-    public User(String name, String password, String userRole, boolean initialized) {
+    @OneToOne
+    UserSettings userSettings;
+
+    public User(String name, String password, String userRole, boolean initialized, UserSettings userSettings) {
         this.name = name;
         this.password = password;
         this.userRole = userRole;
         this.initialized = initialized;
+        this.userSettings = userSettings;
     }
 
     public User() {
@@ -173,5 +176,13 @@ public class User implements UserDetails {
 
     public void setInitialized(Boolean initialized) {
         this.initialized = initialized;
+    }
+
+    public UserSettings getUserSettings() {
+        return userSettings;
+    }
+
+    public void setUserSettings(UserSettings userSettings) {
+        this.userSettings = userSettings;
     }
 }

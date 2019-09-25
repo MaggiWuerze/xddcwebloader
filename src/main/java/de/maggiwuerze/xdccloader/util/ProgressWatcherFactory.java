@@ -1,8 +1,6 @@
 package de.maggiwuerze.xdccloader.util;
 
-import de.maggiwuerze.xdccloader.model.Download;
-import org.pircbotx.dcc.FileTransfer;
-import org.pircbotx.dcc.ReceiveFileTransfer;
+import de.maggiwuerze.xdccloader.model.download.Download;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -15,17 +13,9 @@ public class ProgressWatcherFactory {
     private ApplicationEventPublisher applicationEventPublisher;
 
 
-    public FileTransferProgressWatcher getProgressWatcher(Download download){
+    public FileTransferProgressWatcher getProgressWatcher(Long downloadId){
 
-            FileTransferProgressWatcher watcher = new FileTransferProgressWatcher(download, applicationEventPublisher);
-
-            return watcher;
-
-    }
-
-    public FileTransferProgressWatcher getProgressWatcher(ReceiveFileTransfer fileTransfer, Download download){
-
-            FileTransferProgressWatcher watcher = new FileTransferProgressWatcher(fileTransfer, download, applicationEventPublisher);
+            FileTransferProgressWatcher watcher = new FileTransferProgressWatcher(downloadId, applicationEventPublisher);
 
             return watcher;
 

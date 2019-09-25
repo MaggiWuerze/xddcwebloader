@@ -1,8 +1,7 @@
 package de.maggiwuerze.xdccloader.events.server;
 
 import de.maggiwuerze.xdccloader.events.EntityDeleteEvent;
-import de.maggiwuerze.xdccloader.model.Download;
-import de.maggiwuerze.xdccloader.model.Server;
+import de.maggiwuerze.xdccloader.model.entity.Server;
 
 public class ServerDeleteEvent extends EntityDeleteEvent<Server> {
 

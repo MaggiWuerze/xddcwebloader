@@ -2,11 +2,9 @@ package de.maggiwuerze.xdccloader.events;
 
 import de.maggiwuerze.xdccloader.events.download.DownloadUpdateEvent;
 import de.maggiwuerze.xdccloader.irc.IrcBot;
-import de.maggiwuerze.xdccloader.model.Download;
-import de.maggiwuerze.xdccloader.persistency.DownloadRepository;
-import de.maggiwuerze.xdccloader.util.SocketEvents;
-import de.maggiwuerze.xdccloader.util.State;
-import org.pircbotx.hooks.events.ConnectAttemptFailedEvent;
+import de.maggiwuerze.xdccloader.model.DownloadState;
+import de.maggiwuerze.xdccloader.model.download.Download;
+import de.maggiwuerze.xdccloader.util.DownloadManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -15,8 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EventPublisher {
 
-    @Autowired
-    DownloadRepository downloadRepository;
+    DownloadManager downloadManager = DownloadManager.getInstance();
 
     @Autowired
     private SimpMessagingTemplate websocket;
@@ -26,14 +23,13 @@ public class EventPublisher {
 
     final String MESSAGE_PREFIX = "/topic";
 
-    public void updateDownloadState(State state, Download download) {
+    public void updateDownloadState(DownloadState state, Download download) {
 
         download.setStatus(state);
-        downloadRepository.save(download);
+        downloadManager.update(download);
 
-        DownloadUpdateEvent downloadUpdateEvent = new DownloadUpdateEvent(this, download);
+        DownloadUpdateEvent downloadUpdateEvent = new DownloadUpdateEvent(this, download.getId());
         applicationEventPublisher.publishEvent(downloadUpdateEvent);
-
     }
 
     public void sendWebsocketEvent(SocketEvents event, Object payload) {
@@ -46,9 +42,10 @@ public class EventPublisher {
     public void handleError(IrcBot bot, Exception exception) {
 
         bot.stopBotReconnect();
-        String message = String.format( State.ERROR.getExternalString(), exception.getMessage());
+        String message = String.format(DownloadState.ERROR.getExternalString(), exception.getMessage());
         bot.getDownload().setStatusMessage(message);
-        updateDownloadState(State.ERROR, bot.getDownload());
+        updateDownloadState(DownloadState.ERROR, bot.getDownload());
 
     }
+
 }

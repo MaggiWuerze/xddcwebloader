@@ -16,9 +16,9 @@
 
 
 /*main content*/
- p, h1, h2 {
+ p, h1, h2, h3, h4 {
     font-family: 'Lato', sans-serif !important;
-    color: gainsboro !important;
+    /*color: gainsboro !important;*/
 }
  p {
     font-size: 1.2rem;
@@ -123,11 +123,31 @@
 
 }
 
+.sidenav span {
+
+    cursor: pointer;
+
+}
 .sidenav .active {
 
     font-family: 'Lato', sans-serif !important;
     color: rgb(51, 162, 255) !important;
     background: white;
+
+}
+
+.btn-group-toggle .btn {
+
+    border-color: #0062cc !important;
+    background: white !important;
+    color: #0069d9 !important;
+
+}
+.btn-group-toggle .active {
+
+    color: #fff !important;
+    background-color: #0069d9 !important;
+    border-color: #0062cc !important;
 
 }
 

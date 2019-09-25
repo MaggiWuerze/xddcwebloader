@@ -53578,11 +53578,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_channel_ChannelInputs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./model/channel/ChannelInputs */ "./src/main/js/model/channel/ChannelInputs.js");
 /* harmony import */ var _model_CreateModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/CreateModal */ "./src/main/js/model/CreateModal.js");
 /* harmony import */ var _model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/wizard/InitWizard */ "./src/main/js/model/wizard/InitWizard");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
-/* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-popover */ "./node_modules/react-popover/index.js");
-/* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_popover__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _model_settings_Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/settings/Settings */ "./src/main/js/model/settings/Settings");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+/* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-popover */ "./node_modules/react-popover/index.js");
+/* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_popover__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_12__);
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -53618,6 +53619,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -53639,6 +53641,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
       initialized: true,
+      user: null,
       bots: [],
       servers: [],
       channels: [],
@@ -53656,6 +53659,7 @@ function (_React$Component) {
     };
     _this.onCreate = _this.onCreate.bind(_assertThisInitialized(_this));
     _this.onDelete = _this.onDelete.bind(_assertThisInitialized(_this));
+    _this.onCancel = _this.onCancel.bind(_assertThisInitialized(_this));
     _this.handleSocketCall = _this.handleSocketCall.bind(_assertThisInitialized(_this));
     _this.toggleBoolean = _this.toggleBoolean.bind(_assertThisInitialized(_this));
     _this.finishOnboarding = _this.finishOnboarding.bind(_assertThisInitialized(_this));
@@ -53668,7 +53672,8 @@ function (_React$Component) {
     value: function loadFromServer() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/initialized/').then(function (response) {
+      // INIT
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/initialized/').then(function (response) {
         var init = response.data;
 
         _this2.setState({
@@ -53676,8 +53681,19 @@ function (_React$Component) {
         });
       })["catch"](function (error) {
         console.log(error);
-      });
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/bots/', {
+      }); // SETTINGS
+
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/user/').then(function (response) {
+        var userObject = response.data;
+
+        _this2.setState({
+          user: userObject
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      }); //BOTS,SERVERS,CHANNELS
+
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/bots/', {
         params: {
           active: true
         }
@@ -53690,7 +53706,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/servers/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/servers/').then(function (response) {
         response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
 
         _this2.setState({
@@ -53699,7 +53715,7 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/channels/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/channels/').then(function (response) {
         response.data[0] ? _this2.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
 
         _this2.setState({
@@ -53707,8 +53723,9 @@ function (_React$Component) {
         });
       })["catch"](function (error) {
         console.log(error);
-      });
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/downloads/active/', {
+      }); //DOWNLOADS
+
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/downloads/active/', {
         params: {
           active: true
         }
@@ -53719,14 +53736,14 @@ function (_React$Component) {
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/downloads/failed').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/downloads/failed').then(function (response) {
         _this2.setState({
           failedDownloads: response.data
         });
       })["catch"](function (error) {
         console.log(error);
       });
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('data/downloads/active/', {
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/downloads/active/', {
         params: {
           active: false
         }
@@ -53743,7 +53760,7 @@ function (_React$Component) {
     value: function onCreate(object, objectType, modalName, callback) {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.post('data/' + objectType + '/', object).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.post('data/' + objectType + '/', object).then(function (response) {
         switch (response.status.toString()) {
           case '200':
             modalName ? _this3.toggleBoolean(modalName) : '';
@@ -53762,7 +53779,48 @@ function (_React$Component) {
     }
   }, {
     key: "onDelete",
-    value: function onDelete(payload, type) {// client({method: 'DELETE', path: payload._links.self.href}).done(response => {
+    value: function onDelete(payload, type) {
+      var _this4 = this;
+
+      if (payload && type) {
+        var id = payload.id;
+
+        switch (type) {
+          case 'DL':
+            axios__WEBPACK_IMPORTED_MODULE_12___default.a.get('data/downloads/remove/', {
+              params: {
+                downloadId: payload.id
+              }
+            }).then(function (response) {
+              switch (response.status.toString()) {
+                case '200':
+                  console.log("removing from gui");
+
+                  _this4.removeFromListById(_this4.state.downloads, payload.id);
+
+                  _this4.removeFromListById(_this4.state.doneDownloads, payload.id);
+
+                  _this4.removeFromListById(_this4.state.failedDownloads, payload.id);
+
+                  break;
+
+                default:
+                  console.log("onCreate error");
+                  console.log("statuscode: " + response.status.toString());
+                  callback ? callback(false) : '';
+              }
+            })["catch"](function (error) {
+              console.log(error);
+            });
+            break;
+
+          default:
+        }
+      }
+    }
+  }, {
+    key: "onCancel",
+    value: function onCancel(payload, type) {// client({method: 'DELETE', path: payload._links.self.href}).done(response => {
       //     this.loadFromServer(this.state.pageSize);
       // });
     }
@@ -53784,12 +53842,19 @@ function (_React$Component) {
     value: function addToListAndSort(list, newItem) {
       // this.setState(state => {
       var downloads = list;
-      downloads.push(newItem);
-      downloads.sort(function (a, b) {
-        // return (a.progress < b.progress) ? -1 : (a.progress > b.progress) ? 1 : 0;
-        //multidimension sort?
-        return a.progress - b.progress || a.date - b.date;
-      });
+      var containsDownload = false;
+
+      if (!downloads.some(function (e) {
+        return e.id === newItem.id;
+      })) {
+        /* downloads contains an item with the same id */
+        downloads.push(newItem);
+        downloads.sort(function (a, b) {
+          //multidimension sort?
+          return a.progress - b.progress || a.date - b.date;
+        });
+      }
+
       return downloads; //     return {downloads,};
       // });
     }
@@ -53799,10 +53864,7 @@ function (_React$Component) {
       var list = targetList.filter(function (item) {
         return item.id !== idToRemove;
       });
-      return list; // this.setState(state => {
-      //     const list = targetList.filter(item => item.id !== idToRemove);
-      //     return {list,};
-      // });
+      return list;
     }
   }, {
     key: "updateItemAndSort",
@@ -53834,8 +53896,6 @@ function (_React$Component) {
   }, {
     key: "handleSocketCall",
     value: function handleSocketCall(responseObj) {
-      console.log("socket call! received:");
-      console.log(responseObj);
       var message = JSON.parse(responseObj.body);
       var downloads = this.state.downloads;
       var failedDownloads = this.state.failedDownloads;
@@ -53866,7 +53926,11 @@ function (_React$Component) {
           break;
 
         case '/topic/deleteDownload':
-          this.removeFromListById(downloads, message.id);
+          this.setState({
+            downloads: this.removeFromListById(downloads, message.id),
+            doneDownloads: this.removeFromListById(doneDownloads, message.id),
+            failedDownloads: this.removeFromListById(failedDownloads, message.id)
+          });
           break;
 
         case '/topic/timeout':
@@ -53886,12 +53950,12 @@ function (_React$Component) {
   }, {
     key: "finishOnboarding",
     value: function finishOnboarding(setupDone) {
-      var _this4 = this;
+      var _this5 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_11___default.a.post('data/initialized/').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_12___default.a.post('data/initialized/').then(function (response) {
         switch (response.status.toString()) {
           case '200':
-            _this4.toggleBoolean('initialized');
+            _this5.toggleBoolean('initialized');
 
             var newUrl = location.replace("register", "");
             var title = "XDCC Loader";
@@ -53961,14 +54025,14 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var botPopover = React.createElement(_model_bot_BotInputs__WEBPACK_IMPORTED_MODULE_4__["default"], {
         modaltitle: "Create new Bot",
         attributes: this.state.botAttributes,
         show: this.state.showBotModal,
         onClose: function onClose() {
-          return _this5.toggleBoolean('showBotModal');
+          return _this6.toggleBoolean('showBotModal');
         },
         onCreate: this.onCreate
       });
@@ -53977,7 +54041,7 @@ function (_React$Component) {
         attributes: this.state.botAttributes,
         show: this.state.showBotModal,
         onClose: function onClose() {
-          return _this5.toggleBoolean('showBotModal');
+          return _this6.toggleBoolean('showBotModal');
         },
         onCreate: this.onCreate
       });
@@ -53986,7 +54050,7 @@ function (_React$Component) {
         attributes: this.state.botAttributes,
         show: this.state.showBotModal,
         onClose: function onClose() {
-          return _this5.toggleBoolean('showBotModal');
+          return _this6.toggleBoolean('showBotModal');
         },
         onCreate: this.onCreate
       });
@@ -53997,189 +54061,170 @@ function (_React$Component) {
           onFinish: this.finishOnboarding
         });
       } else {
-        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Container"], {
+        return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Container"], {
           fluid: true
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Row"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Col"], {
           xs: 12,
           md: 1,
           className: "sidenav-column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"], _defineProperty({
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"], _defineProperty({
           className: "text-center"
-        }, "className", "sidenav"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Body, {
+        }, "className", "sidenav"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"].Body, {
           className: "text-muted sidenav-body"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"], {
           justify: true,
           defaultActiveKey: "dashboard",
           onSelect: this.onMenuInteraction,
           className: "flex-column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           as: "span",
           eventKey: "dashboard"
         }, React.createElement("i", {
           className: "fas fa-columns"
-        }), "\xA0\xA0Dashboard"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        }), "\xA0\xA0Dashboard"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           as: "span",
           eventKey: "settings"
         }, React.createElement("i", {
           className: "fas fa-sliders-h"
-        }), "\xA0\xA0Settings"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        }), "\xA0\xA0Settings"), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           as: "span",
           eventKey: "about"
         }, React.createElement("i", {
           className: "fas fa-info-circle"
-        }), "\xA0\xA0About"))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Footer, {
+        }), "\xA0\xA0About"))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"].Footer, {
           className: "text-muted sidenav-footer"
         }, React.createElement("span", null, React.createElement("i", {
           className: "fab fa-github"
         }), React.createElement("a", {
           href: "https://github.com/MaggiWuerze/xddcwebloader"
-        }, "\xA0\xA0", version_tag))))), this.state.activePage == "dashboard" && React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+        }, "\xA0\xA0", version_tag))))), this.state.activePage == "dashboard" && React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Col"], {
           xs: 12,
           md: 4,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"], {
           className: "customCard"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Container, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Tab"].Container, {
           defaultActiveKey: "bots"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"], {
           fill: true,
           variant: "tabs"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           eventKey: "bots"
-        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_10___default.a, {
+        }, React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_11___default.a, {
           isOpen: this.state.showBotPopover,
           body: botPopover,
           place: "below",
           enterExitTransitionDurationMs: 300,
           onOuterAction: function onOuterAction() {
-            return _this5.toggleBoolean('showBotPopover');
+            return _this6.toggleBoolean('showBotPopover');
           }
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showBotPopover');
+            return _this6.toggleBoolean('showBotPopover');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           eventKey: "servers"
-        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_10___default.a, {
+        }, React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_11___default.a, {
           isOpen: this.state.showServerPopover,
           body: serverPopover,
           place: "below",
           enterExitTransitionDurationMs: 300,
           onOuterAction: function onOuterAction() {
-            return _this5.toggleBoolean('showServerPopover');
+            return _this6.toggleBoolean('showServerPopover');
           }
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showServerPopover');
+            return _this6.toggleBoolean('showServerPopover');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        })))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           eventKey: "channels"
-        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_10___default.a, {
+        }, React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", React.createElement(react_popover__WEBPACK_IMPORTED_MODULE_11___default.a, {
           isOpen: this.state.showChannelPopover,
           body: channelPopover,
           place: "below",
           enterExitTransitionDurationMs: 300,
           onOuterAction: function onOuterAction() {
-            return _this5.toggleBoolean('showChannelPopover');
+            return _this6.toggleBoolean('showChannelPopover');
           }
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Button"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this5.toggleBoolean('showChannelPopover');
+            return _this6.toggleBoolean('showChannelPopover');
           }
         }, React.createElement("i", {
           className: "fas fa-plus"
-        })))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
+        })))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Tab"].Pane, {
           eventKey: "bots"
         }, React.createElement(_model_bot_BotListView__WEBPACK_IMPORTED_MODULE_0__["default"], {
           bots: this.state.bots,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Tab"].Pane, {
           eventKey: "servers"
         }, React.createElement(_model_server_ServerListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           servers: this.state.servers,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Tab"].Pane, {
           eventKey: "channels"
         }, React.createElement(_model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_3__["default"], {
           channels: this.state.channels,
           onDelete: this.onDelete(),
           onCreate: this.onCreate
-        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+        }))))))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Col"], {
           xs: 12,
           md: 7,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"], {
           className: "customCard"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Container, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Tab"].Container, {
           defaultActiveKey: "activeDownloads"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"].Header, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"], {
           fill: true,
           variant: "tabs"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           eventKey: "activeDownloads"
-        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        }, "Active Downloads (" + this.state.downloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           eventKey: "completedDownloads"
-        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Nav"].Link, {
+        }, "Completed (" + this.state.doneDownloads.length + ")")), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Item, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Nav"].Link, {
           eventKey: "failedDownloads"
-        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
+        }, "Failed (" + this.state.failedDownloads.length + ")")))), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Card"].Body, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["TabContent"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Tab"].Pane, {
           eventKey: "activeDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.downloads,
-          onDelete: this.onDelete
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
+          onDelete: this.onDelete,
+          onCancel: this.onCancel
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Tab"].Pane, {
           eventKey: "completedDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.doneDownloads,
           onDelete: this.onDelete
-        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Tab"].Pane, {
+        })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Tab"].Pane, {
           eventKey: "failedDownloads"
         }, React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           downloads: this.state.failedDownloads,
           onDelete: this.onDelete
-        })))))))), this.state.activePage == 'settings' && React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
+        })))))))), this.state.activePage == 'settings' && React.createElement(React.Fragment, null, React.createElement(_model_settings_Settings__WEBPACK_IMPORTED_MODULE_9__["default"], {
+          userSettings: this.state.user.userSettings
+        })), this.state.activePage == 'about' && React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Col"], {
           xs: 12,
           md: 10,
           className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Jumbotron"], null, React.createElement("h1", null, "Settings!"), React.createElement("p", null, "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."), React.createElement("p", null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Jumbotron"], null, React.createElement("h1", null, "About!"), React.createElement("p", null, "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."), React.createElement("p", null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__["Button"], {
           variant: "primary"
-        }, "Learn more"))))), this.state.activePage == 'about' && React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Col"], {
-          xs: 12,
-          md: 10,
-          className: "column"
-        }, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Jumbotron"], null, React.createElement("h1", null, "About!"), React.createElement("p", null, "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."), React.createElement("p", null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
-          variant: "primary"
-        }, "Learn more"))))))), "/*modal contents*/", React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
-          modaltitle: "Create new Server",
-          attributes: this.state.serverAttributes,
-          show: this.state.showServerModal,
-          onClose: function onClose() {
-            return _this5.toggleBoolean('showServerModal');
-          },
-          onCreate: this.onCreate
-        }), React.createElement(_model_CreateModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
-          modaltitle: "Create new Channel",
-          attributes: this.state.channelAttributes,
-          show: this.state.showChannelModal,
-          onClose: function onClose() {
-            return _this5.toggleBoolean('showChannelModal');
-          },
-          onCreate: this.onCreate
-        }));
+        }, "Learn more"))))))));
       }
     }
   }]);
@@ -54509,8 +54554,6 @@ function (_React$Component) {
   }, {
     key: "handleKeyDown",
     value: function handleKeyDown(e) {
-      console.log(e);
-
       if (e.key === 'Enter') {
         this.handleSubmit(e);
       }
@@ -55225,6 +55268,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(DownloadCard).call(this, props));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    _this.handleCancel = _this.handleCancel.bind(_assertThisInitialized(_this));
     _this.state = {
       now: 0
     };
@@ -55234,7 +55278,12 @@ function (_React$Component) {
   _createClass(DownloadCard, [{
     key: "handleDelete",
     value: function handleDelete() {
-      this.props.onDelete(this.props.download);
+      this.props.onDelete(this.props.download, "DL");
+    }
+  }, {
+    key: "handleCancel",
+    value: function handleCancel() {
+      this.props.onCancel(this.props.download, "DL");
     }
   }, {
     key: "decideAlertType",
@@ -55259,6 +55308,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Card"], {
         style: {
           margin: '10px'
@@ -55278,24 +55329,17 @@ function (_React$Component) {
         animated: this.props.download.status == 'TRANSMITTING',
         variant: this.decideAlertType(),
         now: this.props.download.progress,
-        label: this.props.download.status + ' (' + this.props.download.progress + '%)'
+        label: this.props.download.status + ' (' + this.props.download.progress + '%)' + (this.props.download.status != "DONE" ? ' @ ' + this.props.download.averageSpeed + "/s" + " time remaining: " + this.props.download.timeRemaining : "")
       }), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["InputGroup"].Append, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
         size: "sm",
-        title: "Pause Download",
-        style: {
-          color: 'white',
-          height: '30px'
-        },
-        variant: "warning"
-      }, React.createElement("i", {
-        className: "fas fa-stop"
-      })), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["Button"], {
-        size: "sm",
-        title: "Cancel Download",
+        title: "Remove Download",
         style: {
           height: '30px'
         },
-        variant: "danger"
+        variant: "danger",
+        onClick: function onClick() {
+          return _this2.handleDelete();
+        }
       }, React.createElement("i", {
         className: "fas fa-trash"
       })))))));
@@ -55364,6 +55408,7 @@ function (_React$Component) {
         return React.createElement(_DownloadCard__WEBPACK_IMPORTED_MODULE_0__["default"], {
           key: download.id,
           download: download,
+          onCancel: _this.props.onCancel,
           onDelete: _this.props.onDelete
         });
       });
@@ -55719,6 +55764,221 @@ function (_React$Component) {
 
   return ListView;
 }(React.Component);
+
+
+
+/***/ }),
+
+/***/ "./src/main/js/model/settings/Settings":
+/*!*********************************************!*\
+  !*** ./src/main/js/model/settings/Settings ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Settings; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var Settings =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Settings, _React$Component);
+
+  function Settings(props) {
+    var _this;
+
+    _classCallCheck(this, Settings);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Settings).call(this, props)); // method refs
+
+    _this.handleSave = _this.handleSave.bind(_assertThisInitialized(_this));
+    _this.handleReset = _this.handleReset.bind(_assertThisInitialized(_this));
+    _this.settingsChanged = _this.settingsChanged.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.getInputs = _this.getInputs.bind(_assertThisInitialized(_this)); //field refs
+
+    _this.settingsForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.resetBtn = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.saveBtn = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.state = {
+      settings: _this.props.userSettings,
+      settingsChanged: false
+    };
+    return _this;
+  }
+
+  _createClass(Settings, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      if (event.target.id) {
+        var value = event.target.checked;
+        var updatedSettings = this.state.settings;
+        updatedSettings[event.target.id] = value;
+        this.setState({
+          settings: updatedSettings
+        });
+      }
+    }
+  }, {
+    key: "settingsChanged",
+    value: function settingsChanged() {
+      return false;
+    }
+  }, {
+    key: "handleSave",
+    value: function handleSave(e) {
+      if (this.settingsChanged()) {
+        var fileRef = document.getElementById('wizardFormFileRef');
+        var download = {
+          targetBotId: 1,
+          fileRefId: fileRef.value
+        };
+        this.props.onCreate(download, "downloads", "", this.props.onFinish);
+      } else {
+        this.props.onFinish();
+      }
+    }
+  }, {
+    key: "handleReset",
+    value: function handleReset(e) {
+      console.log("resetting settings");
+
+      if (this.settingsChanged()) {
+        var fileRef = document.getElementById('wizardFormFileRef');
+        console.log("with value " + fileRef);
+        var download = {
+          targetBotId: 1,
+          fileRefId: fileRef.value
+        };
+        this.props.onCreate(download, "downloads", "", this.props.onFinish);
+      } else {
+        console.log("without setup");
+        this.props.onFinish();
+      }
+    }
+  }, {
+    key: "getInputs",
+    value: function getInputs() {
+      var _this2 = this;
+
+      var settings = this.state.settings;
+      var inputs = [];
+
+      for (var property in settings) {
+        var newInput = null;
+
+        (function () {
+          switch (property) {
+            case 'refreshrateInSeconds':
+              break;
+
+            case 'sessionTimeout':
+              break;
+
+            case 'downloadSortBy':
+              break;
+
+            case 'showAllBotsInQuickWindow':
+              var inputFields = [];
+              settings['botsVisibleInQuickWindow'].forEach(function (bot) {
+                inputFields.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+                  className: "mb-3"
+                }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+                  disabled: true,
+                  value: bot.name
+                }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Append, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Checkbox, {
+                  type: "checkbox",
+                  id: bot.id
+                }))));
+              });
+              newInput = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Bots available in quickview"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"], {
+                className: "mb-3"
+              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["FormControl"], {
+                disabled: true,
+                value: property
+              }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Append, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["InputGroup"].Checkbox, {
+                onChange: function onChange(e) {
+                  return _this2.handleChange(e);
+                },
+                type: "checkbox",
+                id: property
+              }))), !_this2.state.settings.showAllBotsInQuickWindow && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["ListGroup"].Item, {
+                className: "mb-3"
+              }, inputFields));
+              break;
+
+            case 'showAllItemsInDownloadCard':
+              break;
+          }
+        })();
+
+        newInput ? inputs.push(newInput) : null;
+      }
+
+      return inputs;
+    } //Form Validation
+
+  }, {
+    key: "checkValidity",
+    value: function checkValidity(input) {
+      this.resetValidity(input);
+
+      if (!input.checkValidity()) {
+        this.setInvalid(input);
+      } else {
+        this.setValid(input);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var inputs = this.getInputs();
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+        xs: 12,
+        md: 10,
+        className: "column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, "Settings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+        xs: 12,
+        md: 5,
+        style: {
+          'margin': '15px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["ListGroup"], {
+        variant: "flush"
+      }, inputs))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+        variant: "primary"
+      }, "Save"))));
+    }
+  }]);
+
+  return Settings;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 
 

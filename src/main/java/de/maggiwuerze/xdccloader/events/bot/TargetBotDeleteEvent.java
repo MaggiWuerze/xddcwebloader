@@ -1,14 +1,12 @@
 package de.maggiwuerze.xdccloader.events.bot;
 
 import de.maggiwuerze.xdccloader.events.EntityDeleteEvent;
-import de.maggiwuerze.xdccloader.events.EntityDoneEvent;
-import de.maggiwuerze.xdccloader.model.Download;
-import de.maggiwuerze.xdccloader.model.TargetBot;
+import de.maggiwuerze.xdccloader.model.entity.Bot;
 
-public class TargetBotDeleteEvent extends EntityDeleteEvent<TargetBot> {
+public class TargetBotDeleteEvent extends EntityDeleteEvent<Bot> {
 
-    public TargetBotDeleteEvent(Object source, TargetBot targetBot) {
-        super(source, targetBot);
+    public TargetBotDeleteEvent(Object source, Bot bot) {
+        super(source, bot);
     }
 
 }

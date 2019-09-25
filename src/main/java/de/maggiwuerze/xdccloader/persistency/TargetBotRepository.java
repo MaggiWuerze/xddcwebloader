@@ -1,6 +1,6 @@
 package de.maggiwuerze.xdccloader.persistency;
 
-import de.maggiwuerze.xdccloader.model.TargetBot;
+import de.maggiwuerze.xdccloader.model.entity.Bot;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,8 +8,8 @@ import java.util.List;
 
 
 @Repository
-public interface TargetBotRepository extends PagingAndSortingRepository<TargetBot, Long> {
+public interface TargetBotRepository extends PagingAndSortingRepository<Bot, Long> {
 
-    List<TargetBot> findAll();
+    List<Bot> findAll();
 
 }

@@ -1,6 +1,6 @@
 package de.maggiwuerze.xdccloader.persistency;
 
-import de.maggiwuerze.xdccloader.model.User;
+import de.maggiwuerze.xdccloader.model.entity.User;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

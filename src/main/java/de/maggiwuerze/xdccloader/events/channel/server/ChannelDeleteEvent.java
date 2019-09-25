@@ -1,8 +1,7 @@
 package de.maggiwuerze.xdccloader.events.channel.server;
 
 import de.maggiwuerze.xdccloader.events.EntityDeleteEvent;
-import de.maggiwuerze.xdccloader.model.Channel;
-import de.maggiwuerze.xdccloader.model.Server;
+import de.maggiwuerze.xdccloader.model.entity.Channel;
 
 public class ChannelDeleteEvent extends EntityDeleteEvent<Channel> {
 

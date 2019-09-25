@@ -12,7 +12,7 @@ export default class DownloadListView extends React.Component {
 
     render() {
         const downloads = this.props.downloads.map(download =>
-            <DownloadCard key={download.id} download={download} onDelete={this.props.onDelete}/>
+            <DownloadCard key={download.id} download={download} onCancel={this.props.onCancel} onDelete={this.props.onDelete}/>
         );
 
 

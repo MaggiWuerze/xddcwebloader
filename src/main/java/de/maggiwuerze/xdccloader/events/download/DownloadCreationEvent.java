@@ -1,12 +1,11 @@
 package de.maggiwuerze.xdccloader.events.download;
 
 import de.maggiwuerze.xdccloader.events.EntityCreationEvent;
-import de.maggiwuerze.xdccloader.model.Download;
 
-public class DownloadCreationEvent extends EntityCreationEvent<Download> {
+public class DownloadCreationEvent extends EntityCreationEvent<Long> {
 
-    public DownloadCreationEvent(Object source, Download download) {
-        super(source, download);
+    public DownloadCreationEvent(Object source, Long downloadId) {
+        super(source, downloadId);
     }
 
 }

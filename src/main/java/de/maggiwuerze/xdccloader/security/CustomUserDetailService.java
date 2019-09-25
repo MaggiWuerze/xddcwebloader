@@ -1,6 +1,6 @@
 package de.maggiwuerze.xdccloader.security;
 
-import de.maggiwuerze.xdccloader.model.User;
+import de.maggiwuerze.xdccloader.model.entity.User;
 import de.maggiwuerze.xdccloader.persistency.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

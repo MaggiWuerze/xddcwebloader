@@ -1,6 +1,6 @@
-package de.maggiwuerze.xdccloader.util;
+package de.maggiwuerze.xdccloader.model;
 
-public enum State {
+public enum DownloadState {
 
     CONNECTING("Connecting"),
     DONE("Done"),
@@ -16,7 +16,7 @@ public enum State {
 
     String externalString;
 
-    State(String externalString) {
+    DownloadState(String externalString) {
 
         this.externalString = externalString;
     }

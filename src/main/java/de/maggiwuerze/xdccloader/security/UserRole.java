@@ -1,13 +1,13 @@
-package de.maggiwuerze.xdccloader.util;
+package de.maggiwuerze.xdccloader.security;
 
-public enum Role {
+public enum UserRole {
 
     USER("USER"),
     ADMIN("ADMIN");
 
     String externalString;
 
-    Role(String externalString) {
+    UserRole(String externalString) {
 
         this.externalString = externalString;
     }

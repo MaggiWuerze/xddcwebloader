@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccloader.persistency;
 
-import de.maggiwuerze.xdccloader.model.*;
-import de.maggiwuerze.xdccloader.util.Role;
+import de.maggiwuerze.xdccloader.model.entity.*;
+import de.maggiwuerze.xdccloader.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,15 +17,13 @@ class DatabaseLoader implements CommandLineRunner {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    DownloadRepository downloadRepository;
-    @Autowired
     ChannelRepository channelRepository;
     @Autowired
     ServerRepository serverRepository;
     @Autowired
     IrcUserRepository ircUserRepository;
-
-
+    @Autowired
+    UserSettingsRepository userSettingsRepository;
 
     @Transactional
     @Override
@@ -33,7 +31,8 @@ class DatabaseLoader implements CommandLineRunner {
 
         String username = "Bilbo";
         String password = new BCryptPasswordEncoder(11).encode("Baggins");
-        this.userRepository.save(new User(username, password, Role.USER.getExternalString(), true));
+        UserSettings userSettings = userSettingsRepository.save(new UserSettings());
+        this.userRepository.save(new User(username, password, UserRole.USER.getExternalString(), true, userSettings));
 
 
         Channel channel = channelRepository.save(new Channel("#HorribleSubs"));
@@ -42,13 +41,13 @@ class DatabaseLoader implements CommandLineRunner {
         Server server = serverRepository.save(new Server("Rizon" , "irc.rizon.net"));
 
 		String targetBotName = "Ginpachi-Sensei";
-        TargetBot targetBot = this.ircUserRepository.save(new TargetBot(server, channel, targetBotName, "xdcc send %s"));
+        Bot bot = this.ircUserRepository.save(new Bot(server, channel, targetBotName, "xdcc send #%s"));
 
         targetBotName = "CR-HOLLAND|NEW_DOWNLOAD";
-        TargetBot targetBot2 = this.ircUserRepository.save(new TargetBot(server, dbChannel, targetBotName, "xdcc send %s"));
+        Bot bot2 = this.ircUserRepository.save(new Bot(server, dbChannel, targetBotName, "xdcc send #%s"));
 
         targetBotName = "CR-ARCHIVE|1080p";
-        TargetBot targetBot3 = this.ircUserRepository.save(new TargetBot(server, channel, targetBotName, "xdcc send %s"));
+        Bot bot3 = this.ircUserRepository.save(new Bot(server, channel, targetBotName, "xdcc send #%s"));
 
     }
 }
