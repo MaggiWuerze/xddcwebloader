@@ -6,16 +6,15 @@ import de.maggiwuerze.xdccloader.events.download.DownloadDoneEvent;
 import de.maggiwuerze.xdccloader.events.download.DownloadUpdateEvent;
 import de.maggiwuerze.xdccloader.irc.IrcBot;
 import de.maggiwuerze.xdccloader.irc.IrcEventListener;
-import de.maggiwuerze.xdccloader.model.DownloadState;
+import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.download.Download;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
-import de.maggiwuerze.xdccloader.util.DownloadManager;
-import de.maggiwuerze.xdccloader.util.FileTransferProgressWatcher;
+import de.maggiwuerze.xdccloader.service.DownloadService;
 import de.maggiwuerze.xdccloader.util.ProgressWatcherFactory;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.pircbotx.Configuration;
 import org.pircbotx.exception.IrcException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
@@ -25,25 +24,20 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 @Component
+@RequiredArgsConstructor
 public class CustomSpringEventListener {
 
     Logger LOG = Logger.getLogger("Class CustomSpringEventListener");
 
-    @Autowired
-    ProgressWatcherFactory progressWatcherFactory;
-
-    @Autowired
-    IrcEventListener ircEventListener;
-
-    @Autowired
-    EventPublisher eventPublisher;
-
-    DownloadManager downloadManager = DownloadManager.getInstance();
+    private final ProgressWatcherFactory progressWatcherFactory;
+    private final IrcEventListener ircEventListener;
+    private final EventPublisher eventPublisher;
+    private final DownloadService downloadService;
 
     @EventListener
     public void onDownloadCreationEvent(DownloadCreationEvent event) {
 
-        Download download = downloadManager.getById(event.getPayload());
+        Download download = downloadService.getById(event.getPayload());
 
         eventPublisher.updateDownloadState(DownloadState.PREPARING, download);
 
@@ -88,16 +82,16 @@ public class CustomSpringEventListener {
     @EventListener
     public void onDownloadUpdateEvent(DownloadUpdateEvent event) {
 
-        downloadManager.update(downloadManager.getById(event.getPayload()));
-        eventPublisher.sendWebsocketEvent(SocketEvents.UPDATED_DOWNLOAD, downloadManager.getById(event.getPayload()));
+        downloadService.update(downloadService.getById(event.getPayload()));
+        eventPublisher.sendWebsocketEvent(SocketEvents.UPDATED_DOWNLOAD, downloadService.getById(event.getPayload()));
 
     }
 
     @EventListener
     public void onDownloadDeleteEvent(DownloadDeleteEvent event) {
 
-        eventPublisher.sendWebsocketEvent(SocketEvents.DELETED_DOWNLOAD, downloadManager.getById(event.getPayload()));
-        downloadManager.remove(event.getPayload());
+        eventPublisher.sendWebsocketEvent(SocketEvents.DELETED_DOWNLOAD, downloadService.getById(event.getPayload()));
+        downloadService.remove(event.getPayload());
 
     }
 
@@ -105,11 +99,11 @@ public class CustomSpringEventListener {
     public void onDownloadDoneEvent(DownloadDoneEvent event) {
 
         //Do some stuff here before setting to done!
-        Download download = downloadManager.getById(event.getPayload());
+        Download download = downloadService.getById(event.getPayload());
         download.setStatus(DownloadState.DONE);
-        downloadManager.update(download);
+        downloadService.update(download);
 
-        eventPublisher.sendWebsocketEvent(SocketEvents.UPDATED_DOWNLOAD, downloadManager.getById(event.getPayload()));
+        eventPublisher.sendWebsocketEvent(SocketEvents.UPDATED_DOWNLOAD, downloadService.getById(event.getPayload()));
 
     }
 

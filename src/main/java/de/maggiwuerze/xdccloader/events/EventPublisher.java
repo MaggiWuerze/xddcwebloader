@@ -2,31 +2,28 @@ package de.maggiwuerze.xdccloader.events;
 
 import de.maggiwuerze.xdccloader.events.download.DownloadUpdateEvent;
 import de.maggiwuerze.xdccloader.irc.IrcBot;
-import de.maggiwuerze.xdccloader.model.DownloadState;
+import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.download.Download;
-import de.maggiwuerze.xdccloader.util.DownloadManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.maggiwuerze.xdccloader.service.DownloadService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class EventPublisher {
 
-    DownloadManager downloadManager = DownloadManager.getInstance();
-
-    @Autowired
-    private SimpMessagingTemplate websocket;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private final DownloadService downloadService;
+    private final SimpMessagingTemplate websocket;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     final String MESSAGE_PREFIX = "/topic";
 
     public void updateDownloadState(DownloadState state, Download download) {
 
         download.setStatus(state);
-        downloadManager.update(download);
+        downloadService.update(download);
 
         DownloadUpdateEvent downloadUpdateEvent = new DownloadUpdateEvent(this, download.getId());
         applicationEventPublisher.publishEvent(downloadUpdateEvent);
@@ -42,9 +39,10 @@ public class EventPublisher {
     public void handleError(IrcBot bot, Exception exception) {
 
         bot.stopBotReconnect();
+        Download download = downloadService.getById(bot.getDownloadId());
         String message = String.format(DownloadState.ERROR.getExternalString(), exception.getMessage());
-        bot.getDownload().setStatusMessage(message);
-        updateDownloadState(DownloadState.ERROR, bot.getDownload());
+        download.setStatusMessage(message);
+        updateDownloadState(DownloadState.ERROR, download);
 
     }
 

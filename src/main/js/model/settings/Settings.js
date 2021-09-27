@@ -1,20 +1,5 @@
-import React, { Component } from 'react';
-import {
-    Alert,
-    Button,
-    ButtonToolbar,
-    Card,
-    Col,
-    Container,
-    FormControl,
-    Form,
-    InputGroup,
-    Jumbotron,
-    ListGroup,
-    Row,
-    ToggleButton,
-    ToggleButtonGroup
-} from 'react-bootstrap';
+import React from 'react';
+import {Button, Card, Col, Form, FormControl, InputGroup, ListGroup} from 'react-bootstrap';
 
 const ReactDOM = require('react-dom');
 
@@ -125,43 +110,43 @@ export default class Settings extends React.Component {
                 case 'showAllBotsInQuickWindow':
 
                     const inputFields = [];
-                    settings['botsVisibleInQuickWindow']
-                        .forEach(function(bot) {
-
-                            inputFields.push(
-                                <InputGroup className="mb-3">
-                                    <FormControl disabled value={bot.name} />
-                                    <InputGroup.Append>
-                                        <InputGroup.Checkbox
-                                            type="checkbox"
-                                            id= {bot.id}
-                                        />
-                                    </InputGroup.Append>
-                                </InputGroup>)
-                        });
-
-                    newInput =
-
-                        <>
-                            <h4>Bots available in quickview</h4>
-
-                            <InputGroup className="mb-3">
-                                <FormControl disabled value={property} />
-                                <InputGroup.Append>
-                                    <InputGroup.Checkbox
-                                        onChange={(e) => this.handleChange(e)}
-                                        type="checkbox"
-                                        id= {property}
-                                    />
-                                </InputGroup.Append>
-                            </InputGroup>
-
-                            {!this.state.settings.showAllBotsInQuickWindow &&
-                                <ListGroup.Item className="mb-3">
-                                    {inputFields}
-                                </ListGroup.Item>
-                            }
-                        </>
+                    console.dir(settings['botsVisibleInQuickWindow']);
+                    // settings['botsVisibleInQuickWindow']
+                    //     .forEach(function(bot) {
+                    //         inputFields.push(
+                    //             <InputGroup className="mb-3">
+                    //                 <FormControl disabled value={bot.name} />
+                    //                 <InputGroup.Append>
+                    //                     <InputGroup.Checkbox
+                    //                         type="checkbox"
+                    //                         id= {bot.id}
+                    //                     />
+                    //                 </InputGroup.Append>
+                    //             </InputGroup>)
+                    //     });
+                    //
+                    // newInput =
+                    //
+                    //     <>
+                    //         <h4>Bots available in quickview</h4>
+                    //
+                    //         <InputGroup className="mb-3">
+                    //             <FormControl disabled value={property} />
+                    //             <InputGroup.Append>
+                    //                 <InputGroup.Checkbox
+                    //                     onChange={(e) => this.handleChange(e)}
+                    //                     type="checkbox"
+                    //                     id= {property}
+                    //                 />
+                    //             </InputGroup.Append>
+                    //         </InputGroup>
+                    //
+                    //         {!this.state.settings.showAllBotsInQuickWindow &&
+                    //             <ListGroup.Item className="mb-3">
+                    //                 {inputFields}
+                    //             </ListGroup.Item>
+                    //         }
+                    //     </>
 
                     break;
 

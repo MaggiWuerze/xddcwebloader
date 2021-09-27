@@ -3999,8 +3999,8 @@ var isBrowser = (typeof window === "undefined" ? "undefined" : _typeof(window)) 
                 stringify(0) === "0" &&
                 // FF 3.1b1, b2, and JSON 2 serialize wrapped primitives as object
                 // literals.
-                stringify(new Number()) === "0" &&
-                stringify(new String()) == '""' &&
+                stringify(Number()) === "0" &&
+                stringify(String()) == '""' &&
                 // FF 3.1b1, 2 throw an error if the value is `null`, `undefined`, or
                 // does not define a canonical JSON representation (this applies to
                 // objects with `toJSON` properties as well, *unless* they are nested
@@ -5530,7 +5530,7 @@ function shouldUseNative() {
 		// Detect buggy property enumeration order in older V8 versions.
 
 		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		var test1 = String('abc');  // eslint-disable-line no-new-wrappers
 		test1[5] = 'de';
 		if (Object.getOwnPropertyNames(test1)[0] === '5') {
 			return false;
@@ -36281,7 +36281,7 @@ function completeUnitOfWork(workInProgress) {
       } else if (returnFiber !== null) {
         // If there's no more work in this returnFiber. Complete the returnFiber.
         workInProgress = returnFiber;
-        continue;
+
       } else {
         // We've reached the root.
         return null;
@@ -36347,7 +36347,7 @@ function completeUnitOfWork(workInProgress) {
       } else if (returnFiber !== null) {
         // If there's no more work in this returnFiber. Complete the returnFiber.
         workInProgress = returnFiber;
-        continue;
+
       } else {
         return null;
       }
@@ -47461,7 +47461,7 @@ EventTarget.prototype.removeEventListener = function(eventType, listener) {
     } else {
       delete this._listeners[eventType];
     }
-    return;
+
   }
 };
 
@@ -54462,7 +54462,7 @@ function (_React$Component) {
             }));
         }
 
-        ;
+
         return input;
       });
       return (// rebuild this with a custom modal content which gets the inputs as prop
@@ -54816,7 +54816,7 @@ function (_React$Component) {
             break;
         }
 
-        ;
+
         return input;
       });
       return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, this.props.modalTitle), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Footer, {
@@ -55130,7 +55130,7 @@ function (_React$Component) {
             break;
         }
 
-        ;
+
         return input;
       });
       return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, this.props.modalTitle), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Footer, {
@@ -55678,7 +55678,7 @@ function (_React$Component) {
             break;
         }
 
-        ;
+
         return input;
       });
       return React.createElement(React.Fragment, null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], null, React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, this.props.modalTitle), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, null, inputs), React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Footer, {

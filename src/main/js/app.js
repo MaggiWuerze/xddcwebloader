@@ -545,9 +545,9 @@ class App extends React.Component {
                                             <i className="fas fa-columns"></i>
                                             &nbsp;&nbsp;Dashboard
                                         </Nav.Link>
-                                        <Nav.Link as="span" eventKey="settings">
+                                        <Nav.Link as="span" eventKey="">
                                             <i className="fas fa-sliders-h"></i>
-                                            &nbsp;&nbsp;Settings
+                                            &nbsp;&nbsp;Settingss
                                         </Nav.Link>
                                         <Nav.Link as="span" eventKey="about">
                                             <i className="fas fa-info-circle"></i>

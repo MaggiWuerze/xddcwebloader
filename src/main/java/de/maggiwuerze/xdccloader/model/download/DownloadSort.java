@@ -1,11 +1,9 @@
-package de.maggiwuerze.xdccloader.model;
+package de.maggiwuerze.xdccloader.model.download;
 
-import javax.persistence.Entity;
 
 public enum DownloadSort {
 
     PROGRESS,
     SPEED,
-    STARTDATE;
-
+    STARTDATE
 }

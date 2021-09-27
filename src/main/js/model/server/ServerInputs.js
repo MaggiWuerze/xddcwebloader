@@ -126,7 +126,7 @@ export default class ServerInputs extends React.Component {
                             </InputGroup>;
                     default:
                         break;
-                };
+                }
 
                 return input;
 

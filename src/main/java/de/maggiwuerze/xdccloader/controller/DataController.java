@@ -1,86 +1,79 @@
 package de.maggiwuerze.xdccloader.controller;
 
+import de.maggiwuerze.xdccloader.events.SocketEvents;
 import de.maggiwuerze.xdccloader.events.channel.server.ChannelCreationEvent;
 import de.maggiwuerze.xdccloader.events.download.DownloadCreationEvent;
 import de.maggiwuerze.xdccloader.events.download.DownloadDeleteEvent;
 import de.maggiwuerze.xdccloader.events.download.DownloadUpdateEvent;
 import de.maggiwuerze.xdccloader.events.server.ServerCreationEvent;
-import de.maggiwuerze.xdccloader.model.entity.*;
+import de.maggiwuerze.xdccloader.model.download.Download;
+import de.maggiwuerze.xdccloader.model.download.DownloadState;
+import de.maggiwuerze.xdccloader.model.entity.Bot;
+import de.maggiwuerze.xdccloader.model.entity.Channel;
+import de.maggiwuerze.xdccloader.model.entity.Server;
+import de.maggiwuerze.xdccloader.model.entity.User;
 import de.maggiwuerze.xdccloader.model.forms.ChannelForm;
 import de.maggiwuerze.xdccloader.model.forms.DownloadForm;
 import de.maggiwuerze.xdccloader.model.forms.ServerForm;
 import de.maggiwuerze.xdccloader.model.forms.TargetBotForm;
-import de.maggiwuerze.xdccloader.model.download.Download;
 import de.maggiwuerze.xdccloader.model.transport.DownloadTO;
 import de.maggiwuerze.xdccloader.model.transport.UserTO;
-import de.maggiwuerze.xdccloader.persistency.*;
-import de.maggiwuerze.xdccloader.util.DownloadManager;
-import de.maggiwuerze.xdccloader.events.SocketEvents;
-import de.maggiwuerze.xdccloader.model.DownloadState;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.maggiwuerze.xdccloader.service.BotService;
+import de.maggiwuerze.xdccloader.service.ChannelService;
+import de.maggiwuerze.xdccloader.service.DownloadService;
+import de.maggiwuerze.xdccloader.service.ServerService;
+import de.maggiwuerze.xdccloader.service.UserService;
+import java.security.Principal;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-import java.util.*;
-import java.util.logging.Logger;
-
-
+@Log
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/data")
 class DataController {
 
+    private final UserService userService;
+    private final ChannelService channelService;
+    private final ServerService serverService;
+    private final DownloadService downloadService;
+    private final BotService botService;
 
-    Logger logger = Logger.getLogger("Class DataController");
-
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    IrcUserRepository ircUserRepository;
-    @Autowired
-    ChannelRepository channelRepository;
-    @Autowired
-    ServerRepository serverRepository;
-    @Autowired
-    TargetBotRepository targetBotRepository;
-
-    DownloadManager downloadManager = DownloadManager.getInstance();
-
-    @Autowired
-    private SimpMessagingTemplate websocket;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private final SimpMessagingTemplate websocket;
+    private final ApplicationEventPublisher applicationEventPublisher;
+    private final EntityLinks entityLinks;
 
     final String MESSAGE_PREFIX = "/topic";
 
     //USERDETAILS
     @GetMapping("/initialized")
     public ResponseEntity<Boolean> getInitialized(Principal principal) {
-
-        String username = principal.getName();
-        User user = userRepository.findUserByName(username).orElse(null);
-
+        User user = userService.findUserByName(principal.getName());
 
         if (user != null) {
-
             return new ResponseEntity(user.getInitialized(), HttpStatus.OK);
-
         } else {
-
             return new ResponseEntity("user not found", HttpStatus.UNAUTHORIZED);
-
         }
-
     }
 
     @GetMapping("/user")
     public ResponseEntity<UserTO> getuser(Principal principal) {
-
-        User user = userRepository.findUserByName(principal.getName()).orElse(null);
+        User user = userService.findUserByName(principal.getName());
 
         if (user != null) {
 
@@ -108,12 +101,12 @@ class DataController {
     public ResponseEntity<?> setInitialized(Principal principal) {
 
 
-        User user = userRepository.findUserByName(principal.getName()).orElse(null);
+        User user = userService.findUserByName(principal.getName());
 
         if (user != null) {
 
             user.setInitialized(true);
-            userRepository.save(user);
+            userService.saveUser(user);
 
             return new ResponseEntity("ok", HttpStatus.OK);
 
@@ -132,7 +125,7 @@ class DataController {
     @GetMapping("/downloads/")
     public ResponseEntity<List<Object>> getAllDownloads() {
 
-        return new ResponseEntity(DownloadTO.getListOfTOs(downloadManager.findAllByOrderByProgressDesc()), HttpStatus.OK);
+        return new ResponseEntity(DownloadTO.getListOfTOs(downloadService.findAllByOrderByProgressDesc()), HttpStatus.OK);
 
     }
 
@@ -154,14 +147,14 @@ class DataController {
 
         }
 
-        return new ResponseEntity(DownloadTO.getListOfTOs(downloadManager.findAllByStatusInOrderByProgress(states)), HttpStatus.OK);
+        return new ResponseEntity(DownloadTO.getListOfTOs(downloadService.findAllByStatusInOrderByProgress(states)), HttpStatus.OK);
 
     }
 
     @GetMapping("/downloads/failed")
     public ResponseEntity<List<Object>> getFailedDownloads() {
 
-        List<DownloadTO> failedDownloads = DownloadTO.getListOfTOs(downloadManager.findAllByStatusOrderByProgressDesc(DownloadState.ERROR));
+        List<DownloadTO> failedDownloads = DownloadTO.getListOfTOs(downloadService.findAllByStatusOrderByProgressDesc(DownloadState.ERROR));
 
         return new ResponseEntity(failedDownloads, HttpStatus.OK);
 
@@ -170,7 +163,7 @@ class DataController {
     @GetMapping("/downloads/remove")
     public ResponseEntity<?> removeDownloads(Long downloadId) {
 
-        Download download = downloadManager.getById(downloadId);
+        Download download = downloadService.getById(downloadId);
 
         if (download != null) {
 
@@ -188,13 +181,10 @@ class DataController {
 
     @PostMapping("/downloads/")
     public ResponseEntity<?> addDownload(@RequestBody DownloadForm downloadForm) {
-
-        Bot bot = targetBotRepository.findById(downloadForm.getTargetBotId()).orElse(null);
+        Bot bot = botService.findById(downloadForm.getTargetBotId());
 
         if (bot == null) {
-
             return new ResponseEntity("Illegal Arguments in Request", HttpStatus.BAD_REQUEST);
-
         }
 
         String fileRefId = downloadForm.getFileRefId();
@@ -203,23 +193,17 @@ class DataController {
             for (String id : fileRefId.split(",")) {
 
                 Download download = new Download(bot, id);
-                downloadManager.addDownloadToBotQueue(download);
+                downloadService.addDownloadToBotQueue(download);
                 publishEvent(SocketEvents.NEW_DOWNLOAD, download);
 
             }
-
-
         } else {
-
             Download download = new Download(bot, fileRefId);
-            downloadManager.addDownloadToBotQueue(download);
+            downloadService.addDownloadToBotQueue(download);
             publishEvent(SocketEvents.NEW_DOWNLOAD, download);
-
-
         }
 
         return new ResponseEntity("Download(s) added succcessfully.", HttpStatus.OK);
-
     }
 
 
@@ -231,7 +215,7 @@ class DataController {
     @GetMapping("/servers/")
     public ResponseEntity<List<Server>> getAllServers() {
 
-        List<Server> servers = serverRepository.findAll();
+        List<Server> servers = serverService.list();
         return new ResponseEntity(servers, HttpStatus.OK);
 
     }
@@ -239,7 +223,7 @@ class DataController {
     @PostMapping("/servers/")
     public ResponseEntity<?> addServer(@RequestBody ServerForm serverForm) {
 
-        Server server = serverRepository.save(new Server(serverForm.getName(), serverForm.getServerUrl()));
+        Server server = serverService.save(new Server(serverForm.getName(), serverForm.getServerUrl()));
 
         return new ResponseEntity("Download added succcessfully. id=[" + server.getId() + "]", HttpStatus.OK);
     }
@@ -253,7 +237,7 @@ class DataController {
     @GetMapping("/channels/")
     public ResponseEntity<List<Channel>> getAllChannels() {
 
-        List<Channel> channels = channelRepository.findAll();
+        List<Channel> channels = channelService.list();
         return new ResponseEntity(channels, HttpStatus.OK);
 
     }
@@ -261,7 +245,7 @@ class DataController {
     @PostMapping("/channels/")
     public ResponseEntity<?> addChannel(@RequestBody ChannelForm channelForm) {
 
-        Channel channel = channelRepository.save(new Channel(channelForm.getName()));
+        Channel channel = channelService.save(new Channel(channelForm.getName()));
 
         return new ResponseEntity("Download added succcessfully. id=[" + channel.getId() + "]", HttpStatus.OK);
     }
@@ -270,12 +254,12 @@ class DataController {
     //BOTS
 
     @PostMapping("/bots/")
-    public ResponseEntity<?> addBot(@RequestBody TargetBotForm targetBotForm) {
+    public ResponseEntity<?> addBot(@RequestBody TargetBotForm form) {
 
 
-        Optional<Server> server = serverRepository.findById(targetBotForm.getServerId());
-        Optional<Channel> channel = channelRepository.findById(targetBotForm.getChannelId());
-        Bot bot = targetBotRepository.save(new Bot(server.get(), channel.get(), targetBotForm.getName(), targetBotForm.getPattern()));
+        Server server = serverService.findById(form.getServerId());
+        Channel channel = channelService.findById(form.getChannelId());
+        Bot bot = botService.save(new Bot(server, channel, form.getName(), form.getPattern(), form.getMaxParallelDownloads()));
 
         publishEvent(SocketEvents.NEW_SERVER, bot);
 
@@ -288,7 +272,7 @@ class DataController {
     @GetMapping("/bots/")
     public ResponseEntity<List<Bot>> getAllBots() {
 
-        List<Bot> users = targetBotRepository.findAll();
+        List<Bot> users = botService.list();
         return new ResponseEntity(users, HttpStatus.OK);
 
     }
@@ -301,7 +285,7 @@ class DataController {
     @GetMapping("/ircUsers/")
     public ResponseEntity<List<Bot>> getAllIrcUsers() {
 
-        List<Bot> users = ircUserRepository.findAll();
+        List<Bot> users = userService.listIrcUsers();
         return new ResponseEntity(users, HttpStatus.OK);
 
     }
@@ -362,4 +346,8 @@ class DataController {
 
     }
 
+    private String getPath(Download download){
+        return this.entityLinks.linkForItemResource(download.getClass(),
+            download.getId()).toUri().getPath();
+    }
 }

@@ -176,7 +176,7 @@ export default class CreateModal extends React.Component {
                             </InputGroup>;
 
                 }
-                ;
+
 
                 return input;
 

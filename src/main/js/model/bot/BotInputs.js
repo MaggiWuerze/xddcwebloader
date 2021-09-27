@@ -140,7 +140,7 @@ export default class BotInputs extends React.Component {
                             </InputGroup>;
                     default:
                         break;
-                };
+                }
 
                 return input;
 

@@ -1,7 +1,8 @@
 package de.maggiwuerze.xdccloader.model.transport;
 
-import de.maggiwuerze.xdccloader.model.DownloadCardField;
+import de.maggiwuerze.xdccloader.model.download.DownloadCardField;
 import de.maggiwuerze.xdccloader.model.entity.User;
+import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Data
 public class UserTO{
 
     String name;
@@ -42,37 +44,5 @@ public class UserTO{
 
         }
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
-    }
-
-    public Boolean getInitialized() {
-        return initialized;
-    }
-
-    public void setInitialized(Boolean initialized) {
-        this.initialized = initialized;
-    }
-
-    public UserSettingsTO getUserSettings() {
-        return userSettings;
-    }
-
-    public void setUserSettings(UserSettingsTO userSettings) {
-        this.userSettings = userSettings;
     }
 }

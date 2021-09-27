@@ -1,14 +1,14 @@
 package de.maggiwuerze.xdccloader.irc;
 
-import de.maggiwuerze.xdccloader.model.download.Download;
-import de.maggiwuerze.xdccloader.util.DownloadManager;
+import de.maggiwuerze.xdccloader.service.DownloadService;
 import lombok.NonNull;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 
 public class IrcBot extends PircBotX {
 
-    private Long downloadId;
+    private final Long downloadId;
+    private DownloadService downloadService;
 
     /**
      * Constructs a PircBotX with the provided configuration.
@@ -20,16 +20,8 @@ public class IrcBot extends PircBotX {
         this.downloadId = downloadId;
     }
 
-    public String getFileRefId() {
-        return getDownload().getFileRefId();
-    }
-
     public Long getDownloadId() {
         return downloadId;
-    }
-
-    public Download getDownload() {
-        return DownloadManager.getInstance().getById(getDownloadId());
     }
 
 }

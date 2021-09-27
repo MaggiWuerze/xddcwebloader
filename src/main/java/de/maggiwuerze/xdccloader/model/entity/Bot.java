@@ -2,8 +2,10 @@ package de.maggiwuerze.xdccloader.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import lombok.Data;
 
 @Entity
+@Data
 public class Bot {
 
     @Id
@@ -27,61 +29,18 @@ public class Bot {
     @Column(nullable = false)
     LocalDateTime creationDate = LocalDateTime.now();
 
+    @Column(nullable = false)
+    Long maxParallelDownloads = 3L;
+
     public Bot() {
     }
 
-    public Bot(Server server, Channel channel, String name, String pattern) {
+    public Bot(Server server, Channel channel, String name, String pattern, Long maxParallelDownloads) {
         this.name = name;
         this.pattern = pattern;
         this.server = server;
         this.channel = channel;
+        this.maxParallelDownloads = maxParallelDownloads;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
-
-    public Channel getChannel() {
-        return channel;
-    }
-
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public void setServer(Server server) {
-        this.server = server;
-    }
 }

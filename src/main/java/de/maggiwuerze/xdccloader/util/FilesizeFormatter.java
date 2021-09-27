@@ -4,10 +4,9 @@ import java.text.DecimalFormat;
 
 public class FilesizeFormatter {
 
-
     public static String createAutoReadableString (long sizeInBytes){
 
-        String hrSize = null;
+        String hrSize;
 
         double b = sizeInBytes;
         double k = sizeInBytes/1024.0;
@@ -30,6 +29,5 @@ public class FilesizeFormatter {
         }
 
         return hrSize;
-
     }
 }

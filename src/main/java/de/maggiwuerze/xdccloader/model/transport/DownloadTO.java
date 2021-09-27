@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccloader.model.transport;
 
 import de.maggiwuerze.xdccloader.model.download.Download;
-import de.maggiwuerze.xdccloader.model.DownloadState;
+import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import org.springframework.beans.BeanUtils;
 

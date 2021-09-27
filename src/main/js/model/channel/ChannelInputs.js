@@ -101,7 +101,7 @@ export default class ChannelInputs extends React.Component {
                             </InputGroup>;
                     default:
                         break;
-                };
+                }
 
                 return input;
 

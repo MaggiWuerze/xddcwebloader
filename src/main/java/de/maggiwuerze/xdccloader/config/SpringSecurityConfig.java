@@ -108,7 +108,7 @@ class SpringSecurityConfig extends WebSecurityConfigurerAdapter implements WebMv
             @Autowired
             UserRepository userRepository;
 
-            private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+            private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

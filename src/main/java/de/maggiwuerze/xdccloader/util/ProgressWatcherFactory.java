@@ -1,24 +1,19 @@
 package de.maggiwuerze.xdccloader.util;
 
-import de.maggiwuerze.xdccloader.model.download.Download;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.maggiwuerze.xdccloader.service.DownloadService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ProgressWatcherFactory {
 
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
-
+    private final DownloadService downloadService;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public FileTransferProgressWatcher getProgressWatcher(Long downloadId){
-
-            FileTransferProgressWatcher watcher = new FileTransferProgressWatcher(downloadId, applicationEventPublisher);
-
+            FileTransferProgressWatcher watcher = new FileTransferProgressWatcher(downloadId, applicationEventPublisher, downloadService);
             return watcher;
-
     }
-
 }

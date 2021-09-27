@@ -80,7 +80,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return getExpirationDate() != null? getExpirationDate().isBefore(LocalDateTime.now()): true;
+        return getExpirationDate() == null || getExpirationDate().isBefore(LocalDateTime.now());
     }
 
     @Override
@@ -90,7 +90,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return getExpirationDate() != null? getExpirationDate().isBefore(LocalDateTime.now()): true;
+        return getExpirationDate() == null || getExpirationDate().isBefore(LocalDateTime.now());
     }
 
     @Override

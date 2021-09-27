@@ -1,7 +1,7 @@
 {
   "name": "xdcc-web-loader",
   "version": "0.1.0",
-  "description": "Web based Download Manager for xdcc file transfer",
+  "description": "Web based Download Manager for XDCC file transfer",
   "repository": {
     "type": "git",
     "url": "git@github.com:MaggiWuerze/xddcwebloader.git"
@@ -20,26 +20,26 @@
   },
   "homepage": "https://maggiwuerze.de/xdccloader",
   "dependencies": {
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "rest": "^1.3.1",
-    "sockjs-client": "^1.0.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rest": "^2.0.0",
+    "sockjs-client": "^1.5.2",
     "stompjs": "^2.3.3",
-    "react-bootstrap": "1.0.0-beta.8",
-    "react-popover": "^0.5.0",
-    "bootstrap": "4.3.1",
-    "react-sidenav": "4.0.0",
-    "axios": "0.21.1"
+    "react-bootstrap": "1.6.4",
+    "react-popover": "^0.5.10",
+    "bootstrap": "5.1.1",
+    "react-sidenav": "4.0.6",
+    "axios": "0.21.4"
   },
   "scripts": {
     "watch": "webpack --watch -d"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.2",
-    "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0"
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.54.0",
+    "webpack-cli": "^4.8.0"
   }
 }

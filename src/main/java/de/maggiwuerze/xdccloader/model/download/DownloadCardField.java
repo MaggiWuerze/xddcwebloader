@@ -1,4 +1,4 @@
-package de.maggiwuerze.xdccloader.model;
+package de.maggiwuerze.xdccloader.model.download;
 
 public enum DownloadCardField {
 
