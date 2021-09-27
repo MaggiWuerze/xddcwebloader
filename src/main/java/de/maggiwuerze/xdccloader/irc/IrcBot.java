@@ -7,21 +7,20 @@ import org.pircbotx.PircBotX;
 
 public class IrcBot extends PircBotX {
 
-    private final Long downloadId;
-    private DownloadService downloadService;
+	private final Long downloadId;
+	private DownloadService downloadService;
 
-    /**
-     * Constructs a PircBotX with the provided configuration.
-     *
-     * @param configuration Fully built Configuration
-     */
-    public IrcBot(@NonNull Configuration configuration, @NonNull Long downloadId) {
-        super(configuration);
-        this.downloadId = downloadId;
-    }
+	/**
+	 * Constructs a PircBotX with the provided configuration.
+	 *
+	 * @param configuration Fully built Configuration
+	 */
+	public IrcBot(@NonNull Configuration configuration, @NonNull Long downloadId) {
+		super(configuration);
+		this.downloadId = downloadId;
+	}
 
-    public Long getDownloadId() {
-        return downloadId;
-    }
-
+	public Long getDownloadId() {
+		return downloadId;
+	}
 }

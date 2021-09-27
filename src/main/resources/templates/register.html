@@ -2,76 +2,76 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head lang="en">
 
-    <meta charset="UTF-8"/>
-    <title>Login</title>
+	<meta charset="UTF-8"/>
+	<title>Login</title>
 
 
-    <link rel="stylesheet" href="/css/main.css"/>
-    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css"/>
+	<link href="/css/main.css" rel="stylesheet"/>
+	<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/webjars/font-awesome/css/all.min.css" rel="stylesheet"/>
 
 </head>
 <body class="column">
 
-<section id="welcome" style="min-height:100vh;" class="bg-primary d-flex flex-column">
-    <div class="container text-center my-auto">
-        <div class="card" style="margin: auto; width: 18rem;">
-            <div class="card-body">
-                <legend class="card-title" style="text-align: center">Sign Up</legend>
-                <form action="/register" method="post" th:object="${user}" >
+<section class="bg-primary d-flex flex-column" id="welcome" style="min-height:100vh;">
+	<div class="container text-center my-auto">
+		<div class="card" style="margin: auto; width: 18rem;">
+			<div class="card-body">
+				<legend class="card-title" style="text-align: center">Sign Up</legend>
+				<form action="/register" method="post" th:object="${user}">
 
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                        </div>
-                        <input th:field="*{username}"
-                               type="text"
-                               class="form-control"
-                               placeholder="Username"
-                               aria-label="Username"
-                               aria-describedby="basic-addon1">
-                        <p th:each="error: ${#fields.errors('username')}"
-                           th:text="${error}">Validation error</p>
-                    </div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+						</div>
+						<input aria-describedby="basic-addon1"
+								aria-label="Username"
+								class="form-control"
+								placeholder="Username"
+								th:field="*{username}"
+								type="text">
+						<p th:each="error: ${#fields.errors('username')}"
+								th:text="${error}">Validation error</p>
+					</div>
 
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
-                        </div>
-                        <input th:field="*{password}"
-                               type='password'
-                               class="form-control"
-                               placeholder="Password"
-                               aria-label="Password"
-                               aria-describedby="basic-addon2">
-                        <p th:each="error: ${#fields.errors('password')}"
-                           th:text="${error}">Validation error</p>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
-                        </div>
-                        <input th:field="*{matchingPassword}"
-                               type="password"
-                               class="form-control"
-                               placeholder="Confirm Password"
-                               aria-label="Password"
-                               aria-describedby="basic-addon2">
-                    </div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
+						</div>
+						<input aria-describedby="basic-addon2"
+								aria-label="Password"
+								class="form-control"
+								placeholder="Password"
+								th:field="*{password}"
+								type='password'>
+						<p th:each="error: ${#fields.errors('password')}"
+								th:text="${error}">Validation error</p>
+					</div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
+						</div>
+						<input aria-describedby="basic-addon2"
+								aria-label="Password"
+								class="form-control"
+								placeholder="Confirm Password"
+								th:field="*{matchingPassword}"
+								type="password">
+					</div>
 
-                    <div id="errors" th:if="${(param.error != null) and (param.error[0] == 'true')}" class="alert alert-danger" role="alert">
-                        That didn't work. Password or Username was incorrect.
-                    </div>
+					<div class="alert alert-danger" id="errors" role="alert" th:if="${(param.error != null) and (param.error[0] == 'true')}">
+						That didn't work. Password or Username was incorrect.
+					</div>
 
-                    <div class="btn-group" role="group" >
-                        <button class="btn btn-primary" type="submit" >Sign Up</button>
-                        <a th:unless="${noLogin}" class="btn btn-light" href="/login" role="button">Sign In</a>
-                    </div>
+					<div class="btn-group" role="group">
+						<button class="btn btn-primary" type="submit">Sign Up</button>
+						<a class="btn btn-light" href="/login" role="button" th:unless="${noLogin}">Sign In</a>
+					</div>
 
-                </form>
-            </div>
-        </div>
-    </div>
+				</form>
+			</div>
+		</div>
+	</div>
 </section>
 
 

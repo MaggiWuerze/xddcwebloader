@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProgressWatcherFactory {
 
-    private final DownloadService downloadService;
-    private final ApplicationEventPublisher applicationEventPublisher;
+	private final DownloadService downloadService;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
-    public FileTransferProgressWatcher getProgressWatcher(Long downloadId){
-            FileTransferProgressWatcher watcher = new FileTransferProgressWatcher(downloadId, applicationEventPublisher, downloadService);
-            return watcher;
-    }
+	public FileTransferProgressWatcher getProgressWatcher(Long downloadId) {
+		FileTransferProgressWatcher watcher = new FileTransferProgressWatcher(downloadId, applicationEventPublisher, downloadService);
+		return watcher;
+	}
 }

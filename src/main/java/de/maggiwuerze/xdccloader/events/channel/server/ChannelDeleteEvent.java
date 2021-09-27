@@ -5,8 +5,7 @@ import de.maggiwuerze.xdccloader.model.entity.Channel;
 
 public class ChannelDeleteEvent extends EntityDeleteEvent<Channel> {
 
-    public ChannelDeleteEvent(Object source, Channel channel) {
-        super(source, channel);
-    }
-
+	public ChannelDeleteEvent(Object source, Channel channel) {
+		super(source, channel);
+	}
 }

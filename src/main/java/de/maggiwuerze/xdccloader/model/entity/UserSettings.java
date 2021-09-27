@@ -23,42 +23,44 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserSettings {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	Long id;
 
-    @Column(nullable = false)
-    LocalDateTime creationDate = LocalDateTime.now();
+	@Column(nullable = false)
+	LocalDateTime creationDate = LocalDateTime.now();
 
-    @Column(nullable = false)
-    Long refreshrateInSeconds = 1l;
+	@Column(nullable = false)
+	Long refreshrateInSeconds = 1L;
 
-    @Column(nullable = false)
-    Long sessionTimeout = sessionTimeout = 300l;
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	DownloadSort downloadSortBy = DownloadSort.PROGRESS;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    DownloadSort downloadSortBy = DownloadSort.PROGRESS;
+	@Column(nullable = false)
+	Long sessionTimeout = 300L;
 
-    @Column(nullable = false)
-    Boolean showAllBotsInQuickWindow = false;
+	@Column(nullable = false)
+	Boolean showAllBotsInQuickWindow = false;
 
-    @ElementCollection
-    @CollectionTable(name = "BotsVisibleInQuickWindow", joinColumns = @JoinColumn(name = "usersettings_id"))
-    @Column(name = "BotsVisibleInQuickWindow")
-    Map<Bot, Boolean> botsVisibleInQuickWindow = new HashMap<>();
+	@ElementCollection
+	@CollectionTable(name = "BotsVisibleInQuickWindow", joinColumns = @JoinColumn(name = "usersettings_id"))
+	@Column(name = "BotsVisibleInQuickWindow")
+	Map<Bot, Boolean> botsVisibleInQuickWindow = new HashMap<>();
 
-    @Column(nullable = false)
-    Boolean showAllItemsInDownloadCard = true;
+	@Column(nullable = false)
+	Boolean showAllItemsInDownloadCard = true;
 
-    @ElementCollection(targetClass = String.class)
-    @CollectionTable(name = "MAP")
-    @MapKeyColumn(name = "key")
-    @Column(name = "value")
-    private Map<String, Boolean> itemsVisibleInDownloadCard;
+	@ElementCollection(targetClass = String.class)
+	@CollectionTable(name = "MAP")
+	@MapKeyColumn(name = "key")
+	@Column(name = "value")
+	private Map<String, Boolean> itemsVisibleInDownloadCard;
 
-    public UserSettings(Long refreshrateInSeconds, Long sessionTimeout) {
-        this.refreshrateInSeconds = refreshrateInSeconds;
-        this.sessionTimeout = sessionTimeout;
-    }
+	public UserSettings(Long refreshrateInSeconds, Long sessionTimeout) {
+		this.refreshrateInSeconds = refreshrateInSeconds;
+		this.sessionTimeout = sessionTimeout;
+	}
+
+
 }

@@ -5,8 +5,7 @@ import de.maggiwuerze.xdccloader.model.entity.Server;
 
 public class ServerUpdateEvent extends EntityUpdateEvent<Server> {
 
-    public ServerUpdateEvent(Object source, Server server) {
-        super(source, server);
-    }
-
+	public ServerUpdateEvent(Object source, Server server) {
+		super(source, server);
+	}
 }

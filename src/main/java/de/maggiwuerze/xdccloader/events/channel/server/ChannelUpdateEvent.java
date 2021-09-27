@@ -5,8 +5,7 @@ import de.maggiwuerze.xdccloader.model.entity.Channel;
 
 public class ChannelUpdateEvent extends EntityUpdateEvent<Channel> {
 
-    public ChannelUpdateEvent(Object source, Channel channel) {
-        super(source, channel);
-    }
-
+	public ChannelUpdateEvent(Object source, Channel channel) {
+		super(source, channel);
+	}
 }

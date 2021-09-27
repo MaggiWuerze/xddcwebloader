@@ -9,33 +9,33 @@ import lombok.Data;
 @Data
 public class Download {
 
-    Long id;
+	Long id;
 
-    Bot bot;
+	Bot bot;
 
-    String fileRefId;
+	String fileRefId;
 
-    LocalDateTime date = LocalDateTime.now();
+	LocalDateTime date = LocalDateTime.now();
 
-    Double progress = 0.0;
+	Double progress = 0.0;
 
-    String filename = "unknown";
+	String filename = "unknown";
 
-    String filesize = "-";
+	String filesize = "-";
 
-    String averageSpeed = "0 Kb/s";
+	String averageSpeed = "0 Kb/s";
 
-    String timeRemaining = "-";
+	String timeRemaining = "-";
 
-    DownloadState status = DownloadState.UNKNOWN;
+	DownloadState status = DownloadState.UNKNOWN;
 
-    String statusMessage = "";
+	String statusMessage = "";
 
-    @JsonIgnore
-    private FileTransferProgressWatcher progressWatcher;
+	@JsonIgnore
+	private FileTransferProgressWatcher progressWatcher;
 
-    public Download(Bot user, String fileRefId) {
-        this.bot = user;
-        this.fileRefId = fileRefId;
-    }
+	public Download(Bot user, String fileRefId) {
+		this.bot = user;
+		this.fileRefId = fileRefId;
+	}
 }

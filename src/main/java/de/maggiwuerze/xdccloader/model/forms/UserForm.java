@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserForm {
 
-    @NotNull
-    @NotEmpty
-    private String username;
+	@NotNull
+	@NotEmpty
+	private String username;
 
-    @NotNull
-    @NotEmpty
-    private String password;
+	@NotNull
+	@NotEmpty
+	private String password;
 
-    @NotNull
-    @NotEmpty
-    private String matchingPassword;
+	@NotNull
+	@NotEmpty
+	private String matchingPassword;
 }

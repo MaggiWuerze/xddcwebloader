@@ -5,8 +5,7 @@ import de.maggiwuerze.xdccloader.model.entity.Channel;
 
 public class ChannelCreationEvent extends EntityCreationEvent<Channel> {
 
-    public ChannelCreationEvent(Object source, Channel channel) {
-        super(source, channel);
-    }
-
+	public ChannelCreationEvent(Object source, Channel channel) {
+		super(source, channel);
+	}
 }

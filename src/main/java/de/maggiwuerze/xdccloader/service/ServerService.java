@@ -1,10 +1,8 @@
 package de.maggiwuerze.xdccloader.service;
 
-import de.maggiwuerze.xdccloader.model.entity.Channel;
 import de.maggiwuerze.xdccloader.model.entity.Server;
 import de.maggiwuerze.xdccloader.persistency.ServerRepository;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -3,34 +3,30 @@ package de.maggiwuerze.xdccloader.model.transport;
 import de.maggiwuerze.xdccloader.model.download.DownloadSort;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.model.entity.UserSettings;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
-
-import java.util.*;
 
 @Data
 public class UserSettingsTO {
 
-    Long refreshrateInSeconds = 1l;
+	Long refreshrateInSeconds = 1L;
+	DownloadSort downloadSortBy = DownloadSort.PROGRESS;
+	Long sessionTimeout = 300L;
+	Boolean showAllBotsInQuickWindow = false;
+	Map<Bot, Boolean> botsVisibleInQuickWindow = new HashMap<>();
+	Boolean showAllItemsInDownloadCard = true;
+	private Map<String, Boolean> itemsVisibleInDownloadCard;
 
-    Long sessionTimeout = sessionTimeout = 300l;
+	public UserSettingsTO(Long refreshrateInSeconds, Long sessionTimeout) {
+		this.refreshrateInSeconds = refreshrateInSeconds;
+		this.sessionTimeout = sessionTimeout;
+	}
 
-    DownloadSort downloadSortBy = DownloadSort.PROGRESS;
+	public UserSettingsTO(UserSettings userSettings) {
+		BeanUtils.copyProperties(userSettings, this);
+	}
 
-    Boolean showAllBotsInQuickWindow = false;
 
-    Map<Bot, Boolean> botsVisibleInQuickWindow = new HashMap<>();
-
-    Boolean showAllItemsInDownloadCard = true;
-
-    private Map<String, Boolean> itemsVisibleInDownloadCard;
-
-    public UserSettingsTO(Long refreshrateInSeconds, Long sessionTimeout) {
-        this.refreshrateInSeconds = refreshrateInSeconds;
-        this.sessionTimeout = sessionTimeout;
-    }
-
-    public UserSettingsTO(UserSettings userSettings) {
-        BeanUtils.copyProperties(userSettings, this);
-    }
 }

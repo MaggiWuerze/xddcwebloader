@@ -4,9 +4,10 @@ import lombok.Value;
 
 @Value
 public class TargetBotForm {
-    final private String name;
-    final private String pattern;
-    final private Long serverId;
-    final private Long channelId;
-    final private Long maxParallelDownloads;
+
+	private final String name;
+	private final String pattern;
+	private final Long serverId;
+	private final Long channelId;
+	private final Long maxParallelDownloads;
 }

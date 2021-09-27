@@ -2,15 +2,17 @@ var path = require('path');
 
 module.exports = {
     entry: './src/main/js/app.js',
-    devtool: 'sourcemaps',
+    devtool: 'source-map',
     cache: true,
     mode: 'development',
     output: {
         path: __dirname,
         filename: './src/main/resources/static/built/bundle.js'
     },
-    node: {
-        net: 'empty'
+    resolve: {
+        fallback: {
+            net: false
+        }
     },
     module: {
         rules: [

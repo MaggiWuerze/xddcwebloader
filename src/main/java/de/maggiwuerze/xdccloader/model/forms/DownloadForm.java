@@ -4,6 +4,7 @@ import lombok.Value;
 
 @Value
 public class DownloadForm {
-    final private Long targetBotId;
-    final private String fileRefId;
+
+	private final Long targetBotId;
+	private final String fileRefId;
 }

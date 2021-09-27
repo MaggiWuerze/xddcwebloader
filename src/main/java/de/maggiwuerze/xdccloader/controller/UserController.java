@@ -27,49 +27,50 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 class UserController {
 
-    private final UserService userService;
+	private final UserService userService;
 
-    @GetMapping("/register")
-    public ModelAndView register(ModelMap model){
-        model.addAttribute("user", new UserForm());
-        return new ModelAndView("register", model);
-    }
+	@GetMapping("/register")
+	public ModelAndView register(ModelMap model) {
+		model.addAttribute("user", new UserForm());
+		return new ModelAndView("register", model);
+	}
 
-    @GetMapping("/login")
-    public String login(Model model){
-        if(userService.getUserCount() <= 0){
-            model.addAttribute("user", new UserForm());
-            model.addAttribute("noLogin", true);
-            return "register";
-        }
-        return "login";
-    }
+	@GetMapping("/login")
+	public String login(Model model) {
+		if (userService.getUserCount() <= 0) {
+			model.addAttribute("user", new UserForm());
+			model.addAttribute("noLogin", true);
+			return "register";
+		}
+		return "login";
+	}
 
-    @PostMapping(value = "/register")
-    public ModelAndView registerUserAccount(
-            @ModelAttribute("user") @Valid UserForm userForm,
-            BindingResult result, HttpServletRequest request, Errors errors, ModelMap model) {
+	@PostMapping(value = "/register")
+	public ModelAndView registerUserAccount(
+		@ModelAttribute("user") @Valid UserForm userForm,
+		BindingResult result, HttpServletRequest request, Errors errors, ModelMap model
+	) {
 
-            model.addAttribute("user", userForm);
+		model.addAttribute("user", userForm);
 
-            if(errors.hasErrors()){
-                return new ModelAndView("register", model);
-            }else if(userService.usernameExists(userForm.getUsername())){
-                result.rejectValue("username", "username already exists");
-                return new ModelAndView("register", model);
-            }else {
-                String username = userForm.getUsername();
-                String password = new BCryptPasswordEncoder(11).encode(userForm.getPassword());
-                UserSettings userSettings = userService.saveUserSettings(new UserSettings());
-                userService.saveUser(new User(username, password, UserRole.USER.getExternalString(), true, userSettings));
+		if (errors.hasErrors()) {
+			return new ModelAndView("register", model);
+		} else if (userService.usernameExists(userForm.getUsername())) {
+			result.rejectValue("username", "username already exists");
+			return new ModelAndView("register", model);
+		} else {
+			String username = userForm.getUsername();
+			String password = new BCryptPasswordEncoder(11).encode(userForm.getPassword());
+			UserSettings userSettings = userService.saveUserSettings(new UserSettings());
+			userService.saveUser(new User(username, password, UserRole.USER.getExternalString(), true, userSettings));
 
-                try {
-                    request.login(username, userForm.getPassword());
-                } catch (ServletException e) {
-                    log.error(e.getLocalizedMessage(), e);
-                }
+			try {
+				request.login(username, userForm.getPassword());
+			} catch (ServletException e) {
+				log.error(e.getLocalizedMessage(), e);
+			}
 
-                return new ModelAndView("redirect:/", model);
-            }
-    }
+			return new ModelAndView("redirect:/", model);
+		}
+	}
 }

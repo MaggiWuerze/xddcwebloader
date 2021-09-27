@@ -3,134 +3,130 @@ package de.maggiwuerze.xdccloader.model.transport;
 import de.maggiwuerze.xdccloader.model.download.Download;
 import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
-import org.springframework.beans.BeanUtils;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.BeanUtils;
 
 public class DownloadTO {
 
-    Long id;
+	Long id;
 
-    Bot bot;
+	Bot bot;
 
-    String fileRefId;
+	String fileRefId;
 
-    LocalDateTime date = LocalDateTime.now();
+	LocalDateTime date = LocalDateTime.now();
 
-    Double progress = 0.0;
+	Double progress = 0.0;
 
-    String filename = "unknown";
+	String filename = "unknown";
 
-    String filesize = "-";
+	String filesize = "-";
 
-    String averageSpeed = "0 Kb/s";
+	String averageSpeed = "0 Kb/s";
 
-    String timeRemaining = "-";
+	String timeRemaining = "-";
 
-    DownloadState status = DownloadState.UNKNOWN;
+	DownloadState status = DownloadState.UNKNOWN;
 
-    String statusMessage = "";
+	String statusMessage = "";
 
-    public DownloadTO(Download download) {
+	public DownloadTO(Download download) {
 
-        BeanUtils.copyProperties(download, this);
+		BeanUtils.copyProperties(download, this);
+	}
 
-    }
+	public static List<DownloadTO> getListOfTOs(List<Download> downloads) {
 
-    public static List<DownloadTO> getListOfTOs(List<Download> downloads){
+		return downloads.stream().map(dl -> new DownloadTO(dl)).collect(Collectors.toList());
+	}
 
-        return downloads.stream().map(dl -> new DownloadTO(dl)).collect(Collectors.toList());
+	public Long getId() {
+		return id;
+	}
 
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Bot getBot() {
+		return bot;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setBot(Bot bot) {
+		this.bot = bot;
+	}
 
-    public Bot getBot() {
-        return bot;
-    }
+	public String getFileRefId() {
+		return fileRefId;
+	}
 
-    public void setBot(Bot bot) {
-        this.bot = bot;
-    }
+	public void setFileRefId(String fileRefId) {
+		this.fileRefId = fileRefId;
+	}
 
-    public String getFileRefId() {
-        return fileRefId;
-    }
+	public LocalDateTime getDate() {
+		return date;
+	}
 
-    public void setFileRefId(String fileRefId) {
-        this.fileRefId = fileRefId;
-    }
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
 
-    public LocalDateTime getDate() {
-        return date;
-    }
+	public Double getProgress() {
+		return progress;
+	}
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
+	public void setProgress(Double progress) {
+		this.progress = progress;
+	}
 
-    public Double getProgress() {
-        return progress;
-    }
+	public String getFilename() {
+		return filename;
+	}
 
-    public void setProgress(Double progress) {
-        this.progress = progress;
-    }
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
-    public String getFilename() {
-        return filename;
-    }
+	public DownloadState getStatus() {
+		return status;
+	}
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
+	public void setStatus(DownloadState status) {
+		this.status = status;
+	}
 
-    public DownloadState getStatus() {
-        return status;
-    }
+	public String getStatusMessage() {
+		return statusMessage;
+	}
 
-    public void setStatus(DownloadState status) {
-        this.status = status;
-    }
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
+	}
 
-    public String getStatusMessage() {
-        return statusMessage;
-    }
+	public String getFilesize() {
+		return filesize;
+	}
 
-    public void setStatusMessage(String statusMessage) {
-        this.statusMessage = statusMessage;
-    }
+	public void setFilesize(String filesize) {
+		this.filesize = filesize;
+	}
 
-    public String getFilesize() {
-        return filesize;
-    }
+	public String getAverageSpeed() {
+		return averageSpeed;
+	}
 
-    public void setFilesize(String filesize) {
-        this.filesize = filesize;
-    }
+	public void setAverageSpeed(String averageSpeed) {
+		this.averageSpeed = averageSpeed;
+	}
 
-    public String getAverageSpeed() {
-        return averageSpeed;
-    }
+	public String getTimeRemaining() {
+		return timeRemaining;
+	}
 
-    public void setAverageSpeed(String averageSpeed) {
-        this.averageSpeed = averageSpeed;
-    }
-
-    public String getTimeRemaining() {
-        return timeRemaining;
-    }
-
-    public void setTimeRemaining(String timeRemaining) {
-        this.timeRemaining = timeRemaining;
-    }
-
+	public void setTimeRemaining(String timeRemaining) {
+		this.timeRemaining = timeRemaining;
+	}
 }

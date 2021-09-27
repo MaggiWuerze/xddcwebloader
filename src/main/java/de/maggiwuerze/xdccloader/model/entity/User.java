@@ -4,185 +4,186 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-
 @Entity(name = "userdetail")
 public class User implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    Long id;
+	private static final String ROLE_PREFIX = "ROLE_";
 
-    @Column(nullable = false)
-    Boolean active = true;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	Long id;
 
-    @Column(nullable = false, unique = true)
-    String name;
+	@Column(nullable = false)
+	Boolean active = true;
 
-    @Column(nullable = false, unique = true)
-    String password;
+	@Column(nullable = false, unique = true)
+	String name;
 
-    @Column(nullable = false)
-    LocalDateTime creationDate = LocalDateTime.now();
+	@Column(nullable = false, unique = true)
+	String password;
 
-    @Column(nullable = false)
-    String userRole;
+	@Column(nullable = false)
+	LocalDateTime creationDate = LocalDateTime.now();
 
-    @Column()
-    Boolean locked = false;
+	@Column(nullable = false)
+	String userRole;
 
-    @Column()
-    Boolean initialized = false;
+	@Column()
+	Boolean locked = false;
 
-    @Column()
-    LocalDateTime expirationDate;
+	@Column()
+	Boolean initialized = false;
 
-    @Column()
-    LocalDateTime sessionValidUntil ;
+	@Column()
+	LocalDateTime expirationDate;
 
-    @Transient
-    String ROLE_PREFIX = "ROLE_";
+	@Column()
+	LocalDateTime sessionValidUntil;
 
-    @OneToOne
-    UserSettings userSettings;
+	@OneToOne
+	UserSettings userSettings;
 
-    public User(String name, String password, String userRole, boolean initialized, UserSettings userSettings) {
-        this.name = name;
-        this.password = password;
-        this.userRole = userRole;
-        this.initialized = initialized;
-        this.userSettings = userSettings;
-    }
+	public User(String name, String password, String userRole, boolean initialized, UserSettings userSettings) {
+		this.name = name;
+		this.password = password;
+		this.userRole = userRole;
+		this.initialized = initialized;
+		this.userSettings = userSettings;
+	}
 
-    public User() {
-    }
+	public User() {
+	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        List<GrantedAuthority> list = new ArrayList();
+		List<GrantedAuthority> list = new ArrayList();
 
-        list.add(new SimpleGrantedAuthority(ROLE_PREFIX + userRole));
+		list.add(new SimpleGrantedAuthority(ROLE_PREFIX + userRole));
 
-        return list;
+		return list;
+	}
 
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public String getUsername() {
-        return getName();
-    }
+	@Override
+	public String getUsername() {
+		return getName();
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return getExpirationDate() == null || getExpirationDate().isBefore(LocalDateTime.now());
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return getExpirationDate() == null || getExpirationDate().isBefore(LocalDateTime.now());
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return !getLocked();
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return !getLocked();
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return getExpirationDate() == null || getExpirationDate().isBefore(LocalDateTime.now());
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return getExpirationDate() == null || getExpirationDate().isBefore(LocalDateTime.now());
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return getActive();
-    }
+	@Override
+	public boolean isEnabled() {
+		return getActive();
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Boolean getActive() {
-        return active;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+	public Boolean getActive() {
+		return active;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
+	}
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
+	public String getUserRole() {
+		return userRole;
+	}
 
-    public String getUserRole() {
-        return userRole;
-    }
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
 
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
-    }
+	public Boolean getLocked() {
+		return locked;
+	}
 
-    public Boolean getLocked() {
-        return locked;
-    }
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
 
-    public void setLocked(Boolean locked) {
-        this.locked = locked;
-    }
+	public LocalDateTime getExpirationDate() {
+		return expirationDate;
+	}
 
-    public LocalDateTime getExpirationDate() {
-        return expirationDate;
-    }
+	public void setExpirationDate(LocalDateTime expirationDate) {
+		this.expirationDate = expirationDate;
+	}
 
-    public void setExpirationDate(LocalDateTime expirationDate) {
-        this.expirationDate = expirationDate;
-    }
+	public LocalDateTime getSessionValidUntil() {
+		return sessionValidUntil;
+	}
 
-    public LocalDateTime getSessionValidUntil() {
-        return sessionValidUntil;
-    }
+	public void setSessionValidUntil(LocalDateTime sessionValidUntil) {
+		this.sessionValidUntil = sessionValidUntil;
+	}
 
-    public void setSessionValidUntil(LocalDateTime sessionValidUntil) {
-        this.sessionValidUntil = sessionValidUntil;
-    }
+	public Boolean getInitialized() {
+		return initialized;
+	}
 
-    public Boolean getInitialized() {
-        return initialized;
-    }
+	public void setInitialized(Boolean initialized) {
+		this.initialized = initialized;
+	}
 
-    public void setInitialized(Boolean initialized) {
-        this.initialized = initialized;
-    }
+	public UserSettings getUserSettings() {
+		return userSettings;
+	}
 
-    public UserSettings getUserSettings() {
-        return userSettings;
-    }
-
-    public void setUserSettings(UserSettings userSettings) {
-        this.userSettings = userSettings;
-    }
+	public void setUserSettings(UserSettings userSettings) {
+		this.userSettings = userSettings;
+	}
 }

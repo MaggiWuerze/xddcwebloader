@@ -7,7 +7,6 @@ import de.maggiwuerze.xdccloader.persistency.IrcUserRepository;
 import de.maggiwuerze.xdccloader.persistency.UserRepository;
 import de.maggiwuerze.xdccloader.persistency.UserSettingsRepository;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
