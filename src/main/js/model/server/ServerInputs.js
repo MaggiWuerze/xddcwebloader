@@ -1,4 +1,3 @@
-import axios from "axios";
 import {Button, Card, FormControl, InputGroup} from "react-bootstrap";
 
 const React = require('react');
@@ -10,87 +9,20 @@ export default class ServerInputs extends React.Component {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state = {serverList: [], channelList: [], userList: []};
-
 	}
 
 	handleSubmit(e) {
 		e.preventDefault();
-
-		// this.name = name;
-		// this.pattern = pattern;
-		// this.serverId = serverId;
-		// this.channelId = channelId;
-		// this.fileRefId = fileRefId;
+		console.log("saving new server");
 
 		const newServer = {};
-		newBot["name"] = ReactDOM.findDOMNode(this.refs["name"]).value.trim();
-		newBot["pattern"] = ReactDOM.findDOMNode(this.refs["pattern"]).value.trim();
-		newBot["serverId"] = ReactDOM.findDOMNode(this.refs["server"]).value.trim();
-		newBot["channelId"] = ReactDOM.findDOMNode(this.refs["channel"]).value.trim();
-		newBot["fileRefId"] = ReactDOM.findDOMNode(this.refs["fileRefId"]).value.trim();
-		this.props.onCreate(newServer, 'servers', 'showServerPopover');
-
-		// this.props.botAttributes.forEach(attribute => {
-		//     ReactDOM.findDOMNode(this.refs[attribute]).value = '';
-		// });
-
-	}
-
-	loadServerList() {
-
-		axios.get('http://localhost:8080/data/servers/')
-				.then((response) => {
-					this.setState({
-						serverList: response.data
-					});
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-
-	}
-
-	loadChannelList() {
-
-		axios.get('http://localhost:8080/data/channels/')
-				.then((response) => {
-					this.setState({
-						channelList: response.data
-					});
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-
-	}
-
-	componentDidMount() {
-		this.loadServerList();
-		this.loadChannelList();
+		newServer["name"] = ReactDOM.findDOMNode(this.refs["name"]).value.trim();
+		newServer["serverUrl"] = ReactDOM.findDOMNode(this.refs["serverUrl"]).value.trim();
+		this.props.onCreate(newServer, 'servers', 'showServerPopover', this.props.onFinish);
 	}
 
 	render() {
-
-		const serverOptions = this.state.serverList.map(server => {
-
-			let jsonServer = JSON.stringify({
-				id: server.id,
-				name: server.name,
-				serverUrl: server.serverUrl,
-				creationDate: "2019-05-29T14:56:37.599"
-			});
-			return <option key={server.id} value={server.id}>{server.name}</option>
-
-		});
-
-		const channelOptions = this.state.channelList.map(channel => {
-
-			return <option key={channel.id} value={channel.id}>{channel.name}</option>
-
-		});
-
 		const inputs = this.props.attributes.map(attribute => {
-
 					let input = "";
 					switch (attribute) {
 						case 'name':
@@ -120,12 +52,9 @@ export default class ServerInputs extends React.Component {
 						default:
 							break;
 					}
-
 					return input;
-
 				}
 		);
-
 
 		return (
 				<>
@@ -135,7 +64,7 @@ export default class ServerInputs extends React.Component {
 							{inputs}
 						</Card.Body>
 						<Card.Footer className="text-muted">
-							<Button variant="success" onClick={this.handleSubmit}>
+							<Button variant="success" onClick={(e) => this.handleSubmit(e)}>
 								Create a Server
 							</Button>
 						</Card.Footer>
@@ -143,8 +72,5 @@ export default class ServerInputs extends React.Component {
 
 				</>
 		)
-
 	}
-
-
 }

@@ -10,7 +10,6 @@ export default class BotInputs extends React.Component {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state = {serverList: [], channelList: [], userList: []};
-
 	}
 
 	handleSubmit(e) {
@@ -21,13 +20,12 @@ export default class BotInputs extends React.Component {
 		newBot["pattern"] = ReactDOM.findDOMNode(this.refs["pattern"]).value.trim();
 		newBot["serverId"] = ReactDOM.findDOMNode(this.refs["server"]).value.trim();
 		newBot["channelId"] = ReactDOM.findDOMNode(this.refs["channel"]).value.trim();
-		this.props.onCreate(newBot, 'bots', 'showBotPopover');
-
+		newBot["maxParallelDownloads"] = ReactDOM.findDOMNode(this.refs["maxParallelDownloads"]).value.trim();
+		this.props.onCreate(newBot, 'bots', 'showBotPopover', this.props.onFinish);
 	}
 
 	loadServerList() {
-
-		axios.get('http://localhost:8080/data/servers/')
+		axios.get('http://localhost:8080/servers/')
 				.then((response) => {
 					this.setState({
 						serverList: response.data
@@ -36,12 +34,10 @@ export default class BotInputs extends React.Component {
 				.catch((error) => {
 					console.log(error);
 				});
-
 	}
 
 	loadChannelList() {
-
-		axios.get('http://localhost:8080/data/channels/')
+		axios.get('http://localhost:8080/channels/')
 				.then((response) => {
 					this.setState({
 						channelList: response.data
@@ -50,7 +46,6 @@ export default class BotInputs extends React.Component {
 				.catch((error) => {
 					console.log(error);
 				});
-
 	}
 
 	componentDidMount() {
@@ -61,25 +56,14 @@ export default class BotInputs extends React.Component {
 	render() {
 
 		const serverOptions = this.state.serverList.map(server => {
-
-			let jsonServer = JSON.stringify({
-				id: server.id,
-				name: server.name,
-				serverUrl: server.serverUrl,
-				creationDate: "2019-05-29T14:56:37.599"
-			});
 			return <option key={server.id} value={server.id}>{server.name}</option>
-
 		});
 
 		const channelOptions = this.state.channelList.map(channel => {
-
 			return <option key={channel.id} value={channel.id}>{channel.name}</option>
-
 		});
 
 		const inputs = this.props.attributes.map(attribute => {
-
 					let input = "";
 					switch (attribute) {
 						case 'server':
@@ -128,15 +112,24 @@ export default class BotInputs extends React.Component {
 												aria-label={attribute}
 										/>
 									</InputGroup>;
+						case 'maxParallelDownloads':
+							input =
+									<InputGroup className="mb-3" key={attribute}>
+										<InputGroup.Prepend>
+											<InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
+										</InputGroup.Prepend>
+										<FormControl
+												placeholder={attribute}
+												ref={attribute}
+												aria-label={attribute}
+										/>
+									</InputGroup>;
 						default:
 							break;
 					}
-
 					return input;
-
 				}
 		);
-
 
 		return (
 				<>
@@ -154,8 +147,5 @@ export default class BotInputs extends React.Component {
 
 				</>
 		)
-
 	}
-
-
 }

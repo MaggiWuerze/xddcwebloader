@@ -28,6 +28,9 @@ public class UserService {
 		return userRepository.findUserByName(username).isPresent();
 	}
 
+	public UserSettings findUserSettingsById(Long id) {
+		return userSettingsRepository.findById(id).orElse(null);
+	}
 	public UserSettings saveUserSettings(UserSettings userSettings) {
 		return userSettingsRepository.save(new UserSettings());
 	}

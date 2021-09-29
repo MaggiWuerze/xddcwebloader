@@ -4,17 +4,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity(name = "userdetail")
+@Data
 public class User implements UserDetails {
 
 	private static final String ROLE_PREFIX = "ROLE_";
@@ -52,6 +58,9 @@ public class User implements UserDetails {
 
 	@OneToOne
 	UserSettings userSettings;
+
+	@OneToMany
+	List<Bot> bots = new ArrayList<>();
 
 	public User(String name, String password, String userRole, boolean initialized, UserSettings userSettings) {
 		this.name = name;
@@ -101,89 +110,5 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return getActive();
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Boolean getActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public LocalDateTime getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(LocalDateTime creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public String getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(String userRole) {
-		this.userRole = userRole;
-	}
-
-	public Boolean getLocked() {
-		return locked;
-	}
-
-	public void setLocked(Boolean locked) {
-		this.locked = locked;
-	}
-
-	public LocalDateTime getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(LocalDateTime expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-	public LocalDateTime getSessionValidUntil() {
-		return sessionValidUntil;
-	}
-
-	public void setSessionValidUntil(LocalDateTime sessionValidUntil) {
-		this.sessionValidUntil = sessionValidUntil;
-	}
-
-	public Boolean getInitialized() {
-		return initialized;
-	}
-
-	public void setInitialized(Boolean initialized) {
-		this.initialized = initialized;
-	}
-
-	public UserSettings getUserSettings() {
-		return userSettings;
-	}
-
-	public void setUserSettings(UserSettings userSettings) {
-		this.userSettings = userSettings;
 	}
 }

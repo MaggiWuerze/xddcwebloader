@@ -40,23 +40,6 @@ public class UserSettings {
 	@Column(nullable = false)
 	Long sessionTimeout = 300L;
 
-	@Column(nullable = false)
-	Boolean showAllBotsInQuickWindow = false;
-
-	@ElementCollection
-	@CollectionTable(name = "BotsVisibleInQuickWindow", joinColumns = @JoinColumn(name = "usersettings_id"))
-	@Column(name = "BotsVisibleInQuickWindow")
-	Map<Bot, Boolean> botsVisibleInQuickWindow = new HashMap<>();
-
-	@Column(nullable = false)
-	Boolean showAllItemsInDownloadCard = true;
-
-	@ElementCollection(targetClass = String.class)
-	@CollectionTable(name = "MAP")
-	@MapKeyColumn(name = "key")
-	@Column(name = "value")
-	private Map<String, Boolean> itemsVisibleInDownloadCard;
-
 	public UserSettings(Long refreshrateInSeconds, Long sessionTimeout) {
 		this.refreshrateInSeconds = refreshrateInSeconds;
 		this.sessionTimeout = sessionTimeout;

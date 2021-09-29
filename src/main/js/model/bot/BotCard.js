@@ -89,6 +89,18 @@ export default class BotCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
+										<InputGroup.Prepend>
+											<InputGroup.Text>Max Parallel Downloads</InputGroup.Text>
+										</InputGroup.Prepend>
+										<FormControl
+												disabled
+												value={this.props.bot.maxParallelDownloads}
+												aria-label="file reference id"
+										/>
+									</InputGroup>
+								</ListGroup.Item>
+								<ListGroup.Item>
+									<InputGroup size="sm">
 										<FormControl
 												onKeyDown={this.handleKeyDown}
 												ref={this.props.bot.id + "-fileRefId"}

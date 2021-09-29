@@ -71,6 +71,7 @@ tasks.withType(Checkstyle) {
     reports {
         xml.required = false
         html.required = true
+        html.enabled = true
     }
 }
 

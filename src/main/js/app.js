@@ -51,13 +51,22 @@ class App extends React.Component {
 		this.toggleBoolean = this.toggleBoolean.bind(this);
 		this.finishOnboarding = this.finishOnboarding.bind(this);
 		this.onMenuInteraction = this.onMenuInteraction.bind(this);
+
 	}
 
 	loadFromServer() {
+		this.loadInitializedState();
+		this.loadUserData();
+		this.loadBotData();
+		this.loadServerData();
+		this.loadChannelData();
+		this.loadDownloadData();
+	}
 
+	loadInitializedState() {
 		// INIT
 		axios
-				.get('data/initialized/')
+				.get('initialized/')
 				.then((response) => {
 
 					var init = response.data;
@@ -70,11 +79,12 @@ class App extends React.Component {
 				.catch((error) => {
 					console.log(error);
 				});
+	}
 
-		// SETTINGS
-
+	// USER
+	loadUserData() {
 		axios
-				.get('data/user/')
+				.get('user/')
 				.then((response) => {
 
 					var userObject = response.data;
@@ -87,11 +97,13 @@ class App extends React.Component {
 				.catch((error) => {
 					console.log(error);
 				});
+	}
 
+	//BOTS,SERVERS,CHANNELS
+	loadBotData() {
 
-		//BOTS,SERVERS,CHANNELS
 		axios
-				.get('data/bots/', {
+				.get('bots/', {
 
 					params: {
 						active: true,
@@ -109,8 +121,11 @@ class App extends React.Component {
 				.catch((error) => {
 					console.log(error);
 				});
+	}
+
+	loadServerData() {
 		axios
-				.get('data/servers/')
+				.get('servers/')
 				.then((response) => {
 
 					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
@@ -122,8 +137,11 @@ class App extends React.Component {
 				.catch((error) => {
 					console.log(error);
 				});
+	}
+
+	loadChannelData() {
 		axios
-				.get('data/channels/')
+				.get('channels/')
 				.then((response) => {
 
 					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
@@ -135,10 +153,12 @@ class App extends React.Component {
 				.catch((error) => {
 					console.log(error);
 				});
+	}
 
+	loadDownloadData() {
 		//DOWNLOADS
 		axios
-				.get('data/downloads/active/', {
+				.get('downloads/active/', {
 
 					params: {
 						active: true,
@@ -157,7 +177,7 @@ class App extends React.Component {
 				});
 
 		axios
-				.get('data/downloads/failed')
+				.get('downloads/failed')
 				.then((response) => {
 
 					this.setState({
@@ -170,7 +190,7 @@ class App extends React.Component {
 				});
 
 		axios
-				.get('data/downloads/active/', {
+				.get('downloads/active/', {
 
 					params: {
 						active: false,
@@ -191,9 +211,9 @@ class App extends React.Component {
 	}
 
 	onCreate(object, objectType, modalName, callback) {
-
+		console.log("onCreate with: {object}, {objectType}, {modalName}, {callback}")
 		axios
-				.post('data/' + objectType + '/', object)
+				.post(objectType + '/', object)
 				.then((response) => {
 
 					switch (response.status.toString()) {
@@ -229,7 +249,7 @@ class App extends React.Component {
 
 				case 'DL':
 					axios
-							.get('data/downloads/remove/', {
+							.get('downloads/remove/', {
 
 								params: {
 									downloadId: payload.id,
@@ -433,7 +453,7 @@ class App extends React.Component {
 	finishOnboarding(setupDone) {
 
 		axios
-				.post('data/initialized/')
+				.post('initialized/')
 				.then((response) => {
 
 					switch (response.status.toString()) {
@@ -493,32 +513,28 @@ class App extends React.Component {
 
 		const botPopover = (
 				<BotInputs modaltitle="Create new Bot" attributes={this.state.botAttributes}
-						show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
+						show={this.state.showBotModal} onFinish={() => this.loadBotData()}
 						onCreate={this.onCreate}/>
 		);
 
 		const serverPopover = (
-				<ServerInputs modaltitle="Create new Bot" attributes={this.state.botAttributes}
-						show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
+				<ServerInputs modaltitle="Create new Bot" attributes={this.state.serverAttributes}
+						show={this.state.showBotModal} onFinish={() => this.loadServerData()}
 						onCreate={this.onCreate}/>
 		);
 
 		const channelPopover = (
-				<ChannelInputs modaltitle="Create new Bot" attributes={this.state.botAttributes}
-						show={this.state.showBotModal} onClose={() => this.toggleBoolean('showBotModal')}
+				<ChannelInputs modaltitle="Create new Bot" attributes={this.state.channelAttributes}
+						show={this.state.showBotModal} onFinish={() => this.loadChannelData()}
 						onCreate={this.onCreate}/>
 		);
 
 		if (!this.state.initialized) {
-
 			return (
-
 					<InitWizard onCreate={this.onCreate} onFinish={this.finishOnboarding}/>
-
 			)
 
 		} else {
-
 			return (
 					<React.Fragment>
 						<Container fluid>
@@ -531,9 +547,9 @@ class App extends React.Component {
 													<i className="fas fa-columns"></i>
 													&nbsp;&nbsp;Dashboard
 												</Nav.Link>
-												<Nav.Link as="span" eventKey="">
+												<Nav.Link as="span" eventKey="settings">
 													<i className="fas fa-sliders-h"></i>
-													&nbsp;&nbsp;Settings!
+													&nbsp;&nbsp;Settings
 												</Nav.Link>
 												<Nav.Link as="span" eventKey="about">
 													<i className="fas fa-info-circle"></i>
@@ -544,7 +560,7 @@ class App extends React.Component {
 										<Card.Footer className="text-muted sidenav-footer">
                                     <span>
                                         <i className="fab fa-github"></i>
-                                        <a href="https://github.com/MaggiWuerze/xddcwebloader">&nbsp;&nbsp;{version_tag}</a>
+                                        <a target="_blank" href="https://github.com/MaggiWuerze/xddcwebloader">&nbsp;&nbsp;{version_tag}</a>
                                     </span>
 										</Card.Footer>
 									</Card>
@@ -680,14 +696,13 @@ class App extends React.Component {
 
 								{/* SETTINGS */}
 								{this.state.activePage == 'settings' && <>
-
-									<Settings userSettings={this.state.user.userSettings}/>
-
+									<Col xs={12} md={10} className={"column"}>
+										<Settings userSettings={this.state.user.userSettings} onCreate={this.onCreate}/>
+									</Col>
 								</>}
 
 								{/* ABOUT */}
 								{this.state.activePage == 'about' && <>
-
 									<Col xs={12} md={10} className={"column"}>
 										<Jumbotron>
 											<h1>About XDCC Webloader</h1>
@@ -699,9 +714,7 @@ class App extends React.Component {
 											</p>
 										</Jumbotron>
 									</Col>
-
 								</>}
-
 							</Row>
 						</Container>
 					</React.Fragment>
@@ -709,7 +722,6 @@ class App extends React.Component {
 		}
 	}
 }
-
 
 ReactDOM.render(
 		<App/>,

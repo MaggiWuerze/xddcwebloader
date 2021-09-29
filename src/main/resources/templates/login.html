@@ -31,7 +31,8 @@
 								id="username"
 								name="username"
 								placeholder="Username"
-								type="text">
+								type="text"
+								value="Bilbo">
 					</div>
 
 					<div class="input-group mb-3">
@@ -43,7 +44,8 @@
 								input
 								name='password'
 								placeholder="Password"
-								type='password'>
+								type='password'
+								value="Baggins">
 					</div>
 
 					<div class="alert alert-danger" id="errors" role="alert" th:if="${(param.error != null) and (param.error[0] == 'true')}">

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Col, Form, ListGroup} from 'react-bootstrap';
+import {Button, Card, Col, ListGroup, Form, InputGroup, FormControl, DropdownButton, Dropdown} from 'react-bootstrap';
 
 const ReactDOM = require('react-dom');
 
@@ -17,9 +17,9 @@ export default class Settings extends React.Component {
 		this.getInputs = this.getInputs.bind(this);
 
 		//field refs
-		this.settingsForm = React.createRef();
-		this.resetBtn = React.createRef();
-		this.saveBtn = React.createRef();
+		// this.settingsForm = React.createRef();
+		// this.resetBtn = React.createRef();
+		// this.saveBtn = React.createRef();
 
 		this.state = {
 			settings: this.props.userSettings,
@@ -30,42 +30,33 @@ export default class Settings extends React.Component {
 	}
 
 	handleChange(event) {
-
 		if (event.target.id) {
-
-			let value = event.target.checked;
+			let value = event.target.value;
 			let updatedSettings = this.state.settings;
 			updatedSettings[event.target.id] = value;
 			this.setState({settings: updatedSettings});
-
+			this.setState({
+				settingsChanged: true
+			});
 		}
 	}
 
 	settingsChanged() {
-
-		return false;
-
+		return this.state.settingsChanged;
 	}
 
 	handleSave(e) {
 		if (this.settingsChanged()) {
-			var fileRef = document.getElementById('wizardFormFileRef');
-			var download = {
-				targetBotId: 1,
-				fileRefId: fileRef.value
-			}
-			this.props.onCreate(download, "downloads", "", this.props.onFinish);
-		} else {
-			this.props.onFinish();
+			console.log(this.state.settings);
+			this.props.onCreate(this.state.settings, "usersettings", "");
+		}else{
+			console.log("no changes detected")
 		}
 	}
 
 	handleReset(e) {
-
 		console.log("resetting settings");
 		if (this.settingsChanged()) {
-
-
 			var fileRef = document.getElementById('wizardFormFileRef');
 			console.log("with value " + fileRef);
 
@@ -73,133 +64,93 @@ export default class Settings extends React.Component {
 				targetBotId: 1,
 				fileRefId: fileRef.value
 			}
-
 			this.props.onCreate(download, "downloads", "", this.props.onFinish);
 
 		} else {
 
 			console.log("without setup");
 			this.props.onFinish();
-
 		}
-
 	}
 
 	getInputs() {
-
 		var settings = this.state.settings;
 		var inputs = [];
 		for (var property in settings) {
-
 			var newInput = null;
 
 			switch (property) {
-
 				case 'refreshrateInSeconds':
-
+					newInput =
+							<ListGroup.Item key={property}>
+								<InputGroup className="mb-3">
+									<InputGroup.Text>{property}</InputGroup.Text>
+									<FormControl
+											aria-label="Default"
+											aria-describedby="inputGroup-sizing-default"
+											onChange={(e) => this.handleChange(e)}
+											id={property}
+											value={settings[property]}
+									/>
+								</InputGroup>
+							</ListGroup.Item>
 					break;
 
 				case 'sessionTimeout':
-
-					break;
-
-				case 'downloadSortBy':
-
-					break;
-
-				case 'showAllBotsInQuickWindow':
-
-					const inputFields = [];
-					console.log(settings['botsVisibleInQuickWindow']);
-					settings['botsVisibleInQuickWindow']
-					    .forEach(function(bot) {
-					        inputFields.push(
-					            <InputGroup className="mb-3">
-					                <FormControl disabled value={bot.name} />
-					                <InputGroup.Append>
-					                    <InputGroup.Checkbox
-					                        type="checkbox"
-					                        id= {bot.id}
-					                    />
-					                </InputGroup.Append>
-					            </InputGroup>)
-					    });
-
 					newInput =
-					    <>
-					        <h4>Bots available in quickview</h4>
-					        <InputGroup className="mb-3">
-					            <FormControl disabled value={property} />
-					            <InputGroup.Append>
-					                <InputGroup.Checkbox
-					                    onChange={(e) => this.handleChange(e)}
-					                    type="checkbox"
-					                    id= {property}
-					                />
-					            </InputGroup.Append>
-					        </InputGroup>
-
-					        {!this.state.settings.showAllBotsInQuickWindow &&
-					            <ListGroup.Item className="mb-3">
-					                {inputFields}
-					            </ListGroup.Item>
-					        }
-					    </>
-
+							<ListGroup.Item key={property}>
+								<InputGroup className="mb-3">
+									<InputGroup.Text>{property}</InputGroup.Text>
+									<FormControl
+											aria-label="Default"
+											aria-describedby="inputGroup-sizing-default"
+											onChange={(e) => this.handleChange(e)}
+											id={property}
+											value={settings[property]}
+									/>
+								</InputGroup>
+							</ListGroup.Item>
 					break;
-
-				case 'showAllItemsInDownloadCard':
-
+				case 'downloadSortBy':
+					newInput =
+							<ListGroup.Item key={property}>
+								<InputGroup className="mb-3">
+									<InputGroup.Text>{property}</InputGroup.Text>
+									<Form.Control
+											aria-label="Default"
+											aria-describedby="inputGroup-sizing-default"
+											as="select"
+											onChange={(e) => this.handleChange(e)}>
+											id={property}
+											value={settings[property]}
+										<option value="PROGRESS">Progress</option>
+										<option value="STARTDATE">Date</option>
+										<option value="NAME">Name</option>
+									</Form.Control>
+								</InputGroup>
+							</ListGroup.Item>
 					break;
-
 			}
-
 			newInput ? inputs.push(newInput) : null;
 		}
-
 		return inputs;
-
-	}
-
-	//Form Validation
-	checkValidity(input) {
-
-		this.resetValidity(input);
-
-		if (!input.checkValidity()) {
-
-			this.setInvalid(input);
-
-		} else {
-
-			this.setValid(input);
-
-		}
-
 	}
 
 	render() {
-
 		const inputs = this.getInputs();
-
 		return (
-
-				<Col xs={12} md={10} className={"column"}>
-					<Card>
-						<Card.Header>Settings</Card.Header>
-						<Col xs={12} md={5} style={{'margin': '15px'}}>
-							<Form>
-								<ListGroup variant="flush">
-									{inputs}
-								</ListGroup>
-							</Form>
-						</Col>
-						<Card.Header>
-							<Button variant="primary">Save</Button>
-						</Card.Header>
-					</Card>
-				</Col>
+				<>
+					<Col xs={12} md={5} style={{'margin': '15px'}}>
+						<Form>
+							<ListGroup variant="flush">
+								{inputs}
+							</ListGroup>
+						</Form>
+					</Col>
+					<Card.Header>
+						<Button variant="primary" onClick={(e) => this.handleSave(e)}>Save</Button>
+					</Card.Header>
+				</>
 		)
 	}
-
 }
