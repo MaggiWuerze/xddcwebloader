@@ -5,9 +5,9 @@
 	font-family: 'Lato';
 	font-style: normal;
 	font-weight: 400;
-	src: url('../fonts/lato-v15-latin-regular.eot'); /* IE9 Compat Modes */
+	src: url('../fonts/LatoLatin-Regular.eot'); /* IE9 Compat Modes */
 	src: local('Lato Regular'), local('Lato-Regular'),
-	url('../fonts/lato-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/lato-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */ url('../fonts/lato-v15-latin-regular.woff') format('woff'), /* Modern Browsers */ url('../fonts/lato-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */ url('../fonts/lato-v15-latin-regular.svg#Lato') format('svg'); /* Legacy iOS */
+	url('../fonts/LatoLatin-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/LatoLatin-Regular.woff2') format('woff2'), /* Super Modern Browsers */ url('../fonts/LatoLatin-Regular.woff') format('woff'), /* Modern Browsers */ url('../fonts/LatoLatin-Regular.ttf') format('truetype');
 }
 
 
@@ -246,4 +246,50 @@ code {
 
 .close:hover {
 	background: #00d9ff;
+}
+
+.bobbing {
+	animation: MoveUpDown 3s linear infinite;
+	left: 0;
+	bottom: 0;
+}
+
+@keyframes MoveUpDown {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-5px);
+	}
+}
+
+.container-fluid .jumbotron, .container .jumbotron {
+	border-radius: 6px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+@media screen and (min-width: 768px)
+{
+	.container-fluid .jumbotron, .container .jumbotron {
+		padding-left: 60px;
+		padding-right: 60px;
+	}
+}
+
+@media screen and (min-width: 768px)
+{
+	.jumbotron {
+		padding-bottom: 48px;
+		padding-top: 48px;
+	}
+}
+
+.jumbotron {
+	background-color: #eee;
+	padding-left: 60px;
+	padding-right: 60px;
+	margin-bottom: 30px;
+	padding-bottom: 30px;
+	padding-top: 30px;
 }
