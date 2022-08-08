@@ -20,15 +20,14 @@
   },
   "homepage": "https://maggiwuerze.de/XDCC-Webloader",
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rest": "^2.0.0",
     "sockjs-client": "^1.5.2",
     "stompjs": "^2.3.3",
-    "react-bootstrap": "1.6.4",
+    "react-bootstrap": "2.5.0",
     "react-popover": "^0.5.10",
     "bootstrap": "5.1.1",
-    "react-sidenav": "4.0.6",
     "axios": "0.21.4"
   },
   "scripts": {

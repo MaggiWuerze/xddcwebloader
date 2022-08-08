@@ -27,9 +27,7 @@ export default class ChannelInputs extends React.Component {
 						case 'name':
 							input =
 									<InputGroup className="mb-3" key={attribute}>
-										<InputGroup.Prepend>
-											<InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
-										</InputGroup.Prepend>
+										<InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
 										<FormControl
 												placeholder={attribute}
 												ref={attribute}

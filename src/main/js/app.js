@@ -1,5 +1,5 @@
 'use strict';
-
+import { createRoot } from "react-dom/client";
 import BotListView from './model/bot/BotListView';
 import DownloadListView from './model/download/DownloadListView';
 import ServerListView from './model/server/ServerListView';
@@ -10,13 +10,13 @@ import ChannelInputs from './model/channel/ChannelInputs';
 import InitWizard from './model/wizard/InitWizard';
 import Settings from './model/settings/Settings';
 
-import {Button, Card, Col, Container, Jumbotron, Nav, Row, Tab, TabContent} from 'react-bootstrap';
+import {Button, Card, Col, Container, Nav, Row, Tab, TabContent} from 'react-bootstrap';
 import Popover from 'react-popover';
 
 import axios from 'axios';
 
 const React = require('react');
-const ReactDOM = require('react-dom');
+const root = createRoot(document.getElementById("react"));
 const stompClient = require('./websocket-listener');
 
 const version_tag = "V. 0.5";
@@ -704,7 +704,7 @@ class App extends React.Component {
 								{/* ABOUT */}
 								{this.state.activePage == 'about' && <>
 									<Col xs={12} md={10} className={"column"}>
-										<Jumbotron>
+										<div className="jumbotron">
 											<h1>About XDCC Webloader</h1>
 											<p>
 												Information about the project
@@ -712,7 +712,7 @@ class App extends React.Component {
 											<p>
 												<Button variant="primary">Learn more</Button>
 											</p>
-										</Jumbotron>
+										</div>
 									</Col>
 								</>}
 							</Row>
@@ -723,7 +723,4 @@ class App extends React.Component {
 	}
 }
 
-ReactDOM.render(
-		<App/>,
-		document.getElementById('react')
-)
+root.render(<App/>)

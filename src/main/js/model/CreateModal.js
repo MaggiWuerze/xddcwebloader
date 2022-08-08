@@ -117,9 +117,7 @@ export default class CreateModal extends React.Component {
 						case 'server':
 							input =
 									<InputGroup className="mb-3" key={attribute}>
-										<InputGroup.Prepend>
-											<InputGroup.Text id="basic-addon1" key={attribute}>Server</InputGroup.Text>
-										</InputGroup.Prepend>
+										<InputGroup.Text id="basic-addon1" key={attribute}>Server</InputGroup.Text>
 										<Form.Control key={attribute} ref={attribute} as="select">
 											{serverOptions}
 										</Form.Control>
@@ -129,9 +127,7 @@ export default class CreateModal extends React.Component {
 
 							input =
 									<InputGroup className="mb-3" key={attribute}>
-										<InputGroup.Prepend>
-											<InputGroup.Text id="basic-addon1" key={attribute}>Channel</InputGroup.Text>
-										</InputGroup.Prepend>
+										<InputGroup.Text id="basic-addon1" key={attribute}>Channel</InputGroup.Text>
 										<Form.Control key={attribute} ref={attribute} as="select">
 											{channelOptions}
 										</Form.Control>
@@ -141,9 +137,7 @@ export default class CreateModal extends React.Component {
 
 							input =
 									<InputGroup className="mb-3" key={attribute}>
-										<InputGroup.Prepend>
-											<InputGroup.Text id="basic-addon1" key={attribute}>User</InputGroup.Text>
-										</InputGroup.Prepend>
+										<InputGroup.Text id="basic-addon1" key={attribute}>User</InputGroup.Text>
 										<Form.Control key={attribute} ref={attribute} as="select">
 											{userOptions}
 										</Form.Control>
@@ -152,9 +146,7 @@ export default class CreateModal extends React.Component {
 						case 'fileRefId':
 							input =
 									<InputGroup className="mb-3" key={attribute}>
-										<InputGroup.Prepend>
-											<InputGroup.Text id="basic-addon1" key={attribute}>File Reference ID</InputGroup.Text>
-										</InputGroup.Prepend>
+										<InputGroup.Text id="basic-addon1" key={attribute}>File Reference ID</InputGroup.Text>
 										<FormControl
 												placeholder={"filereference (e.g. #2421)"}
 												ref={attribute}
@@ -165,9 +157,7 @@ export default class CreateModal extends React.Component {
 						default:
 							input =
 									<InputGroup className="mb-3" key={attribute}>
-										<InputGroup.Prepend>
-											<InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
-										</InputGroup.Prepend>
+										<InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
 										<FormControl
 												placeholder={attribute}
 												ref={attribute}

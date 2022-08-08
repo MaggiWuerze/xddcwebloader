@@ -52,9 +52,7 @@ export default class BotCard extends React.Component {
 							<ListGroup variant="flush">
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Channelname</InputGroup.Text>
-										</InputGroup.Prepend>
+										<InputGroup.Text>Channelname</InputGroup.Text>
 										<FormControl
 												disabled
 												value={this.props.bot.channel.name}
@@ -65,9 +63,7 @@ export default class BotCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
 											<InputGroup.Text>Servername</InputGroup.Text>
-										</InputGroup.Prepend>
 										<FormControl
 												disabled
 												value={this.props.bot.server.name}
@@ -77,9 +73,7 @@ export default class BotCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
 											<InputGroup.Text>Bot Messagepattern</InputGroup.Text>
-										</InputGroup.Prepend>
 										<FormControl
 												disabled
 												value={this.props.bot.pattern}
@@ -89,9 +83,7 @@ export default class BotCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
 											<InputGroup.Text>Max Parallel Downloads</InputGroup.Text>
-										</InputGroup.Prepend>
 										<FormControl
 												disabled
 												value={this.props.bot.maxParallelDownloads}
@@ -107,9 +99,7 @@ export default class BotCard extends React.Component {
 												placeholder="fileRefId (eg. #3452)"
 												aria-label="file reference id"
 										/>
-										<InputGroup.Append>
-											<Button variant="outline-secondary" onClick={this.handleSubmit}>Send</Button>
-										</InputGroup.Append>
+										<Button variant="outline-secondary" onClick={this.handleSubmit}>Send</Button>
 									</InputGroup>
 								</ListGroup.Item>
 							</ListGroup>

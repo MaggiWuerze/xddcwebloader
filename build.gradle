@@ -19,43 +19,47 @@ node {
 
 dependencies {
     //SPRING
-    implementation("org.springframework.boot:spring-boot-starter-data-rest:2.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-security:2.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-web:2.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-tomcat:2.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.5.4")
-    implementation("org.springframework.boot:spring-boot-devtools:2.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-websocket:2.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-validation:2.5.4")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.4")
+    implementation('org.springframework.boot:spring-boot-starter-data-rest:2.7.2')
+    implementation('org.springframework.boot:spring-boot-starter-security:2.7.2')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf:2.7.2')
+    implementation('org.springframework.boot:spring-boot-starter-web:2.7.2')
+    implementation('org.springframework.boot:spring-boot-starter-tomcat:2.7.2')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa:2.7.2')
+    implementation('org.springframework.boot:spring-boot-devtools:2.7.2')
+    implementation('org.springframework.boot:spring-boot-starter-websocket:2.7.2')
+    implementation('org.springframework.boot:spring-boot-starter-validation:2.7.2')
+    testImplementation('org.springframework.boot:spring-boot-starter-test:2.7.2')
+
+    // JAX-B dependencies for JDK 9+
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 
     //LOMBOK
-    compileOnly("org.projectlombok:lombok:1.18.20")
-    annotationProcessor("org.projectlombok:lombok:1.18.20")
-    testCompileOnly("org.projectlombok:lombok:1.18.20")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.20")
+    compileOnly('org.projectlombok:lombok:1.18.24')
+    annotationProcessor('org.projectlombok:lombok:1.18.24')
+    testCompileOnly('org.projectlombok:lombok:1.18.24')
+    testAnnotationProcessor('org.projectlombok:lombok:1.18.24')
 
     //DATABASE
-    implementation("org.postgresql:postgresql:42.2.23.jre7")
-    implementation("mysql:mysql-connector-java:8.0.25")
-    runtimeOnly("com.h2database:h2:1.4.200")
+    implementation('org.postgresql:postgresql:42.3.6')
+    implementation('mysql:mysql-connector-java:8.0.29')
+    runtimeOnly('com.h2database:h2:2.1.214')
 
     //UTILS
     implementation("com.github.pircbotx:pircbotx:master-SNAPSHOT")
     implementation("commons-io:commons-io:2.11.0")
 
     //WEBJARS
-    implementation("org.webjars:webjars-locator-core:0.48")
+    implementation('org.webjars:webjars-locator-core:0.52')
     implementation("org.webjars:jquery:3.6.0")
-    implementation("org.webjars:bootstrap:5.1.0")
-    implementation("org.webjars:font-awesome:5.15.3")
+    implementation('org.webjars:bootstrap:5.1.3')
+    implementation('org.webjars:font-awesome:6.1.2')
 }
 
 group = "de.maggiwuerze"
 version = "0.5.0-SNAPSHOT"
 description = "xdccloader"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications.create("maven", MavenPublication) {

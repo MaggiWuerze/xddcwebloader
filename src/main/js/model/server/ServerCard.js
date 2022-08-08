@@ -25,9 +25,7 @@ export default class ServerCard extends React.Component {
 							<ListGroup variant="flush">
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
 											<InputGroup.Text>Servername</InputGroup.Text>
-										</InputGroup.Prepend>
 										<FormControl
 												disabled
 												value={this.props.server.name}
@@ -36,9 +34,7 @@ export default class ServerCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Server URL</InputGroup.Text>
-										</InputGroup.Prepend>
+										<InputGroup.Text>Server URL</InputGroup.Text>
 										<FormControl
 												disabled
 												value={this.props.server.serverUrl}
