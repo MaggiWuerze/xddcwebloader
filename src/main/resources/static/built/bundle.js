@@ -5499,10 +5499,10 @@ var Settings = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./src/main/js/model/wizard/InitWizard":
-/*!*********************************************!*\
-  !*** ./src/main/js/model/wizard/InitWizard ***!
-  \*********************************************/
+/***/ "./src/main/js/model/wizard/InitWizard.js":
+/*!************************************************!*\
+  !*** ./src/main/js/model/wizard/InitWizard.js ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5545,8 +5545,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
-var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
 var InitWizard = /*#__PURE__*/function (_React$Component) {
   _inherits(InitWizard, _React$Component);
@@ -5748,7 +5746,8 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
         name: validName,
         pattern: validPattern,
         serverId: 1,
-        channelId: 1
+        channelId: 1,
+        maxParallelDownloads: 1
       };
       this.props.onCreate(bot, "bots", "", this.nextPage);
     }
@@ -5766,7 +5765,6 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
         className: "container text-center my-auto"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        as: "container",
         activeIndex: this.state.index,
         direction: this.state.direction,
         onSelect: this.handleSelect,
@@ -5819,9 +5817,9 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
         className: "sr-only"
       }, "Creating Server...")))), !this.state.workingInBg && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "The Server"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Enter the URL to the IRC server you want to connect to"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Prepend, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
         id: "basic-addon1"
-      }, "Servername")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Control, {
+      }, "Servername"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Control, {
         id: "wizardFormServerName",
         required: true,
         type: "text",
@@ -5833,9 +5831,9 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
         type: "invalid"
       }, "Please provide a name for your Server.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Prepend, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
         id: "basic-addon1"
-      }, "Server URL")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Control, {
+      }, "Server URL"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Control, {
         id: "wizardFormServerUrl",
         required: true,
         type: "text",
@@ -5869,9 +5867,9 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
         className: "sr-only"
       }, "Adding Channel...")))), !this.state.workingInBg && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Add A Channel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Now add a channel that exists on the server you just entered.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "This is the channel where you want to request your files."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Prepend, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
         id: "basic-addon2"
-      }, "Channelname")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Control, {
+      }, "Channelname"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Control, {
         id: "wizardFormChannelName",
         required: true,
         type: "text",
@@ -5905,9 +5903,9 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
         className: "sr-only"
       }, "Adding Channel...")))), !this.state.workingInBg && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Create Your Bot"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Finally enter the name of the bot that serves your content as well as a message template that will be used to write messages to them. The message template should look somewhat like this: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", null, " 'xdcc send %s' "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "The ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", null, "'%s'"), " part is where the part that identifies the file will be placed. In some cases this is something like an id (#3432) in other cases it may be the specific file name (yourfile.txt).", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "It is ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "mandatory"), " to include the ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", null, "'%s'")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Prepend, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
         id: "basic-addon3"
-      }, "Botname")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, "Botname"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
         id: "wizardFormBotName",
         required: true,
         type: "text",
@@ -5917,9 +5915,9 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
         "aria-describedby": "basic-addon3"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Prepend, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
         id: "basic-addon4"
-      }, "Messagepattern")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Control, {
+      }, "Messagepattern"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"].Control, {
         id: "wizardFormBotPattern",
         required: true,
         type: "text",
@@ -5941,9 +5939,9 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
         className: "wizardPageContainer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "That", "\'", "s it!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Now your bot is ready to get files for you."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "Let", "\'", " try it."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Prepend, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"].Text, {
         id: "basic-addon5"
-      }, "File reference")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, "File reference"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
         required: true,
         id: "wizardFormFileRef",
         placeholder: "the ID/Name referencing your File",
@@ -56200,7 +56198,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_bot_BotInputs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./model/bot/BotInputs */ "./src/main/js/model/bot/BotInputs.js");
 /* harmony import */ var _model_server_ServerInputs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./model/server/ServerInputs */ "./src/main/js/model/server/ServerInputs.js");
 /* harmony import */ var _model_channel_ChannelInputs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/channel/ChannelInputs */ "./src/main/js/model/channel/ChannelInputs.js");
-/* harmony import */ var _model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/wizard/InitWizard */ "./src/main/js/model/wizard/InitWizard");
+/* harmony import */ var _model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/wizard/InitWizard */ "./src/main/js/model/wizard/InitWizard.js");
 /* harmony import */ var _model_settings_Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/settings/Settings */ "./src/main/js/model/settings/Settings.js");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
@@ -56319,6 +56317,7 @@ var App = /*#__PURE__*/function (_React$Component) {
       // INIT
       axios__WEBPACK_IMPORTED_MODULE_11___default().get('initialized/').then(function (response) {
         var init = response.data;
+        console.log("user is initialized: " + init);
 
         _this2.setState({
           initialized: init

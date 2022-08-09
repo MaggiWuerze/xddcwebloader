@@ -69,7 +69,8 @@ class App extends React.Component {
 				.get('initialized/')
 				.then((response) => {
 
-					var init = response.data;
+					const init = response.data;
+					console.log("user is initialized: " + init)
 					this.setState({
 						initialized: init
 					});
