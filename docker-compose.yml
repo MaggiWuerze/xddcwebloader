@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+    run:
+        container_name: xdcc
+        ports:
+            - '9999:8080'
+        environment:
+            - XDCC_DB_TYPE=org.hibernate.dialect.PostgreSQLDialect
+            - XDCC_DB_URL=postgresql://mediaserver:49153/postgres
+            - XDCC_DB_USER=sa
+            - XDCC_DB_PASSWORD=sa
+        image: xdcc
