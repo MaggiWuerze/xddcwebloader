@@ -28,3 +28,7 @@ HELP.md
 ### VS Code ###
 .vscode/
 /.gradle/
+
+### Node.js ###
+node_modules
+xdcc
