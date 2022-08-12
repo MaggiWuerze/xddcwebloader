@@ -94,6 +94,7 @@ export default class BotInputs extends React.Component {
 												aria-label={attribute}
 										/>
 									</InputGroup>;
+						break;
 						case 'pattern':
 							input =
 									<InputGroup className="mb-3" key={attribute}>
@@ -104,6 +105,7 @@ export default class BotInputs extends React.Component {
 												aria-label={attribute}
 										/>
 									</InputGroup>;
+						break;
 						case 'maxParallelDownloads':
 							input =
 									<InputGroup className="mb-3" key={attribute}>
@@ -114,6 +116,7 @@ export default class BotInputs extends React.Component {
 												aria-label={attribute}
 										/>
 									</InputGroup>;
+						break;
 						default:
 							break;
 					}
