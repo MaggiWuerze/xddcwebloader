@@ -22,13 +22,8 @@ class MainController {
 
 	@GetMapping("/")
 	public String index(Principal principal) {
-		String username = "";
-		if (principal instanceof User) {
-			username = ((User)principal).getUsername();
-		} else {
-			username = principal.toString();
-		}
-		userService.setCurrentUser(username);
+
+		userService.setCurrentUser(principal.getName());
 		return "index";
 	}
 

@@ -1,4 +1,4 @@
-import {Card, Container, FormControl, InputGroup, ListGroup} from "react-bootstrap";
+import {Button, Card, Container, FormControl, InputGroup, ListGroup} from "react-bootstrap";
 
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -12,14 +12,23 @@ export default class ChannelCard extends React.Component {
 	}
 
 	handleDelete() {
-		this.props.onDelete(this.props.channel);
+		this.props.onDelete(this.props.channel, 'CH');
 	}
 
 	render() {
 
 		return (
 				<Card style={{margin: '10px'}}>
-					<Card.Header>{this.props.channel.name}</Card.Header>
+					<Card.Header>
+						{this.props.channel.name}
+						<Button
+								size="sm"
+								title="Remove Channel"
+								style={{height: '30px', float: 'right'}}
+								variant="danger"
+								onClick={() => this.handleDelete()}>
+							<i className="fas fa-trash"></i>
+						</Button></Card.Header>
 					<Card.Body>
 						<Container fluid>
 							<ListGroup variant="flush">

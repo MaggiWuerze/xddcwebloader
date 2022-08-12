@@ -25,4 +25,6 @@ public class BotService {
 	public Bot findById(Long channelId) {
 		return targetBotRepository.findById(channelId).orElse(null);
 	}
+
+	public void delete(Long channelId) {targetBotRepository.deleteById(channelId);}
 }

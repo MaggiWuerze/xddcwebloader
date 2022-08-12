@@ -25,7 +25,7 @@ public class UserService {
 	private final IrcUserRepository ircUserRepository;
 	private final UserSettingsRepository userSettingsRepository;
 
-	@Getter
+
 	private UserTO currentUser;
 
 	public long getUserCount() {
@@ -57,5 +57,9 @@ public class UserService {
 
 	public void setCurrentUser(String currentUser) {
 		this.currentUser = new UserTO(findUserByName(currentUser));
+	}
+
+	public User getCurrentUser() {
+		return findUserByName(currentUser.getName());
 	}
 }

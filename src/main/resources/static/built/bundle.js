@@ -4001,11 +4001,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ BotCard)
 /* harmony export */ });
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ListGroup.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/InputGroup.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/FormControl.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ListGroup.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/InputGroup.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/FormControl.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4057,7 +4057,7 @@ var BotCard = /*#__PURE__*/function (_React$Component) {
   _createClass(BotCard, [{
     key: "handleDelete",
     value: function handleDelete() {
-      this.props.onDelete(this.props.bot);
+      this.props.onDelete(this.props.bot, "BOT");
     }
   }, {
     key: "handleKeyDown",
@@ -4093,42 +4093,55 @@ var BotCard = /*#__PURE__*/function (_React$Component) {
             open: !open
           });
         }
-      }, this.props.bot.name), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, this.props.bot.name, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        size: "sm",
+        title: "Remove Bot",
+        style: {
+          height: '30px',
+          "float": 'right'
+        },
+        variant: "danger",
+        onClick: function onClick() {
+          return _this2.handleDelete();
+        }
+      }, /*#__PURE__*/React.createElement("i", {
+        className: "fas fa-trash"
+      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
         fluid: true
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
         variant: "flush"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         size: "sm"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Text, null, "Channelname"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Text, null, "Channelname"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         disabled: true,
         value: this.props.bot.channel.name,
         "aria-label": "file reference id"
-      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         size: "sm"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Text, null, "Servername"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Text, null, "Servername"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         disabled: true,
         value: this.props.bot.server.name,
         "aria-label": "file reference id"
-      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         size: "sm"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Text, null, "Bot Messagepattern"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Text, null, "Bot Messagepattern"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         disabled: true,
         value: this.props.bot.pattern,
         "aria-label": "file reference id"
-      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         size: "sm"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Text, null, "Max Parallel Downloads"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Text, null, "Max Parallel Downloads"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         disabled: true,
         value: this.props.bot.maxParallelDownloads,
         "aria-label": "file reference id"
-      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         size: "sm"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         onKeyDown: this.handleKeyDown,
         ref: this.props.bot.id + "-fileRefId",
         placeholder: "fileRefId (eg. #3452)",
         "aria-label": "file reference id"
-      }), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"], {
         variant: "outline-secondary",
         onClick: this.handleSubmit
       }, "Send")))))));
@@ -4453,10 +4466,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ChannelCard)
 /* harmony export */ });
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ListGroup.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/InputGroup.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/FormControl.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ListGroup.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/InputGroup.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/FormControl.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4503,22 +4517,37 @@ var ChannelCard = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelCard, [{
     key: "handleDelete",
     value: function handleDelete() {
-      this.props.onDelete(this.props.channel);
+      this.props.onDelete(this.props.channel, 'CH');
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"], {
         style: {
           margin: '10px'
         }
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Header, null, this.props.channel.name), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Header, null, this.props.channel.name, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        size: "sm",
+        title: "Remove Channel",
+        style: {
+          height: '30px',
+          "float": 'right'
+        },
+        variant: "danger",
+        onClick: function onClick() {
+          return _this2.handleDelete();
+        }
+      }, /*#__PURE__*/React.createElement("i", {
+        className: "fas fa-trash"
+      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
         fluid: true
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
         variant: "flush"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         size: "sm"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Text, null, "Channel Name"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Text, null, "Channel Name"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         disabled: true,
         value: this.props.channel.name,
         "aria-label": "file reference id"
@@ -4983,10 +5012,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ServerCard)
 /* harmony export */ });
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ListGroup.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/InputGroup.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/FormControl.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ListGroup.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/InputGroup.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/FormControl.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5033,28 +5063,43 @@ var ServerCard = /*#__PURE__*/function (_React$Component) {
   _createClass(ServerCard, [{
     key: "handleDelete",
     value: function handleDelete() {
-      this.props.onDelete(this.props.channel);
+      this.props.onDelete(this.props.server, 'SRV');
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"], {
         style: {
           margin: '10px'
         }
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Header, null, this.props.server.name), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Header, null, this.props.server.name, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        size: "sm",
+        title: "Remove Server",
+        style: {
+          height: '30px',
+          "float": 'right'
+        },
+        variant: "danger",
+        onClick: function onClick() {
+          return _this2.handleDelete();
+        }
+      }, /*#__PURE__*/React.createElement("i", {
+        className: "fas fa-trash"
+      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
         fluid: true
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
         variant: "flush"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         size: "sm"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Text, null, "Servername"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Text, null, "Servername"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         disabled: true,
         value: this.props.server.name,
         "aria-label": "file reference id"
-      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
         size: "sm"
-      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"].Text, null, "Server URL"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Text, null, "Server URL"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         disabled: true,
         value: this.props.server.serverUrl,
         "aria-label": "file reference id"
@@ -6073,6 +6118,75 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
 }((react__WEBPACK_IMPORTED_MODULE_0___default().Component));
 
 
+
+/***/ }),
+
+/***/ "./src/main/js/util/AutohideExample.js":
+/*!*********************************************!*\
+  !*** ./src/main/js/util/AutohideExample.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap/Col */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap/Row */ "./node_modules/react-bootstrap/esm/Row.js");
+/* harmony import */ var react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Toast */ "./node_modules/react-bootstrap/esm/Toast.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+function AutohideExample() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      show = _useState2[0],
+      setShow = _useState2[1];
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    xs: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    onClose: function onClose() {
+      return setShow(false);
+    },
+    show: show,
+    delay: 3000,
+    autohide: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_3__["default"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: "holder.js/20x20?text=%20",
+    className: "rounded me-2",
+    alt: ""
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", {
+    className: "me-auto"
+  }, "Bootstrap"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("small", null, "11 mins ago")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_3__["default"].Body, null, "Woohoo, you're reading this text in a Toast!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    xs: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: function onClick() {
+      return setShow(true);
+    }
+  }, "Show Toast")));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AutohideExample);
 
 /***/ }),
 
@@ -11863,6 +11977,291 @@ function createBootstrapComponent(Component, opts) {
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ThemeProvider);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/Toast.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/Toast.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _restart_hooks_useTimeout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @restart/hooks/useTimeout */ "./node_modules/@restart/hooks/esm/useTimeout.js");
+/* harmony import */ var _ToastFade__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ToastFade */ "./node_modules/react-bootstrap/esm/ToastFade.js");
+/* harmony import */ var _ToastHeader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ToastHeader */ "./node_modules/react-bootstrap/esm/ToastHeader.js");
+/* harmony import */ var _ToastBody__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ToastBody */ "./node_modules/react-bootstrap/esm/ToastBody.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var _ToastContext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ToastContext */ "./node_modules/react-bootstrap/esm/ToastContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+
+const Toast = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(({
+  bsPrefix,
+  className,
+  transition: Transition = _ToastFade__WEBPACK_IMPORTED_MODULE_4__["default"],
+  show = true,
+  animation = true,
+  delay = 5000,
+  autohide = false,
+  onClose,
+  bg,
+  ...props
+}, ref) => {
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_5__.useBootstrapPrefix)(bsPrefix, 'toast'); // We use refs for these, because we don't want to restart the autohide
+  // timer in case these values change.
+
+  const delayRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(delay);
+  const onCloseRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(onClose);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    delayRef.current = delay;
+    onCloseRef.current = onClose;
+  }, [delay, onClose]);
+  const autohideTimeout = (0,_restart_hooks_useTimeout__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  const autohideToast = !!(autohide && show);
+  const autohideFunc = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    if (autohideToast) {
+      onCloseRef.current == null ? void 0 : onCloseRef.current();
+    }
+  }, [autohideToast]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    // Only reset timer if show or autohide changes.
+    autohideTimeout.set(autohideFunc, delayRef.current);
+  }, [autohideTimeout, autohideFunc]);
+  const toastContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => ({
+    onClose
+  }), [onClose]);
+  const hasAnimation = !!(Transition && animation);
+
+  const toast = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", { ...props,
+    ref: ref,
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(bsPrefix, className, bg && `bg-${bg}`, !hasAnimation && (show ? 'show' : 'hide')),
+    role: "alert",
+    "aria-live": "assertive",
+    "aria-atomic": "true"
+  });
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_ToastContext__WEBPACK_IMPORTED_MODULE_6__["default"].Provider, {
+    value: toastContext,
+    children: hasAnimation && Transition ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Transition, {
+      in: show,
+      unmountOnExit: true,
+      children: toast
+    }) : toast
+  });
+});
+Toast.displayName = 'Toast';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Toast, {
+  Body: _ToastBody__WEBPACK_IMPORTED_MODULE_7__["default"],
+  Header: _ToastHeader__WEBPACK_IMPORTED_MODULE_8__["default"]
+}));
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/ToastBody.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/ToastBody.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _createWithBsPrefix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createWithBsPrefix */ "./node_modules/react-bootstrap/esm/createWithBsPrefix.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_createWithBsPrefix__WEBPACK_IMPORTED_MODULE_0__["default"])('toast-body'));
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/ToastContainer.js":
+/*!************************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/ToastContainer.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+const positionClasses = {
+  'top-start': 'top-0 start-0',
+  'top-center': 'top-0 start-50 translate-middle-x',
+  'top-end': 'top-0 end-0',
+  'middle-start': 'top-50 start-0 translate-middle-y',
+  'middle-center': 'top-50 start-50 translate-middle',
+  'middle-end': 'top-50 end-0 translate-middle-y',
+  'bottom-start': 'bottom-0 start-0',
+  'bottom-center': 'bottom-0 start-50 translate-middle-x',
+  'bottom-end': 'bottom-0 end-0'
+};
+const ToastContainer = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+  bsPrefix,
+  position,
+  containerPosition = 'absolute',
+  className,
+  // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+  as: Component = 'div',
+  ...props
+}, ref) => {
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'toast-container');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, {
+    ref: ref,
+    ...props,
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(bsPrefix, position && [containerPosition ? `position-${containerPosition}` : null, positionClasses[position]], className)
+  });
+});
+ToastContainer.displayName = 'ToastContainer';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ToastContainer);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/ToastContext.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/ToastContext.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const ToastContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onClose() {}
+
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ToastContext);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/ToastFade.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/ToastFade.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-transition-group/Transition */ "./node_modules/react-transition-group/esm/Transition.js");
+/* harmony import */ var _Fade__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Fade */ "./node_modules/react-bootstrap/esm/Fade.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+const fadeStyles = {
+  [react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_2__.ENTERING]: 'showing',
+  [react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_2__.EXITING]: 'showing show'
+};
+const ToastFade = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((props, ref) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Fade__WEBPACK_IMPORTED_MODULE_3__["default"], { ...props,
+  ref: ref,
+  transitionClasses: fadeStyles
+}));
+ToastFade.displayName = 'ToastFade';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ToastFade);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/ToastHeader.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/ToastHeader.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @restart/hooks/useEventCallback */ "./node_modules/@restart/hooks/esm/useEventCallback.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var _CloseButton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CloseButton */ "./node_modules/react-bootstrap/esm/CloseButton.js");
+/* harmony import */ var _ToastContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ToastContext */ "./node_modules/react-bootstrap/esm/ToastContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+const defaultProps = {
+  closeLabel: 'Close',
+  closeButton: true
+};
+const ToastHeader = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+  bsPrefix,
+  closeLabel,
+  closeVariant,
+  closeButton,
+  className,
+  children,
+  ...props
+}, ref) => {
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_4__.useBootstrapPrefix)(bsPrefix, 'toast-header');
+  const context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_ToastContext__WEBPACK_IMPORTED_MODULE_5__["default"]);
+  const handleClick = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_2__["default"])(e => {
+    context == null ? void 0 : context.onClose == null ? void 0 : context.onClose(e);
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    ref: ref,
+    ...props,
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(bsPrefix, className),
+    children: [children, closeButton && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_CloseButton__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      "aria-label": closeLabel,
+      variant: closeVariant,
+      onClick: handleClick,
+      "data-dismiss": "toast"
+    })]
+  });
+});
+ToastHeader.displayName = 'ToastHeader';
+ToastHeader.defaultProps = defaultProps;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ToastHeader);
 
 /***/ }),
 
@@ -56311,23 +56710,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_channel_ChannelInputs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/channel/ChannelInputs */ "./src/main/js/model/channel/ChannelInputs.js");
 /* harmony import */ var _model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/wizard/InitWizard */ "./src/main/js/model/wizard/InitWizard.js");
 /* harmony import */ var _model_settings_Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/settings/Settings */ "./src/main/js/model/settings/Settings.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Nav.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Tab.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/TabContent.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Toast.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ToastContainer.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Nav.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Tab.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/TabContent.js");
 /* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-popover */ "./node_modules/react-popover/index.js");
 /* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_popover__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _util_AutohideExample__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./util/AutohideExample */ "./src/main/js/util/AutohideExample.js");
+/* harmony import */ var _model_channel_ChannelCard__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./model/channel/ChannelCard */ "./src/main/js/model/channel/ChannelCard.js");
 
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -56348,6 +56765,9 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
 
 
 
@@ -56394,6 +56814,7 @@ var App = /*#__PURE__*/function (_React$Component) {
       botAttributes: [],
       channelAttributes: [],
       serverAttributes: [],
+      toasts: [],
       links: {},
       activePage: 'dashboard',
       showBotPopover: false,
@@ -56415,6 +56836,7 @@ var App = /*#__PURE__*/function (_React$Component) {
     value: function loadFromServer() {
       this.loadInitializedState();
       this.loadUserData();
+      this.loadAttributes();
       this.loadBotData();
       this.loadServerData();
       this.loadChannelData();
@@ -56452,21 +56874,40 @@ var App = /*#__PURE__*/function (_React$Component) {
       })["catch"](function (error) {
         console.debug(error);
       });
+    }
+  }, {
+    key: "loadAttributes",
+    value: function loadAttributes() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_11___default().get('bots/example', {}).then(function (response) {
+        response.data[0] ? _this4.updateAttributes(Object.keys(response.data[0]), 'botAttributes') : null;
+      })["catch"](function (error) {
+        console.debug(error);
+      });
+      axios__WEBPACK_IMPORTED_MODULE_11___default().get('servers/example', {}).then(function (response) {
+        response.data[0] ? _this4.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
+      })["catch"](function (error) {
+        console.debug(error);
+      });
+      axios__WEBPACK_IMPORTED_MODULE_11___default().get('channels/example', {}).then(function (response) {
+        response.data[0] ? _this4.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
+      })["catch"](function (error) {
+        console.debug(error);
+      });
     } //BOTS,SERVERS,CHANNELS
 
   }, {
     key: "loadBotData",
     value: function loadBotData() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_11___default().get('bots/', {
         params: {
           active: true
         }
       }).then(function (response) {
-        response.data[0] ? _this4.updateAttributes(Object.keys(response.data[0]), 'botAttributes') : null;
-
-        _this4.setState({
+        _this5.setState({
           bots: response.data
         });
       })["catch"](function (error) {
@@ -56476,12 +56917,10 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "loadServerData",
     value: function loadServerData() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_11___default().get('servers/').then(function (response) {
-        response.data[0] ? _this5.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
-
-        _this5.setState({
+        _this6.setState({
           servers: response.data
         });
       })["catch"](function (error) {
@@ -56491,12 +56930,10 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "loadChannelData",
     value: function loadChannelData() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_11___default().get('channels/').then(function (response) {
-        response.data[0] ? _this6.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
-
-        _this6.setState({
+        _this7.setState({
           channels: response.data
         });
       })["catch"](function (error) {
@@ -56506,7 +56943,7 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "loadDownloadData",
     value: function loadDownloadData() {
-      var _this7 = this;
+      var _this8 = this;
 
       //DOWNLOADS
       axios__WEBPACK_IMPORTED_MODULE_11___default().get('downloads/active/', {
@@ -56514,14 +56951,14 @@ var App = /*#__PURE__*/function (_React$Component) {
           active: true
         }
       }).then(function (response) {
-        _this7.setState({
+        _this8.setState({
           downloads: response.data
         });
       })["catch"](function (error) {
         console.debug(error);
       });
       axios__WEBPACK_IMPORTED_MODULE_11___default().get('downloads/failed').then(function (response) {
-        _this7.setState({
+        _this8.setState({
           failedDownloads: response.data
         });
       })["catch"](function (error) {
@@ -56532,7 +56969,7 @@ var App = /*#__PURE__*/function (_React$Component) {
           active: false
         }
       }).then(function (response) {
-        _this7.setState({
+        _this8.setState({
           doneDownloads: response.data
         });
       })["catch"](function (error) {
@@ -56542,13 +56979,13 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onCreate",
     value: function onCreate(object, objectType, modalName, callback) {
-      var _this8 = this;
+      var _this9 = this;
 
       console.debug("onCreate with: {object}, {objectType}, {modalName}, {callback}");
       axios__WEBPACK_IMPORTED_MODULE_11___default().post(objectType + '/', object).then(function (response) {
         switch (response.status.toString()) {
           case '200':
-            modalName ? _this8.toggleBoolean(modalName) : '';
+            modalName ? _this9.toggleBoolean(modalName) : '';
             callback ? callback(true) : '';
             break;
 
@@ -56565,32 +57002,42 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onDelete",
     value: function onDelete(payload, type) {
-      var _this9 = this;
+      var _this10 = this;
 
       if (payload && type) {
         var id = payload.id;
 
         switch (type) {
           case 'DL':
-            axios__WEBPACK_IMPORTED_MODULE_11___default().get('downloads/remove/', {
+            axios__WEBPACK_IMPORTED_MODULE_11___default()["delete"]('downloads/', {
               params: {
                 downloadId: payload.id
               }
             }).then(function (response) {
               switch (response.status.toString()) {
                 case '200':
-                  console.debug("removing from gui");
+                  _this10.setState({
+                    downloads: _this10.state.downloads.filter(function (item) {
+                      return item.id !== id;
+                    })
+                  });
 
-                  _this9.removeFromListById(_this9.state.downloads, payload.id);
+                  _this10.setState({
+                    doneDownloads: _this10.state.doneDownloads.filter(function (item) {
+                      return item.id !== id;
+                    })
+                  });
 
-                  _this9.removeFromListById(_this9.state.doneDownloads, payload.id);
-
-                  _this9.removeFromListById(_this9.state.failedDownloads, payload.id);
+                  _this10.setState({
+                    failedDownloads: _this10.state.failedDownloads.filter(function (item) {
+                      return item.id !== id;
+                    })
+                  });
 
                   break;
 
                 default:
-                  console.debug("onCreate error");
+                  console.debug("onDelete error");
                   console.debug("statuscode: " + response.status.toString());
                   callback ? callback(false) : '';
               }
@@ -56599,9 +57046,144 @@ var App = /*#__PURE__*/function (_React$Component) {
             });
             break;
 
+          case 'BOT':
+            console.debug("deleting BOT");
+            axios__WEBPACK_IMPORTED_MODULE_11___default()["delete"]('bots/', {
+              params: {
+                botId: payload.id
+              }
+            }).then(function (response) {
+              switch (response.status.toString()) {
+                case '200':
+                  _this10.setState({
+                    bots: _this10.state.bots.filter(function (item) {
+                      return item.id !== id;
+                    })
+                  });
+
+                  break;
+
+                default:
+                  console.debug("onDelete error");
+                  console.debug("statuscode: " + response.status.toString());
+                  callback ? callback(false) : '';
+
+                  _this10.showErrorToast("Error Deleting Bot!", response.data);
+
+              }
+            })["catch"](function (error) {
+              _this10.showErrorToast("Error Deleting Bot!", error.response.data);
+            });
+            break;
+
+          case 'CH':
+            console.debug("deleting CHANNEL");
+            axios__WEBPACK_IMPORTED_MODULE_11___default()["delete"]('channels/', {
+              params: {
+                channelId: payload.id
+              }
+            }).then(function (response) {
+              switch (response.status.toString()) {
+                case '200':
+                  _this10.setState({
+                    channels: _this10.state.channels.filter(function (item) {
+                      return item.id !== id;
+                    })
+                  });
+
+                  break;
+
+                default:
+                  console.debug("onDelete error");
+                  console.debug("statuscode: " + response.status.toString());
+                  callback ? callback(false) : '';
+
+                  _this10.showErrorToast("Error Deleting Server!", response.data);
+
+              }
+            })["catch"](function (error) {
+              if (error.response.status == 409) {
+                _this10.showWarnToast("This Channel is currently in use.", "Delete the respective Bot before deleting its children.");
+              } else {
+                _this10.showErrorToast("Error Deleting Channel!", error.response.data);
+              }
+            });
+            break;
+
+          case 'SRV':
+            console.debug("deleting SERVER");
+            axios__WEBPACK_IMPORTED_MODULE_11___default()["delete"]('servers/', {
+              params: {
+                serverId: payload.id
+              }
+            }).then(function (response) {
+              switch (response.status.toString()) {
+                case '200':
+                  _this10.setState({
+                    servers: _this10.state.servers.filter(function (item) {
+                      return item.id !== id;
+                    })
+                  });
+
+                  break;
+
+                case '409':
+                  _this10.showErrorToast(error.toString());
+
+                  break;
+
+                default:
+                  console.debug("onDelete error");
+                  console.debug("statuscode: " + response.status.toString());
+                  callback ? callback(false) : '';
+
+                  _this10.showErrorToast("Error Deleting Server!", response.data);
+
+              }
+            })["catch"](function (error) {
+              if (error.response.status == 409) {
+                _this10.showWarnToast("This Server is currently in use.", "Delete the respective Bot before deleting its children.");
+              } else {
+                _this10.showErrorToast("Error Deleting Server!", error.response.data);
+              }
+            });
+            break;
+
           default:
         }
       }
+    }
+  }, {
+    key: "showWarnToast",
+    value: function showWarnToast(title, message) {
+      this.showToast(title, message, 'Warning');
+    }
+  }, {
+    key: "showErrorToast",
+    value: function showErrorToast(title, message) {
+      this.showToast(title, message, 'Danger');
+    }
+  }, {
+    key: "showToast",
+    value: function showToast(title, message, variant) {
+      this.setState(function (prevState) {
+        return {
+          toasts: [].concat(_toConsumableArray(prevState.toasts), [{
+            title: title,
+            variant: variant,
+            message: message
+          }])
+        };
+      });
+    }
+  }, {
+    key: "hideToast",
+    value: function hideToast(toast) {
+      this.setState({
+        toasts: this.state.toasts.filter(function (item) {
+          return item !== toast;
+        })
+      });
     }
   }, {
     key: "onCancel",
@@ -56734,12 +57316,12 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "finishOnboarding",
     value: function finishOnboarding(setupDone) {
-      var _this10 = this;
+      var _this11 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_11___default().post('initialized/').then(function (response) {
         switch (response.status.toString()) {
           case '200':
-            _this10.toggleBoolean('initialized');
+            _this11.toggleBoolean('initialized');
 
             var newUrl = location.replace("register", "");
             var title = "XDCC Loader";
@@ -56809,14 +57391,14 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this11 = this;
+      var _this12 = this;
 
       var botPopover = /*#__PURE__*/React.createElement(_model_bot_BotInputs__WEBPACK_IMPORTED_MODULE_5__["default"], {
         modaltitle: "Create new Bot",
         attributes: this.state.botAttributes,
         show: this.state.showBotModal,
         onFinish: function onFinish() {
-          return _this11.loadBotData();
+          return _this12.loadBotData();
         },
         onCreate: this.onCreate
       });
@@ -56825,7 +57407,7 @@ var App = /*#__PURE__*/function (_React$Component) {
         attributes: this.state.serverAttributes,
         show: this.state.showBotModal,
         onFinish: function onFinish() {
-          return _this11.loadServerData();
+          return _this12.loadServerData();
         },
         onCreate: this.onCreate
       });
@@ -56834,9 +57416,21 @@ var App = /*#__PURE__*/function (_React$Component) {
         attributes: this.state.channelAttributes,
         show: this.state.showBotModal,
         onFinish: function onFinish() {
-          return _this11.loadChannelData();
+          return _this12.loadChannelData();
         },
         onCreate: this.onCreate
+      });
+      var toasts = this.state.toasts.map(function (toast, idx) {
+        return /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          onClose: function onClose() {
+            return _this12.hideToast(toast);
+          },
+          className: "d-inline-block m-1",
+          bg: toast.variant.toLowerCase(),
+          key: idx,
+          delay: 5000,
+          autohide: true
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Header, null, toast.title), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Body, null, toast.message));
       });
 
       if (!this.state.initialized) {
@@ -56845,55 +57439,61 @@ var App = /*#__PURE__*/function (_React$Component) {
           onFinish: this.finishOnboarding
         });
       } else {
-        return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_12__["default"], {
+        return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
           fluid: true
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_13__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"], {
+          position: "top-end",
+          style: {
+            margin: '1rem',
+            zIndex: '999'
+          }
+        }, toasts), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
           xs: 12,
           md: 1,
           className: "sidenav-column"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"], _defineProperty({
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], _defineProperty({
           className: "text-center"
-        }, "className", "sidenav"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Body, {
+        }, "className", "sidenav"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Body, {
           className: "text-muted sidenav-body"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"], {
           justify: true,
           defaultActiveKey: "dashboard",
           onSelect: this.onMenuInteraction,
           className: "flex-column"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           as: "span",
           eventKey: "dashboard"
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-columns"
-        }), "\xA0\xA0Dashboard"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        }), "\xA0\xA0Dashboard"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           as: "span",
           eventKey: "settings"
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-sliders-h"
-        }), "\xA0\xA0Settings"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        }), "\xA0\xA0Settings"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           as: "span",
           eventKey: "about"
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-info-circle"
-        }), "\xA0\xA0About"))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Footer, {
+        }), "\xA0\xA0About"))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Footer, {
           className: "text-muted sidenav-footer"
         }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
           className: "fab fa-github"
         }), /*#__PURE__*/React.createElement("a", {
           target: "_blank",
           href: "https://github.com/MaggiWuerze/xddcwebloader"
-        }, "\xA0\xA0", version_tag))))), this.state.activePage == "dashboard" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        }, "\xA0\xA0", version_tag))))), this.state.activePage == "dashboard" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
           xs: 12,
           md: 4,
           className: "column"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], {
           className: "customCard"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Container, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Container, {
           defaultActiveKey: "bots"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Header, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Header, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"], {
           fill: true,
           variant: "tabs"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           eventKey: "bots"
         }, /*#__PURE__*/React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", /*#__PURE__*/React.createElement((react_popover__WEBPACK_IMPORTED_MODULE_10___default()), {
           isOpen: this.state.showBotPopover,
@@ -56901,18 +57501,18 @@ var App = /*#__PURE__*/function (_React$Component) {
           place: "below",
           enterExitTransitionDurationMs: 300,
           onOuterAction: function onOuterAction() {
-            return _this11.toggleBoolean('showBotPopover');
+            return _this12.toggleBoolean('showBotPopover');
           }
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__["default"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this11.toggleBoolean('showBotPopover');
+            return _this12.toggleBoolean('showBotPopover');
           }
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-plus"
-        })))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        })))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           eventKey: "servers"
         }, /*#__PURE__*/React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", /*#__PURE__*/React.createElement((react_popover__WEBPACK_IMPORTED_MODULE_10___default()), {
           isOpen: this.state.showServerPopover,
@@ -56920,18 +57520,18 @@ var App = /*#__PURE__*/function (_React$Component) {
           place: "below",
           enterExitTransitionDurationMs: 300,
           onOuterAction: function onOuterAction() {
-            return _this11.toggleBoolean('showServerPopover');
+            return _this12.toggleBoolean('showServerPopover');
           }
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__["default"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this11.toggleBoolean('showServerPopover');
+            return _this12.toggleBoolean('showServerPopover');
           }
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-plus"
-        })))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        })))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           eventKey: "channels"
         }, /*#__PURE__*/React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", /*#__PURE__*/React.createElement((react_popover__WEBPACK_IMPORTED_MODULE_10___default()), {
           isOpen: this.state.showChannelPopover,
@@ -56939,82 +57539,82 @@ var App = /*#__PURE__*/function (_React$Component) {
           place: "below",
           enterExitTransitionDurationMs: 300,
           onOuterAction: function onOuterAction() {
-            return _this11.toggleBoolean('showChannelPopover');
+            return _this12.toggleBoolean('showChannelPopover');
           }
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__["default"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
           onClick: function onClick() {
-            return _this11.toggleBoolean('showChannelPopover');
+            return _this12.toggleBoolean('showChannelPopover');
           }
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-plus"
-        })))))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Pane, {
+        })))))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_24__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
           eventKey: "bots"
         }, /*#__PURE__*/React.createElement(_model_bot_BotListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           bots: this.state.bots,
-          onDelete: this.onDelete(),
+          onDelete: this.onDelete,
           onCreate: this.onCreate
-        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Pane, {
+        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
           eventKey: "servers"
         }, /*#__PURE__*/React.createElement(_model_server_ServerListView__WEBPACK_IMPORTED_MODULE_3__["default"], {
           servers: this.state.servers,
-          onDelete: this.onDelete(),
+          onDelete: this.onDelete,
           onCreate: this.onCreate
-        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Pane, {
+        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
           eventKey: "channels"
         }, /*#__PURE__*/React.createElement(_model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_4__["default"], {
           channels: this.state.channels,
-          onDelete: this.onDelete(),
+          onDelete: this.onDelete,
           onCreate: this.onCreate
-        }))))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        }))))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
           xs: 12,
           md: 7,
           className: "column"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], {
           className: "customCard"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Container, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Container, {
           defaultActiveKey: "activeDownloads"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Header, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Header, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"], {
           fill: true,
           variant: "tabs"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           eventKey: "activeDownloads"
-        }, "Active Downloads (" + this.state.downloads.length + ")")), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        }, "Active Downloads (" + this.state.downloads.length + ")")), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           eventKey: "completedDownloads"
-        }, "Completed (" + this.state.doneDownloads.length + ")")), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"].Link, {
+        }, "Completed (" + this.state.doneDownloads.length + ")")), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
           eventKey: "failedDownloads"
-        }, "Failed (" + this.state.failedDownloads.length + ")")))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Pane, {
+        }, "Failed (" + this.state.failedDownloads.length + ")")))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_24__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
           eventKey: "activeDownloads"
         }, /*#__PURE__*/React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           downloads: this.state.downloads,
           onDelete: this.onDelete,
           onCancel: this.onCancel
-        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Pane, {
+        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
           eventKey: "completedDownloads"
         }, /*#__PURE__*/React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           downloads: this.state.doneDownloads,
           onDelete: this.onDelete
-        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Pane, {
+        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
           eventKey: "failedDownloads"
         }, /*#__PURE__*/React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           downloads: this.state.failedDownloads,
           onDelete: this.onDelete
-        })))))))), this.state.activePage == 'settings' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        })))))))), this.state.activePage == 'settings' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
           xs: 12,
           md: 10,
           className: "column"
         }, /*#__PURE__*/React.createElement(_model_settings_Settings__WEBPACK_IMPORTED_MODULE_9__["default"], {
           userSettings: this.state.user.userSettings,
           onCreate: this.onCreate
-        }))), this.state.activePage == 'about' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        }))), this.state.activePage == 'about' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
           xs: 12,
           md: 10,
           className: "column"
         }, /*#__PURE__*/React.createElement("div", {
           className: "jumbotron"
-        }, /*#__PURE__*/React.createElement("h1", null, "About XDCC Webloader"), /*#__PURE__*/React.createElement("p", null, "Information about the project"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], {
+        }, /*#__PURE__*/React.createElement("h1", null, "About XDCC Webloader"), /*#__PURE__*/React.createElement("p", null, "Information about the project"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__["default"], {
           variant: "primary"
         }, "Learn more"))))))));
       }

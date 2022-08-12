@@ -1,13 +1,18 @@
 package de.maggiwuerze.xdccloader.controller;
 
+import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.model.entity.Channel;
 import de.maggiwuerze.xdccloader.model.forms.ChannelForm;
+import de.maggiwuerze.xdccloader.model.transport.ChannelTO;
 import de.maggiwuerze.xdccloader.service.ChannelService;
+import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +29,8 @@ class ChannelController {
 	 * @return a list of all channels
 	 */
 	@GetMapping("/channels/")
-	public ResponseEntity<List<Channel>> getAllChannels() {
-		List<Channel> channels = channelService.list();
+	public ResponseEntity<List<ChannelTO>> getAllChannels() {
+		List<ChannelTO> channels = channelService.list().stream().map(ChannelTO::new).collect(Collectors.toList());
 		return new ResponseEntity(channels, HttpStatus.OK);
 	}
 
@@ -33,6 +38,25 @@ class ChannelController {
 	public ResponseEntity<?> addChannel(@RequestBody ChannelForm channelForm) {
 		Channel channel = channelService.save(new Channel(channelForm.getName()));
 		return new ResponseEntity("Download added succcessfully. id=[" + channel.getId() + "]", HttpStatus.OK);
+	}
+
+	/**
+	 * @return an example channel object to populate the attributes for channel creation popover
+	 */
+	@GetMapping("/channels/example")
+	public ResponseEntity<List<Channel>> getExampleChannel(Principal principal) {
+		return new ResponseEntity(List.of(new Channel()), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/channels/")
+	public ResponseEntity<?> delete( Long channelId) {
+		try {
+			channelService.delete(channelId);
+			return new ResponseEntity("Channel deleted succcessfully.", HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity("Channel could not be deleted", HttpStatus.CONFLICT);
+		}
+
 	}
 
 }

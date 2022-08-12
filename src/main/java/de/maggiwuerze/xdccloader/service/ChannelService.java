@@ -1,8 +1,10 @@
 package de.maggiwuerze.xdccloader.service;
 
 import de.maggiwuerze.xdccloader.model.entity.Channel;
+import de.maggiwuerze.xdccloader.model.transport.ChannelTO;
 import de.maggiwuerze.xdccloader.persistency.ChannelRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,4 +28,6 @@ public class ChannelService {
 	public Channel findById(Long channelId) {
 		return channelRepository.findById(channelId).orElse(null);
 	}
+
+	public void delete(Long channelId) {channelRepository.deleteById(channelId);}
 }

@@ -10,10 +10,13 @@ import ChannelInputs from './model/channel/ChannelInputs';
 import InitWizard from './model/wizard/InitWizard';
 import Settings from './model/settings/Settings';
 
-import {Button, Card, Col, Container, Nav, Row, Tab, TabContent} from 'react-bootstrap';
+import {Button, Card, Col, Container, Nav, Row, Tab, Toast, TabContent, ToastContainer} from 'react-bootstrap';
 import Popover from 'react-popover';
 
 import axios from 'axios';
+import {useState} from "react";
+import AutohideExample from "./util/AutohideExample";
+import Channel from "./model/channel/ChannelCard";
 
 const React = require('react');
 const root = createRoot(document.getElementById("react"));
@@ -38,6 +41,7 @@ class App extends React.Component {
 			botAttributes: [],
 			channelAttributes: [],
 			serverAttributes: [],
+			toasts: [],
 			links: {},
 			activePage: 'dashboard',
 			showBotPopover: false,
@@ -57,6 +61,7 @@ class App extends React.Component {
 	loadFromServer() {
 		this.loadInitializedState();
 		this.loadUserData();
+		this.loadAttributes();
 		this.loadBotData();
 		this.loadServerData();
 		this.loadChannelData();
@@ -94,6 +99,33 @@ class App extends React.Component {
 				});
 	}
 
+	loadAttributes() {
+		axios
+				.get('bots/example', {})
+				.then((response) => {
+					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'botAttributes') : null;
+				})
+				.catch((error) => {
+					console.debug(error);
+				});
+		axios
+				.get('servers/example', {})
+				.then((response) => {
+					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
+				})
+				.catch((error) => {
+					console.debug(error);
+				});
+		axios
+				.get('channels/example', {})
+				.then((response) => {
+					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
+				})
+				.catch((error) => {
+					console.debug(error);
+				});
+	}
+
 	//BOTS,SERVERS,CHANNELS
 	loadBotData() {
 		axios
@@ -103,7 +135,6 @@ class App extends React.Component {
 					}
 				})
 				.then((response) => {
-					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'botAttributes') : null;
 					this.setState({
 						bots: response.data
 					});
@@ -117,7 +148,6 @@ class App extends React.Component {
 		axios
 				.get('servers/')
 				.then((response) => {
-					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
 					this.setState({
 						servers: response.data
 					});
@@ -131,7 +161,6 @@ class App extends React.Component {
 		axios
 				.get('channels/')
 				.then((response) => {
-					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
 					this.setState({
 						channels: response.data
 					});
@@ -209,12 +238,11 @@ class App extends React.Component {
 
 	onDelete(payload, type) {
 		if (payload && type) {
-			var id = payload.id;
-
+			const id = payload.id;
 			switch (type) {
 				case 'DL':
 					axios
-						.get('downloads/remove/', {
+						.delete('downloads/', {
 							params: {
 								downloadId: payload.id,
 							}
@@ -223,14 +251,13 @@ class App extends React.Component {
 
 							switch (response.status.toString()) {
 								case '200':
-									console.debug("removing from gui");
-									this.removeFromListById(this.state.downloads, payload.id);
-									this.removeFromListById(this.state.doneDownloads, payload.id);
-									this.removeFromListById(this.state.failedDownloads, payload.id);
+									this.setState({downloads: this.state.downloads.filter(item => item.id !== id)});
+									this.setState({doneDownloads: this.state.doneDownloads.filter(item => item.id !== id)});
+									this.setState({failedDownloads: this.state.failedDownloads.filter(item => item.id !== id)});
 									break;
 
 								default:
-									console.debug("onCreate error");
+									console.debug("onDelete error");
 									console.debug("statuscode: " + response.status.toString());
 									callback ? callback(false) : '';
 							}
@@ -238,9 +265,109 @@ class App extends React.Component {
 							console.debug(error);
 						});
 					break;
+				case 'BOT':
+					console.debug("deleting BOT")
+					axios
+							.delete('bots/', {
+								params: {
+									botId: payload.id,
+								}
+							})
+							.then((response) => {
+								switch (response.status.toString()) {
+									case '200':
+										this.setState({bots: this.state.bots.filter(item => item.id !== id)});
+										break;
+									default:
+										console.debug("onDelete error");
+										console.debug("statuscode: " + response.status.toString());
+										callback ? callback(false) : '';
+										this.showErrorToast("Error Deleting Bot!", response.data)
+								}
+							}).catch((error) => {
+								this.showErrorToast("Error Deleting Bot!", error.response.data);
+					});
+				break;
+				case 'CH':
+					console.debug("deleting CHANNEL")
+					axios
+							.delete('channels/', {
+								params: {
+									channelId: payload.id,
+								}
+							})
+							.then((response) => {
+
+								switch (response.status.toString()) {
+									case '200':
+										this.setState({channels: this.state.channels.filter(item => item.id !== id)});
+										break;
+
+									default:
+										console.debug("onDelete error");
+										console.debug("statuscode: " + response.status.toString());
+										callback ? callback(false) : '';
+										this.showErrorToast("Error Deleting Server!", response.data)
+								}
+							}).catch((error) => {
+								if(error.response.status == 409) {
+									this.showWarnToast("This Channel is currently in use.", "Delete the respective Bot before deleting its children.")
+								} else {
+									this.showErrorToast("Error Deleting Channel!", error.response.data)
+								}
+					});
+				break;
+				case 'SRV':
+					console.debug("deleting SERVER")
+					axios
+							.delete('servers/', {
+								params: {
+									serverId: payload.id,
+								}
+							})
+							.then((response) => {
+
+								switch (response.status.toString()) {
+									case '200':
+										this.setState({servers: this.state.servers.filter(item => item.id !== id)});
+										break;
+
+									case '409':
+										this.showErrorToast(error.toString())
+										break;
+									default:
+										console.debug("onDelete error");
+										console.debug("statuscode: " + response.status.toString());
+										callback ? callback(false) : '';
+										this.showErrorToast("Error Deleting Server!", response.data)
+								}
+							}).catch((error) => {
+								if(error.response.status == 409) {
+									this.showWarnToast("This Server is currently in use.", "Delete the respective Bot before deleting its children.")
+								} else {
+									this.showErrorToast("Error Deleting Server!", error.response.data)
+								}
+					});
+				break;
 				default:
 			}
 		}
+	}
+
+	showWarnToast(title, message) {
+		this.showToast(title, message, 'Warning');
+	}
+	showErrorToast(title, message) {
+		this.showToast(title, message, 'Danger');
+	}
+	showToast(title, message, variant) {
+		this.setState(prevState => ({
+			toasts: [...prevState.toasts, {title: title, variant:variant, message: message}]
+		}));
+	}
+
+	hideToast(toast){
+		this.setState({toasts: this.state.toasts.filter(item => item !== toast)});
 	}
 
 	onCancel(payload, type) {
@@ -432,6 +559,23 @@ class App extends React.Component {
 						onCreate={this.onCreate}/>
 		);
 
+		const toasts = this.state.toasts.map((toast, idx) =>
+				<Toast
+						onClose={() => this.hideToast(toast)}
+						className="d-inline-block m-1"
+						bg={toast.variant.toLowerCase()}
+						key={idx}
+						delay={5000}
+						autohide>
+					<Toast.Header>
+						{toast.title}
+					</Toast.Header>
+					<Toast.Body>
+						{toast.message}
+					</Toast.Body>
+				</Toast>
+		);
+
 		if (!this.state.initialized) {
 			return (
 					<InitWizard onCreate={this.onCreate} onFinish={this.finishOnboarding}/>
@@ -440,6 +584,9 @@ class App extends React.Component {
 			return (
 					<React.Fragment>
 						<Container fluid>
+							<ToastContainer position='top-end' style={{margin: '1rem' , zIndex: '999'}}>
+								{toasts}
+							</ToastContainer>
 							<Row>
 								<Col xs={12} md={1} className="sidenav-column">
 									<Card className="text-center" className="sidenav">
@@ -535,15 +682,21 @@ class App extends React.Component {
 												<Card.Body>
 													<TabContent>
 														<Tab.Pane eventKey="bots">
-															<BotListView bots={this.state.bots} onDelete={this.onDelete()}
+															<BotListView
+																	bots={this.state.bots}
+																	onDelete={this.onDelete}
 																	onCreate={this.onCreate}/>
 														</Tab.Pane>
 														<Tab.Pane eventKey="servers">
-															<ServerListView servers={this.state.servers} onDelete={this.onDelete()}
+															<ServerListView
+																	servers={this.state.servers}
+																	onDelete={this.onDelete}
 																	onCreate={this.onCreate}/>
 														</Tab.Pane>
 														<Tab.Pane eventKey="channels">
-															<ChannelListView channels={this.state.channels} onDelete={this.onDelete()}
+															<ChannelListView
+																	channels={this.state.channels}
+																	onDelete={this.onDelete}
 																	onCreate={this.onCreate}/>
 														</Tab.Pane>
 													</TabContent>

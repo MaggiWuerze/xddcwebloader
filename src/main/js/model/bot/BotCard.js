@@ -17,7 +17,7 @@ export default class BotCard extends React.Component {
 	}
 
 	handleDelete() {
-		this.props.onDelete(this.props.bot);
+		this.props.onDelete(this.props.bot, "BOT");
 	}
 
 	handleKeyDown(e) {
@@ -45,7 +45,17 @@ export default class BotCard extends React.Component {
 		const open = this.state.open;
 		return (
 				<Card style={{margin: '10px'}}>
-					<Card.Header onClick={() => this.setState({open: !open})}>{this.props.bot.name}</Card.Header>
+					<Card.Header onClick={() => this.setState({open: !open})}>
+						{this.props.bot.name}
+						<Button
+								size="sm"
+								title="Remove Bot"
+								style={{height: '30px', float: 'right'}}
+								variant="danger"
+								onClick={() => this.handleDelete()}>
+							<i className="fas fa-trash"></i>
+						</Button>
+					</Card.Header>
 					<Card.Body>
 						{/*<Collapse in={this.state.open}>*/}
 						<Container fluid>
