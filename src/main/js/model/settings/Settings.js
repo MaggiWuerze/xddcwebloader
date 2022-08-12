@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Card, Col, ListGroup, Form, InputGroup, FormControl, DropdownButton, Dropdown} from 'react-bootstrap';
+import {FileSelector} from "./FileSelector";
 
 const ReactDOM = require('react-dom');
 
@@ -47,18 +48,18 @@ export default class Settings extends React.Component {
 
 	handleSave(e) {
 		if (this.settingsChanged()) {
-			console.log(this.state.settings);
+			console.debug(this.state.settings);
 			this.props.onCreate(this.state.settings, "usersettings", "");
 		}else{
-			console.log("no changes detected")
+			console.debug("no changes detected")
 		}
 	}
 
 	handleReset(e) {
-		console.log("resetting settings");
+		console.debug("resetting settings");
 		if (this.settingsChanged()) {
 			var fileRef = document.getElementById('wizardFormFileRef');
-			console.log("with value " + fileRef);
+			console.debug("with value " + fileRef);
 
 			var download = {
 				targetBotId: 1,
@@ -68,9 +69,14 @@ export default class Settings extends React.Component {
 
 		} else {
 
-			console.log("without setup");
+			console.debug("without setup");
 			this.props.onFinish();
 		}
+	}
+
+	handleFolderSelection(e) {
+		console.debug(e);
+		console.debug("Directory selected!");
 	}
 
 	getInputs() {
@@ -88,7 +94,7 @@ export default class Settings extends React.Component {
 									<FormControl
 											aria-label="Default"
 											aria-describedby="inputGroup-sizing-default"
-											onChange={(e) => this.handleChange(e)}
+											onChange={(e) => this.handleFolderSelection(e)}
 											id={property}
 											value={settings[property]}
 									/>
@@ -128,6 +134,22 @@ export default class Settings extends React.Component {
 										<option value="NAME">Name</option>
 									</Form.Control>
 								</InputGroup>
+							</ListGroup.Item>
+					break;
+					case 'downloadPath':
+					newInput =
+							<ListGroup.Item key={property}>
+								<InputGroup className="mb-3">
+									<InputGroup.Text>{property}</InputGroup.Text>
+									<FormControl
+											aria-label="Default"
+											aria-describedby="inputGroup-sizing-default"
+											onChange={(e) => this.handleChange(e)}
+											id={property}
+											value={settings[property]}
+									/>
+								</InputGroup>
+
 							</ListGroup.Item>
 					break;
 			}

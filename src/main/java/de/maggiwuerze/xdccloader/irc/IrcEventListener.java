@@ -4,7 +4,9 @@ import de.maggiwuerze.xdccloader.events.EventPublisher;
 import de.maggiwuerze.xdccloader.model.download.Download;
 import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
+import de.maggiwuerze.xdccloader.model.entity.User;
 import de.maggiwuerze.xdccloader.service.DownloadService;
+import de.maggiwuerze.xdccloader.service.UserService;
 import java.io.File;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import org.pircbotx.hooks.events.ListenerExceptionEvent;
 import org.pircbotx.hooks.events.OutputEvent;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,9 +32,10 @@ import org.springframework.stereotype.Component;
 public class IrcEventListener extends ListenerAdapter {
 
 	//    final String DL_PATH = File.separator + "opt" + File.separator + "xdcc" + File.separator + "data";
-	private static final String DL_PATH = "." + File.separator + "xdcc";
+	private String downloadPath = "";
 	private final EventPublisher eventPublisher;
 	private final DownloadService downloadService;
+	private final UserService userService;
 
 	@Override
 	public void onBanList(BanListEvent event) {
@@ -70,10 +74,15 @@ public class IrcEventListener extends ListenerAdapter {
 
 	@Override
 	public void onIncomingFileTransfer(IncomingFileTransferEvent event) throws Exception {
+
+		if(downloadPath.isBlank()) {
+			downloadPath = userService.getCurrentUser().getUserSettings().getDownloadPath();
+		}
+
 		IrcBot bot = event.getBot();
 		Download download = downloadService.getById(bot.getDownloadId());
 		download.setFilename(event.getSafeFilename());
-		String path = DL_PATH + File.separatorChar + event.getSafeFilename();
+		String path = downloadPath + File.separatorChar + event.getSafeFilename();
 		File downloadFile = new File(path);
 
 		//Receive the file from the user

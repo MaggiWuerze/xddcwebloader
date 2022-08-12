@@ -13,7 +13,7 @@ export default class ServerInputs extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		console.log("saving new server");
+		console.debug("saving new server");
 
 		const newServer = {};
 		newServer["name"] = ReactDOM.findDOMNode(this.refs["name"]).value.trim();

@@ -3,15 +3,20 @@ package de.maggiwuerze.xdccloader.service;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.model.entity.User;
 import de.maggiwuerze.xdccloader.model.entity.UserSettings;
+import de.maggiwuerze.xdccloader.model.transport.UserTO;
 import de.maggiwuerze.xdccloader.persistency.IrcUserRepository;
 import de.maggiwuerze.xdccloader.persistency.UserRepository;
 import de.maggiwuerze.xdccloader.persistency.UserSettingsRepository;
 import java.util.List;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 @Component
+@SessionScope
 @RequiredArgsConstructor
 @Slf4j
 public class UserService {
@@ -19,6 +24,9 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final IrcUserRepository ircUserRepository;
 	private final UserSettingsRepository userSettingsRepository;
+
+	@Getter
+	private UserTO currentUser;
 
 	public long getUserCount() {
 		return userRepository.count();
@@ -45,5 +53,9 @@ public class UserService {
 
 	public List<Bot> listIrcUsers() {
 		return ircUserRepository.findAll();
+	}
+
+	public void setCurrentUser(String currentUser) {
+		this.currentUser = new UserTO(findUserByName(currentUser));
 	}
 }

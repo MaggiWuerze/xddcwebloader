@@ -12,13 +12,9 @@ import org.springframework.beans.BeanUtils;
 
 @Data
 public class UserTO {
-
 	String name;
-
 	String userRole;
-
 	Boolean initialized = false;
-
 	UserSettingsTO userSettings;
 
 	List<Bot> bots;
@@ -31,9 +27,7 @@ public class UserTO {
 	}
 
 	public UserTO(User user) {
-
 		BeanUtils.copyProperties(user, this);
 		userSettings = new UserSettingsTO(user.getUserSettings());
-
 	}
 }

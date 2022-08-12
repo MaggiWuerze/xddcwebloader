@@ -68,17 +68,14 @@ class App extends React.Component {
 		axios
 				.get('initialized/')
 				.then((response) => {
-
 					const init = response.data;
-					console.log("user is initialized: " + init)
+					console.debug("user is initialized: " + init)
 					this.setState({
 						initialized: init
 					});
-
-
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 	}
 
@@ -87,40 +84,32 @@ class App extends React.Component {
 		axios
 				.get('user/')
 				.then((response) => {
-
 					var userObject = response.data;
 					this.setState({
 						user: userObject
 					});
-
-
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 	}
 
 	//BOTS,SERVERS,CHANNELS
 	loadBotData() {
-
 		axios
 				.get('bots/', {
-
 					params: {
 						active: true,
 					}
-
 				})
 				.then((response) => {
-
 					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'botAttributes') : null;
 					this.setState({
 						bots: response.data
 					});
-
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 	}
 
@@ -128,15 +117,13 @@ class App extends React.Component {
 		axios
 				.get('servers/')
 				.then((response) => {
-
 					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
 					this.setState({
 						servers: response.data
 					});
-
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 	}
 
@@ -144,15 +131,13 @@ class App extends React.Component {
 		axios
 				.get('channels/')
 				.then((response) => {
-
 					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
 					this.setState({
 						channels: response.data
 					});
-
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 	}
 
@@ -160,135 +145,102 @@ class App extends React.Component {
 		//DOWNLOADS
 		axios
 				.get('downloads/active/', {
-
 					params: {
 						active: true,
 					}
-
 				})
 				.then((response) => {
-
 					this.setState({
 						downloads: response.data
 					});
-
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 
 		axios
 				.get('downloads/failed')
 				.then((response) => {
-
 					this.setState({
 						failedDownloads: response.data
 					});
-
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 
 		axios
 				.get('downloads/active/', {
-
 					params: {
 						active: false,
 					}
-
 				})
 				.then((response) => {
-
 					this.setState({
 						doneDownloads: response.data
 					});
-
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
-
 	}
 
 	onCreate(object, objectType, modalName, callback) {
-		console.log("onCreate with: {object}, {objectType}, {modalName}, {callback}")
+		console.debug("onCreate with: {object}, {objectType}, {modalName}, {callback}")
 		axios
 				.post(objectType + '/', object)
 				.then((response) => {
-
 					switch (response.status.toString()) {
-
 						case '200':
-
 							modalName ? this.toggleBoolean(modalName) : '';
 							callback ? callback(true) : '';
-
 							break;
 
 						default:
-
-							console.log("onCreate error");
-							console.log("statuscode: " + response.status.toString());
+							console.debug("onCreate error");
+							console.debug("statuscode: " + response.status.toString());
 							callback ? callback(false) : '';
-
 					}
 				}).catch((error) => {
 			callback ? callback(false) : '';
-			console.log(error);
+			console.debug(error);
 		});
-
 	}
 
 	onDelete(payload, type) {
-
 		if (payload && type) {
-
 			var id = payload.id;
 
 			switch (type) {
-
 				case 'DL':
 					axios
-							.get('downloads/remove/', {
+						.get('downloads/remove/', {
+							params: {
+								downloadId: payload.id,
+							}
+						})
+						.then((response) => {
 
-								params: {
-									downloadId: payload.id,
-								}
+							switch (response.status.toString()) {
+								case '200':
+									console.debug("removing from gui");
+									this.removeFromListById(this.state.downloads, payload.id);
+									this.removeFromListById(this.state.doneDownloads, payload.id);
+									this.removeFromListById(this.state.failedDownloads, payload.id);
+									break;
 
-							})
-							.then((response) => {
-
-								switch (response.status.toString()) {
-
-									case '200':
-
-										console.log("removing from gui");
-										this.removeFromListById(this.state.downloads, payload.id);
-										this.removeFromListById(this.state.doneDownloads, payload.id);
-										this.removeFromListById(this.state.failedDownloads, payload.id);
-
-										break;
-
-									default:
-
-										console.log("onCreate error");
-										console.log("statuscode: " + response.status.toString());
-										callback ? callback(false) : '';
-
-								}
-							}).catch((error) => {
-						console.log(error);
-					});
-
+								default:
+									console.debug("onCreate error");
+									console.debug("statuscode: " + response.status.toString());
+									callback ? callback(false) : '';
+							}
+						}).catch((error) => {
+							console.debug(error);
+						});
 					break;
-
 				default:
-
 			}
-
 		}
-
 	}
 
 	onCancel(payload, type) {
@@ -298,24 +250,17 @@ class App extends React.Component {
 	}
 
 	onMenuInteraction(eventKey, event) {
-
 		this.setState({
-
 			activePage: eventKey
-
 		});
-
 	}
 
 	moveToList(sourceList, targetList, item) {
-
 		this.removeFromListById(sourceList, item.id);
 		return this.addToListAndSort(targetList, item);
-
 	}
 
 	addToListAndSort(list, newItem) {
-
 		// this.setState(state => {
 		const downloads = list;
 		var containsDownload = false;
@@ -329,22 +274,15 @@ class App extends React.Component {
 			});
 		}
 
-
 		return downloads;
-		//     return {downloads,};
-		// });
-
 	}
 
 	removeFromListById(targetList, idToRemove) {
-
 		var list = targetList.filter(item => item.id !== idToRemove);
 		return list;
-
 	}
 
 	updateItemAndSort(list, newItem) {
-
 		this.setState(state => {
 			const downloads = list.map((item) => {
 				if (item.id == newItem.id) {
@@ -361,129 +299,94 @@ class App extends React.Component {
 			});
 			return {downloads,};
 		});
-
 	}
 
 	updateAttributes(attributes, paramName) {
-
 		if (this.state[paramName] && this.state[paramName].length <= 0) {
 			this.setState({[paramName]: attributes});
 		}
 	}
 
 	handleSocketCall(responseObj) {
-
-
 		let message = JSON.parse(responseObj.body);
 		let downloads = this.state.downloads;
 		let failedDownloads = this.state.failedDownloads;
 		let doneDownloads = this.state.doneDownloads;
 
 		switch (responseObj.headers.destination) {
-
 			case '/topic/newDownload':
-
 				this.setState({
-
 					downloads: this.addToListAndSort(downloads, message)
-
 				});
-
 				break;
 
 			case '/topic/updateDownload':
 
 				if (message.status == 'DONE') {
-
 					this.setState({
-
 						downloads: this.removeFromListById(downloads, message.id),
 						doneDownloads: this.addToListAndSort(doneDownloads, message)
-
 					});
 					// this.moveToList(downloads, doneDownloads, message);
 
 				} else if (message.status == 'ERROR') {
-
 					this.setState({
-
 						downloads: this.removeFromListById(downloads, message.id),
 						failedDownloads: this.addToListAndSort(failedDownloads, message)
-
 					});
-
 				} else {
-
 					this.updateItemAndSort(downloads, message);
-
 				}
-
 				break;
 
 			case '/topic/deleteDownload':
-
 				this.setState({
-
 					downloads: this.removeFromListById(downloads, message.id),
 					doneDownloads: this.removeFromListById(doneDownloads, message.id),
 					failedDownloads: this.removeFromListById(failedDownloads, message.id)
-
 				});
-
 				break;
 
 			case '/topic/timeout':
-
-				console.log("your session has timed out. please log in again");
+				console.debug("your session has timed out. please log in again");
 				window.location.href = "login?timeout=true";
 				break;
 
 			default:
-
-				console.log("unknown event route! destination was: " + responseObj.headers.destination);
+				console.debug("unknown event route! destination was: " + responseObj.headers.destination);
 		}
 
 
 	}
 
 	toggleBoolean(key) {
-
 		this.setState({[key]: !this.state[key]});
 	}
 
 	finishOnboarding(setupDone) {
-
 		axios
 				.post('initialized/')
 				.then((response) => {
-
 					switch (response.status.toString()) {
-
 						case '200':
-
 							this.toggleBoolean('initialized');
-
 							let newUrl = location.replace("register", "");
 							let title = "XDCC Loader"
-							console.log("newUrl: " + newUrl)
-							console.log("title: " + title)
+							console.debug("newUrl: " + newUrl)
+							console.debug("title: " + title)
 							var obj = {Title: title, Url: newUrl};
 							history.pushState(obj, obj.Title, obj.Url);
-
 							break;
 
 						default:
-
-							console.log("finisch onboarding error");
-							console.log("statuscode: " + response.status.toString());
-
+							console.debug("finisch onboarding error");
+							console.debug("statuscode: " + response.status.toString());
 					}
 				}).catch((error) => {
-			console.log(error);
+			console.debug(error);
 		});
 
 		setupDone ? this.loadFromServer() : "";
-
 	}
 
 	componentDidMount() {
@@ -511,7 +414,6 @@ class App extends React.Component {
 	}
 
 	render() {
-
 		const botPopover = (
 				<BotInputs modaltitle="Create new Bot" attributes={this.state.botAttributes}
 						show={this.state.showBotModal} onFinish={() => this.loadBotData()}
@@ -534,7 +436,6 @@ class App extends React.Component {
 			return (
 					<InitWizard onCreate={this.onCreate} onFinish={this.finishOnboarding}/>
 			)
-
 		} else {
 			return (
 					<React.Fragment>

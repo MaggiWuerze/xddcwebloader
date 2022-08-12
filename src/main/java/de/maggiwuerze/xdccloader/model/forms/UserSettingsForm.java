@@ -10,4 +10,6 @@ public class UserSettingsForm {
 	DownloadSort downloadSortBy;
 
 	Long sessionTimeout;
+
+	String downloadPath;
 }

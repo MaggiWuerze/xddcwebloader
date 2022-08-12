@@ -45,7 +45,7 @@ export default class CreateModal extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 
 	}
@@ -59,7 +59,7 @@ export default class CreateModal extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 
 	}
@@ -73,7 +73,7 @@ export default class CreateModal extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 
 	}

@@ -60,10 +60,10 @@ export default class InitWizard extends React.Component {
 	}
 
 	handleFinish(e) {
-		console.log("finishing Wizard");
+		console.debug("finishing Wizard");
 		if (this.state.FileRefValid) {
 			var fileRef = document.getElementById('wizardFormFileRef');
-			console.log("with value " + fileRef);
+			console.debug("with value " + fileRef);
 
 			var download = {
 				targetBotId: 1,
@@ -71,7 +71,7 @@ export default class InitWizard extends React.Component {
 			}
 			this.props.onCreate(download, "downloads", "", this.props.onFinish);
 		} else {
-			console.log("without setup");
+			console.debug("without setup");
 			this.props.onFinish();
 		}
 	}
@@ -128,9 +128,9 @@ export default class InitWizard extends React.Component {
 		var validFileRef = document.getElementById('wizardFormFileRef');
 		this.checkValidity(event.currentTarget);
 
-		console.log("checking fileRef with value:" + validFileRef.value);
+		console.debug("checking fileRef with value:" + validFileRef.value);
 		this.setState({FileRefValid: validFileRef.validity.valid});
-		console.log("fileRef valid:" + validFileRef.validity.valid);
+		console.debug("fileRef valid:" + validFileRef.validity.valid);
 	}
 
 	nextPage(success) {
@@ -141,7 +141,7 @@ export default class InitWizard extends React.Component {
 				workingInBg: false
 			});
 		} else {
-			console.log("error!");
+			console.debug("error!");
 			this.setState({
 				workingInBg: false,
 				wizardError: true

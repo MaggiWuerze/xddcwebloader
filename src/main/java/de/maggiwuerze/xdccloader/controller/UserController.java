@@ -68,7 +68,7 @@ class UserController{
 			String username = userForm.getUsername();
 			String password = new BCryptPasswordEncoder(11).encode(userForm.getPassword());
 			UserSettings userSettings = userService.saveUserSettings(new UserSettings());
-			userService.saveUser(new User(username, password, UserRole.USER.getExternalString(), true, userSettings));
+			userService.saveUser(new User(username, password, UserRole.USER.getExternalString(), false, userSettings));
 
 			try {
 				request.login(username, userForm.getPassword());
@@ -108,9 +108,7 @@ class UserController{
 		@RequestBody UserSettingsForm userSettingsForm, Principal principal) {
 		User user = userService.findUserByName(principal.getName());
 		UserSettings userSettingsById = user.getUserSettings();
-		userSettingsById.setDownloadSortBy(userSettingsForm.getDownloadSortBy());
-		userSettingsById.setRefreshrateInSeconds(userSettingsForm.getRefreshrateInSeconds());
-		userSettingsById.setSessionTimeout(userSettingsForm.getSessionTimeout());
+		userSettingsById.update(userSettingsForm);
 		userService.saveUserSettings(userSettingsById);
 		user.setUserSettings(userSettingsById);
 		userService.saveUser(user);

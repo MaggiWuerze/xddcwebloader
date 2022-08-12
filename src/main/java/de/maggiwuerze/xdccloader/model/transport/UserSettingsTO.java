@@ -17,6 +17,7 @@ public class UserSettingsTO {
 	Boolean showAllBotsInQuickWindow = false;
 	Map<Bot, Boolean> botsVisibleInQuickWindow = new HashMap<>();
 	Boolean showAllItemsInDownloadCard = true;
+	String downloadPath = "";
 	private Map<String, Boolean> itemsVisibleInDownloadCard;
 
 	public UserSettingsTO(Long refreshrateInSeconds, Long sessionTimeout) {

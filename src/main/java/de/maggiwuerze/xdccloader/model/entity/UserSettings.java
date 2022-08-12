@@ -1,6 +1,7 @@
 package de.maggiwuerze.xdccloader.model.entity;
 
 import de.maggiwuerze.xdccloader.model.download.DownloadSort;
+import de.maggiwuerze.xdccloader.model.forms.UserSettingsForm;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,10 +41,19 @@ public class UserSettings {
 	@Column(nullable = false)
 	Long sessionTimeout = 300L;
 
+	@Column(nullable = false)
+	String downloadPath = "xdcc/";
+
 	public UserSettings(Long refreshrateInSeconds, Long sessionTimeout) {
 		this.refreshrateInSeconds = refreshrateInSeconds;
 		this.sessionTimeout = sessionTimeout;
 	}
 
+	public void update(UserSettingsForm newSettings) {
+		setDownloadSortBy(newSettings.getDownloadSortBy());
+		setRefreshrateInSeconds(newSettings.getRefreshrateInSeconds());
+		setSessionTimeout(newSettings.getSessionTimeout());
+		setDownloadPath(newSettings.getDownloadPath());
+	}
 
 }

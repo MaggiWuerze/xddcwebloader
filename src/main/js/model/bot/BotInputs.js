@@ -32,7 +32,7 @@ export default class BotInputs extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 	}
 
@@ -44,7 +44,7 @@ export default class BotInputs extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.log(error);
+					console.debug(error);
 				});
 	}
 

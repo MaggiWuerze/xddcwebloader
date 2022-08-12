@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,14 @@ class MainController {
 	private final UserService userService;
 
 	@GetMapping("/")
-	public String index() {
+	public String index(Principal principal) {
+		String username = "";
+		if (principal instanceof User) {
+			username = ((User)principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		userService.setCurrentUser(username);
 		return "index";
 	}
 
