@@ -1,6 +1,10 @@
 # XDCCWebloader
 Web based Download Manager for xdcc file transfer with ReactJS in the frontend and Spring Data REST in the backend
 
+# Releases
+Releases and executables can be found here:
+[Releases](https://github.com/MaggiWuerze/xddcwebloader/releases)
+
 # Screenshots
 
 ### The Main Download View
@@ -14,7 +18,7 @@ Web based Download Manager for xdcc file transfer with ReactJS in the frontend a
 
 # Running The App
 ### Locally 
-The simplest way to run it is to simply execute the jar from the releases section. it packs everything except a java runtime, so as long as you have java you can run it and start right away.
+The simplest way to run it is to simply execute the jar from the [releases](https://github.com/MaggiWuerze/xddcwebloader/releases) section. it packs everything except a java runtime, so as long as you have java you can run it and start right away.
 ### Docker
 The next best option is to use the Dockerfiles found in the repository to build and run the app through your docker installation.
 ### From The IDE
