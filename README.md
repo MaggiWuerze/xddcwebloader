@@ -26,6 +26,10 @@ This option is mainly meant for people looking into the code or trying to make a
 
 I'd recommend IntelliJ. For this approach also see the building section.
 
+--  
+
+After starting the app (shouldn't take more than a couple of seconds) you can open it in your browser at either [localhost:8080](localhost:8080) or hostname/ip:8080 if you try to access it from another machine. 
+
 # Building
 Building the app (and running it from your IDE) requires you to install the following requirements:  
 - Node.js (17+)  
