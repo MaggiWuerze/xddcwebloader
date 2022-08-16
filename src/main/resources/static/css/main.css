@@ -293,3 +293,12 @@ code {
 	padding-bottom: 30px;
 	padding-top: 30px;
 }
+.footerIconWrapper {
+	width: 90%;
+	display: block;
+}
+.footerIconWrapper > a {
+	width: 30%;
+	margin: auto 10%;
+	float: left
+}

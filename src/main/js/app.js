@@ -14,9 +14,6 @@ import {Button, Card, Col, Container, Nav, Row, Tab, Toast, TabContent, ToastCon
 import Popover from 'react-popover';
 
 import axios from 'axios';
-import {useState} from "react";
-import AutohideExample from "./util/AutohideExample";
-import Channel from "./model/channel/ChannelCard";
 
 const React = require('react');
 const root = createRoot(document.getElementById("react"));
@@ -479,6 +476,11 @@ class App extends React.Component {
 				window.location.href = "login?timeout=true";
 				break;
 
+			case '/topic/error':
+				console.debug("There was an error!");
+				this.showErrorToast("Server Error",message);
+				break;
+
 			default:
 				console.debug("unknown event route! destination was: " + responseObj.headers.destination);
 		}
@@ -607,10 +609,14 @@ class App extends React.Component {
 											</Nav>
 										</Card.Body>
 										<Card.Footer className="text-muted sidenav-footer">
-                                    <span>
-                                        <i className="fab fa-github"></i>
-                                        <a target="_blank" href="https://github.com/MaggiWuerze/xddcwebloader">&nbsp;&nbsp;{version_tag}</a>
-                                    </span>
+											<div className="footerIconWrapper">
+												<a href="/logout">
+													<i title="Log out" className="fa-solid fa-right-from-bracket fa-2x"></i>
+												</a>
+												<a target="_blank" href="https://github.com/MaggiWuerze/xddcwebloader">
+													<i title={version_tag} className="fab fa-github fa-2x"></i>
+												</a>
+											</div>
 										</Card.Footer>
 									</Card>
 								</Col>

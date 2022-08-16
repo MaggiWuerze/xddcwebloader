@@ -6121,75 +6121,6 @@ var InitWizard = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./src/main/js/util/AutohideExample.js":
-/*!*********************************************!*\
-  !*** ./src/main/js/util/AutohideExample.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap/Col */ "./node_modules/react-bootstrap/esm/Col.js");
-/* harmony import */ var react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap/Row */ "./node_modules/react-bootstrap/esm/Row.js");
-/* harmony import */ var react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Toast */ "./node_modules/react-bootstrap/esm/Toast.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-
-
-
-function AutohideExample() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      show = _useState2[0],
-      setShow = _useState2[1];
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    onClose: function onClose() {
-      return setShow(false);
-    },
-    show: show,
-    delay: 3000,
-    autohide: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_3__["default"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: "holder.js/20x20?text=%20",
-    className: "rounded me-2",
-    alt: ""
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", {
-    className: "me-auto"
-  }, "Bootstrap"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("small", null, "11 mins ago")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_3__["default"].Body, null, "Woohoo, you're reading this text in a Toast!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    onClick: function onClick() {
-      return setShow(true);
-    }
-  }, "Show Toast")));
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AutohideExample);
-
-/***/ }),
-
 /***/ "./src/main/js/websocket-listener.js":
 /*!*******************************************!*\
   !*** ./src/main/js/websocket-listener.js ***!
@@ -56710,24 +56641,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_channel_ChannelInputs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./model/channel/ChannelInputs */ "./src/main/js/model/channel/ChannelInputs.js");
 /* harmony import */ var _model_wizard_InitWizard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./model/wizard/InitWizard */ "./src/main/js/model/wizard/InitWizard.js");
 /* harmony import */ var _model_settings_Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./model/settings/Settings */ "./src/main/js/model/settings/Settings.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Toast.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ToastContainer.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Nav.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Tab.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/TabContent.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Toast.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ToastContainer.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Row.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Card.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Nav.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Tab.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/TabContent.js");
 /* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-popover */ "./node_modules/react-popover/index.js");
 /* harmony import */ var react_popover__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_popover__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _util_AutohideExample__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./util/AutohideExample */ "./src/main/js/util/AutohideExample.js");
-/* harmony import */ var _model_channel_ChannelCard__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./model/channel/ChannelCard */ "./src/main/js/model/channel/ChannelCard.js");
 
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -56765,9 +56692,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
 
 
 
@@ -57304,6 +57228,11 @@ var App = /*#__PURE__*/function (_React$Component) {
           window.location.href = "login?timeout=true";
           break;
 
+        case '/topic/error':
+          console.debug("There was an error!");
+          this.showErrorToast("Server Error", message);
+          break;
+
         default:
           console.debug("unknown event route! destination was: " + responseObj.headers.destination);
       }
@@ -57421,7 +57350,7 @@ var App = /*#__PURE__*/function (_React$Component) {
         onCreate: this.onCreate
       });
       var toasts = this.state.toasts.map(function (toast, idx) {
-        return /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"], {
+        return /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_12__["default"], {
           onClose: function onClose() {
             return _this12.hideToast(toast);
           },
@@ -57430,7 +57359,7 @@ var App = /*#__PURE__*/function (_React$Component) {
           key: idx,
           delay: 5000,
           autohide: true
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Header, null, toast.title), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"].Body, null, toast.message));
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_12__["default"].Header, null, toast.title), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_12__["default"].Body, null, toast.message));
       });
 
       if (!this.state.initialized) {
@@ -57439,61 +57368,68 @@ var App = /*#__PURE__*/function (_React$Component) {
           onFinish: this.finishOnboarding
         });
       } else {
-        return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
+        return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_13__["default"], {
           fluid: true
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_14__["default"], {
           position: "top-end",
           style: {
             margin: '1rem',
             zIndex: '999'
           }
-        }, toasts), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
+        }, toasts), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_15__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
           xs: 12,
           md: 1,
           className: "sidenav-column"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], _defineProperty({
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"], _defineProperty({
           className: "text-center"
-        }, "className", "sidenav"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Body, {
+        }, "className", "sidenav"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Body, {
           className: "text-muted sidenav-body"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], {
           justify: true,
           defaultActiveKey: "dashboard",
           onSelect: this.onMenuInteraction,
           className: "flex-column"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           as: "span",
           eventKey: "dashboard"
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-columns"
-        }), "\xA0\xA0Dashboard"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        }), "\xA0\xA0Dashboard"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           as: "span",
           eventKey: "settings"
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-sliders-h"
-        }), "\xA0\xA0Settings"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        }), "\xA0\xA0Settings"), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           as: "span",
           eventKey: "about"
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-info-circle"
-        }), "\xA0\xA0About"))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Footer, {
+        }), "\xA0\xA0About"))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Footer, {
           className: "text-muted sidenav-footer"
-        }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
-          className: "fab fa-github"
-        }), /*#__PURE__*/React.createElement("a", {
+        }, /*#__PURE__*/React.createElement("div", {
+          className: "footerIconWrapper"
+        }, /*#__PURE__*/React.createElement("a", {
+          href: "/logout"
+        }, /*#__PURE__*/React.createElement("i", {
+          className: "fa-solid fa-right-from-bracket fa-2x"
+        })), /*#__PURE__*/React.createElement("a", {
           target: "_blank",
           href: "https://github.com/MaggiWuerze/xddcwebloader"
-        }, "\xA0\xA0", version_tag))))), this.state.activePage == "dashboard" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
+        }, /*#__PURE__*/React.createElement("i", {
+          title: version_tag,
+          className: "fab fa-github fa-2x"
+        })))))), this.state.activePage == "dashboard" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
           xs: 12,
           md: 4,
           className: "column"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"], {
           className: "customCard"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Container, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"].Container, {
           defaultActiveKey: "bots"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Header, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Header, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], {
           fill: true,
           variant: "tabs"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           eventKey: "bots"
         }, /*#__PURE__*/React.createElement("span", null, "Bots (" + this.state.bots.length + ")", "\xA0", /*#__PURE__*/React.createElement((react_popover__WEBPACK_IMPORTED_MODULE_10___default()), {
           isOpen: this.state.showBotPopover,
@@ -57503,7 +57439,7 @@ var App = /*#__PURE__*/function (_React$Component) {
           onOuterAction: function onOuterAction() {
             return _this12.toggleBoolean('showBotPopover');
           }
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
@@ -57512,7 +57448,7 @@ var App = /*#__PURE__*/function (_React$Component) {
           }
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-plus"
-        })))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        })))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           eventKey: "servers"
         }, /*#__PURE__*/React.createElement("span", null, "Servers (" + this.state.servers.length + ")", "\xA0", /*#__PURE__*/React.createElement((react_popover__WEBPACK_IMPORTED_MODULE_10___default()), {
           isOpen: this.state.showServerPopover,
@@ -57522,7 +57458,7 @@ var App = /*#__PURE__*/function (_React$Component) {
           onOuterAction: function onOuterAction() {
             return _this12.toggleBoolean('showServerPopover');
           }
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
@@ -57531,7 +57467,7 @@ var App = /*#__PURE__*/function (_React$Component) {
           }
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-plus"
-        })))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        })))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           eventKey: "channels"
         }, /*#__PURE__*/React.createElement("span", null, "Channels (" + this.state.channels.length + ")", "\xA0", /*#__PURE__*/React.createElement((react_popover__WEBPACK_IMPORTED_MODULE_10___default()), {
           isOpen: this.state.showChannelPopover,
@@ -57541,7 +57477,7 @@ var App = /*#__PURE__*/function (_React$Component) {
           onOuterAction: function onOuterAction() {
             return _this12.toggleBoolean('showChannelPopover');
           }
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], {
           size: "sm",
           className: "tab_btn",
           variant: "success",
@@ -57550,71 +57486,71 @@ var App = /*#__PURE__*/function (_React$Component) {
           }
         }, /*#__PURE__*/React.createElement("i", {
           className: "fas fa-plus"
-        })))))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_24__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
+        })))))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"].Pane, {
           eventKey: "bots"
         }, /*#__PURE__*/React.createElement(_model_bot_BotListView__WEBPACK_IMPORTED_MODULE_1__["default"], {
           bots: this.state.bots,
           onDelete: this.onDelete,
           onCreate: this.onCreate
-        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
+        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"].Pane, {
           eventKey: "servers"
         }, /*#__PURE__*/React.createElement(_model_server_ServerListView__WEBPACK_IMPORTED_MODULE_3__["default"], {
           servers: this.state.servers,
           onDelete: this.onDelete,
           onCreate: this.onCreate
-        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
+        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"].Pane, {
           eventKey: "channels"
         }, /*#__PURE__*/React.createElement(_model_channel_ChannelListView__WEBPACK_IMPORTED_MODULE_4__["default"], {
           channels: this.state.channels,
           onDelete: this.onDelete,
           onCreate: this.onCreate
-        }))))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
+        }))))))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
           xs: 12,
           md: 7,
           className: "column"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"], {
           className: "customCard"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Container, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"].Container, {
           defaultActiveKey: "activeDownloads"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Header, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"], {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Header, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"], {
           fill: true,
           variant: "tabs"
-        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           eventKey: "activeDownloads"
-        }, "Active Downloads (" + this.state.downloads.length + ")")), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        }, "Active Downloads (" + this.state.downloads.length + ")")), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           eventKey: "completedDownloads"
-        }, "Completed (" + this.state.doneDownloads.length + ")")), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"].Link, {
+        }, "Completed (" + this.state.doneDownloads.length + ")")), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Item, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_18__["default"].Link, {
           eventKey: "failedDownloads"
-        }, "Failed (" + this.state.failedDownloads.length + ")")))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_24__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
+        }, "Failed (" + this.state.failedDownloads.length + ")")))), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_17__["default"].Body, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_21__["default"], null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"].Pane, {
           eventKey: "activeDownloads"
         }, /*#__PURE__*/React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           downloads: this.state.downloads,
           onDelete: this.onDelete,
           onCancel: this.onCancel
-        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
+        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"].Pane, {
           eventKey: "completedDownloads"
         }, /*#__PURE__*/React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           downloads: this.state.doneDownloads,
           onDelete: this.onDelete
-        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_22__["default"].Pane, {
+        })), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"].Pane, {
           eventKey: "failedDownloads"
         }, /*#__PURE__*/React.createElement(_model_download_DownloadListView__WEBPACK_IMPORTED_MODULE_2__["default"], {
           downloads: this.state.failedDownloads,
           onDelete: this.onDelete
-        })))))))), this.state.activePage == 'settings' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
+        })))))))), this.state.activePage == 'settings' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
           xs: 12,
           md: 10,
           className: "column"
         }, /*#__PURE__*/React.createElement(_model_settings_Settings__WEBPACK_IMPORTED_MODULE_9__["default"], {
           userSettings: this.state.user.userSettings,
           onCreate: this.onCreate
-        }))), this.state.activePage == 'about' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_19__["default"], {
+        }))), this.state.activePage == 'about' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_16__["default"], {
           xs: 12,
           md: 10,
           className: "column"
         }, /*#__PURE__*/React.createElement("div", {
           className: "jumbotron"
-        }, /*#__PURE__*/React.createElement("h1", null, "About XDCC Webloader"), /*#__PURE__*/React.createElement("p", null, "Information about the project"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_23__["default"], {
+        }, /*#__PURE__*/React.createElement("h1", null, "About XDCC Webloader"), /*#__PURE__*/React.createElement("p", null, "Information about the project"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_20__["default"], {
           variant: "primary"
         }, "Learn more"))))))));
       }

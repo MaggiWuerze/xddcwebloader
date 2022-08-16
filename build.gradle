@@ -62,6 +62,10 @@ dependencies {
     implementation('org.webjars:font-awesome:6.1.2')
 }
 
+group = "de.maggiwuerze"
+version = "0.5.0-SNAPSHOT"
+description = "xdccloader"
+
 publishing {
     publications.create("maven", MavenPublication) {
         from(components["java"])
