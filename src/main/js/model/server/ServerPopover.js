@@ -1,9 +1,9 @@
-import {Button, Card, FormControl, InputGroup} from "react-bootstrap";
+import {Button, Card, FormControl, InputGroup, OverlayTrigger, Popover} from "react-bootstrap";
 
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-export default class ServerInputs extends React.Component {
+export default class ServerPopover extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -21,6 +21,11 @@ export default class ServerInputs extends React.Component {
 		this.props.onCreate(newServer, 'servers', 'showServerPopover', this.props.onFinish);
 	}
 
+	handleInput(e) {
+		// e.target.value = e.target.value + e.key;
+		return false;
+	}
+
 	render() {
 		const inputs = this.props.attributes.map(attribute => {
 					let input = "";
@@ -33,6 +38,7 @@ export default class ServerInputs extends React.Component {
 												placeholder={attribute}
 												ref={attribute}
 												aria-label={attribute}
+												onKeyDown={(e) => {this.handleInput(e)}}
 										/>
 									</InputGroup>;
 						case 'serverUrl':
@@ -43,6 +49,7 @@ export default class ServerInputs extends React.Component {
 												placeholder={attribute}
 												ref={attribute}
 												aria-label={attribute}
+												onKeyDown={(e) => {this.handleInput(e)}}
 										/>
 									</InputGroup>;
 						default:
@@ -54,18 +61,27 @@ export default class ServerInputs extends React.Component {
 
 		return (
 				<>
-					<Card>
-						<Card.Header>{this.props.modalTitle}</Card.Header>
-						<Card.Body>
-							{inputs}
-						</Card.Body>
-						<Card.Footer className="text-muted">
-							<Button variant="success" onClick={(e) => this.handleSubmit(e)}>
-								Create a Server
-							</Button>
-						</Card.Footer>
-					</Card>
-
+					<OverlayTrigger
+							trigger="click"
+							key="server-po"
+							placement="top"
+							rootClose
+							overlay={
+								<Popover id={`server-popover`}>
+									<Popover.Header as="h3">{this.props.modaltitle}</Popover.Header>
+									<Popover.Body>
+										{inputs}
+										<Button variant="success" onClick={(e) => this.handleSubmit(e)}>
+											Create a Server
+										</Button>
+									</Popover.Body>
+								</Popover>
+							}
+					>
+						<Button size="lg" className={"tab_btn"} variant="success">
+							<i className="fas fa-plus"></i>
+						</Button>
+					</OverlayTrigger>
 				</>
 		)
 	}

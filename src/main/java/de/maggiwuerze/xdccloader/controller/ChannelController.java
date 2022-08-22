@@ -8,6 +8,7 @@ import de.maggiwuerze.xdccloader.service.ChannelService;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,13 +32,18 @@ class ChannelController {
 	@GetMapping("/channels/")
 	public ResponseEntity<List<ChannelTO>> getAllChannels() {
 		List<ChannelTO> channels = channelService.list().stream().map(ChannelTO::new).collect(Collectors.toList());
-		return new ResponseEntity(channels, HttpStatus.OK);
+		return new ResponseEntity<>(channels, HttpStatus.OK);
 	}
 
 	@PostMapping("/channels/")
 	public ResponseEntity<?> addChannel(@RequestBody ChannelForm channelForm) {
-		Channel channel = channelService.save(new Channel(channelForm.getName()));
-		return new ResponseEntity("Download added succcessfully. id=[" + channel.getId() + "]", HttpStatus.OK);
+		try {
+			Channel channel = channelService.save(new Channel(channelForm.getName()));
+			return new ResponseEntity<>("Download added successfully. id=[" + channel.getId() + "]", HttpStatus.OK);
+		} catch (ConstraintViolationException e) {
+			log.error(e.getMessage());
+			return new ResponseEntity<>(e.getConstraintViolations().stream().findFirst().get().getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -45,16 +51,16 @@ class ChannelController {
 	 */
 	@GetMapping("/channels/example")
 	public ResponseEntity<List<Channel>> getExampleChannel(Principal principal) {
-		return new ResponseEntity(List.of(new Channel()), HttpStatus.OK);
+		return new ResponseEntity<>(List.of(new Channel()), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/channels/")
 	public ResponseEntity<?> delete( Long channelId) {
 		try {
 			channelService.delete(channelId);
-			return new ResponseEntity("Channel deleted succcessfully.", HttpStatus.OK);
+			return new ResponseEntity<>("Channel deleted successfully.", HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity("Channel could not be deleted", HttpStatus.CONFLICT);
+			return new ResponseEntity<>("Channel could not be deleted", HttpStatus.CONFLICT);
 		}
 
 	}

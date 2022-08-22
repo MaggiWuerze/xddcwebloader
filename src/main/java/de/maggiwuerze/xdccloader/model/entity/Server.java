@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Server {
@@ -14,9 +15,11 @@ public class Server {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 
+	@Size(min=1, message = "Server name must be at least 1 character long")
 	@Column(nullable = false)
 	String name;
 
+	@Size(min=1, message = "Server URL must be at least 1 character long")
 	@Column(nullable = false)
 	String serverUrl;
 

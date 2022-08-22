@@ -9,6 +9,9 @@ import de.maggiwuerze.xdccloader.service.ServerService;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,8 +40,14 @@ class ServerController {
 
 	@PostMapping("/servers/")
 	public ResponseEntity<?> addServer(@RequestBody ServerForm serverForm) {
-		Server server = serverService.save(new Server(serverForm.getName(), serverForm.getServerUrl()));
-		return new ResponseEntity("Download added succcessfully. id=[" + server.getId() + "]", HttpStatus.OK);
+		try {
+			Server server = serverService.save(new Server(serverForm.getName(), serverForm.getServerUrl()));
+			return new ResponseEntity("Download added successfully. id=[" + server.getId() + "]", HttpStatus.OK);
+		} catch (ConstraintViolationException e) {
+			log.error(e.getMessage());
+			String errormessage = e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining("\n"));
+			return new ResponseEntity(errormessage, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -53,7 +62,7 @@ class ServerController {
 	public ResponseEntity<?> delete( Long serverId) {
 		try {
 			serverService.delete(serverId);
-			return new ResponseEntity("Server deleted succcessfully.", HttpStatus.OK);
+			return new ResponseEntity("Server deleted successfully.", HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity("Server could not be deleted", HttpStatus.CONFLICT);
 		}

@@ -4,14 +4,13 @@ import BotListView from './model/bot/BotListView';
 import DownloadListView from './model/download/DownloadListView';
 import ServerListView from './model/server/ServerListView';
 import ChannelListView from './model/channel/ChannelListView';
-import BotInputs from './model/bot/BotInputs';
-import ServerInputs from './model/server/ServerInputs';
-import ChannelInputs from './model/channel/ChannelInputs';
+import BotPopover from './model/bot/BotPopover';
+import ServerPopover from './model/server/ServerPopover';
+import ChannelPopover from './model/channel/ChannelPopover';
 import InitWizard from './model/wizard/InitWizard';
 import Settings from './model/settings/Settings';
 
-import {Button, Card, Col, Container, Nav, Row, Tab, Toast, TabContent, ToastContainer} from 'react-bootstrap';
-import Popover from 'react-popover';
+import {Button, Card, Col, Container, Nav, Row, Tab, Toast, TabContent, ToastContainer,Popover, OverlayTrigger} from 'react-bootstrap';
 
 import axios from 'axios';
 
@@ -77,7 +76,8 @@ class App extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading initialization state!", error.message)
+					console.error(error);
 				});
 	}
 
@@ -92,7 +92,8 @@ class App extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading user data!", error.message)
+					console.error(error);
 				});
 	}
 
@@ -103,7 +104,8 @@ class App extends React.Component {
 					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'botAttributes') : null;
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading bot fields!", error.message)
+					console.error(error);
 				});
 		axios
 				.get('servers/example', {})
@@ -111,7 +113,8 @@ class App extends React.Component {
 					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'serverAttributes') : null;
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading server fields!", error.message)
+					console.error(error);
 				});
 		axios
 				.get('channels/example', {})
@@ -119,7 +122,8 @@ class App extends React.Component {
 					response.data[0] ? this.updateAttributes(Object.keys(response.data[0]), 'channelAttributes') : null;
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading channel fields!", error.message)
+					console.error(error);
 				});
 	}
 
@@ -137,11 +141,15 @@ class App extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading bot data!", error.message)
+					console.error(error);
 				});
+		//closing popup
+		document.body.click();
 	}
 
 	loadServerData() {
+		console.debug("reloading server data")
 		axios
 				.get('servers/')
 				.then((response) => {
@@ -150,8 +158,11 @@ class App extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading server data!", error.message)
+					console.error(error);
 				});
+		//closing popup
+		document.body.click();
 	}
 
 	loadChannelData() {
@@ -163,8 +174,11 @@ class App extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading channel data!", error.message)
+					console.error(error);
 				});
+		//closing popup
+		document.body.click();
 	}
 
 	loadDownloadData() {
@@ -181,7 +195,8 @@ class App extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading active downloads!", error.message)
+					console.error(error);
 				});
 
 		axios
@@ -192,7 +207,8 @@ class App extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.debug(error);
+					this.showErrorToast("Error loading failed downloads!", error.message)
+					console.error(error);
 				});
 
 		axios
@@ -207,12 +223,12 @@ class App extends React.Component {
 					});
 				})
 				.catch((error) => {
-					console.debug(error);
+					console.error(error);
+					this.showErrorToast("Error loading active downloads!", error.message)
 				});
 	}
 
 	onCreate(object, objectType, modalName, callback) {
-		console.debug("onCreate with: {object}, {objectType}, {modalName}, {callback}")
 		axios
 				.post(objectType + '/', object)
 				.then((response) => {
@@ -223,14 +239,12 @@ class App extends React.Component {
 							break;
 
 						default:
-							console.debug("onCreate error");
-							console.debug("statuscode: " + response.status.toString());
 							callback ? callback(false) : '';
 					}
 				}).catch((error) => {
-			callback ? callback(false) : '';
-			console.debug(error);
-		});
+					// callback ? callback(false) : '';
+					this.showErrorToast("Error creating " + objectType+ "!", error.response.data)
+				});
 	}
 
 	onDelete(payload, type) {
@@ -254,12 +268,13 @@ class App extends React.Component {
 									break;
 
 								default:
-									console.debug("onDelete error");
-									console.debug("statuscode: " + response.status.toString());
+									console.error("onDelete error");
+									console.error("statuscode: " + response.status.toString());
 									callback ? callback(false) : '';
 							}
 						}).catch((error) => {
-							console.debug(error);
+						this.showErrorToast("Error deleting download!", error.message)
+						console.error(error);
 						});
 					break;
 				case 'BOT':
@@ -470,6 +485,11 @@ class App extends React.Component {
 					failedDownloads: this.removeFromListById(failedDownloads, message.id)
 				});
 				break;
+			case '/topic/newServer':
+				this.setState({
+					server: this.addToListAndSort(this.state.servers, message)
+				});
+				break;
 
 			case '/topic/timeout':
 				console.debug("your session has timed out. please log in again");
@@ -543,23 +563,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		const botPopover = (
-				<BotInputs modaltitle="Create new Bot" attributes={this.state.botAttributes}
-						show={this.state.showBotModal} onFinish={() => this.loadBotData()}
-						onCreate={this.onCreate}/>
-		);
-
-		const serverPopover = (
-				<ServerInputs modaltitle="Create new Bot" attributes={this.state.serverAttributes}
-						show={this.state.showBotModal} onFinish={() => this.loadServerData()}
-						onCreate={this.onCreate}/>
-		);
-
-		const channelPopover = (
-				<ChannelInputs modaltitle="Create new Bot" attributes={this.state.channelAttributes}
-						show={this.state.showBotModal} onFinish={() => this.loadChannelData()}
-						onCreate={this.onCreate}/>
-		);
 
 		const toasts = this.state.toasts.map((toast, idx) =>
 				<Toast
@@ -586,7 +589,7 @@ class App extends React.Component {
 			return (
 					<React.Fragment>
 						<Container fluid>
-							<ToastContainer position='top-end' style={{margin: '1rem' , zIndex: '999'}}>
+							<ToastContainer className="toast-container" position='top-end'>
 								{toasts}
 							</ToastContainer>
 							<Row>
@@ -633,17 +636,6 @@ class App extends React.Component {
 															<Nav.Link eventKey="bots">
                                                         <span>
                                                             {"Bots (" + this.state.bots.length + ")"}&nbsp;
-															<Popover
-																	isOpen={this.state.showBotPopover}
-																	body={botPopover}
-																	place="below"
-																	enterExitTransitionDurationMs={300}
-																	onOuterAction={() => this.toggleBoolean('showBotPopover')}>
-                                                                <Button size="sm" className={"tab_btn"} variant="success"
-																		onClick={() => this.toggleBoolean('showBotPopover')}>
-                                                                    <i className="fas fa-plus"></i>
-                                                                </Button>
-                                                             </Popover>
                                                         </span>
 															</Nav.Link>
 														</Nav.Item>
@@ -651,17 +643,6 @@ class App extends React.Component {
 															<Nav.Link eventKey="servers">
                                                         <span>
                                                             {"Servers (" + this.state.servers.length + ")"}&nbsp;
-															<Popover
-																	isOpen={this.state.showServerPopover}
-																	body={serverPopover}
-																	place="below"
-																	enterExitTransitionDurationMs={300}
-																	onOuterAction={() => this.toggleBoolean('showServerPopover')}>
-                                                                <Button size="sm" className={"tab_btn"} variant="success"
-																		onClick={() => this.toggleBoolean('showServerPopover')}>
-                                                                    <i className="fas fa-plus"></i>
-                                                                </Button>
-                                                             </Popover>
                                                         </span>
 															</Nav.Link>
 														</Nav.Item>
@@ -669,17 +650,6 @@ class App extends React.Component {
 															<Nav.Link eventKey="channels">
                                                         <span>
                                                             {"Channels (" + this.state.channels.length + ")"}&nbsp;
-															<Popover
-																	isOpen={this.state.showChannelPopover}
-																	body={channelPopover}
-																	place="below"
-																	enterExitTransitionDurationMs={300}
-																	onOuterAction={() => this.toggleBoolean('showChannelPopover')}>
-                                                                <Button size="sm" className={"tab_btn"} variant="success"
-																		onClick={() => this.toggleBoolean('showChannelPopover')}>
-                                                                    <i className="fas fa-plus"></i>
-                                                                </Button>
-                                                             </Popover>
                                                         </span>
 															</Nav.Link>
 														</Nav.Item>
@@ -692,18 +662,35 @@ class App extends React.Component {
 																	bots={this.state.bots}
 																	onDelete={this.onDelete}
 																	onCreate={this.onCreate}/>
+															<div className="popover-btn">
+																<BotPopover modaltitle="Create new Bot" attributes={this.state.botAttributes}
+																		show={this.state.showBotModal} onFinish={() => this.loadBotData()}
+																		onCreate={this.onCreate}/>
+															</div>
 														</Tab.Pane>
 														<Tab.Pane eventKey="servers">
 															<ServerListView
 																	servers={this.state.servers}
 																	onDelete={this.onDelete}
 																	onCreate={this.onCreate}/>
+															<div className="popover-btn">
+																<ServerPopover modaltitle="Create new Bot" attributes={this.state.serverAttributes}
+																		onFinish={() => this.loadServerData()}
+																		onCreate={this.onCreate}/>
+															</div>
 														</Tab.Pane>
 														<Tab.Pane eventKey="channels">
 															<ChannelListView
 																	channels={this.state.channels}
 																	onDelete={this.onDelete}
 																	onCreate={this.onCreate}/>
+															<div className="popover-btn">
+																<ChannelPopover modaltitle="Create new Bot"
+																		attributes={this.state.channelAttributes}
+																		onFinish={() => this.loadChannelData()}
+																		onCreate={this.onCreate}/>
+															</div>
+
 														</Tab.Pane>
 													</TabContent>
 												</Card.Body>

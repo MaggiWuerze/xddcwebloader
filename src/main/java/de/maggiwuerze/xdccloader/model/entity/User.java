@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,9 +33,11 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	Boolean active = true;
 
+	@Size(min=1)
 	@Column(nullable = false, unique = true)
 	String name;
 
+	@Size(min=1)
 	@Column(nullable = false, unique = true)
 	String password;
 

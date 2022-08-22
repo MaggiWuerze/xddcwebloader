@@ -1,9 +1,9 @@
-import {Button, Card, FormControl, InputGroup} from "react-bootstrap";
+import {Button, Card, FormControl, InputGroup, OverlayTrigger, Popover} from "react-bootstrap";
 
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-export default class ChannelInputs extends React.Component {
+export default class ChannelPopover extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -43,18 +43,29 @@ export default class ChannelInputs extends React.Component {
 
 		return (
 				<>
-					<Card>
-						<Card.Header>{this.props.modalTitle}</Card.Header>
-						<Card.Body>
-							{inputs}
-						</Card.Body>
-						<Card.Footer className="text-muted">
-							<Button variant="success" onClick={this.handleSubmit}>
-								Create a Channel
-							</Button>
-						</Card.Footer>
-					</Card>
+					<OverlayTrigger
+							trigger="click"
+							key="channel-po"
+							placement="top"
+							rootClose
+							overlay={
+								<Popover id={`channel-popover`}>
+									<Popover.Header as="h3">{this.props.modaltitle}</Popover.Header>
+									<Popover.Body>
+										{inputs}
+										<Button variant="success" onClick={(e) => this.handleSubmit(e)}>
+											Create a Channel
+										</Button>
+									</Popover.Body>
+								</Popover>
+							}
+					>
+						<Button size="lg" className={"tab_btn"} variant="success" onClick={() => this.setState({showChannelPopover: !this.state.showChannelPopover})}>
+							<i className="fas fa-plus"></i>
+						</Button>
+					</OverlayTrigger>
 				</>
+
 		)
 	}
 }

@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
@@ -26,15 +28,19 @@ public class Bot {
 	@JoinColumn(name = "SERVER_ID")
 	Server server;
 
+	@Size(min=1, message = "Bot name must be at least 1 character long")
 	@Column(nullable = false)
 	String name;
 
+	@Size(min=1, message = "Bot pattern must be at least 1 character long")
 	@Column(nullable = false)
 	String pattern;
 
 	@Column(nullable = false)
 	LocalDateTime creationDate = LocalDateTime.now();
 
+
+	@Min(1L)
 	@Column(nullable = false)
 	Long maxParallelDownloads = 3L;
 

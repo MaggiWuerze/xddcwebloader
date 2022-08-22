@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +33,7 @@ public class UserSettings {
 	@Column(nullable = false)
 	LocalDateTime creationDate = LocalDateTime.now();
 
+	@Min(value = 1L, message = "Refresh rate may not be shorter than 1 second")
 	@Column(nullable = false)
 	Long refreshrateInSeconds = 1L;
 
@@ -38,9 +41,11 @@ public class UserSettings {
 	@Enumerated(EnumType.STRING)
 	DownloadSort downloadSortBy = DownloadSort.PROGRESS;
 
+	@Min(value = 1, message = "Session Timeout may not be shorter than 1 second")
 	@Column(nullable = false)
 	Long sessionTimeout = 300L;
 
+	@Size(min=1, message = "Download path may not be empty")
 	@Column(nullable = false)
 	String downloadPath = "xdcc/";
 

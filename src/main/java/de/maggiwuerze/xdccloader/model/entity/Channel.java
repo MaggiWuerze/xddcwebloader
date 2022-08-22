@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Channel {
@@ -14,6 +15,7 @@ public class Channel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 
+	@Size(min=1, message = "Channel name must be at least 1 character long")
 	@Column(nullable = false)
 	String name;
 

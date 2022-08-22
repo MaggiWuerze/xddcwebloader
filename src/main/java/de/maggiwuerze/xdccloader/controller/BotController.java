@@ -16,6 +16,8 @@ import de.maggiwuerze.xdccloader.service.UserService;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,16 +42,21 @@ class BotController {
 
 	@PostMapping("/bots/")
 	public ResponseEntity<?> addBot(@RequestBody TargetBotForm form, Principal principal) {
-		User user = userService.findUserByName(principal.getName());
-		Server server = serverService.findById(form.getServerId());
-		Channel channel = channelService.findById(form.getChannelId());
-		Bot bot = new Bot(server, channel, form.getName(), form.getPattern(), form.getMaxParallelDownloads());
-		botService.save(bot);
-		user.getBots().add(bot);
-		userService.saveUser(user);
-
-		eventService.publishEvent(SocketEvents.NEW_SERVER, bot);
-		return new ResponseEntity("Bot added succcessfully", HttpStatus.OK);
+		try {
+			User user = userService.findUserByName(principal.getName());
+			Server server = serverService.findById(form.getServerId());
+			Channel channel = channelService.findById(form.getChannelId());
+			Bot bot = new Bot(server, channel, form.getName(), form.getPattern(), form.getMaxParallelDownloads());
+			botService.save(bot);
+			user.getBots().add(bot);
+			userService.saveUser(user);
+			eventService.publishEvent(SocketEvents.NEW_SERVER, bot);
+			return new ResponseEntity<>("Bot added successfully", HttpStatus.OK);
+		} catch (ConstraintViolationException e) {
+			log.error(e.getMessage());
+			String errormessage = e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining("\n"));
+			return new ResponseEntity<>(errormessage, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -59,7 +66,7 @@ class BotController {
 	public ResponseEntity<List<BotTO>> getAllBots(Principal principal) {
 		User user = userService.findUserByName(principal.getName());
 		List<BotTO> bots = user.getBots().stream().map(BotTO::new).collect(Collectors.toList());
-		return new ResponseEntity(bots, HttpStatus.OK);
+		return new ResponseEntity<>(bots, HttpStatus.OK);
 	}
 
 	/**
@@ -67,7 +74,7 @@ class BotController {
 	 */
 	@GetMapping("/bots/example")
 	public ResponseEntity<List<Bot>> getExampleBot(Principal principal) {
-		return new ResponseEntity(List.of(new Bot()), HttpStatus.OK);
+		return new ResponseEntity<>(List.of(new Bot()), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/bots/")
@@ -77,9 +84,9 @@ class BotController {
 			currentUser.getBots().remove(botService.findById(botId));
 			userService.saveUser(currentUser);
 			botService.delete(botId);
-			return new ResponseEntity("Bot deleted succcessfully.", HttpStatus.OK);
+			return new ResponseEntity<>("Bot deleted successfully.", HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity("Bot could not be deleted", HttpStatus.CONFLICT);
+			return new ResponseEntity<>("Bot could not be deleted", HttpStatus.CONFLICT);
 		}
 	}
 }
