@@ -23,10 +23,9 @@
     "axios": "^1.6.2",
     "bootstrap": "5.1.1",
     "react": "^17.0.2",
-    "react-bootstrap": "1.6.7",
+    "react-bootstrap": "2.9.1",
     "react-dom": "^17.0.2",
     "react-popover": "^0.5.10",
-
     "rest": "^2.0.0",
     "sockjs-client": "^1.5.2",
     "stompjs": "^2.3.3"

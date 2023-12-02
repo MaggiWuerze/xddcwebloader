@@ -1,4 +1,4 @@
-import {Button, Card, Container, FormControl, InputGroup, ListGroup} from "react-bootstrap";
+import {Button, Card, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
 
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -47,28 +47,22 @@ export default class BotCard extends React.Component {
 				<Card style={{margin: '10px'}}>
 					<Card.Header onClick={() => this.setState({open: !open})}>{this.props.bot.name}</Card.Header>
 					<Card.Body>
-						{/*<Collapse in={this.state.open}>*/}
 						<Container fluid>
 							<ListGroup variant="flush">
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Channelname</InputGroup.Text>
-										</InputGroup.Prepend>
-										<FormControl
+										<InputGroup.Text>Channelname</InputGroup.Text>
+										<Form.Control
 												disabled
 												value={this.props.bot.channel.name}
 												aria-label="file reference id"
 										/>
 									</InputGroup>
-									{/*{"Channelname: " + this.props.bot.channel.name}*/}
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Servername</InputGroup.Text>
-										</InputGroup.Prepend>
-										<FormControl
+										<InputGroup.Text>Servername</InputGroup.Text>
+										<Form.Control
 												disabled
 												value={this.props.bot.server.name}
 												aria-label="file reference id"
@@ -77,10 +71,8 @@ export default class BotCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Bot Messagepattern</InputGroup.Text>
-										</InputGroup.Prepend>
-										<FormControl
+										<InputGroup.Text>Bot Messagepattern</InputGroup.Text>
+										<Form.Control
 												disabled
 												value={this.props.bot.pattern}
 												aria-label="file reference id"
@@ -89,10 +81,8 @@ export default class BotCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Max Parallel Downloads</InputGroup.Text>
-										</InputGroup.Prepend>
-										<FormControl
+										<InputGroup.Text>Max Parallel Downloads</InputGroup.Text>
+										<Form.Control
 												disabled
 												value={this.props.bot.maxParallelDownloads}
 												aria-label="file reference id"
@@ -101,20 +91,17 @@ export default class BotCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<FormControl
+										<Form.Control
 												onKeyDown={this.handleKeyDown}
 												ref={this.props.bot.id + "-fileRefId"}
 												placeholder="fileRefId (eg. #3452)"
 												aria-label="file reference id"
 										/>
-										<InputGroup.Append>
-											<Button variant="outline-secondary" onClick={this.handleSubmit}>Send</Button>
-										</InputGroup.Append>
+										<Button variant="outline-secondary" onClick={this.handleSubmit}>Send</Button>
 									</InputGroup>
 								</ListGroup.Item>
 							</ListGroup>
 						</Container>
-						{/*</Collapse>*/}
 					</Card.Body>
 				</Card>
 		)

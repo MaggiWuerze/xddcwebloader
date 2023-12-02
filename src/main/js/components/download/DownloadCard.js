@@ -69,7 +69,7 @@ export default class DownloadCard extends React.Component {
 										variant={this.decideAlertType()}
 										now={this.props.download.progress}
 										label={this.props.download.status + ' (' + this.props.download.progress + '%)' + (this.props.download.status != "DONE" ? ' @ ' + this.props.download.averageSpeed + "/s" + " time remaining: " + this.props.download.timeRemaining : "")}/>
-								<InputGroup.Append>
+
 									<Button
 											size="sm"
 											title="Remove Download"
@@ -78,7 +78,7 @@ export default class DownloadCard extends React.Component {
 											onClick={() => this.handleDelete()}>
 										<i className="fas fa-trash"></i>
 									</Button>
-								</InputGroup.Append>
+
 							</InputGroup>
 						</Container>
 					</Card.Body>

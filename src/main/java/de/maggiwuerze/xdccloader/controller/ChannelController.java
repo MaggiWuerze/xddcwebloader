@@ -25,8 +25,7 @@ class ChannelController {
 	 */
 	@GetMapping("/channels/")
 	public ResponseEntity<List<Channel>> getAllChannels() {
-		List<Channel> channels = channelService.list();
-		return new ResponseEntity(channels, HttpStatus.OK);
+		return new ResponseEntity(channelService.list(), HttpStatus.OK);
 	}
 
 	@PostMapping("/channels/")

@@ -1,4 +1,4 @@
-import {Card, Container, FormControl, InputGroup, ListGroup} from "react-bootstrap";
+import {Card, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
 
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -25,54 +25,16 @@ export default class ChannelCard extends React.Component {
 							<ListGroup variant="flush">
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
+										
 											<InputGroup.Text>Channelname</InputGroup.Text>
-										</InputGroup.Prepend>
-										<FormControl
+										
+										<Form.Control
 												disabled
 												value={this.props.channel.name}
 												aria-label="file reference id"
 										/>
 									</InputGroup>
-									{/*{"Channelname: " + this.props.bot.channel.name}*/}
 								</ListGroup.Item>
-								{/*<ListGroup.Item>*/}
-								{/*    <InputGroup size="sm">*/}
-								{/*        <InputGroup.Prepend>*/}
-								{/*            <InputGroup.Text>Servername</InputGroup.Text>*/}
-								{/*        </InputGroup.Prepend>*/}
-								{/*        <FormControl*/}
-								{/*            disabled*/}
-								{/*            value={this.props.bot.server.name}*/}
-								{/*            aria-label="file reference id"*/}
-								{/*        />*/}
-								{/*    </InputGroup>*/}
-								{/*</ListGroup.Item>*/}
-								{/*<ListGroup.Item>*/}
-								{/*    <InputGroup size="sm">*/}
-								{/*        <InputGroup.Prepend>*/}
-								{/*            <InputGroup.Text>Bot Messagepattern</InputGroup.Text>*/}
-								{/*        </InputGroup.Prepend>*/}
-								{/*        <FormControl*/}
-								{/*            disabled*/}
-								{/*            value={this.props.bot.pattern}*/}
-								{/*            aria-label="file reference id"*/}
-								{/*        />*/}
-								{/*    </InputGroup>*/}
-								{/*</ListGroup.Item>*/}
-								{/*<ListGroup.Item>*/}
-								{/*    <InputGroup size="sm">*/}
-								{/*        <FormControl*/}
-								{/*            onKeyDown={this.handleKeyDown}*/}
-								{/*            ref={this.props.bot.id + "-fileRefId"}*/}
-								{/*            placeholder="fileRefId (eg. #3452)"*/}
-								{/*            aria-label="file reference id"*/}
-								{/*        />*/}
-								{/*        <InputGroup.Append>*/}
-								{/*            <Button variant="outline-secondary" onClick={this.handleSubmit}>Send</Button>*/}
-								{/*        </InputGroup.Append>*/}
-								{/*    </InputGroup>*/}
-								{/*</ListGroup.Item>*/}
 							</ListGroup>
 						</Container>
 					</Card.Body>

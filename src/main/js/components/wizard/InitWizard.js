@@ -289,9 +289,9 @@ export default class InitWizard extends React.Component {
                                 <Row>
                                     <Col>
                                         <InputGroup className="mb-3">
-                                            <InputGroup.Prepend>
+
                                               <InputGroup.Text id="basic-addon1">Servername</InputGroup.Text>
-                                            </InputGroup.Prepend>
+                                            "
                                             <Form.Control
                                                 id="wizardFormServerName"
                                                 required
@@ -306,9 +306,9 @@ export default class InitWizard extends React.Component {
                                         </InputGroup>
 
                                         <InputGroup className="mb-3">
-                                            <InputGroup.Prepend>
+
                                               <InputGroup.Text id="basic-addon1">Server URL</InputGroup.Text>
-                                            </InputGroup.Prepend>
+                                            "
                                             <Form.Control
                                                 id="wizardFormServerUrl"
                                                 required
@@ -356,9 +356,9 @@ export default class InitWizard extends React.Component {
                                       This is the channel where you want to request your files.
                                     </p>
                                     <InputGroup className="mb-3">
-                                      <InputGroup.Prepend>
+
                                         <InputGroup.Text id="basic-addon2">Channelname</InputGroup.Text>
-                                      </InputGroup.Prepend>
+                                      "
                                       <Form.Control
                                         id="wizardFormChannelName"
                                         required
@@ -406,9 +406,9 @@ export default class InitWizard extends React.Component {
                                         It is <b>mandatory</b> to include the <code>'%s'</code>
                                     </p>
                                     <InputGroup className="mb-3">
-                                        <InputGroup.Prepend>
+
                                           <InputGroup.Text id="basic-addon3">Botname</InputGroup.Text>
-                                        </InputGroup.Prepend>
+                                        "
                                         <FormControl
                                             id="wizardFormBotName"
                                             required
@@ -420,9 +420,9 @@ export default class InitWizard extends React.Component {
                                         />
                                     </InputGroup>
                                     <InputGroup className="mb-3">
-                                        <InputGroup.Prepend>
+
                                           <InputGroup.Text id="basic-addon4">Messagepattern</InputGroup.Text>
-                                        </InputGroup.Prepend>
+                                        "
                                         <Form.Control
                                             id="wizardFormBotPattern"
                                             required
@@ -459,11 +459,11 @@ export default class InitWizard extends React.Component {
                             <Row>
                                 <Col>
                                     <InputGroup className="mb-3">
-                                        <InputGroup.Prepend>
+
                                             <InputGroup.Text id="basic-addon5">
                                                 File reference
                                             </InputGroup.Text>
-                                        </InputGroup.Prepend>
+                                        "
                                         <FormControl
                                             required
                                             id="wizardFormFileRef"

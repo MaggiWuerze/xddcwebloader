@@ -1,4 +1,4 @@
-import {Card, Container, FormControl, InputGroup, ListGroup} from "react-bootstrap";
+import {Card, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
 
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -25,10 +25,8 @@ export default class ServerCard extends React.Component {
 							<ListGroup variant="flush">
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Servername</InputGroup.Text>
-										</InputGroup.Prepend>
-										<FormControl
+										{/*<InputGroup.Text>Servername</InputGroup.Text>*/}
+										<Form.Control
 												disabled
 												value={this.props.server.name}
 												aria-label="file reference id"/>
@@ -36,10 +34,8 @@ export default class ServerCard extends React.Component {
 								</ListGroup.Item>
 								<ListGroup.Item>
 									<InputGroup size="sm">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Server URL</InputGroup.Text>
-										</InputGroup.Prepend>
-										<FormControl
+										{/*<InputGroup.Text>Server URL</InputGroup.Text>*/}
+										<Form.Control
 												disabled
 												value={this.props.server.serverUrl}
 												aria-label="file reference id"/>

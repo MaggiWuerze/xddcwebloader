@@ -28,9 +28,9 @@ export default class ServerInputs extends React.Component {
 						case 'name':
 							input =
 									<InputGroup className="mb-3" key={attribute}>
-										<InputGroup.Prepend>
+
 											<InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
-										</InputGroup.Prepend>
+										"
 										<FormControl
 												placeholder={attribute}
 												ref={attribute}
@@ -40,9 +40,9 @@ export default class ServerInputs extends React.Component {
 						case 'serverUrl':
 							input =
 									<InputGroup className="mb-3" key={attribute}>
-										<InputGroup.Prepend>
+
 											<InputGroup.Text id="basic-addon1" key={attribute}>{attribute}</InputGroup.Text>
-										</InputGroup.Prepend>
+										"
 										<FormControl
 												placeholder={attribute}
 												ref={attribute}

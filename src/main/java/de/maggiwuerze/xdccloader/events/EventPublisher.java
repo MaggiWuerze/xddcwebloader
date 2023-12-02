@@ -6,12 +6,14 @@ import de.maggiwuerze.xdccloader.model.download.Download;
 import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.service.DownloadService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class EventPublisher {
 
 	private static final String MESSAGE_PREFIX = "/topic";
@@ -39,7 +41,11 @@ public class EventPublisher {
 		bot.stopBotReconnect();
 		Download download = downloadService.getById(bot.getDownloadId());
 		String message = String.format(DownloadState.ERROR.getExternalString(), exception.getMessage());
-		download.setStatusMessage(message);
-		updateDownloadState(DownloadState.ERROR, download);
+		try {
+			download.setStatusMessage(message);
+			updateDownloadState(DownloadState.ERROR, download);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 	}
 }
