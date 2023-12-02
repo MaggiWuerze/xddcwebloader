@@ -6,5 +6,6 @@ import lombok.Value;
 public class ServerForm {
 
 	private final String name;
+
 	private final String serverUrl;
 }

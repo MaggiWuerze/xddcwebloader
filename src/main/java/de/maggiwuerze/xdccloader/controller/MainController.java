@@ -3,6 +3,7 @@ package de.maggiwuerze.xdccloader.controller;
 import de.maggiwuerze.xdccloader.model.entity.User;
 import de.maggiwuerze.xdccloader.service.UserService;
 import java.security.Principal;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

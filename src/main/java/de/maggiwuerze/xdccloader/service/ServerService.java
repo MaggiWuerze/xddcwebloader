@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccloader.service;
 
 import de.maggiwuerze.xdccloader.model.entity.Server;
-import de.maggiwuerze.xdccloader.persistency.ServerRepository;
+import de.maggiwuerze.xdccloader.persistence.ServerRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

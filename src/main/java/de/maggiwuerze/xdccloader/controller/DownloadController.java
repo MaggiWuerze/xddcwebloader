@@ -4,44 +4,27 @@ import de.maggiwuerze.xdccloader.events.SocketEvents;
 import de.maggiwuerze.xdccloader.model.download.Download;
 import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
-import de.maggiwuerze.xdccloader.model.entity.User;
-import de.maggiwuerze.xdccloader.model.entity.UserSettings;
 import de.maggiwuerze.xdccloader.model.forms.DownloadForm;
-import de.maggiwuerze.xdccloader.model.forms.UserForm;
 import de.maggiwuerze.xdccloader.model.transport.DownloadTO;
-import de.maggiwuerze.xdccloader.model.transport.UserTO;
-import de.maggiwuerze.xdccloader.security.UserRole;
 import de.maggiwuerze.xdccloader.service.BotService;
 import de.maggiwuerze.xdccloader.service.DownloadService;
 import de.maggiwuerze.xdccloader.service.EventService;
-import de.maggiwuerze.xdccloader.service.UserService;
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-class DownloadController{
+class DownloadController {
 
 	private final DownloadService downloadService;
 	private final BotService botService;

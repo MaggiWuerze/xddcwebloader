@@ -1,12 +1,8 @@
 package de.maggiwuerze.xdccloader.model.transport;
 
-import de.maggiwuerze.xdccloader.model.download.DownloadCardField;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.model.entity.User;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 

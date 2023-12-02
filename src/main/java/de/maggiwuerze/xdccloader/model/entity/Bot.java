@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Bot {
 
 	@Id
@@ -37,9 +39,6 @@ public class Bot {
 
 	@Column(nullable = false)
 	Long maxParallelDownloads = 3L;
-
-	public Bot() {
-	}
 
 	public Bot(Server server, Channel channel, String name, String pattern, Long maxParallelDownloads) {
 		this.name = name;

@@ -1,14 +1,14 @@
 'use strict';
 
-import BotListView from './model/bot/BotListView';
-import DownloadListView from './model/download/DownloadListView';
-import ServerListView from './model/server/ServerListView';
-import ChannelListView from './model/channel/ChannelListView';
-import BotInputs from './model/bot/BotInputs';
-import ServerInputs from './model/server/ServerInputs';
-import ChannelInputs from './model/channel/ChannelInputs';
-import InitWizard from './model/wizard/InitWizard';
-import Settings from './model/settings/Settings';
+import BotListView from './components/bot/BotListView';
+import DownloadListView from './components/download/DownloadListView';
+import ServerListView from './components/server/ServerListView';
+import ChannelListView from './components/channel/ChannelListView';
+import BotInputs from './components/bot/BotInputs';
+import ServerInputs from './components/server/ServerInputs';
+import ChannelInputs from './components/channel/ChannelInputs';
+import InitWizard from './components/wizard/InitWizard';
+import Settings from './components/settings/Settings';
 
 import {Button, Card, Col, Container, Jumbotron, Nav, Row, Tab, TabContent} from 'react-bootstrap';
 import Popover from 'react-popover';

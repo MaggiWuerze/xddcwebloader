@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccloader.config;
 
 import de.maggiwuerze.xdccloader.model.entity.User;
-import de.maggiwuerze.xdccloader.persistency.UserRepository;
+import de.maggiwuerze.xdccloader.persistence.UserRepository;
 import de.maggiwuerze.xdccloader.security.CustomUserDetailService;
 import java.io.IOException;
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package de.maggiwuerze.xdccloader.persistency;
+package de.maggiwuerze.xdccloader.persistence;
 
 
 //@Repository

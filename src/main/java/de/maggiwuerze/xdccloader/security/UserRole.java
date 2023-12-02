@@ -8,7 +8,6 @@ public enum UserRole {
 	String externalString;
 
 	UserRole(String externalString) {
-
 		this.externalString = externalString;
 	}
 

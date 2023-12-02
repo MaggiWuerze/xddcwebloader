@@ -3,9 +3,10 @@ package de.maggiwuerze.xdccloader.service;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.model.entity.User;
 import de.maggiwuerze.xdccloader.model.entity.UserSettings;
-import de.maggiwuerze.xdccloader.persistency.IrcUserRepository;
-import de.maggiwuerze.xdccloader.persistency.UserRepository;
-import de.maggiwuerze.xdccloader.persistency.UserSettingsRepository;
+import de.maggiwuerze.xdccloader.persistence.IrcUserRepository;
+import de.maggiwuerze.xdccloader.persistence.UserRepository;
+import de.maggiwuerze.xdccloader.persistence.UserSettingsRepository;
+import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,5 +46,10 @@ public class UserService {
 
 	public List<Bot> listIrcUsers() {
 		return ircUserRepository.findAll();
+	}
+
+	public List<Bot> getBots(Principal principal) {
+		User user = findUserByName(principal.getName());
+		return user.getBots();
 	}
 }

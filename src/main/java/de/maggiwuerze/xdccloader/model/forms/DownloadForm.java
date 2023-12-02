@@ -6,5 +6,6 @@ import lombok.Value;
 public class DownloadForm {
 
 	private final Long targetBotId;
+
 	private final String fileRefId;
 }

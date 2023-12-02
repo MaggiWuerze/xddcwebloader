@@ -1,4 +1,4 @@
-package de.maggiwuerze.xdccloader.persistency;
+package de.maggiwuerze.xdccloader.persistence;
 
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface TargetBotRepository extends PagingAndSortingRepository<Bot, Long> {
+public interface IrcUserRepository extends PagingAndSortingRepository<Bot, Long> {
 
 	List<Bot> findAll();
 }

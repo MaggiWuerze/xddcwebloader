@@ -1,6 +1,5 @@
 package de.maggiwuerze.xdccloader.controller;
 
-import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.model.entity.User;
 import de.maggiwuerze.xdccloader.model.entity.UserSettings;
 import de.maggiwuerze.xdccloader.model.forms.UserForm;
@@ -9,7 +8,6 @@ import de.maggiwuerze.xdccloader.model.transport.UserTO;
 import de.maggiwuerze.xdccloader.security.UserRole;
 import de.maggiwuerze.xdccloader.service.UserService;
 import java.security.Principal;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -33,7 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-class UserController{
+class UserController {
 
 	private final UserService userService;
 
@@ -81,26 +79,15 @@ class UserController{
 	}
 
 	@GetMapping("/user")
-	public ResponseEntity<UserTO> getuser(Principal principal) {
+	public ResponseEntity<?> getUser(Principal principal) {
 		User user = userService.findUserByName(principal.getName());
 
 		if (user != null) {
 			UserTO userTO = new UserTO(user);
-			return new ResponseEntity(userTO, HttpStatus.OK);
+			return new ResponseEntity<>(userTO, HttpStatus.OK);
 		} else {
-			return new ResponseEntity("user not found", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>("user not found", HttpStatus.UNAUTHORIZED);
 		}
-	}
-
-	//IRC_USERS
-
-	/**
-	 * @return a list of all users
-	 */
-	@GetMapping("/ircUsers/")
-	public ResponseEntity<List<Bot>> getAllIrcUsers() {
-		List<Bot> users = userService.listIrcUsers();
-		return new ResponseEntity(users, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/usersettings")
@@ -109,12 +96,11 @@ class UserController{
 		User user = userService.findUserByName(principal.getName());
 		UserSettings userSettingsById = user.getUserSettings();
 		userSettingsById.setDownloadSortBy(userSettingsForm.getDownloadSortBy());
-		userSettingsById.setRefreshrateInSeconds(userSettingsForm.getRefreshrateInSeconds());
 		userSettingsById.setSessionTimeout(userSettingsForm.getSessionTimeout());
 		userService.saveUserSettings(userSettingsById);
 		user.setUserSettings(userSettingsById);
 		userService.saveUser(user);
 
-		return new ResponseEntity("Usersettings updated succcessfully.", HttpStatus.OK);
+		return new ResponseEntity<>("UserSettings updated successfully.", HttpStatus.OK);
 	}
 }

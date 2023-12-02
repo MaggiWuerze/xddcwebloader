@@ -1,4 +1,4 @@
-package de.maggiwuerze.xdccloader.persistency;
+package de.maggiwuerze.xdccloader.persistence;
 
 import de.maggiwuerze.xdccloader.model.entity.Channel;
 import java.util.List;

@@ -6,5 +6,6 @@ import lombok.Value;
 public class ChannelForm {
 
 	private final String name;
+
 	private final String bla;
 }

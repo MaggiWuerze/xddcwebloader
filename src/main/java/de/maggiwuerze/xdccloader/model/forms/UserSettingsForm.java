@@ -5,7 +5,6 @@ import lombok.Value;
 
 @Value
 public class UserSettingsForm {
-	Long refreshrateInSeconds;
 
 	DownloadSort downloadSortBy;
 
