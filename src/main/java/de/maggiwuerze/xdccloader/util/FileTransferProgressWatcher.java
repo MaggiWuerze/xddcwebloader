@@ -66,9 +66,9 @@ public class FileTransferProgressWatcher {
 			applicationEventPublisher.publishEvent(new DownloadDeleteEvent(this, download.getId()));
 			schedulerResult.cancel(true);
 		} else if (fileTransfer.getFileTransferStatus().getDccState().equals(DccState.ERROR)) {
-			updateDownloadStatus(download, DownloadState.ERROR, fileTransfer.getFileTransferStatus().getException().getLocalizedMessage());
+			updateDownloadStatus(download, DownloadState.ERROR, fileTransfer.getFileTransferStatus().getException().getMessage());
 			log.debug(String.format("error on filetransfer for fileID %s", download.getFileRefId()));
-			log.debug(fileTransfer.getFileTransferStatus().getException().getLocalizedMessage());
+			log.debug(fileTransfer.getFileTransferStatus().getException().getMessage());
 			schedulerResult.cancel(true);
 		} else if (newProgress == 100.0 && fileTransfer.getFileTransferStatus().isSuccessful()) {
 			updateDownloadStatus(download, DownloadState.FINALIZING, "");

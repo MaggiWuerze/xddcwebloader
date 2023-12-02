@@ -94,7 +94,7 @@ export default class BotCard extends React.Component {
 										<Form.Control
 												onKeyDown={this.handleKeyDown}
 												ref={this.props.bot.id + "-fileRefId"}
-												placeholder="fileRefId (eg. #3452)"
+												placeholder="fileRefId (eg. 3452)"
 												aria-label="file reference id"
 										/>
 										<Button variant="outline-secondary" onClick={this.handleSubmit}>Send</Button>

@@ -6649,7 +6649,7 @@ var BotCard = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"].Control, {
         onKeyDown: this.handleKeyDown,
         ref: this.props.bot.id + "-fileRefId",
-        placeholder: "fileRefId (eg. #3452)",
+        placeholder: "fileRefId (eg. 3452)",
         "aria-label": "file reference id"
       }), /*#__PURE__*/React.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
         variant: "outline-secondary",

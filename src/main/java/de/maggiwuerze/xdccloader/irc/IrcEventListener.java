@@ -70,6 +70,7 @@ public class IrcEventListener extends ListenerAdapter {
 
 	@Override
 	public void onIncomingFileTransfer(IncomingFileTransferEvent event) throws Exception {
+		super.onIncomingFileTransfer(event);
 		IrcBot bot = event.getBot();
 		Download download = downloadService.getById(bot.getDownloadId());
 		download.setFilename(event.getSafeFilename());
