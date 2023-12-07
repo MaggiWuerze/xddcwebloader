@@ -22,6 +22,9 @@ public class UserSettings {
 	Long id;
 
 	@Column(nullable = false)
+	Boolean initialized = false;
+
+	@Column(nullable = false)
 	LocalDateTime creationDate = LocalDateTime.now();
 
 	@Column(nullable = false)

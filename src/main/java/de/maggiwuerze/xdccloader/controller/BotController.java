@@ -2,15 +2,12 @@ package de.maggiwuerze.xdccloader.controller;
 
 import de.maggiwuerze.xdccloader.events.SocketEvents;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
-import de.maggiwuerze.xdccloader.model.entity.Channel;
-import de.maggiwuerze.xdccloader.model.entity.Server;
-import de.maggiwuerze.xdccloader.model.entity.User;
 import de.maggiwuerze.xdccloader.model.forms.TargetBotForm;
 import de.maggiwuerze.xdccloader.service.BotService;
 import de.maggiwuerze.xdccloader.service.ChannelService;
 import de.maggiwuerze.xdccloader.service.EventService;
 import de.maggiwuerze.xdccloader.service.ServerService;
-import de.maggiwuerze.xdccloader.service.UserService;
+import de.maggiwuerze.xdccloader.service.UserSettingsService;
 import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class BotController {
 
-	private final UserService userService;
+	private final UserSettingsService userSettingsService;
 	private final ChannelService channelService;
 	private final BotService botService;
 	private final ServerService serverService;
@@ -35,7 +32,7 @@ class BotController {
 
 	@PostMapping("/bots/")
 	public ResponseEntity<?> addBot(@RequestBody TargetBotForm form, Principal principal) {
-		eventService.publishEvent(SocketEvents.NEW_SERVER, botService.save(principal, form));
+		eventService.publishEvent(SocketEvents.NEW_SERVER, botService.save(form));
 		return new ResponseEntity("Bot added succcessfully", HttpStatus.OK);
 	}
 
@@ -44,14 +41,7 @@ class BotController {
 	 */
 	@GetMapping("/bots/")
 	public ResponseEntity<List<Bot>> getAllBots(Principal principal) {
-		return new ResponseEntity(userService.getBots(principal), HttpStatus.OK);
+		return new ResponseEntity(botService.list(), HttpStatus.OK);
 	}
 
-	/**
-	 * @return a list of all users
-	 */
-	@GetMapping("/ircUsers/")
-	public ResponseEntity<List<Bot>> getAllIrcUsers() {
-		return new ResponseEntity(userService.listIrcUsers(), HttpStatus.OK);
-	}
 }

@@ -6,6 +6,10 @@ import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.service.DownloadService;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.pircbotx.dcc.DccState;
@@ -74,11 +78,23 @@ public class IrcEventListener extends ListenerAdapter {
 		IrcBot bot = event.getBot();
 		Download download = downloadService.getById(bot.getDownloadId());
 		download.setFilename(event.getSafeFilename());
-		String path = DL_PATH + File.separatorChar + event.getSafeFilename();
-		File downloadFile = new File(path);
+//		String path = DL_PATH + File.separatorChar + event.getSafeFilename();
+		Path path = Paths.get(DL_PATH + File.separatorChar + event.getSafeFilename());
 
 		//Receive the file from the user
-		ReceiveFileTransfer fileTransfer = event.accept(downloadFile);
+		// If the file exists, resume from a position
+//		File downloadFile = new File(path);
+		ReceiveFileTransfer fileTransfer;
+		if (path.toFile().exists()) {
+			// Use BasicFileAttributes to find position to resume
+			fileTransfer = event.acceptResume(path.toFile(),
+				Files.readAttributes(path, BasicFileAttributes.class).size());
+		}
+		// Accept a new file
+		else {
+			fileTransfer = event.accept(path.toFile());
+		}
+
 		download.getProgressWatcher().setFileTransfer(fileTransfer);
 		TaskExecutor taskExecutor = new SimpleAsyncTaskExecutor(event.getBot().getNick() + " transfer");
 

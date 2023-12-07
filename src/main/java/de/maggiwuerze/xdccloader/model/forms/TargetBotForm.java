@@ -9,5 +9,5 @@ public class TargetBotForm {
 	private final String pattern;
 	private final Long serverId;
 	private final Long channelId;
-	private final Long maxParallelDownloads;
+	private final Long maxParallelDownloads = 3L;
 }

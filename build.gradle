@@ -20,6 +20,7 @@ node {
 // VERSIONS
 ext {
     SPRING_VERSION = "2.7.18"
+    LOMBOK_VERSION = "1.18.30"
 
 }
 
@@ -38,10 +39,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:$SPRING_VERSION")
 
     //LOMBOK
-    compileOnly("org.projectlombok:lombok:1.18.20")
-    annotationProcessor("org.projectlombok:lombok:1.18.20")
-    testCompileOnly("org.projectlombok:lombok:1.18.20")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.20")
+    compileOnly("org.projectlombok:lombok:$LOMBOK_VERSION")
+    annotationProcessor("org.projectlombok:lombok:$LOMBOK_VERSION")
+    testCompileOnly("org.projectlombok:lombok:$LOMBOK_VERSION")
+    testAnnotationProcessor("org.projectlombok:lombok:$LOMBOK_VERSION")
 
     //DATABASE
     implementation("org.postgresql:postgresql:42.2.23.jre7")
@@ -67,9 +68,9 @@ dependencies {
 }
 
 group = "de.maggiwuerze"
-version = "0.5.0-SNAPSHOT"
 description = "xdccloader"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+version = "0.5.1-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications.create("maven", MavenPublication) {
@@ -85,7 +86,6 @@ tasks.withType(Checkstyle) {
     reports {
         xml.required = false
         html.required = true
-        html.enabled = true
     }
 }
 

@@ -1,9 +1,6 @@
 package de.maggiwuerze.xdccloader.controller;
 
-import de.maggiwuerze.xdccloader.model.entity.User;
-import de.maggiwuerze.xdccloader.service.UserService;
-import java.security.Principal;
-import javax.servlet.http.HttpSession;
+import de.maggiwuerze.xdccloader.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 class MainController {
 
-	private final UserService userService;
+	private final UserSettingsService userSettingsService;
 
 	@GetMapping("/")
 	public String index() {
@@ -27,30 +24,21 @@ class MainController {
 
 	//USERDETAILS
 	@GetMapping("/initialized")
-	public ResponseEntity<Boolean> getInitialized(Principal principal) {
-		User user = userService.findUserByName(principal.getName());
+	public ResponseEntity<Boolean> getInitialized() {
 
-		if (user != null) {
-			return new ResponseEntity(user.getInitialized(), HttpStatus.OK);
+		if (userSettingsService.getUserSettings().getInitialized()) {
+			return new ResponseEntity(true, HttpStatus.OK);
 		} else {
-			return new ResponseEntity("user not found", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity(false, HttpStatus.OK);
 		}
 	}
 
 	@PostMapping("/initialized/")
-	public ResponseEntity<?> setInitialized(Principal principal) {
-		User user = userService.findUserByName(principal.getName());
+	public ResponseEntity<?> setInitialized() {
 
-		if (user != null) {
+		userSettingsService.setInitialized(true);
 
-			user.setInitialized(true);
-			userService.saveUser(user);
-
-			return new ResponseEntity("ok", HttpStatus.OK);
-		} else {
-
-			return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
-		}
+		return new ResponseEntity("ok", HttpStatus.OK);
 	}
 
 }
