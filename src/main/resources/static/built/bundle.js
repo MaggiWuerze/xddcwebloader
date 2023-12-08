@@ -54623,7 +54623,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 var stompClient = __webpack_require__(/*! ./websocket-listener */ "./src/main/js/websocket-listener.js");
-var version_tag = "V. 0.5";
+var version_tag = "V. 0.6";
 var App = /*#__PURE__*/function (_React$Component) {
   _inherits(App, _React$Component);
   var _super = _createSuper(App);

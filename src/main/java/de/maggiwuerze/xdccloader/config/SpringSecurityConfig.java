@@ -25,7 +25,6 @@ class SpringSecurityConfig implements WebMvcConfigurer {
 			.frameOptions().sameOrigin()
 			.and()
 			.authorizeRequests()
-			.antMatchers("/register").permitAll()
 			.requestMatchers(PathRequest.toH2Console()).permitAll()
 			.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 			.antMatchers("/webjars/**", "/resources/**").permitAll()
