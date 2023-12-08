@@ -27,3 +27,7 @@ jobs:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
+      - name: 'Build Inventory Image'
+        run: |
+          docker build . --tag ghcr.io/<maggiwuerze>/store:latest
+          docker push ghcr.io/<maggiwuerze>/store:latest
