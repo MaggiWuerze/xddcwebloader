@@ -1,0 +1,35 @@
+name: Docker Image CI
+
+on:
+  push:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.17
+      - name: Checkout project sources
+        uses: actions/checkout@v3
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Run build with Gradle Wrapper
+        run: ./gradlew bootJar
+
+      - name: Copy jar file
+        run: cp build/libs/*.jar Docker
+
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: 'Build Latest Image'
+        run: |
+          docker build . --tag ghcr.io/maggiwuerze/xdccwebloader:snapshot -f Docker/Dockerfile
+          docker push ghcr.io/maggiwuerze/xdccwebloader:snapshot
