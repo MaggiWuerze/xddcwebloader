@@ -1,7 +1,9 @@
 version: '3.3'
 services:
     run:
-        container_name: xdcc
+        image: ghcr.io/maggiwuerze/xdccwebloader:latest
+        container_name: xdcc_webloader
+        restart: unless-stopped
         ports:
             - '9999:8080'
         environment:
@@ -9,4 +11,3 @@ services:
             - XDCC_DB_URL=postgresql://mediaserver:49153/postgres
             - XDCC_DB_USER=sa
             - XDCC_DB_PASSWORD=sa
-        image: xdcc

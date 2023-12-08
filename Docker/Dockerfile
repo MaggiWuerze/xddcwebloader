@@ -1,6 +1,6 @@
 FROM openjdk:17.0
 LABEL org.opencontainers.image.source="https://github.com/maggiwuerze/xdccwebloader>"
-WORKDIR /app
+WORKDIR /xdcc_webloader
 EXPOSE 8080
-COPY *.jar app.jar
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+COPY *.jar /xdcc_webloader/app.jar
+ENTRYPOINT ["java","-jar","/xdcc_webloader/app.jar"]
