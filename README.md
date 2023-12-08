@@ -17,10 +17,10 @@ Releases and executables can be found here:
 ![image](https://user-images.githubusercontent.com/9729962/184346810-f5fb1803-664d-43dc-9b40-1c684ffc290e.png)
 
 # Running The App
-### Locally 
-The simplest way to run it is to simply execute the jar from the [releases](https://github.com/MaggiWuerze/xddcwebloader/releases) section. it packs everything except a java runtime, so as long as you have java you can run it and start right away.
 ### Docker
-The next best option is to use the Dockerfiles found in the repository to build and run the app through your docker installation.
+The best option is to use the provided Docker image or build the container yourself using the ```Dockerfile``` and ```docker-compose.yml``` found in the repository to build and run the app through your docker installation.
+### Locally 
+You can also simply execute the jar from the [releases](https://github.com/MaggiWuerze/xddcwebloader/releases) section. it packs everything except a java runtime, so as long as you have java you can run it and start right away.
 ### From The IDE
 This option is mainly meant for people looking into the code or trying to make a PR/Fork for it. Open the project in your favourite Java IDE and execute the XdccloaderApplication class.  
 
