@@ -10,6 +10,7 @@ import de.maggiwuerze.xdccloader.model.download.Download;
 import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.service.DownloadService;
+import de.maggiwuerze.xdccloader.util.IpHelper;
 import de.maggiwuerze.xdccloader.util.ProgressWatcherFactory;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,7 @@ public class CustomSpringEventListener {
 			.setAutoReconnectAttempts(5)
 			.setAutoNickChange(true) //Automatically change nick when the current one is in use
 			.addListener(ircEventListener) //Add our listener that will be called on Events
+			.setDccPublicAddress(IpHelper.getPublicIp())
 			.buildConfiguration();
 
 		//Create our bot with the configuration
