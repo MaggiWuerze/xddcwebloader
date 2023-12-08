@@ -1,8 +1,8 @@
 package de.maggiwuerze.xdccloader.model.forms;
 
 import de.maggiwuerze.xdccloader.model.forms.validation.PasswordMatches;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

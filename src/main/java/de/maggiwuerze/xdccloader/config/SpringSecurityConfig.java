@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,16 +21,17 @@ class SpringSecurityConfig implements WebMvcConfigurer {
 	@Bean
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
+//		http
+//			.headers()
+//			.frameOptions().sameOrigin();
+
 		http
-			.headers()
-			.frameOptions().sameOrigin()
-			.and()
-			.authorizeRequests()
-			.requestMatchers(PathRequest.toH2Console()).permitAll()
-			.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-			.antMatchers("/webjars/**", "/resources/**").permitAll()
-			.and()
-			.csrf().disable();
+			.authorizeHttpRequests(authorize -> authorize
+				.requestMatchers(PathRequest.toH2Console()).permitAll()
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+				.requestMatchers("/webjars/**", "/resources/**").permitAll()
+			)
+			.csrf(AbstractHttpConfigurer::disable);
 
 		return http.build();
 	}

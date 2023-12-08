@@ -1,8 +1,8 @@
 package de.maggiwuerze.xdccloader.model.forms.validation;
 
 import de.maggiwuerze.xdccloader.model.forms.UserForm;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class PasswordMatchesValidator
 	implements ConstraintValidator<PasswordMatches, Object> {

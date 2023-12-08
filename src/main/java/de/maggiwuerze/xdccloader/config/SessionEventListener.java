@@ -2,8 +2,8 @@ package de.maggiwuerze.xdccloader.config;
 
 import de.maggiwuerze.xdccloader.events.EventPublisher;
 import de.maggiwuerze.xdccloader.events.SocketEvents;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
+import jakarta.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -4,7 +4,7 @@ import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.model.entity.Channel;
 import de.maggiwuerze.xdccloader.model.entity.Server;
 import de.maggiwuerze.xdccloader.model.entity.UserSettings;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
