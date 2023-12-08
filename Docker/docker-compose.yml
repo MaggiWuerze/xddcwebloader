@@ -4,6 +4,9 @@ services:
         image: ghcr.io/maggiwuerze/xdccwebloader:latest
         container_name: xdcc_webloader
         restart: unless-stopped
+        volumes:
+            - '/path/to/your/docker/folder/xdcc:/xdcc_webloader/xdcc'
+            - '/path/to/your/docker/folder/data:/xdcc_webloader/data'
         ports:
             - '9999:8080'
         environment:
