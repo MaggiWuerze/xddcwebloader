@@ -84,7 +84,7 @@ class App extends React.Component {
 	// USER
 	loadUserData() {
 		axios
-				.get('user/')
+				.get('usersettings/')
 				.then((response) => {
 
 					var userObject = response.data;
@@ -462,7 +462,7 @@ class App extends React.Component {
 
 							this.toggleBoolean('initialized');
 
-							let newUrl = location.replace("register", "");
+							let newUrl = location.replace("/", "");
 							let title = "XDCC Loader"
 							console.log("newUrl: " + newUrl)
 							console.log("title: " + title)
@@ -704,7 +704,6 @@ class App extends React.Component {
 								{/* ABOUT */}
 								{this.state.activePage == 'about' && <>
 									<Col xs={12} md={10} className={"column"}>
-										<Jumbotron>
 											<h1>About XDCC Webloader</h1>
 											<p>
 												Information about the project
@@ -712,7 +711,6 @@ class App extends React.Component {
 											<p>
 												<Button variant="primary">Learn more</Button>
 											</p>
-										</Jumbotron>
 									</Col>
 								</>}
 							</Row>
