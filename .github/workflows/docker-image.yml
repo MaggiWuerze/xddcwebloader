@@ -29,5 +29,5 @@ jobs:
           password: ${{secrets.GITHUB_TOKEN}}
       - name: 'Build Inventory Image'
         run: |
-          docker build ./Docker/Dockerfile --tag ghcr.io/maggiwuerze/xdccwebloader:latest
+          docker build /Docker/Dockerfile --tag ghcr.io/maggiwuerze/xdccwebloader:latest
           docker push ghcr.io/maggiwuerze/xdccwebloader:latest
