@@ -33,5 +33,6 @@ jobs:
 
       - name: 'Build Inventory Image'
         run: |
+          ls .
           docker build Docker/Dockerfile --tag ghcr.io/maggiwuerze/xdccwebloader:latest
           docker push ghcr.io/maggiwuerze/xdccwebloader:latest
