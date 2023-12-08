@@ -7339,6 +7339,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ DownloadListView)
 /* harmony export */ });
 /* harmony import */ var _DownloadCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DownloadCard */ "./src/main/js/components/download/DownloadCard.js");
+/* harmony import */ var react_bootstrap_Stack__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap/Stack */ "./node_modules/react-bootstrap/esm/Stack.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
@@ -7353,6 +7354,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 var DownloadListView = /*#__PURE__*/function (_React$Component) {
@@ -7363,10 +7365,32 @@ var DownloadListView = /*#__PURE__*/function (_React$Component) {
     return _super.call(this, props);
   }
   _createClass(DownloadListView, [{
-    key: "render",
-    value: function render() {
+    key: "createEmptyView",
+    value: function createEmptyView() {
+      return /*#__PURE__*/React.createElement("div", {
+        style: {
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }
+      }, /*#__PURE__*/React.createElement(react_bootstrap_Stack__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        style: {
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        },
+        gap: 1
+      }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("i", {
+        className: "fa-solid fa-sailboat fa-3x bobbing"
+      })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", null, "All quiet\u2026"))));
+    }
+  }, {
+    key: "createDownloadList",
+    value: function createDownloadList() {
       var _this = this;
-      var downloads = this.props.downloads.map(function (download) {
+      return this.props.downloads.map(function (download) {
         return /*#__PURE__*/React.createElement(_DownloadCard__WEBPACK_IMPORTED_MODULE_0__["default"], {
           key: download.id,
           download: download,
@@ -7374,9 +7398,14 @@ var DownloadListView = /*#__PURE__*/function (_React$Component) {
           onDelete: _this.props.onDelete
         });
       });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var viewContent = this.props.downloads.length === 0 ? this.createEmptyView() : this.createDownloadList();
       return /*#__PURE__*/React.createElement("div", {
         className: 'list'
-      }, downloads);
+      }, viewContent);
     }
   }]);
   return DownloadListView;

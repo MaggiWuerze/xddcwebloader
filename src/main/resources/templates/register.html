@@ -30,8 +30,9 @@
 								placeholder="Username"
 								th:field="*{username}"
 								type="text">
-						<p th:each="error: ${#fields.errors('username')}"
-								th:text="${error}">Validation error</p>
+						<div class="invalid-feedback" th:each="error: ${#fields.errors('username')}" style="display: block">
+							<th:block th:text="${error}"></th:block>
+						</div>
 					</div>
 
 					<div class="input-group mb-3">
@@ -44,8 +45,9 @@
 								placeholder="Password"
 								th:field="*{password}"
 								type='password'>
-						<p th:each="error: ${#fields.errors('password')}"
-								th:text="${error}">Validation error</p>
+						<div class="invalid-feedback" th:each="error: ${#fields.errors('password')}" style="display: block">
+							<th:block th:text="${error}"></th:block>
+						</div>
 					</div>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">

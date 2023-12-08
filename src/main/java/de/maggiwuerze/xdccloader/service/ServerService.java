@@ -22,7 +22,9 @@ public class ServerService {
 		return serverRepository.save(server);
 	}
 
-	public Server findById(Long channelId) {
-		return serverRepository.findById(channelId).orElse(null);
+	public Server findById(Long serverId) {
+		return serverRepository.findById(serverId).orElse(null);
 	}
+
+	public void delete(Long serverId) {serverRepository.deleteById(serverId);}
 }

@@ -5,16 +5,16 @@
 	font-family: 'Lato';
 	font-style: normal;
 	font-weight: 400;
-	src: url('../fonts/lato-v15-latin-regular.eot'); /* IE9 Compat Modes */
+	src: url('../fonts/LatoLatin-Regular.eot'); /* IE9 Compat Modes */
 	src: local('Lato Regular'), local('Lato-Regular'),
-	url('../fonts/lato-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/lato-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */ url('../fonts/lato-v15-latin-regular.woff') format('woff'), /* Modern Browsers */ url('../fonts/lato-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */ url('../fonts/lato-v15-latin-regular.svg#Lato') format('svg'); /* Legacy iOS */
+	url('../fonts/LatoLatin-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/LatoLatin-Regular.woff2') format('woff2'), /* Super Modern Browsers */ url('../fonts/LatoLatin-Regular.woff') format('woff'), /* Modern Browsers */ url('../fonts/LatoLatin-Regular.ttf') format('truetype');
 }
 
 
 /*main content*/
 p, h1, h2, h3, h4 {
-	font-family: 'Lato', sans-serif !important;
-	/*color: gainsboro !important;*/
+	font-family: 'Lato', sans-serif;
+	/*color: gainsboro;*/
 }
 
 p {
@@ -23,7 +23,7 @@ p {
 
 code {
 
-	color: palegreen !important;
+	color: palegreen;
 
 }
 
@@ -35,13 +35,13 @@ code {
 
 .wizardSpinner {
 
-	width: 5rem !important;
-	height: 5rem !important;
+	width: 5rem;
+	height: 5rem;
 
 }
 
 .main {
-	position: fixed !important;
+	position: fixed;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -53,6 +53,7 @@ code {
 	height: 100vh;
 	top: 0;
 	bottom: 0;
+	padding-left: 0;
 }
 
 .customCard {
@@ -91,13 +92,14 @@ code {
 .sidenav {
 
 	height: 100vh;
-	border-right-color: transparent !important;
+	border-right-color: transparent;
 
 }
 
 .sidenav-column {
 
-	padding-left: 0 !important;
+	padding-left: 0;
+	padding-right: 0;
 
 }
 
@@ -105,10 +107,10 @@ code {
 
 	top: 0;
 	bottom: 0;
-	background: whitesmoke !important;
-	color: white !important;
-	padding-right: 0 !important;
-	padding-left: 0 !important;
+	background: whitesmoke;
+	color: white;
+	padding-right: 0;
+	padding-left: 0;
 
 }
 
@@ -128,41 +130,35 @@ code {
 
 .sidenav .active {
 
-	font-family: 'Lato', sans-serif !important;
-	color: rgb(51, 162, 255) !important;
+	font-family: 'Lato', sans-serif;
+	color: rgb(51, 162, 255);
 	background: white;
 
 }
 
 .btn-group-toggle .btn {
 
-	border-color: #0062cc !important;
-	background: white !important;
-	color: #0069d9 !important;
+	border-color: #0062cc;
+	background: white;
+	color: #0069d9;
 
 }
 
 .btn-group-toggle .active {
 
-	color: #fff !important;
-	background-color: #0069d9 !important;
-	border-color: #0062cc !important;
+	color: #fff;
+	background-color: #0069d9;
+	border-color: #0062cc;
 
 }
 
 /* popovers */
 
-.Popover-body {
-	display: inline-flex;
-	flex-direction: column;
-	padding: 5px;
-	background: hsl(0, 0%, 27%);
-	color: white;
-	border-radius: 0.3rem;
+.bot-popover {
+	max-width: 450px;
 }
-
-.Popover-tipShape {
-	fill: hsl(0, 0%, 27%);
+.popover-arrow::after {
+	border-bottom-color: #f0f0f0;
 }
 
 /*input validation*/
@@ -246,4 +242,73 @@ code {
 
 .close:hover {
 	background: #00d9ff;
+}
+
+.bobbing {
+	animation: MoveUpDown 3s linear infinite;
+	left: 0;
+	bottom: 0;
+}
+
+@keyframes MoveUpDown {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-5px);
+	}
+}
+
+.container-fluid .jumbotron, .container .jumbotron {
+	border-radius: 6px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+@media screen and (min-width: 768px)
+{
+	.container-fluid .jumbotron, .container .jumbotron {
+		padding-left: 60px;
+		padding-right: 60px;
+	}
+}
+
+@media screen and (min-width: 768px)
+{
+	.jumbotron {
+		padding-bottom: 48px;
+		padding-top: 48px;
+	}
+}
+
+.jumbotron {
+	background-color: #eee;
+	padding-left: 60px;
+	padding-right: 60px;
+	margin-bottom: 30px;
+	padding-bottom: 30px;
+	padding-top: 30px;
+}
+.footerIconWrapper {
+	width: 100%;
+	display: block;
+}
+.footerIconWrapper > a {
+	width: 30%;
+	margin: auto 10%;
+	float: left
+}
+
+.popover-btn {
+	width: 100%;
+	display: block;
+}
+
+.popover-btn .btn{
+	width: 60%;
+	margin: auto 20%;
+}
+
+.toast-container {
+	z-index: 999;
 }
