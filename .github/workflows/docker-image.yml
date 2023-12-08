@@ -20,6 +20,9 @@ jobs:
         run: ./gradlew build
       - name: Build with Gradle      
         run: ./gradlew jar
+
+      - name: List files
+        run: ls .
         
       - name: 'Login to GitHub Container Registry'
         uses: docker/login-action@v1
