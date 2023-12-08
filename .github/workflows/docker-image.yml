@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          echo 'release: ${{ github.event.release.name }}'
+          echo 'version ${{ github.event.release.tag_name }}'
+          echo 'created by ${{ github.event.release.author.name }}'
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -30,8 +34,12 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
 
-      - name: 'Build Inventory Image'
+      - name: 'Build version tagged Image'
         run: |
-          ls Docker/
-          docker build . --tag ghcr.io/maggiwuerze/xdccwebloader:latest -f Docker/Dockerfile
+          docker build . --tag ghcr.io/maggiwuerze/xdccwebloader:${{ github.event.release.tag_name }} -f Docker/Dockerfile
           docker push ghcr.io/maggiwuerze/xdccwebloader:${{ github.event.release.tag_name }}
+
+      - name: 'Build Latest Image'
+        run: |
+          docker build . --tag ghcr.io/maggiwuerze/xdccwebloader:latest -f Docker/Dockerfile
+          docker push ghcr.io/maggiwuerze/xdccwebloader:latest

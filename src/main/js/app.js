@@ -19,7 +19,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const stompClient = require('./websocket-listener');
 
-const version_tag = "V. 0.6";
+const version_tag = "V. 0.6.1";
 
 class App extends React.Component {
 
