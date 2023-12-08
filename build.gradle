@@ -89,6 +89,15 @@ tasks.withType(Checkstyle) {
     }
 }
 
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
+                'Main-Class': 'de.maggiwuerze.xdccloader.XdccloaderApplication'
+        )
+    }
+}
+
 task buildReactApp(type: NodeTask, dependsOn: "npmInstall") {
     script = project.file('node_modules/webpack/bin/webpack.js')
     args = [
