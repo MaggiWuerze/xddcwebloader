@@ -34,7 +34,8 @@ class DatabaseLoader implements CommandLineRunner {
 
 		Server server = serverRepository.save(new Server("Rizon", "irc.rizon.net"));
 		Channel channel = channelRepository.save(new Channel("#subsplease"));
-		Bot bot = this.ircUserRepository.save(new Bot(server, channel, "Ginpachi-Sensei", "xdcc send #%s", 3L));
+		this.ircUserRepository.save(new Bot(server, channel, "Ginpachi-Sensei", "xdcc send #%s", 3L));
+		this.ircUserRepository.save(new Bot(server, channel, "CR-ARUTHA-IPv6|NEW", "xdcc send #%s", 3L));
 
 	}
 }
