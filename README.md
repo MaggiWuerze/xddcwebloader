@@ -18,7 +18,9 @@ Releases and executables can be found here:
 
 # Running The App
 ### Docker
-The best option is to use the provided Docker image or build the container yourself using the ```Dockerfile``` and ```docker-compose.yml``` found in the repository to build and run the app through your docker installation.
+The best option is to use the provided Docker image or build the container yourself using the ```Dockerfile``` and ```docker-compose.yml``` found in the repository to build and run the app through your docker installation. There are two types of docker image available:
+-  The ```latest``` image is based on the current master branch and is build at every push to master.
+-  Versions tagged with ```vX.x``` are created when a new versioned release is issued. They are usually more stable and dont change that frequently.
 ### Locally 
 You can also simply execute the jar from the [releases](https://github.com/MaggiWuerze/xddcwebloader/releases) section. it packs everything except a java runtime, so as long as you have java you can run it and start right away.
 ### From The IDE
