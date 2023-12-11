@@ -18,7 +18,7 @@ Releases and executables can be found here:
 
 # Running The App
 ### Docker
-The best option is to use the provided Docker image or build the container yourself using the ```Dockerfile``` and ```docker-compose.yml``` found in the repository to build and run the app through your docker installation. There are two types of docker image available:
+The best option is to use the provided Docker image or build the container yourself using the ```Dockerfile``` and ```docker-compose.yml``` found in the repository to build and run the app through your docker installation. There are two types of docker image available, which can be found [here](https://github.com/users/MaggiWuerze/packages/container/package/xdccwebloader):
 -  The ```latest``` image is based on the current master branch and is build at every push to master.
 -  Versions tagged with ```vX.x``` are created when a new versioned release is issued. They are usually more stable and dont change that frequently.
 ### Locally 
