@@ -51,6 +51,8 @@ public class CustomSpringEventListener {
 			.setAutoNickChange(true) //Automatically change nick when the current one is in use
 			.addListener(ircEventListener) //Add our listener that will be called on Events
 			.setDccPublicAddress(IpHelper.getPublicIp())
+			.setAutoReconnect(true)
+			.setAutoReconnectAttempts(5)
 			.buildConfiguration();
 
 		//Create our bot with the configuration
