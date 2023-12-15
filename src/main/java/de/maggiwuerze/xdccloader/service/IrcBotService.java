@@ -45,7 +45,6 @@ public class IrcBotService {
 			.setAutoNickChange(true) //Automatically change nick when the current one is in use
 			.addListener(ircEventListener) //Add our listener that will be called on Events
 			.setDccPublicAddress(IpHelper.getPublicIp())
-			.setDccPorts(List.of(10000))
 			.buildConfiguration();
 		IrcBot bot = new IrcBot(configuration, download.getId());
 		activeBots.put(targetBot, bot);
