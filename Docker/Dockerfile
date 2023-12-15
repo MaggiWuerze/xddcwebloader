@@ -1,4 +1,4 @@
-FROM openjdk:17.0
+FROM 21-alpine-jdk
 LABEL org.opencontainers.image.source="https://github.com/maggiwuerze/xdccwebloader>"
 WORKDIR /xdcc_webloader
 EXPOSE 8080
