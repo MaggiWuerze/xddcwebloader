@@ -47,12 +47,11 @@ public class CustomSpringEventListener {
 			.setName(username) //Set the nick of the bot. CHANGE IN YOUR CODE
 			.addServer(targetBot.getServer().getServerUrl()) //Join the freenode network
 			.addAutoJoinChannel(targetBot.getChannel().getName()) //Join the official #pircbotx channel
+			.setAutoReconnect(true)
 			.setAutoReconnectAttempts(5)
 			.setAutoNickChange(true) //Automatically change nick when the current one is in use
 			.addListener(ircEventListener) //Add our listener that will be called on Events
 			.setDccPublicAddress(IpHelper.getPublicIp())
-			.setAutoReconnect(true)
-			.setAutoReconnectAttempts(5)
 			.buildConfiguration();
 
 		//Create our bot with the configuration

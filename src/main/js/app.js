@@ -244,12 +244,13 @@ class App extends React.Component {
 		if (payload && type) {
 
 			var id = payload.id;
+			console.log("downloadID: " + id);
 
 			switch (type) {
 
 				case 'DL':
 					axios
-							.get('downloads/remove/', {
+							.get('downloads/remove', {
 
 								params: {
 									downloadId: payload.id,

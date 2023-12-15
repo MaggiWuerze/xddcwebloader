@@ -54804,9 +54804,10 @@ var App = /*#__PURE__*/function (_React$Component) {
       var _this9 = this;
       if (payload && type) {
         var id = payload.id;
+        console.log("downloadID: " + id);
         switch (type) {
           case 'DL':
-            axios__WEBPACK_IMPORTED_MODULE_10__["default"].get('downloads/remove/', {
+            axios__WEBPACK_IMPORTED_MODULE_10__["default"].get('downloads/remove', {
               params: {
                 downloadId: payload.id
               }
