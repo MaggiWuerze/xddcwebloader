@@ -10,6 +10,7 @@ import de.maggiwuerze.xdccloader.model.download.Download;
 import de.maggiwuerze.xdccloader.model.download.DownloadState;
 import de.maggiwuerze.xdccloader.model.entity.Bot;
 import de.maggiwuerze.xdccloader.service.DownloadService;
+import de.maggiwuerze.xdccloader.service.IrcBotService;
 import de.maggiwuerze.xdccloader.util.IpHelper;
 import de.maggiwuerze.xdccloader.util.ProgressWatcherFactory;
 import java.io.IOException;
@@ -32,35 +33,19 @@ public class CustomSpringEventListener {
 	private final IrcEventListener ircEventListener;
 	private final EventPublisher eventPublisher;
 	private final DownloadService downloadService;
+	private final IrcBotService ircBotService;
 
 	@EventListener
 	public void onDownloadCreationEvent(DownloadCreationEvent event) {
 
 		Download download = downloadService.getById(event.getPayload());
-
 		eventPublisher.updateDownloadState(DownloadState.PREPARING, download);
-
-		String username = RandomStringUtils.randomAlphabetic(1) + RandomStringUtils.random(7, true, true);
-		Bot targetBot = download.getBot();
-
-		Configuration configuration = new Configuration.Builder()
-			.setName(username) //Set the nick of the bot. CHANGE IN YOUR CODE
-			.addServer(targetBot.getServer().getServerUrl()) //Join the freenode network
-			.addAutoJoinChannel(targetBot.getChannel().getName()) //Join the official #pircbotx channel
-			.setAutoReconnect(true)
-			.setAutoReconnectAttempts(5)
-			.setAutoNickChange(true) //Automatically change nick when the current one is in use
-			.addListener(ircEventListener) //Add our listener that will be called on Events
-			.setDccPublicAddress(IpHelper.getPublicIp())
-			.buildConfiguration();
-
 		//Create our bot with the configuration
 		download.setProgressWatcher(progressWatcherFactory.getProgressWatcher(download.getId()));
 
-		IrcBot bot = new IrcBot(configuration, download.getId());
+		IrcBot bot = ircBotService.getIrcBotForDownload(download);
 
 		eventPublisher.updateDownloadState(DownloadState.PREPARED, download);
-
 		TaskExecutor taskExecutor = new SimpleAsyncTaskExecutor(bot.getNick() + "_bot");
 		taskExecutor.execute(() -> {
 
