@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: xdccwebloader
+  data:
+    rest:
+      base-path: /api
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: "jdbc:h2:file:./data/demo"
