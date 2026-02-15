@@ -3,6 +3,7 @@ package de.maggiwuerze.xdccwebloader.model.download
 import com.fasterxml.jackson.annotation.JsonIgnore
 import de.maggiwuerze.xdccwebloader.model.entity.Bot
 import de.maggiwuerze.xdccwebloader.util.FileTransferProgressWatcher
+import io.swagger.v3.oas.annotations.media.Schema
 import java.util.*
 
 
@@ -29,4 +30,8 @@ class Download(var bot: Bot, var fileRefId: String) {
     @JsonIgnore
     var progressWatcher: FileTransferProgressWatcher? = null
 
+    fun toTO() = DownloadTO(id, bot, filename, filesize)
 }
+
+@Schema(name = "DownloadTO", requiredProperties = ["id", "bot", "filename", "filesize"])
+data class DownloadTO(val id: UUID, val bot: Bot, val filename: String, val filesize: String)

@@ -2,6 +2,7 @@ package de.maggiwuerze.xdccwebloader.service
 
 import de.maggiwuerze.xdccwebloader.model.download.Download
 import de.maggiwuerze.xdccwebloader.model.download.DownloadState
+import de.maggiwuerze.xdccwebloader.model.download.DownloadTO
 import de.maggiwuerze.xdccwebloader.model.entity.Bot
 import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
@@ -36,6 +37,27 @@ class DownloadService {
 
         return downloads.values.sortedBy { it.progress }.toList()
     }
+
+    fun findAllActive(): List<DownloadTO> {
+        return listOf(DownloadState.UNKNOWN, DownloadState.DONE).let {
+            findAllByStatusInOrderByProgress(it).map { it.toTO() }
+        }
+    }
+
+    fun findAllInactive(): List<DownloadTO> {
+        return listOf(
+            DownloadState.PREPARING,
+            DownloadState.PREPARED,
+            DownloadState.READY,
+            DownloadState.CONNECTING,
+            DownloadState.TRANSMITTING,
+            DownloadState.FINALIZING
+        ).let {
+            findAllByStatusInOrderByProgress(it).map { it.toTO() }
+
+        }
+    }
+
 
     fun findAllByStatusInOrderByProgress(states: List<DownloadState>): List<Download> {
         return downloads.values

@@ -1,8 +1,8 @@
 package de.maggiwuerze.xdccwebloader.controller
 
 import de.maggiwuerze.xdccwebloader.model.entity.Server
+import de.maggiwuerze.xdccwebloader.model.entity.ServerTO
 import de.maggiwuerze.xdccwebloader.model.forms.ServerForm
-import de.maggiwuerze.xdccwebloader.model.transport.ServerTO
 import de.maggiwuerze.xdccwebloader.service.ServerService
 import jakarta.validation.ConstraintViolationException
 import org.slf4j.LoggerFactory
@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
@@ -20,40 +22,37 @@ internal class ServerController(private val serverService: ServerService) {
 
     val log = LoggerFactory.getLogger(this.javaClass.name)
 
-    @get:GetMapping("/servers/")
-    val allServers: ResponseEntity<List<ServerTO>>
-        /**
-         * @return a list of all servers
-         */
-        get() {
-            val servers: List<ServerTO> = serverService.list().map { ServerTO(it) }.toList()
+    @GetMapping("/servers/")
+    fun listServers(): ResponseEntity<List<ServerTO>> {
+        return ResponseEntity(serverService.list().map { it.toTO() }.toList(), HttpStatus.OK)
+    }
 
-            return ResponseEntity(servers, HttpStatus.OK)
+    @GetMapping("{id}")
+    fun getServer(@PathVariable id: UUID): ResponseEntity<ServerTO> {
+        serverService.findById(id)?.let {
+            return ResponseEntity(it.toTO(), HttpStatus.OK)
         }
+        return ResponseEntity(HttpStatus.NOT_FOUND)
+    }
 
     @PostMapping("/servers/")
-    fun addServer(@RequestBody serverForm: ServerForm): ResponseEntity<*> {
+    fun createServer(@RequestBody serverForm: ServerForm): ResponseEntity<ServerTO> {
         try {
-            val server: Server = serverService.save(Server(name = serverForm.name, serverUrl = serverForm.serverUrl))
-            return ResponseEntity("Download added successfully. id=[${server.id}]", HttpStatus.OK)
+            serverService.save(Server(name = serverForm.name, serverUrl = serverForm.serverUrl)).let { server ->
+                return ResponseEntity(server.toTO(), HttpStatus.OK)
+            }
         } catch (e: ConstraintViolationException) {
             log.error(e.message)
-            val errormessage =
-                e.constraintViolations.map { it.message }.joinToString("\n")
-            return ResponseEntity(errormessage, HttpStatus.BAD_REQUEST)
+            return ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
 
-    /**
-     * @return an example server object to populate the attributes for server creation popover
-     */
-    @GetMapping("/servers/example")
-    fun getExampleServer(): ResponseEntity<List<Server>> {
-        return ResponseEntity(listOf(Server()), HttpStatus.OK)
-    }
+    @PutMapping("{id}")
+    fun updateServer(@PathVariable id: UUID, @RequestBody serverForm: ServerForm): ResponseEntity<ServerTO> =
+        serverService.update(id, serverForm).toTO().let { ResponseEntity(it, HttpStatus.OK) }
 
     @DeleteMapping("/servers/")
-    fun delete(serverId: UUID): ResponseEntity<*> {
+    fun deleteServer(serverId: UUID): ResponseEntity<*> {
         try {
             serverService.delete(serverId)
             return ResponseEntity("Server deleted successfully.", HttpStatus.OK)

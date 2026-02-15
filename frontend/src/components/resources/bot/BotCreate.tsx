@@ -1,21 +1,26 @@
 import * as React from 'react';
 import {useNavigate} from 'react-router';
-import useNotifications from '../../hooks/useNotifications/useNotifications';
-import {createOne as createEmployee, type Employee, validate as validateEmployee,} from '../../data/employees';
-import EmployeeForm, {type EmployeeFormState, type FormFieldValue,} from './EmployeeForm';
-import PageContainer from '../pagecontainer/PageContainer';
+import useNotifications from '../../../hooks/useNotifications/useNotifications';
+import {BotRepository as repository} from '../../../data/botRepository';
+import BotForm, {type BotFormState, type FormFieldValue,} from './BotForm';
+import PageContainer from '../../pagecontainer/PageContainer';
+import {BotTO} from "../../../api/rest";
 
-const INITIAL_FORM_VALUES: Partial<EmployeeFormState['values']> = {
-    role: 'Market',
-    isFullTime: true,
+const INITIAL_FORM_VALUES: Partial<BotFormState['values']> = {
+    name: '',
+    pattern: '',
+    maxParallelDownloads: 3,
+    server: undefined,
+    channel: undefined,
+
 };
 
-export default function EmployeeCreate() {
+export default function BotCreate() {
     const navigate = useNavigate();
 
     const notifications = useNotifications();
 
-    const [formState, setFormState] = React.useState<EmployeeFormState>(() => ({
+    const [formState, setFormState] = React.useState<BotFormState>(() => ({
         values: INITIAL_FORM_VALUES,
         errors: {},
     }));
@@ -23,7 +28,7 @@ export default function EmployeeCreate() {
     const formErrors = formState.errors;
 
     const setFormValues = React.useCallback(
-        (newFormValues: Partial<EmployeeFormState['values']>) => {
+        (newFormValues: Partial<BotFormState['values']>) => {
             setFormState((previousState) => ({
                 ...previousState,
                 values: newFormValues,
@@ -33,7 +38,7 @@ export default function EmployeeCreate() {
     );
 
     const setFormErrors = React.useCallback(
-        (newFormErrors: Partial<EmployeeFormState['errors']>) => {
+        (newFormErrors: Partial<BotFormState['errors']>) => {
             setFormState((previousState) => ({
                 ...previousState,
                 errors: newFormErrors,
@@ -43,9 +48,9 @@ export default function EmployeeCreate() {
     );
 
     const handleFormFieldChange = React.useCallback(
-        (name: keyof EmployeeFormState['values'], value: FormFieldValue) => {
-            const validateField = async (values: Partial<EmployeeFormState['values']>) => {
-                const {issues} = validateEmployee(values);
+        (name: keyof BotFormState['values'], value: FormFieldValue) => {
+            const validateField = async (values: Partial<BotFormState['values']>) => {
+                const {issues} = repository.validate(values);
                 setFormErrors({
                     ...formErrors,
                     [name]: issues?.find((issue) => issue.path?.[0] === name)?.message,
@@ -65,7 +70,7 @@ export default function EmployeeCreate() {
     }, [setFormValues]);
 
     const handleFormSubmit = React.useCallback(async () => {
-        const {issues} = validateEmployee(formValues);
+        const {issues} = repository.validate(formValues);
         if (issues && issues.length > 0) {
             setFormErrors(
                 Object.fromEntries(issues.map((issue) => [issue.path?.[0], issue.message])),
@@ -75,7 +80,7 @@ export default function EmployeeCreate() {
         setFormErrors({});
 
         try {
-            await createEmployee(formValues as Omit<Employee, 'id'>);
+            await repository.create(formValues as Omit<BotTO, 'id'>);
             notifications.show('Employee created successfully.', {
                 severity: 'success',
                 autoHideDuration: 3000,
@@ -99,7 +104,7 @@ export default function EmployeeCreate() {
             title="New Employee"
             breadcrumbs={[{title: 'Employees', path: '/employees'}, {title: 'New'}]}
         >
-            <EmployeeForm
+            <BotForm
                 formState={formState}
                 onFieldChange={handleFormFieldChange}
                 onSubmit={handleFormSubmit}

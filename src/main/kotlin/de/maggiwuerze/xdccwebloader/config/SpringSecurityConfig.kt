@@ -4,10 +4,9 @@ import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
@@ -21,8 +20,11 @@ class SpringSecurityConfig : WebMvcConfigurer {
     @Throws(Exception::class)
     fun configure(http: HttpSecurity): SecurityFilterChain? {
         http
+            .cors(Customizer.withDefaults())
+            .csrf({ csrf -> csrf.disable() })
             .authorizeHttpRequests(Customizer { authorize ->
                 authorize
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                     .requestMatchers(
                         "/",
@@ -35,8 +37,6 @@ class SpringSecurityConfig : WebMvcConfigurer {
                     .anyRequest().permitAll()
             }
             )
-        http.csrf(Customizer { obj: CsrfConfigurer<HttpSecurity> -> obj.disable() })
-        http.cors(Customizer { obj: CorsConfigurer<HttpSecurity> -> obj.disable() })
 
         return http.build()
     }

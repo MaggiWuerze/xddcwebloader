@@ -12,51 +12,54 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate, useParams} from 'react-router';
-import {useDialogs} from '../../hooks/useDialogs/useDialogs';
-import useNotifications from '../../hooks/useNotifications/useNotifications';
-import {deleteOne as deleteEmployee, type Employee, getOne as getEmployee,} from '../../data/employees';
-import PageContainer from '../pagecontainer/PageContainer';
+import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
+import useNotifications from '../../../hooks/useNotifications/useNotifications';
+import {ServerRepository as repository} from '../../../data/serverRepository';
+import PageContainer from '../../pagecontainer/PageContainer';
+import {ServerTO} from "../../../api/rest";
 
-export default function EmployeeShow() {
-    const {employeeId} = useParams();
+export default function ServerShow() {
+    const {serverId} = useParams();
+
     const navigate = useNavigate();
 
     const dialogs = useDialogs();
     const notifications = useNotifications();
 
-    const [employee, setEmployee] = React.useState<Employee | null>(null);
+    const [server, setServer] = React.useState<ServerTO | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
     const [error, setError] = React.useState<Error | null>(null);
 
     const loadData = React.useCallback(async () => {
+        if (!serverId) return;
         setError(null);
         setIsLoading(true);
 
         try {
-            const showData = await getEmployee(Number(employeeId));
+            const showData = await repository.get(serverId);
 
-            setEmployee(showData);
+            setServer(showData);
         } catch (showDataError) {
             setError(showDataError as Error);
         }
         setIsLoading(false);
-    }, [employeeId]);
+    }, [serverId]);
 
     React.useEffect(() => {
         loadData();
     }, [loadData]);
 
     const handleEmployeeEdit = React.useCallback(() => {
-        navigate(`/employees/${employeeId}/edit`);
-    }, [navigate, employeeId]);
+        navigate(`/employees/${serverId}/edit`);
+    }, [navigate, serverId]);
 
     const handleEmployeeDelete = React.useCallback(async () => {
-        if (!employee) {
+        if (!server || !serverId) {
             return;
         }
 
         const confirmed = await dialogs.confirm(
-            `Do you wish to delete ${employee.name}?`,
+            `Do you wish to delete ${server.name}?`,
             {
                 title: `Delete employee?`,
                 severity: 'error',
@@ -68,7 +71,7 @@ export default function EmployeeShow() {
         if (confirmed) {
             setIsLoading(true);
             try {
-                await deleteEmployee(Number(employeeId));
+                await repository.delete(serverId);
 
                 navigate('/employees');
 
@@ -87,7 +90,7 @@ export default function EmployeeShow() {
             }
             setIsLoading(false);
         }
-    }, [employee, dialogs, employeeId, navigate, notifications]);
+    }, [server, dialogs, serverId, navigate, notifications]);
 
     const handleBack = React.useCallback(() => {
         navigate('/employees');
@@ -119,38 +122,22 @@ export default function EmployeeShow() {
             );
         }
 
-        return employee ? (
+        return server ? (
             <Box sx={{flexGrow: 1, width: '100%'}}>
                 <Grid container spacing={2} sx={{width: '100%'}}>
                     <Grid size={{xs: 12, sm: 6}}>
                         <Paper sx={{px: 2, py: 1}}>
                             <Typography variant="overline">Name</Typography>
                             <Typography variant="body1" sx={{mb: 1}}>
-                                {employee.name}
+                                {server.name}
                             </Typography>
                         </Paper>
                     </Grid>
                     <Grid size={{xs: 12, sm: 6}}>
                         <Paper sx={{px: 2, py: 1}}>
-                            <Typography variant="overline">Age</Typography>
+                            <Typography variant="overline">Server URL</Typography>
                             <Typography variant="body1" sx={{mb: 1}}>
-                                {employee.age}
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid size={{xs: 12, sm: 6}}>
-                        <Paper sx={{px: 2, py: 1}}>
-                            <Typography variant="overline">Department</Typography>
-                            <Typography variant="body1" sx={{mb: 1}}>
-                                {employee.role}
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid size={{xs: 12, sm: 6}}>
-                        <Paper sx={{px: 2, py: 1}}>
-                            <Typography variant="overline">Full-time</Typography>
-                            <Typography variant="body1" sx={{mb: 1}}>
-                                {employee.isFullTime ? 'Yes' : 'No'}
+                                {server.serverUrl}
                             </Typography>
                         </Paper>
                     </Grid>
@@ -187,19 +174,19 @@ export default function EmployeeShow() {
     }, [
         isLoading,
         error,
-        employee,
+        server,
         handleBack,
         handleEmployeeEdit,
         handleEmployeeDelete,
     ]);
 
-    const pageTitle = `Employee ${employeeId}`;
+    const pageTitle = `Server ${serverId}`;
 
     return (
         <PageContainer
             title={pageTitle}
             breadcrumbs={[
-                {title: 'Employees', path: '/employees'},
+                {title: 'Servers', path: '/servers'},
                 {title: pageTitle},
             ]}
         >

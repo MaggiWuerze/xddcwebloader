@@ -7,7 +7,6 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import {
     DataGrid,
-    GridActionsCellItem,
     gridClasses,
     GridColDef,
     GridEventListener,
@@ -17,17 +16,16 @@ import {
 } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import {useLocation, useNavigate, useSearchParams} from 'react-router';
-import {useDialogs} from '../../hooks/useDialogs/useDialogs';
-import useNotifications from '../../hooks/useNotifications/useNotifications';
-import {deleteOne as deleteEmployee, type Employee, getMany as getEmployees,} from '../../data/employees';
-import PageContainer from '../pagecontainer/PageContainer';
+import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
+import useNotifications from '../../../hooks/useNotifications/useNotifications';
+import PageContainer from '../../pagecontainer/PageContainer';
+import {DownloadRepository as repository} from "../../../data/downloadRepository";
+import {DownloadTO} from "../../../api/rest";
 
 const INITIAL_PAGE_SIZE = 10;
 
-export default function EmployeeList() {
+export default function DownloadList() {
     const {pathname} = useLocation();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -51,7 +49,7 @@ export default function EmployeeList() {
     );
 
     const [rowsState, setRowsState] = React.useState<{
-        rows: Employee[];
+        rows: DownloadTO[];
         rowCount: number;
     }>({
         rows: [],
@@ -123,7 +121,7 @@ export default function EmployeeList() {
         setIsLoading(true);
 
         try {
-            const listData = await getEmployees({
+            const listData = await repository.list({
                 paginationModel,
                 sortModel,
                 filterModel,
@@ -162,47 +160,10 @@ export default function EmployeeList() {
     }, [navigate]);
 
     const handleRowEdit = React.useCallback(
-        (employee: Employee) => () => {
+        (employee: DownloadTO) => () => {
             navigate(`/employees/${employee.id}/edit`);
         },
         [navigate],
-    );
-
-    const handleRowDelete = React.useCallback(
-        (employee: Employee) => async () => {
-            const confirmed = await dialogs.confirm(
-                `Do you wish to delete ${employee.name}?`,
-                {
-                    title: `Delete employee?`,
-                    severity: 'error',
-                    okText: 'Delete',
-                    cancelText: 'Cancel',
-                },
-            );
-
-            if (confirmed) {
-                setIsLoading(true);
-                try {
-                    await deleteEmployee(Number(employee.id));
-
-                    notifications.show('Employee deleted successfully.', {
-                        severity: 'success',
-                        autoHideDuration: 3000,
-                    });
-                    loadData();
-                } catch (deleteError) {
-                    notifications.show(
-                        `Failed to delete employee. Reason:' ${(deleteError as Error).message}`,
-                        {
-                            severity: 'error',
-                            autoHideDuration: 3000,
-                        },
-                    );
-                }
-                setIsLoading(false);
-            }
-        },
-        [dialogs, notifications, loadData],
     );
 
     const initialState = React.useMemo(
@@ -232,31 +193,11 @@ export default function EmployeeList() {
                 width: 160,
             },
             {field: 'isFullTime', headerName: 'Full-time', type: 'boolean'},
-            {
-                field: 'actions',
-                type: 'actions',
-                flex: 1,
-                align: 'right',
-                getActions: ({row}) => [
-                    <GridActionsCellItem
-                        key="edit-item"
-                        icon={<EditIcon/>}
-                        label="Edit"
-                        onClick={handleRowEdit(row)}
-                    />,
-                    <GridActionsCellItem
-                        key="delete-item"
-                        icon={<DeleteIcon/>}
-                        label="Delete"
-                        onClick={handleRowDelete(row)}
-                    />,
-                ],
-            },
         ],
-        [handleRowEdit, handleRowDelete],
+        [handleRowEdit],
     );
 
-    const pageTitle = 'Employees';
+    const pageTitle = 'Downloads';
 
     return (
         <PageContainer

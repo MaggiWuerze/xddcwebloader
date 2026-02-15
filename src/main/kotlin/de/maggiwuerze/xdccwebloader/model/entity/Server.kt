@@ -1,5 +1,6 @@
 package de.maggiwuerze.xdccwebloader.model.entity
 
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -21,4 +22,9 @@ class Server(
     var creationDate: LocalDateTime = LocalDateTime.now()
 ) {
     constructor() : this(name = "", serverUrl = "")
+
+    fun toTO() = ServerTO(id, name, serverUrl, creationDate)
 }
+
+@Schema(name = "ServerTO", requiredProperties = ["id", "name", "serverUrl", "creationDate"])
+data class ServerTO(val id: UUID, val name: String, val serverUrl: String, val creationDate: LocalDateTime)

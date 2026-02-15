@@ -3,29 +3,25 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useNavigate, useParams} from 'react-router';
-import useNotifications from '../../hooks/useNotifications/useNotifications';
-import {
-    type Employee,
-    getOne as getEmployee,
-    updateOne as updateEmployee,
-    validate as validateEmployee,
-} from '../../data/employees';
-import EmployeeForm, {type EmployeeFormState, type FormFieldValue,} from './EmployeeForm';
-import PageContainer from '../pagecontainer/PageContainer';
+import useNotifications from '../../../hooks/useNotifications/useNotifications';
+import {BotRepository as repository} from '../../../data/botRepository';
+import BotForm, {type BotFormState, type FormFieldValue,} from './BotForm';
+import PageContainer from '../../pagecontainer/PageContainer';
+import {BotTO} from "../../../api/rest";
 
 function EmployeeEditForm({
                               initialValues,
                               onSubmit,
                           }: {
-    initialValues: Partial<EmployeeFormState['values']>;
-    onSubmit: (formValues: Partial<EmployeeFormState['values']>) => Promise<void>;
+    initialValues: Partial<BotFormState['values']>;
+    onSubmit: (formValues: Partial<BotFormState['values']>) => Promise<void>;
 }) {
     const {employeeId} = useParams();
     const navigate = useNavigate();
 
     const notifications = useNotifications();
 
-    const [formState, setFormState] = React.useState<EmployeeFormState>(() => ({
+    const [formState, setFormState] = React.useState<BotFormState>(() => ({
         values: initialValues,
         errors: {},
     }));
@@ -33,7 +29,7 @@ function EmployeeEditForm({
     const formErrors = formState.errors;
 
     const setFormValues = React.useCallback(
-        (newFormValues: Partial<EmployeeFormState['values']>) => {
+        (newFormValues: Partial<BotFormState['values']>) => {
             setFormState((previousState) => ({
                 ...previousState,
                 values: newFormValues,
@@ -43,7 +39,7 @@ function EmployeeEditForm({
     );
 
     const setFormErrors = React.useCallback(
-        (newFormErrors: Partial<EmployeeFormState['errors']>) => {
+        (newFormErrors: Partial<BotFormState['errors']>) => {
             setFormState((previousState) => ({
                 ...previousState,
                 errors: newFormErrors,
@@ -53,12 +49,14 @@ function EmployeeEditForm({
     );
 
     const handleFormFieldChange = React.useCallback(
-        (name: keyof EmployeeFormState['values'], value: FormFieldValue) => {
-            const validateField = async (values: Partial<EmployeeFormState['values']>) => {
-                const {issues} = validateEmployee(values);
+        (name: keyof BotFormState['values'], value: FormFieldValue) => {
+            const validateField = async (values: Partial<BotFormState['values']>) => {
+                const {issues} = repository.validate(values);
                 setFormErrors({
                     ...formErrors,
-                    [name]: issues?.find((issue) => issue.path?.[0] === name)?.message,
+                    [name]: issues?.find((issue: {
+                        path: (string | number | symbol)[];
+                    }) => issue.path?.[0] === name)?.message,
                 });
             };
 
@@ -75,10 +73,13 @@ function EmployeeEditForm({
     }, [initialValues, setFormValues]);
 
     const handleFormSubmit = React.useCallback(async () => {
-        const {issues} = validateEmployee(formValues);
+        const {issues} = repository.validate(formValues);
         if (issues && issues.length > 0) {
             setFormErrors(
-                Object.fromEntries(issues.map((issue) => [issue.path?.[0], issue.message])),
+                Object.fromEntries(issues.map((issue: {
+                    path: any[];
+                    message: any;
+                }) => [issue.path?.[0], issue.message])),
             );
             return;
         }
@@ -91,7 +92,7 @@ function EmployeeEditForm({
                 autoHideDuration: 3000,
             });
 
-            navigate('/employees');
+            navigate('/bot');
         } catch (editError) {
             notifications.show(
                 `Failed to edit employee. Reason: ${(editError as Error).message}`,
@@ -105,48 +106,50 @@ function EmployeeEditForm({
     }, [formValues, navigate, notifications, onSubmit, setFormErrors]);
 
     return (
-        <EmployeeForm
+        <BotForm
             formState={formState}
             onFieldChange={handleFormFieldChange}
             onSubmit={handleFormSubmit}
             onReset={handleFormReset}
             submitButtonLabel="Save"
-            backButtonPath={`/employees/${employeeId}`}
+            backButtonPath={`/bot/${employeeId}`}
         />
     );
 }
 
-export default function EmployeeEdit() {
-    const {employeeId} = useParams();
+export default function BotEdit() {
+    const {botId} = useParams();
 
-    const [employee, setEmployee] = React.useState<Employee | null>(null);
+    const [employee, setEmployee] = React.useState<BotTO | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
     const [error, setError] = React.useState<Error | null>(null);
 
     const loadData = React.useCallback(async () => {
+        if (!botId) return;
         setError(null);
         setIsLoading(true);
 
         try {
-            const showData = await getEmployee(Number(employeeId));
+            const showData = await repository.get(botId);
 
             setEmployee(showData);
         } catch (showDataError) {
             setError(showDataError as Error);
         }
         setIsLoading(false);
-    }, [employeeId]);
+    }, [botId]);
 
     React.useEffect(() => {
         loadData();
     }, [loadData]);
 
     const handleSubmit = React.useCallback(
-        async (formValues: Partial<EmployeeFormState['values']>) => {
-            const updatedData = await updateEmployee(Number(employeeId), formValues);
+        async (formValues: Partial<BotFormState['values']>) => {
+            if (!botId) return;
+            const updatedData = await repository.update(botId, formValues);
             setEmployee(updatedData);
         },
-        [employeeId],
+        [botId],
     );
 
     const renderEdit = React.useMemo(() => {
@@ -182,10 +185,10 @@ export default function EmployeeEdit() {
 
     return (
         <PageContainer
-            title={`Edit Employee ${employeeId}`}
+            title={`Edit Employee ${botId}`}
             breadcrumbs={[
-                {title: 'Employees', path: '/employees'},
-                {title: `Employee ${employeeId}`, path: `/employees/${employeeId}`},
+                {title: 'Employees', path: '/bot'},
+                {title: `Employee ${botId}`, path: `/bot/${botId}`},
                 {title: 'Edit'},
             ]}
         >

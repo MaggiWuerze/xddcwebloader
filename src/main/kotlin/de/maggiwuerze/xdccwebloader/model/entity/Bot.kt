@@ -1,5 +1,6 @@
 package de.maggiwuerze.xdccwebloader.model.entity
 
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -45,4 +46,22 @@ class Bot(
     @Column(nullable = false)
     var maxParallelDownloads: Long? = 3L
 
+) {
+    fun toTO() = BotTO(
+        id, server, channel, name, pattern, creationDate, maxParallelDownloads!!
+    )
+}
+
+@Schema(
+    name = "BotTO",
+    requiredProperties = ["id", "server", "channel", "name", "pattern", "creationDate", "maxParallelDownloads"]
+)
+data class BotTO(
+    val id: UUID,
+    val server: Server,
+    val channel: Channel,
+    val name: String,
+    val pattern: String,
+    val creationDate: LocalDateTime,
+    val maxParallelDownloads: Long
 )

@@ -1,39 +1,83 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import {createHashRouter, RouterProvider} from 'react-router';
 import DashboardLayout from './components/dashboard/DashboardLayout';
-import EmployeeList from './components/bot/EmployeeList';
-import EmployeeShow from './components/bot/EmployeeShow';
-import EmployeeCreate from './components/bot/EmployeeCreate';
-import EmployeeEdit from './components/bot/EmployeeEdit';
+import BotList from './components/resources/bot/BotList';
+import BotShow from './components/resources/bot/BotShow';
+import BotCreate from './components/resources/bot/BotCreate';
+import BotEdit from './components/resources/bot/BotEdit';
 import NotificationsProvider from './hooks/useNotifications/NotificationsProvider';
 import DialogsProvider from './hooks/useDialogs/DialogsProvider';
 import AppTheme from './theme/AppTheme';
 import {dataGridCustomizations, formInputCustomizations, sidebarCustomizations,} from './theme/customizations/';
+import DownloadList from "./components/resources/download/DownloadList";
+import ChannelList from "./components/resources/channel/ChannelList";
+import ChannelShow from "./components/resources/channel/ChannelShow";
+import ChannelCreate from "./components/resources/channel/ChannelCreate";
+import ChannelEdit from "./components/resources/channel/ChannelEdit";
+import ServerEdit from "./components/resources/server/ServerEdit";
+import ServerList from "./components/resources/server/ServerList";
+import ServerShow from "./components/resources/server/ServerShow";
+import ServerCreate from "./components/resources/server/ServerCreate";
 
 const router = createHashRouter([
     {
         Component: DashboardLayout,
         children: [
+            //server routes
             {
-                path: '/employees',
-                Component: EmployeeList,
+                path: '/server',
+                Component: ServerList,
             },
             {
-                path: '/employees/:employeeId',
-                Component: EmployeeShow,
+                path: '/server/:serverId',
+                Component: ServerShow,
             },
             {
-                path: '/employees/new',
-                Component: EmployeeCreate,
+                path: '/server/new',
+                Component: ServerCreate,
             },
             {
-                path: '/employees/:employeeId/edit',
-                Component: EmployeeEdit,
+                path: '/server/:serverId/edit',
+                Component: ServerEdit,
+            },
+            //channel routes
+            {
+                path: '/channel',
+                Component: ChannelList,
+            },
+            {
+                path: '/channel/:channelId',
+                Component: ChannelShow,
+            },
+            {
+                path: '/channel/new',
+                Component: ChannelCreate,
+            },
+            {
+                path: '/channel/:channelId/edit',
+                Component: ChannelEdit,
+            },
+            //bot routes
+            {
+                path: '/bot',
+                Component: BotList,
+            },
+            {
+                path: '/bot/:botId',
+                Component: BotShow,
+            },
+            {
+                path: '/bot/new',
+                Component: BotCreate,
+            },
+            {
+                path: '/bot/:botId/edit',
+                Component: BotEdit,
             },
             // Fallback route for the example routes in dashboard sidebar items
             {
                 path: '*',
-                Component: EmployeeList,
+                Component: DownloadList,
             },
         ],
     },

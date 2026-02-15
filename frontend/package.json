@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "1.13.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/roboto": "^5.2.9",
@@ -39,8 +40,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "update-typing": "npm run update:api-specs-local && npm run update:api-typings && npm run generate_client",
     "update:api-specs-local": "curl --output api-schema/specs/api.json http://localhost:8080/v3/api-docs",
-    "update:api-typings": "openapi-typescript api-schema/specs/api.json --output api-schema/specs/api-typings.ts --alphabetize  --enum"
+    "update:api-typings": "openapi-typescript api-schema/specs/api.json --output api-schema/specs/api-typings.ts --alphabetize  --enum",
+    "generate_client": "openapi-generator-cli generate -i api-schema/specs/api.json -g typescript-axios -o src/api/rest"
   },
   "eslintConfig": {
     "extends": [

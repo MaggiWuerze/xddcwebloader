@@ -12,21 +12,21 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate, useParams} from 'react-router';
-import {useDialogs} from '../../hooks/useDialogs/useDialogs';
-import useNotifications from '../../hooks/useNotifications/useNotifications';
-import {deleteOne as deleteEmployee, getOne as getEmployee,} from '../../data/employees';
-import PageContainer from '../pagecontainer/PageContainer';
+import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
+import useNotifications from '../../../hooks/useNotifications/useNotifications';
+import {deleteOne as deleteEmployee, type Employee, getOne as getEmployee,} from '../../../data/bot';
+import PageContainer from '../../pagecontainer/PageContainer';
 
-export default function EmployeeShow() {
+export default function DownloadShow() {
     const {employeeId} = useParams();
     const navigate = useNavigate();
 
     const dialogs = useDialogs();
     const notifications = useNotifications();
 
-    const [employee, setEmployee] = React.useState(null);
+    const [employee, setEmployee] = React.useState<Employee | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
-    const [error, setError] = React.useState(null);
+    const [error, setError] = React.useState<Error | null>(null);
 
     const loadData = React.useCallback(async () => {
         setError(null);
@@ -37,7 +37,7 @@ export default function EmployeeShow() {
 
             setEmployee(showData);
         } catch (showDataError) {
-            setError(showDataError);
+            setError(showDataError as Error);
         }
         setIsLoading(false);
     }, [employeeId]);
@@ -78,7 +78,7 @@ export default function EmployeeShow() {
                 });
             } catch (deleteError) {
                 notifications.show(
-                    `Failed to delete employee. Reason:' ${deleteError.message}`,
+                    `Failed to delete employee. Reason:' ${(deleteError as Error).message}`,
                     {
                         severity: 'error',
                         autoHideDuration: 3000,

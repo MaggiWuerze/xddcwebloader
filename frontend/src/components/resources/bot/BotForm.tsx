@@ -1,41 +1,35 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
-import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select, {SelectChangeEvent, SelectProps} from '@mui/material/Select';
+import {SelectChangeEvent} from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate} from 'react-router';
-import type {Employee} from '../../data/employees';
+import {BotTO} from "../../../api/rest";
 
-export interface EmployeeFormState {
-    values: Partial<Omit<Employee, 'id'>>;
-    errors: Partial<Record<keyof EmployeeFormState['values'], string>>;
+export interface BotFormState {
+    values: Partial<Omit<BotTO, 'id'>>;
+    errors: Partial<Record<keyof BotFormState['values'], string>>;
 }
 
 export type FormFieldValue = string | string[] | number | boolean | File | null;
 
 export interface EmployeeFormProps {
-    formState: EmployeeFormState;
+    formState: BotFormState;
     onFieldChange: (
-        name: keyof EmployeeFormState['values'],
+        name: keyof BotFormState['values'],
         value: FormFieldValue,
     ) => void;
-    onSubmit: (formValues: Partial<EmployeeFormState['values']>) => Promise<void>;
-    onReset?: (formValues: Partial<EmployeeFormState['values']>) => void;
+    onSubmit: (formValues: Partial<BotFormState['values']>) => Promise<void>;
+    onReset?: (formValues: Partial<BotFormState['values']>) => void;
     submitButtonLabel: string;
     backButtonPath?: string;
 }
 
-export default function EmployeeForm(props: EmployeeFormProps) {
+export default function BotForm(props: EmployeeFormProps) {
     const {
         formState,
         onFieldChange,
@@ -69,7 +63,7 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     const handleTextFieldChange = React.useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             onFieldChange(
-                event.target.name as keyof EmployeeFormState['values'],
+                event.target.name as keyof BotFormState['values'],
                 event.target.value,
             );
         },
@@ -79,7 +73,7 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     const handleNumberFieldChange = React.useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             onFieldChange(
-                event.target.name as keyof EmployeeFormState['values'],
+                event.target.name as keyof BotFormState['values'],
                 Number(event.target.value),
             );
         },
@@ -88,7 +82,7 @@ export default function EmployeeForm(props: EmployeeFormProps) {
 
     const handleCheckboxFieldChange = React.useCallback(
         (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-            onFieldChange(event.target.name as keyof EmployeeFormState['values'], checked);
+            onFieldChange(event.target.name as keyof BotFormState['values'], checked);
         },
         [onFieldChange],
     );
@@ -96,7 +90,7 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     const handleSelectFieldChange = React.useCallback(
         (event: SelectChangeEvent) => {
             onFieldChange(
-                event.target.name as keyof EmployeeFormState['values'],
+                event.target.name as keyof BotFormState['values'],
                 event.target.value,
             );
         },
@@ -110,7 +104,7 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     }, [formValues, onReset]);
 
     const handleBack = React.useCallback(() => {
-        navigate(backButtonPath ?? '/employees');
+        navigate(backButtonPath ?? '/bot');
     }, [navigate, backButtonPath]);
 
     return (
@@ -138,51 +132,14 @@ export default function EmployeeForm(props: EmployeeFormProps) {
                     <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
                         <TextField
                             type="number"
-                            value={formValues.age ?? ''}
+                            value={formValues.pattern ?? ''}
                             onChange={handleNumberFieldChange}
-                            name="age"
-                            label="Age"
-                            error={!!formErrors.age}
-                            helperText={formErrors.age ?? ' '}
+                            name="pattern"
+                            label="Pattern"
+                            error={!!formErrors.pattern}
+                            helperText={formErrors.pattern ?? ' '}
                             fullWidth
                         />
-                    </Grid>
-                    <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
-                        <FormControl error={!!formErrors.role} fullWidth>
-                            <InputLabel id="employee-role-label">Department</InputLabel>
-                            <Select
-                                value={formValues.role ?? ''}
-                                onChange={handleSelectFieldChange as SelectProps['onChange']}
-                                labelId="employee-role-label"
-                                name="role"
-                                label="Department"
-                                defaultValue=""
-                                fullWidth
-                            >
-                                <MenuItem value="Market">Market</MenuItem>
-                                <MenuItem value="Finance">Finance</MenuItem>
-                                <MenuItem value="Development">Development</MenuItem>
-                            </Select>
-                            <FormHelperText>{formErrors.role ?? ' '}</FormHelperText>
-                        </FormControl>
-                    </Grid>
-                    <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
-                        <FormControl>
-                            <FormControlLabel
-                                name="isFullTime"
-                                control={
-                                    <Checkbox
-                                        size="large"
-                                        checked={formValues.isFullTime ?? false}
-                                        onChange={handleCheckboxFieldChange}
-                                    />
-                                }
-                                label="Full-time"
-                            />
-                            <FormHelperText error={!!formErrors.isFullTime}>
-                                {formErrors.isFullTime ?? ' '}
-                            </FormHelperText>
-                        </FormControl>
                     </Grid>
                 </Grid>
             </FormGroup>

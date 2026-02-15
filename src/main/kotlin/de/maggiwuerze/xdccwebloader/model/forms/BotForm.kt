@@ -2,7 +2,7 @@ package de.maggiwuerze.xdccwebloader.model.forms
 
 import java.util.*
 
-class TargetBotForm(
+class BotForm(
     val name: String,
     val pattern: String,
     val serverId: UUID,

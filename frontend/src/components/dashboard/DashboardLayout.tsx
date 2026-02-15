@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import {Outlet} from 'react-router';
 import DashboardSidebar from './DashboardSidebar';
+import DashboardHeader from "./DashboardHeader";
 
 export default function DashboardLayout() {
     const theme = useTheme();
@@ -55,6 +56,11 @@ export default function DashboardLayout() {
                 width: '100%',
             }}
         >
+            <DashboardHeader
+                title="XDCC Webloader"
+                menuOpen={isNavigationExpanded}
+                onToggleMenu={handleToggleHeaderMenu}
+            />
             <DashboardSidebar
                 expanded={isNavigationExpanded}
                 setExpanded={setIsNavigationExpanded}

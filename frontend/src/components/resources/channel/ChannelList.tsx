@@ -5,20 +5,30 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
-import {DataGrid, GridActionsCellItem, gridClasses} from '@mui/x-data-grid';
+import {
+    DataGrid,
+    GridActionsCellItem,
+    gridClasses,
+    GridColDef,
+    GridEventListener,
+    GridFilterModel,
+    GridPaginationModel,
+    GridSortModel,
+} from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useLocation, useNavigate, useSearchParams} from 'react-router';
-import {useDialogs} from '../../hooks/useDialogs/useDialogs';
-import useNotifications from '../../hooks/useNotifications/useNotifications';
-import {deleteOne as deleteEmployee, getMany as getEmployees,} from '../../data/employees';
-import PageContainer from '../pagecontainer/PageContainer';
+import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
+import useNotifications from '../../../hooks/useNotifications/useNotifications';
+import PageContainer from '../../pagecontainer/PageContainer';
+import {ChannelTO} from "../../../api/rest";
+import {ChannelRepository as repository} from "../../../data/channelRepository";
 
 const INITIAL_PAGE_SIZE = 10;
 
-export default function EmployeeList() {
+export default function ChannelList() {
     const {pathname} = useLocation();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -26,31 +36,34 @@ export default function EmployeeList() {
     const dialogs = useDialogs();
     const notifications = useNotifications();
 
-    const [paginationModel, setPaginationModel] = React.useState({
+    const [paginationModel, setPaginationModel] = React.useState<GridPaginationModel>({
         page: searchParams.get('page') ? Number(searchParams.get('page')) : 0,
         pageSize: searchParams.get('pageSize')
             ? Number(searchParams.get('pageSize'))
             : INITIAL_PAGE_SIZE,
     });
-    const [filterModel, setFilterModel] = React.useState(
+    const [filterModel, setFilterModel] = React.useState<GridFilterModel>(
         searchParams.get('filter')
             ? JSON.parse(searchParams.get('filter') ?? '')
             : {items: []},
     );
-    const [sortModel, setSortModel] = React.useState(
+    const [sortModel, setSortModel] = React.useState<GridSortModel>(
         searchParams.get('sort') ? JSON.parse(searchParams.get('sort') ?? '') : [],
     );
 
-    const [rowsState, setRowsState] = React.useState({
+    const [rowsState, setRowsState] = React.useState<{
+        rows: ChannelTO[];
+        rowCount: number;
+    }>({
         rows: [],
         rowCount: 0,
     });
 
     const [isLoading, setIsLoading] = React.useState(true);
-    const [error, setError] = React.useState(null);
+    const [error, setError] = React.useState<Error | null>(null);
 
     const handlePaginationModelChange = React.useCallback(
-        (model) => {
+        (model: GridPaginationModel) => {
             setPaginationModel(model);
 
             searchParams.set('page', String(model.page));
@@ -66,7 +79,7 @@ export default function EmployeeList() {
     );
 
     const handleFilterModelChange = React.useCallback(
-        (model) => {
+        (model: GridFilterModel) => {
             setFilterModel(model);
 
             if (
@@ -88,7 +101,7 @@ export default function EmployeeList() {
     );
 
     const handleSortModelChange = React.useCallback(
-        (model) => {
+        (model: GridSortModel) => {
             setSortModel(model);
 
             if (model.length > 0) {
@@ -111,7 +124,7 @@ export default function EmployeeList() {
         setIsLoading(true);
 
         try {
-            const listData = await getEmployees({
+            const listData = await repository.list({
                 paginationModel,
                 sortModel,
                 filterModel,
@@ -122,7 +135,7 @@ export default function EmployeeList() {
                 rowCount: listData.itemCount,
             });
         } catch (listDataError) {
-            setError(listDataError);
+            setError(listDataError as Error);
         }
 
         setIsLoading(false);
@@ -138,28 +151,28 @@ export default function EmployeeList() {
         }
     }, [isLoading, loadData]);
 
-    const handleRowClick = React.useCallback(
+    const handleRowClick = React.useCallback<GridEventListener<'rowClick'>>(
         ({row}) => {
-            navigate(`/employees/${row.id}`);
+            navigate(`/channel/${row.id}`);
         },
         [navigate],
     );
 
     const handleCreateClick = React.useCallback(() => {
-        navigate('/employees/new');
+        navigate('/channel/new');
     }, [navigate]);
 
     const handleRowEdit = React.useCallback(
-        (employee) => () => {
-            navigate(`/employees/${employee.id}/edit`);
+        (employee: ChannelTO) => () => {
+            navigate(`/channel/${employee.id}/edit`);
         },
         [navigate],
     );
 
     const handleRowDelete = React.useCallback(
-        (employee) => async () => {
+        (channel: ChannelTO) => async () => {
             const confirmed = await dialogs.confirm(
-                `Do you wish to delete ${employee.name}?`,
+                `Do you wish to delete ${channel.name}?`,
                 {
                     title: `Delete employee?`,
                     severity: 'error',
@@ -171,7 +184,7 @@ export default function EmployeeList() {
             if (confirmed) {
                 setIsLoading(true);
                 try {
-                    await deleteEmployee(Number(employee.id));
+                    await repository.delete(channel.id);
 
                     notifications.show('Employee deleted successfully.', {
                         severity: 'success',
@@ -180,7 +193,7 @@ export default function EmployeeList() {
                     loadData();
                 } catch (deleteError) {
                     notifications.show(
-                        `Failed to delete employee. Reason:' ${deleteError.message}`,
+                        `Failed to delete employee. Reason:' ${(deleteError as Error).message}`,
                         {
                             severity: 'error',
                             autoHideDuration: 3000,
@@ -200,26 +213,17 @@ export default function EmployeeList() {
         [],
     );
 
-    const columns = React.useMemo(
+    const columns = React.useMemo<GridColDef[]>(
         () => [
             {field: 'id', headerName: 'ID'},
             {field: 'name', headerName: 'Name', width: 140},
-            {field: 'age', headerName: 'Age', type: 'number'},
             {
-                field: 'joinDate',
-                headerName: 'Join date',
+                field: 'createDate',
+                headerName: 'Create date',
                 type: 'date',
                 valueGetter: (value) => value && new Date(value),
                 width: 140,
             },
-            {
-                field: 'role',
-                headerName: 'Department',
-                type: 'singleSelect',
-                valueOptions: ['Market', 'Finance', 'Development'],
-                width: 160,
-            },
-            {field: 'isFullTime', headerName: 'Full-time', type: 'boolean'},
             {
                 field: 'actions',
                 type: 'actions',
@@ -244,7 +248,7 @@ export default function EmployeeList() {
         [handleRowEdit, handleRowDelete],
     );
 
-    const pageTitle = 'Employees';
+    const pageTitle = 'Channels';
 
     return (
         <PageContainer

@@ -5,13 +5,17 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
+//Resource icons
 import BotIcon from '@mui/icons-material/SmartToy';
 import SearchIcon from '@mui/icons-material/Search';
 import ChannelIcon from '@mui/icons-material/Tag';
 import ServerIcon from '@mui/icons-material/Public';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import DescriptionIcon from '@mui/icons-material/Description';
-import LayersIcon from '@mui/icons-material/Layers';
+//Download Icons
+import DownloadIcon from '@mui/icons-material/Download';
+import RunningIcon from '@mui/icons-material/Download';
+import FinishedIcon from '@mui/icons-material/Check';
+import CancelledIcon from '@mui/icons-material/Cancel';
 import {matchPath, useLocation} from 'react-router';
 import DashboardSidebarContext from '../../context/DashboardSidebarContext';
 import {DRAWER_WIDTH, MINI_DRAWER_WIDTH} from '../../constants';
@@ -133,40 +137,9 @@ export default function DashboardSidebar({
                             width: mini ? MINI_DRAWER_WIDTH : 'auto',
                         }}
                     >
-                        <DashboardSidebarHeaderItem>Main items</DashboardSidebarHeaderItem>
-                        <DashboardSidebarPageItem
-                            id="bots"
-                            title="Bots"
-                            icon={<BotIcon/>}
-                            href="/bots"
-                            selected={!!matchPath('/bots/*', pathname) || pathname === '/'}
-                        />
-                        <DashboardSidebarPageItem
-                            id="channels"
-                            title="Channels"
-                            icon={<ChannelIcon/>}
-                            href="/channels"
-                            selected={!!matchPath('/channels/*', pathname) || pathname === '/'}
-                        />
-                        <DashboardSidebarPageItem
-                            id="servers"
-                            title="Servers"
-                            icon={<ServerIcon/>}
-                            href="/servers"
-                            selected={!!matchPath('/servers/*', pathname) || pathname === '/'}
-                        />
-                        <DashboardSidebarPageItem
-                            id="search-engines"
-                            title="Search Engines"
-                            icon={<SearchIcon/>}
-                            href="/search-engines"
-                            selected={!!matchPath('/search-engines/*', pathname) || pathname === '/'}
-                        />
-                        <DashboardSidebarDividerItem/>
-                        <DashboardSidebarHeaderItem>Example items</DashboardSidebarHeaderItem>
                         <DashboardSidebarPageItem
                             id="reports"
-                            title="Reports"
+                            title="Resources"
                             icon={<BarChartIcon/>}
                             href="/reports"
                             selected={!!matchPath('/reports', pathname)}
@@ -183,28 +156,65 @@ export default function DashboardSidebar({
                                     }}
                                 >
                                     <DashboardSidebarPageItem
-                                        id="sales"
-                                        title="Sales"
-                                        icon={<DescriptionIcon/>}
-                                        href="/reports/sales"
-                                        selected={!!matchPath('/reports/sales', pathname)}
+                                        id="bots"
+                                        title="Bots"
+                                        icon={<BotIcon/>}
+                                        href="/bot"
+                                        selected={!!matchPath('/bot/*', pathname)}
                                     />
                                     <DashboardSidebarPageItem
-                                        id="traffic"
-                                        title="Traffic"
-                                        icon={<DescriptionIcon/>}
-                                        href="/reports/traffic"
-                                        selected={!!matchPath('/reports/traffic', pathname)}
+                                        id="channels"
+                                        title="Channels"
+                                        icon={<ChannelIcon/>}
+                                        href="/channel"
+                                        selected={!!matchPath('/channel/*', pathname)}
+                                    />
+                                    <DashboardSidebarPageItem
+                                        id="servers"
+                                        title="Servers"
+                                        icon={<ServerIcon/>}
+                                        href="/server"
+                                        selected={!!matchPath('/server/*', pathname)}
+                                    />
+                                    <DashboardSidebarPageItem
+                                        id="search-engines"
+                                        title="Search Engines"
+                                        icon={<SearchIcon/>}
+                                        href="/search-engine"
+                                        selected={!!matchPath('/search-engine/*', pathname)}
                                     />
                                 </List>
                             }
                         />
+                        <DashboardSidebarDividerItem/>
+                        <DashboardSidebarHeaderItem>Downloads</DashboardSidebarHeaderItem>
                         <DashboardSidebarPageItem
-                            id="integrations"
-                            title="Integrations"
-                            icon={<LayersIcon/>}
-                            href="/integrations"
-                            selected={!!matchPath('/integrations', pathname)}
+                            id="downloads"
+                            title="All Downloads"
+                            icon={<DownloadIcon/>}
+                            href="/downloads"
+                            selected={!!matchPath('/downloads/*', pathname) || pathname === '/'}
+                        />
+                        <DashboardSidebarPageItem
+                            id="running-downloads"
+                            title="Running"
+                            icon={<RunningIcon/>}
+                            href="/downloads/running"
+                            selected={!!matchPath('/downloads/running/*', pathname)}
+                        />
+                        <DashboardSidebarPageItem
+                            id="finished-downloads"
+                            title="Finished"
+                            icon={<FinishedIcon/>}
+                            href="/downloads/finished"
+                            selected={!!matchPath('/downloads/finished/*', pathname)}
+                        />
+                        <DashboardSidebarPageItem
+                            id="cancelled-downloads"
+                            title="Cancelled"
+                            icon={<CancelledIcon/>}
+                            href="/downloads/cancelled"
+                            selected={!!matchPath('/downloads/cancelled/*', pathname)}
                         />
                     </List>
                 </Box>

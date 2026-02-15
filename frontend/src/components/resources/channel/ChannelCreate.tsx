@@ -1,45 +1,51 @@
 import * as React from 'react';
 import {useNavigate} from 'react-router';
-import useNotifications from '../../hooks/useNotifications/useNotifications';
-import {createOne as createEmployee, validate as validateEmployee,} from '../../data/employees';
-import EmployeeForm from './EmployeeForm';
-import PageContainer from '../pagecontainer/PageContainer';
+import useNotifications from '../../../hooks/useNotifications/useNotifications';
+import ChannelForm, {type ChannelFormState, type FormFieldValue,} from './ChannelForm';
+import PageContainer from '../../pagecontainer/PageContainer';
+import {ChannelRepository as repository} from '../../../data/channelRepository';
+import {ChannelTO} from "../../../api/rest";
 
-const INITIAL_FORM_VALUES = {
-    role: 'Market',
-    isFullTime: true,
+const INITIAL_FORM_VALUES: Partial<ChannelFormState['values']> = {
+    name: '',
 };
 
-export default function EmployeeCreate() {
+export default function ChannelCreate() {
     const navigate = useNavigate();
 
     const notifications = useNotifications();
 
-    const [formState, setFormState] = React.useState(() => ({
+    const [formState, setFormState] = React.useState<ChannelFormState>(() => ({
         values: INITIAL_FORM_VALUES,
         errors: {},
     }));
     const formValues = formState.values;
     const formErrors = formState.errors;
 
-    const setFormValues = React.useCallback((newFormValues) => {
-        setFormState((previousState) => ({
-            ...previousState,
-            values: newFormValues,
-        }));
-    }, []);
+    const setFormValues = React.useCallback(
+        (newFormValues: Partial<ChannelFormState['values']>) => {
+            setFormState((previousState) => ({
+                ...previousState,
+                values: newFormValues,
+            }));
+        },
+        [],
+    );
 
-    const setFormErrors = React.useCallback((newFormErrors) => {
-        setFormState((previousState) => ({
-            ...previousState,
-            errors: newFormErrors,
-        }));
-    }, []);
+    const setFormErrors = React.useCallback(
+        (newFormErrors: Partial<ChannelFormState['errors']>) => {
+            setFormState((previousState) => ({
+                ...previousState,
+                errors: newFormErrors,
+            }));
+        },
+        [],
+    );
 
     const handleFormFieldChange = React.useCallback(
-        (name, value) => {
-            const validateField = async (values) => {
-                const {issues} = validateEmployee(values);
+        (name: keyof ChannelFormState['values'], value: FormFieldValue) => {
+            const validateField = async (values: Partial<ChannelFormState['values']>) => {
+                const {issues} = repository.validate(values);
                 setFormErrors({
                     ...formErrors,
                     [name]: issues?.find((issue) => issue.path?.[0] === name)?.message,
@@ -59,7 +65,7 @@ export default function EmployeeCreate() {
     }, [setFormValues]);
 
     const handleFormSubmit = React.useCallback(async () => {
-        const {issues} = validateEmployee(formValues);
+        const {issues} = repository.validate(formValues);
         if (issues && issues.length > 0) {
             setFormErrors(
                 Object.fromEntries(issues.map((issue) => [issue.path?.[0], issue.message])),
@@ -69,7 +75,7 @@ export default function EmployeeCreate() {
         setFormErrors({});
 
         try {
-            await createEmployee(formValues);
+            await repository.create(formValues as Omit<ChannelTO, 'id'>);
             notifications.show('Employee created successfully.', {
                 severity: 'success',
                 autoHideDuration: 3000,
@@ -78,7 +84,7 @@ export default function EmployeeCreate() {
             navigate('/employees');
         } catch (createError) {
             notifications.show(
-                `Failed to create employee. Reason: ${createError.message}`,
+                `Failed to create employee. Reason: ${(createError as Error).message}`,
                 {
                     severity: 'error',
                     autoHideDuration: 3000,
@@ -93,7 +99,7 @@ export default function EmployeeCreate() {
             title="New Employee"
             breadcrumbs={[{title: 'Employees', path: '/employees'}, {title: 'New'}]}
         >
-            <EmployeeForm
+            <ChannelForm
                 formState={formState}
                 onFieldChange={handleFormFieldChange}
                 onSubmit={handleFormSubmit}
