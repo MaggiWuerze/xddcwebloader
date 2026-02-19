@@ -15,7 +15,7 @@ import {
     type GridPaginationModel,
     type GridSortModel,
 } from '@mui/x-data-grid';
-import PageContainer from '../pagecontainer/PageContainer';
+import PageContainer from '../../pagecontainer/PageContainer';
 
 type ListResult<T> = { items: T[]; itemCount: number };
 
