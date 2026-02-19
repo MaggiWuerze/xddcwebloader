@@ -14,6 +14,7 @@ import {
     type GridFilterModel,
     type GridPaginationModel,
     type GridSortModel,
+    GridValidRowModel,
 } from '@mui/x-data-grid';
 import PageContainer from '../../pagecontainer/PageContainer';
 
@@ -25,7 +26,12 @@ export type BaseListLoadParams = {
     filterModel: GridFilterModel;
 };
 
-type Props<T> = {
+type DefaultActionsContext = {
+    refresh: () => void;
+    isLoading: boolean;
+};
+
+type Props<T extends GridValidRowModel> = {
     title: string;
     breadcrumbs?: { title: string }[];
     columns: GridColDef<T>[];
@@ -47,11 +53,18 @@ type Props<T> = {
     onCreateClick?: () => void;
     createLabel?: string;
     pageSizeOptions?: number[];
+
+    /**
+     * Optional override for the PageContainer actions area.
+     * If provided, BaseList will render this instead of the default Refresh+Create buttons.
+     * You still get access to BaseList's refresh() and isLoading state.
+     */
+    actions?: (ctx: DefaultActionsContext) => React.ReactNode;
 };
 
 const INITIAL_PAGE_SIZE = 10;
 
-export function BaseList<T>(props: Props<T>) {
+export function BaseList<T extends GridValidRowModel>(props: Props<T>) {
     const {
         title,
         breadcrumbs,
@@ -63,6 +76,7 @@ export function BaseList<T>(props: Props<T>) {
         onCreateClick,
         createLabel = 'Create',
         pageSizeOptions = [5, INITIAL_PAGE_SIZE, 25],
+        actions,
     } = props;
 
     const [rowsState, setRowsState] = React.useState<{ rows: T[]; rowCount: number }>({
@@ -98,27 +112,32 @@ export function BaseList<T>(props: Props<T>) {
         if (!isLoading) loadData();
     }, [isLoading, loadData]);
 
+    const defaultActions = React.useMemo(
+        () => (
+            <Stack direction="row" alignItems="center" spacing={1}>
+                <Tooltip title="Reload data" placement="right" enterDelay={1000}>
+                    <div>
+                        <IconButton size="small" aria-label="refresh" onClick={handleRefresh}>
+                            <RefreshIcon/>
+                        </IconButton>
+                    </div>
+                </Tooltip>
+
+                {onCreateClick && (
+                    <Button variant="contained" onClick={onCreateClick} startIcon={<AddIcon/>}>
+                        {createLabel}
+                    </Button>
+                )}
+            </Stack>
+        ),
+        [createLabel, handleRefresh, onCreateClick],
+    );
+
     return (
         <PageContainer
             title={title}
             breadcrumbs={breadcrumbs ?? [{title}]}
-            actions={
-                <Stack direction="row" alignItems="center" spacing={1}>
-                    <Tooltip title="Reload data" placement="right" enterDelay={1000}>
-                        <div>
-                            <IconButton size="small" aria-label="refresh" onClick={handleRefresh}>
-                                <RefreshIcon/>
-                            </IconButton>
-                        </div>
-                    </Tooltip>
-
-                    {onCreateClick && (
-                        <Button variant="contained" onClick={onCreateClick} startIcon={<AddIcon/>}>
-                            {createLabel}
-                        </Button>
-                    )}
-                </Stack>
-            }
+            actions={actions ? actions({refresh: handleRefresh, isLoading}) : defaultActions}
         >
             <Box sx={{flex: 1, width: '100%'}}>
                 {error ? (

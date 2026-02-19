@@ -1,296 +1,82 @@
 import * as React from 'react';
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
-import {
-    DataGrid,
-    gridClasses,
-    GridColDef,
-    GridEventListener,
-    GridFilterModel,
-    GridPaginationModel,
-    GridSortModel,
-} from '@mui/x-data-grid';
-import AddIcon from '@mui/icons-material/Add';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import {useLocation, useNavigate, useSearchParams} from 'react-router';
-import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
-import useNotifications from '../../../hooks/useNotifications/useNotifications';
-import PageContainer from '../../pagecontainer/PageContainer';
-import {DownloadRepository as repository} from "../../../data/downloadRepository";
-import {DownloadTO} from "../../../api/rest";
+import type {GridColDef} from '@mui/x-data-grid';
+import {useNavigate} from 'react-router';
+import {BaseList, BaseListLoadParams} from '../base/BaseList';
+import {useUrlDataGridState} from '../base/UrlDataGridState';
+import type {DownloadTO} from '../../../api/rest';
+import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 import {DownloadState} from "../../../data/DownloadState";
+import {DownloadRepository} from "../../../data/downloadRepository";
 
-const INITIAL_PAGE_SIZE = 10;
-
-export default function DownloadList(props: { state: DownloadState }) {
-    const {pathname} = useLocation();
-    const [searchParams] = useSearchParams();
+export default function DownloadList(state: DownloadState) {
     const navigate = useNavigate();
+    const gridState = useUrlDataGridState(10);
 
-    const dialogs = useDialogs();
-    const notifications = useNotifications();
-
-    const [paginationModel, setPaginationModel] = React.useState<GridPaginationModel>({
-        page: searchParams.get('page') ? Number(searchParams.get('page')) : 0,
-        pageSize: searchParams.get('pageSize')
-            ? Number(searchParams.get('pageSize'))
-            : INITIAL_PAGE_SIZE,
-    });
-    const [filterModel, setFilterModel] = React.useState<GridFilterModel>(
-        searchParams.get('filter')
-            ? JSON.parse(searchParams.get('filter') ?? '')
-            : {items: []},
-    );
-    const [sortModel, setSortModel] = React.useState<GridSortModel>(
-        searchParams.get('sort') ? JSON.parse(searchParams.get('sort') ?? '') : [],
-    );
-
-    const [rowsState, setRowsState] = React.useState<{
-        rows: DownloadTO[];
-        rowCount: number;
-    }>({
-        rows: [],
-        rowCount: 0,
-    });
-
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [error, setError] = React.useState<Error | null>(null);
-
-    const handlePaginationModelChange = React.useCallback(
-        (model: GridPaginationModel) => {
-            setPaginationModel(model);
-
-            searchParams.set('page', String(model.page));
-            searchParams.set('pageSize', String(model.pageSize));
-
-            const newSearchParamsString = searchParams.toString();
-
-            navigate(
-                `${pathname}${newSearchParamsString ? '?' : ''}${newSearchParamsString}`,
-            );
-        },
-        [navigate, pathname, searchParams],
-    );
-
-    const handleFilterModelChange = React.useCallback(
-        (model: GridFilterModel) => {
-            setFilterModel(model);
-
-            if (
-                model.items.length > 0 ||
-                (model.quickFilterValues && model.quickFilterValues.length > 0)
-            ) {
-                searchParams.set('filter', JSON.stringify(model));
-            } else {
-                searchParams.delete('filter');
-            }
-
-            const newSearchParamsString = searchParams.toString();
-
-            navigate(
-                `${pathname}${newSearchParamsString ? '?' : ''}${newSearchParamsString}`,
-            );
-        },
-        [navigate, pathname, searchParams],
-    );
-
-    const handleSortModelChange = React.useCallback(
-        (model: GridSortModel) => {
-            setSortModel(model);
-
-            if (model.length > 0) {
-                searchParams.set('sort', JSON.stringify(model));
-            } else {
-                searchParams.delete('sort');
-            }
-
-            const newSearchParamsString = searchParams.toString();
-
-            navigate(
-                `${pathname}${newSearchParamsString ? '?' : ''}${newSearchParamsString}`,
-            );
-        },
-        [navigate, pathname, searchParams],
-    );
-
-    const loadData = React.useCallback(async () => {
-        setError(null);
-        setIsLoading(true);
-
-        try {
-            const paginationParams = {
-                paginationModel,
-                sortModel,
-                filterModel,
-            }
-
-            let listData;
-
-            switch (props.state) {
-                case DownloadState.all:
-                    listData = await repository.list(paginationParams);
-                    break;
-                case DownloadState.active:
-                    listData = await repository.list(paginationParams);
-                    break;
-                case DownloadState.finished:
-                    listData = await repository.list(paginationParams);
-                    break;
-                case DownloadState.cancelled:
-                    listData = await repository.list(paginationParams);
-                    break;
-                default:
-                    listData = await repository.list(paginationParams);
-            }
-
-            setRowsState({
-                rows: listData.items,
-                rowCount: listData.itemCount,
-            });
-        } catch (listDataError) {
-            setError(listDataError as Error);
-        }
-
-        setIsLoading(false);
-    }, [paginationModel, sortModel, filterModel]);
-
-    React.useEffect(() => {
-        loadData();
-    }, [loadData]);
-
-    const handleRefresh = React.useCallback(() => {
-        if (!isLoading) {
-            loadData();
-        }
-    }, [isLoading, loadData]);
-
-    const handleRowClick = React.useCallback<GridEventListener<'rowClick'>>(
-        ({row}) => {
-            navigate(`/downloads/${row.id}`);
-        },
-        [navigate],
-    );
-
-    const handleCreateClick = React.useCallback(() => {
-        navigate('/downloads/new');
-    }, [navigate]);
-
-    const handleRowEdit = React.useCallback(
-        (employee: DownloadTO) => () => {
-            navigate(`/employees/${employee.id}/edit`);
-        },
-        [navigate],
-    );
-
-    const initialState = React.useMemo(
-        () => ({
-            pagination: {paginationModel: {pageSize: INITIAL_PAGE_SIZE}},
-        }),
-        [],
-    );
-
-    const columns = React.useMemo<GridColDef[]>(
+    const columns = React.useMemo<GridColDef<DownloadTO>[]>(
         () => [
-            {field: 'id', headerName: 'ID'},
-            {field: 'name', headerName: 'Name', width: 140},
-            {field: 'age', headerName: 'Age', type: 'number'},
-            {
-                field: 'joinDate',
-                headerName: 'Join date',
-                type: 'date',
-                valueGetter: (value) => value && new Date(value),
-                width: 140,
-            },
-            {
-                field: 'role',
-                headerName: 'Department',
-                type: 'singleSelect',
-                valueOptions: ['Market', 'Finance', 'Development'],
-                width: 160,
-            },
-            {field: 'isFullTime', headerName: 'Full-time', type: 'boolean'},
+            {field: 'name', headerName: 'Name', flex: 1, minWidth: 80, headerAlign: 'center', align: 'center'},
+            // specific actions column lives here (edit/delete) if needed
         ],
         [],
     );
 
-    const pageTitle = 'Downloads';
+    type DownloadLoadFn = (params: BaseListLoadParams) => Promise<{ items: DownloadTO[]; itemCount: number }>;
+
+    function determineLoadFunction(state: DownloadState): DownloadLoadFn {
+        switch (state) {
+            case DownloadState.all:
+                return (params) => DownloadRepository.list(params);
+
+            case DownloadState.active:
+                // If you have a dedicated endpoint, call it here; otherwise reuse list() for now.
+                return (params) => DownloadRepository.list(params);
+
+            case DownloadState.finished:
+                return (params) => DownloadRepository.list(params);
+
+            case DownloadState.cancelled:
+                return (params) => DownloadRepository.list(params);
+
+            default:
+                return (params) => DownloadRepository.list(params);
+        }
+    }
+
+    const load = React.useMemo(() => determineLoadFunction(state), [state]);
+
 
     return (
-        <PageContainer
-            title={pageTitle}
-            actions={
+        <BaseList<DownloadTO>
+            title="Downloads"
+            columns={columns}
+            gridState={gridState}
+            load={load}
+            onRowClick={(row) => navigate(`/downloads/${row.id}`)}
+            actions={({refresh, isLoading}) => (
                 <Stack direction="row" alignItems="center" spacing={1}>
                     <Tooltip title="Reload data" placement="right" enterDelay={1000}>
                         <div>
-                            <IconButton size="small" aria-label="refresh" onClick={handleRefresh}>
+                            <IconButton size="small" aria-label="refresh" onClick={refresh} disabled={isLoading}>
                                 <RefreshIcon/>
                             </IconButton>
                         </div>
                     </Tooltip>
-                    <Button
-                        variant="contained"
-                        onClick={handleCreateClick}
-                        startIcon={<AddIcon/>}
-                    >
+
+                    {/* Download-specific buttons */}
+                    <Button variant="outlined" onClick={() => {/* e.g. cancelAll */
+                    }}>
+                        Cancel all
+                    </Button>
+                    <Button variant="contained" onClick={() => navigate('/downloads/new')} startIcon={<AddIcon/>}>
                         Create
                     </Button>
                 </Stack>
-            }
-        >
-            <Box sx={{flex: 1, width: '100%'}}>
-                {error ? (
-                    <Box sx={{flexGrow: 1}}>
-                        <Alert severity="error">{error.message}</Alert>
-                    </Box>
-                ) : (
-                    <DataGrid
-                        rows={rowsState.rows}
-                        rowCount={rowsState.rowCount}
-                        columns={columns}
-                        pagination
-                        sortingMode="server"
-                        filterMode="server"
-                        paginationMode="server"
-                        paginationModel={paginationModel}
-                        onPaginationModelChange={handlePaginationModelChange}
-                        sortModel={sortModel}
-                        onSortModelChange={handleSortModelChange}
-                        filterModel={filterModel}
-                        onFilterModelChange={handleFilterModelChange}
-                        disableRowSelectionOnClick
-                        onRowClick={handleRowClick}
-                        loading={isLoading}
-                        initialState={initialState}
-                        showToolbar
-                        pageSizeOptions={[5, INITIAL_PAGE_SIZE, 25]}
-                        sx={{
-                            [`& .${gridClasses.columnHeader}, & .${gridClasses.cell}`]: {
-                                outline: 'transparent',
-                            },
-                            [`& .${gridClasses.columnHeader}:focus-within, & .${gridClasses.cell}:focus-within`]:
-                                {
-                                    outline: 'none',
-                                },
-                            [`& .${gridClasses.row}:hover`]: {
-                                cursor: 'pointer',
-                            },
-                        }}
-                        slotProps={{
-                            loadingOverlay: {
-                                variant: 'circular-progress',
-                                noRowsVariant: 'circular-progress',
-                            },
-                            baseIconButton: {
-                                size: 'small',
-                            },
-                        }}
-                    />
-                )}
-            </Box>
-        </PageContainer>
+            )}
+        />
     );
 }
