@@ -24,14 +24,22 @@ export const ChannelRepository: BaseRepository<ChannelTO, ChannelForm> = {
         return {issues};
     },
 
+    async listAll(): Promise<ChannelTO[]> {
+        return await this.list({
+            paginationModel: {page: 0, pageSize: 1000},
+            sortModel: [],
+            filterModel: {items: []},
+        }).then(server => server.items);
+    },
+
     async list({
-                   paginationModel,
-                   filterModel,
-                   sortModel,
+                   paginationModel = {page: 0, pageSize: 1000},
+                   sortModel = [],
+                   filterModel = {items: []},
                }: {
-        paginationModel: GridPaginationModel;
-        sortModel: GridSortModel;
-        filterModel: GridFilterModel;
+        paginationModel?: GridPaginationModel;
+        sortModel?: GridSortModel;
+        filterModel?: GridFilterModel;
     }): Promise<{ items: ChannelTO[]; itemCount: number }> {
         const bots = await api.listChannels().then((rs) => rs.data);
 

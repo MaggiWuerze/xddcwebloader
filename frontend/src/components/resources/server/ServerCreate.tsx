@@ -97,8 +97,8 @@ export default function ServerCreate() {
 
     return (
         <PageContainer
-            title="New Employee"
-            breadcrumbs={[{title: 'Employees', path: '/employees'}, {title: 'New'}]}
+            title="New Server"
+            breadcrumbs={[{title: 'Servers', path: '/server'}, {title: 'New'}]}
         >
             <ServerForm
                 formState={formState}

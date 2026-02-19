@@ -1,6 +1,6 @@
 import type {GridFilterModel, GridPaginationModel, GridSortModel} from '@mui/x-data-grid';
 import type {BaseRepository} from './base/baseRepository';
-import {BotControllerApi, type BotForm, type BotTO} from '../api/rest';
+import {BotControllerApi, type BotFormTO, type BotTO} from '../api/rest';
 
 const api = new BotControllerApi();
 
@@ -11,9 +11,9 @@ type ValidationResult = { issues: { message: string; path: (keyof BotTO)[] }[] }
  * - F = TargetBotForm (write model)
  * - ID = string (UUID)
  */
-export const BotRepository: BaseRepository<BotTO, BotForm> = {
+export const BotRepository: BaseRepository<BotTO, BotFormTO> = {
 
-    validate(bot: Partial<BotTO>): ValidationResult {
+    validate(bot: Partial<BotFormTO>): ValidationResult {
         let issues: ValidationResult['issues'] = [];
 
         if (!bot.name) {
@@ -24,11 +24,11 @@ export const BotRepository: BaseRepository<BotTO, BotForm> = {
             issues = [...issues, {message: 'Pattern is required', path: ['pattern']}];
         }
 
-        if (!bot.channel) {
+        if (!bot.channelId) {
             issues = [...issues, {message: 'Channel is required', path: ['channel']}];
         }
 
-        if (!bot.server) {
+        if (!bot.serverId) {
             issues = [...issues, {message: 'Server is required', path: ['server']}];
         }
 
@@ -39,14 +39,22 @@ export const BotRepository: BaseRepository<BotTO, BotForm> = {
         return {issues};
     },
 
+    async listAll(): Promise<BotTO[]> {
+        return await this.list({
+            paginationModel: {page: 0, pageSize: 1000},
+            sortModel: [],
+            filterModel: {items: []},
+        }).then(server => server.items);
+    },
+
     async list({
-                   paginationModel,
-                   filterModel,
-                   sortModel,
+                   paginationModel = {page: 0, pageSize: 1000},
+                   sortModel = [],
+                   filterModel = {items: []},
                }: {
-        paginationModel: GridPaginationModel;
-        sortModel: GridSortModel;
-        filterModel: GridFilterModel;
+        paginationModel?: GridPaginationModel;
+        sortModel?: GridSortModel;
+        filterModel?: GridFilterModel;
     }): Promise<{ items: BotTO[]; itemCount: number }> {
         const bots = await api.listBots().then((rs) => rs.data);
 
@@ -119,11 +127,11 @@ export const BotRepository: BaseRepository<BotTO, BotForm> = {
         return await api.getBot(id).then((res) => res.data);
     },
 
-    async create(data: Omit<BotForm, 'id'>): Promise<BotTO> {
+    async create(data: Omit<BotFormTO, 'id'>): Promise<BotTO> {
         return await api.createBot({...data}).then((res) => res.data);
     },
 
-    async update(_id: string, _data: Partial<Omit<BotForm, 'id'>>): Promise<BotTO> {
+    async update(_id: string, _data: Partial<Omit<BotFormTO, 'id'>>): Promise<BotTO> {
         return await api.updateBot(_id, _data).then((res) => res.data);
     },
 

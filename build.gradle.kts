@@ -43,8 +43,8 @@ dependencies {
     runtimeOnly("com.h2database:h2")
 
     //XDCC
-    //implementation("com.github.pircbotx:pircbotx:2.3.1")
-    implementation("com.github.pircbotx:pircbotx:-SNAPSHOT")
+    implementation("com.github.pircbotx:pircbotx:2.3.1")
+    //implementation("com.github.pircbotx:pircbotx:-SNAPSHOT")
 
     // JAX-B dependencies (Jakarta namespace) for Spring Boot 4 / Jakarta EE
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")

@@ -3,7 +3,7 @@ package de.maggiwuerze.xdccwebloader.service
 import de.maggiwuerze.xdccwebloader.model.entity.Bot
 import de.maggiwuerze.xdccwebloader.model.entity.Channel
 import de.maggiwuerze.xdccwebloader.model.entity.Server
-import de.maggiwuerze.xdccwebloader.model.forms.BotForm
+import de.maggiwuerze.xdccwebloader.model.forms.BotFormTO
 import de.maggiwuerze.xdccwebloader.persistence.TargetBotRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -21,7 +21,7 @@ class BotService(
         return targetBotRepository.findAll()
     }
 
-    fun save(form: BotForm): Bot {
+    fun save(form: BotFormTO): Bot {
         val server: Server =
             serverService.findById(form.serverId) ?: throw IllegalStateException("Server ${form.serverId} not found")
         val channel: Channel = channelService.findById(form.channelId)
@@ -48,15 +48,15 @@ class BotService(
         } ?: HttpStatus.BAD_REQUEST
     }
 
-    fun update(id: UUID, botForm: BotForm): Bot {
+    fun update(id: UUID, botFormTO: BotFormTO): Bot {
         return findById(id)?.let {
-            it.name = botForm.name
-            it.pattern = botForm.pattern
-            it.maxParallelDownloads = botForm.maxParallelDownloads
-            it.server = serverService.findById(botForm.serverId)
-                ?: throw IllegalStateException("Server ${botForm.serverId} not found")
-            it.channel = channelService.findById(botForm.channelId)
-                ?: throw IllegalStateException("Channel ${botForm.channelId} not found")
+            it.name = botFormTO.name
+            it.pattern = botFormTO.pattern
+            it.maxParallelDownloads = botFormTO.maxParallelDownloads
+            it.server = serverService.findById(botFormTO.serverId)
+                ?: throw IllegalStateException("Server ${botFormTO.serverId} not found")
+            it.channel = channelService.findById(botFormTO.channelId)
+                ?: throw IllegalStateException("Channel ${botFormTO.channelId} not found")
             targetBotRepository.save(it)
         } ?: throw IllegalStateException("Bot with id $id not found.")
     }

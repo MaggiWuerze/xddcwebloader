@@ -3,33 +3,34 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormGroup from '@mui/material/FormGroup';
 import Grid from '@mui/material/Grid';
-import {SelectChangeEvent} from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate} from 'react-router';
-import {ChannelFormTO} from "../../../api/rest";
+import {DownloadFormTO} from "../../../api/rest";
+import {BotRepository as botRepository} from "../../../data/botRepository";
+import {BotSelect} from "../bot/BotSelect";
 
-export interface ChannelFormState {
-    values: Partial<Omit<ChannelFormTO, 'id'>>;
-    errors: Partial<Record<keyof ChannelFormState['values'], string>>;
+export interface DownloadFormState {
+    values: Partial<Omit<DownloadFormTO, 'id'>>;
+    errors: Partial<Record<keyof DownloadFormState['values'], string>>;
 }
 
 export type FormFieldValue = string | string[] | number | boolean | File | null;
 
 export interface EmployeeFormProps {
-    formState: ChannelFormState;
+    formState: DownloadFormState;
     onFieldChange: (
-        name: keyof ChannelFormState['values'],
+        name: keyof DownloadFormState['values'],
         value: FormFieldValue,
     ) => void;
-    onSubmit: (formValues: Partial<ChannelFormState['values']>) => Promise<void>;
-    onReset?: (formValues: Partial<ChannelFormState['values']>) => void;
+    onSubmit: (formValues: Partial<DownloadFormState['values']>) => Promise<void>;
+    onReset?: (formValues: Partial<DownloadFormState['values']>) => void;
     submitButtonLabel: string;
     backButtonPath?: string;
 }
 
-export default function ChannelForm(props: EmployeeFormProps) {
+export default function DownloadForm(props: EmployeeFormProps) {
     const {
         formState,
         onFieldChange,
@@ -63,7 +64,7 @@ export default function ChannelForm(props: EmployeeFormProps) {
     const handleTextFieldChange = React.useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             onFieldChange(
-                event.target.name as keyof ChannelFormState['values'],
+                event.target.name as keyof DownloadFormState['values'],
                 event.target.value,
             );
         },
@@ -73,25 +74,8 @@ export default function ChannelForm(props: EmployeeFormProps) {
     const handleNumberFieldChange = React.useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             onFieldChange(
-                event.target.name as keyof ChannelFormState['values'],
+                event.target.name as keyof DownloadFormState['values'],
                 Number(event.target.value),
-            );
-        },
-        [onFieldChange],
-    );
-
-    const handleCheckboxFieldChange = React.useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-            onFieldChange(event.target.name as keyof ChannelFormState['values'], checked);
-        },
-        [onFieldChange],
-    );
-
-    const handleSelectFieldChange = React.useCallback(
-        (event: SelectChangeEvent) => {
-            onFieldChange(
-                event.target.name as keyof ChannelFormState['values'],
-                event.target.value,
             );
         },
         [onFieldChange],
@@ -104,7 +88,7 @@ export default function ChannelForm(props: EmployeeFormProps) {
     }, [formValues, onReset]);
 
     const handleBack = React.useCallback(() => {
-        navigate(backButtonPath ?? '/employees');
+        navigate(backButtonPath ?? '/bot');
     }, [navigate, backButtonPath]);
 
     return (
@@ -120,13 +104,20 @@ export default function ChannelForm(props: EmployeeFormProps) {
                 <Grid container spacing={2} sx={{mb: 2, width: '100%'}}>
                     <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
                         <TextField
-                            value={formValues.name ?? ''}
+                            value={formValues.fileRefId ?? ''}
                             onChange={handleTextFieldChange}
-                            name="name"
-                            label="Name"
-                            error={!!formErrors.name}
-                            helperText={formErrors.name ?? ' '}
+                            name="fileRefId"
+                            label="FileRefId"
+                            placeholder="#1234"
+                            error={!!formErrors.fileRefId}
+                            helperText={formErrors.fileRefId ?? ' '}
                             fullWidth
+                        />
+                    </Grid>
+                    <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
+                        <BotSelect
+                            botSelectValues={botRepository.listAll()}
+                            onChange={(botId) => formValues.targetBotId = botId}
                         />
                     </Grid>
                 </Grid>

@@ -15,19 +15,19 @@ const router = createHashRouter([
         Component: DashboardLayout,
         children: [
             {
-                path: '/employees',
+                path: '/bot',
                 Component: BotList,
             },
             {
-                path: '/employees/:employeeId',
+                path: '/bot/:botId',
                 Component: BotShow,
             },
             {
-                path: '/employees/new',
+                path: '/bot/new',
                 Component: BotCreate,
             },
             {
-                path: '/employees/:employeeId/edit',
+                path: '/bot/:botId/edit',
                 Component: BotEdit,
             },
             // Fallback route for the example routes in dashboard sidebar items

@@ -2,7 +2,7 @@ package de.maggiwuerze.xdccwebloader.controller
 
 import de.maggiwuerze.xdccwebloader.model.entity.Channel
 import de.maggiwuerze.xdccwebloader.model.entity.ChannelTO
-import de.maggiwuerze.xdccwebloader.model.forms.ChannelForm
+import de.maggiwuerze.xdccwebloader.model.forms.ChannelFormTO
 import de.maggiwuerze.xdccwebloader.service.ChannelService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -33,16 +33,16 @@ class ChannelController(val channelService: ChannelService) {
             ?: ResponseEntity(HttpStatus.NOT_FOUND)
 
     @PutMapping("{id}")
-    fun updateChannel(@PathVariable id: UUID, @RequestBody channelForm: ChannelForm): ResponseEntity<ChannelTO> =
-        ResponseEntity(channelService.update(id, channelForm).toTO(), HttpStatus.OK)
+    fun updateChannel(@PathVariable id: UUID, @RequestBody channelFormTO: ChannelFormTO): ResponseEntity<ChannelTO> =
+        ResponseEntity(channelService.update(id, channelFormTO).toTO(), HttpStatus.OK)
 
     @DeleteMapping("{id}")
     fun deleteChannel(@PathVariable id: UUID): ResponseEntity<HttpStatus> =
         ResponseEntity(channelService.delete(id))
 
     @PostMapping
-    fun createChannel(@RequestBody channelForm: ChannelForm): ResponseEntity<ChannelTO> {
-        channelService.save(Channel(name = channelForm.name)).let {
+    fun createChannel(@RequestBody channelFormTO: ChannelFormTO): ResponseEntity<ChannelTO> {
+        channelService.save(Channel(name = channelFormTO.name)).let {
             return ResponseEntity(it.toTO(), HttpStatus.OK)
         }
     }

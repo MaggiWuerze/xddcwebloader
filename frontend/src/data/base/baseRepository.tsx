@@ -9,6 +9,8 @@ export interface BaseRepository<T, F, ID = string> {
         filterModel: GridFilterModel;
     }): Promise<{ items: T[]; itemCount: number }>;
 
+    listAll(): Promise<T[]>;
+
     get(id: ID): Promise<T>;
 
     create(data: Omit<F, 'id'>): Promise<T>;

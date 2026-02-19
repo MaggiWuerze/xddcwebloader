@@ -22,10 +22,11 @@ import useNotifications from '../../../hooks/useNotifications/useNotifications';
 import PageContainer from '../../pagecontainer/PageContainer';
 import {DownloadRepository as repository} from "../../../data/downloadRepository";
 import {DownloadTO} from "../../../api/rest";
+import {DownloadState} from "../../../data/DownloadState";
 
 const INITIAL_PAGE_SIZE = 10;
 
-export default function DownloadList() {
+export default function DownloadList(props: { state: DownloadState }) {
     const {pathname} = useLocation();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -121,11 +122,30 @@ export default function DownloadList() {
         setIsLoading(true);
 
         try {
-            const listData = await repository.list({
+            const paginationParams = {
                 paginationModel,
                 sortModel,
                 filterModel,
-            });
+            }
+
+            let listData;
+
+            switch (props.state) {
+                case DownloadState.all:
+                    listData = await repository.list(paginationParams);
+                    break;
+                case DownloadState.active:
+                    listData = await repository.list(paginationParams);
+                    break;
+                case DownloadState.finished:
+                    listData = await repository.list(paginationParams);
+                    break;
+                case DownloadState.cancelled:
+                    listData = await repository.list(paginationParams);
+                    break;
+                default:
+                    listData = await repository.list(paginationParams);
+            }
 
             setRowsState({
                 rows: listData.items,
@@ -150,13 +170,13 @@ export default function DownloadList() {
 
     const handleRowClick = React.useCallback<GridEventListener<'rowClick'>>(
         ({row}) => {
-            navigate(`/employees/${row.id}`);
+            navigate(`/downloads/${row.id}`);
         },
         [navigate],
     );
 
     const handleCreateClick = React.useCallback(() => {
-        navigate('/employees/new');
+        navigate('/downloads/new');
     }, [navigate]);
 
     const handleRowEdit = React.useCallback(
@@ -194,7 +214,7 @@ export default function DownloadList() {
             },
             {field: 'isFullTime', headerName: 'Full-time', type: 'boolean'},
         ],
-        [handleRowEdit],
+        [],
     );
 
     const pageTitle = 'Downloads';
@@ -202,7 +222,6 @@ export default function DownloadList() {
     return (
         <PageContainer
             title={pageTitle}
-            breadcrumbs={[{title: pageTitle}]}
             actions={
                 <Stack direction="row" alignItems="center" spacing={1}>
                     <Tooltip title="Reload data" placement="right" enterDelay={1000}>

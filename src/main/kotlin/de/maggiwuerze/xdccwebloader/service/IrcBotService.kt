@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service
 import kotlin.random.Random
 
 @Service
-class IrcBotService {
-    private val ircEventListener: IrcEventListener? = null
+class IrcBotService(private val ircEventListener: IrcEventListener) {
     private val activeBots: MutableMap<Bot, IrcBot> = HashMap()
 
     fun getIrcBotForDownload(download: Download): IrcBot {
@@ -39,7 +38,7 @@ class IrcBotService {
         return bot
     }
 
-    val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+    val charPool: List<Char> = ('a'..'z') + ('A'..'Z')
     fun randomString() = (1..7)
         .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
         .joinToString("")

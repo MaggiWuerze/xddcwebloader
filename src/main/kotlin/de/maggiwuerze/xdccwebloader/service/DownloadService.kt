@@ -1,9 +1,11 @@
 package de.maggiwuerze.xdccwebloader.service
 
+import de.maggiwuerze.xdccwebloader.events.SocketEvents
 import de.maggiwuerze.xdccwebloader.model.download.Download
 import de.maggiwuerze.xdccwebloader.model.download.DownloadState
 import de.maggiwuerze.xdccwebloader.model.download.DownloadTO
 import de.maggiwuerze.xdccwebloader.model.entity.Bot
+import de.maggiwuerze.xdccwebloader.model.forms.DownloadFormTO
 import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -15,7 +17,7 @@ import java.util.Collections.synchronizedMap
  * Service for adding Downloads to the queue and retrieving them
  */
 @Service
-class DownloadService {
+class DownloadService(val botService: BotService, val eventService: EventService) {
     private val downloads: MutableMap<UUID, Download> = synchronizedMap(HashMap())
     private val bots: MutableMap<Bot, List<Download>> = synchronizedMap(HashMap())
     private var downloadFolderReady = false
@@ -90,5 +92,30 @@ class DownloadService {
             throw RuntimeException("target folder" + customDir + "could not be created")
         }
         downloadFolderReady = true
+    }
+
+    fun create(downloadFormTO: DownloadFormTO): List<Download> {
+        botService.findById(downloadFormTO.targetBotId)?.let { bot ->
+            val fileRefId: String = downloadFormTO.fileRefId
+            val downloads: MutableList<Download> = ArrayList()
+            if (fileRefId.contains(",")) {
+                for (id in fileRefId.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                    Download(bot, id).let { download ->
+                        downloads.add(download)
+                        addDownloadToBotQueue(download)
+                        eventService.publishEvent(SocketEvents.NEW_DOWNLOAD, download)
+                    }
+                }
+            } else {
+                Download(bot, fileRefId).let { download ->
+                    downloads.add(download)
+                    addDownloadToBotQueue(download)
+                    eventService.publishEvent(SocketEvents.NEW_DOWNLOAD, download)
+                }
+            }
+
+            return downloads
+        }
+        return emptyList()
     }
 }

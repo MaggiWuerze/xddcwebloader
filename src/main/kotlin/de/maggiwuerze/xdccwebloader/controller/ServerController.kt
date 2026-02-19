@@ -2,7 +2,7 @@ package de.maggiwuerze.xdccwebloader.controller
 
 import de.maggiwuerze.xdccwebloader.model.entity.Server
 import de.maggiwuerze.xdccwebloader.model.entity.ServerTO
-import de.maggiwuerze.xdccwebloader.model.forms.ServerForm
+import de.maggiwuerze.xdccwebloader.model.forms.ServerFormTO
 import de.maggiwuerze.xdccwebloader.service.ServerService
 import jakarta.validation.ConstraintViolationException
 import org.slf4j.LoggerFactory
@@ -36,9 +36,9 @@ internal class ServerController(private val serverService: ServerService) {
     }
 
     @PostMapping("/servers/")
-    fun createServer(@RequestBody serverForm: ServerForm): ResponseEntity<ServerTO> {
+    fun createServer(@RequestBody serverFormTO: ServerFormTO): ResponseEntity<ServerTO> {
         try {
-            serverService.save(Server(name = serverForm.name, serverUrl = serverForm.serverUrl)).let { server ->
+            serverService.save(Server(name = serverFormTO.name, serverUrl = serverFormTO.serverUrl)).let { server ->
                 return ResponseEntity(server.toTO(), HttpStatus.OK)
             }
         } catch (e: ConstraintViolationException) {
@@ -48,8 +48,8 @@ internal class ServerController(private val serverService: ServerService) {
     }
 
     @PutMapping("{id}")
-    fun updateServer(@PathVariable id: UUID, @RequestBody serverForm: ServerForm): ResponseEntity<ServerTO> =
-        serverService.update(id, serverForm).toTO().let { ResponseEntity(it, HttpStatus.OK) }
+    fun updateServer(@PathVariable id: UUID, @RequestBody serverFormTO: ServerFormTO): ResponseEntity<ServerTO> =
+        serverService.update(id, serverFormTO).toTO().let { ResponseEntity(it, HttpStatus.OK) }
 
     @DeleteMapping("/servers/")
     fun deleteServer(serverId: UUID): ResponseEntity<*> {

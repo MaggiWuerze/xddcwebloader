@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccwebloader.service
 
 import de.maggiwuerze.xdccwebloader.model.entity.Channel
-import de.maggiwuerze.xdccwebloader.model.forms.ChannelForm
+import de.maggiwuerze.xdccwebloader.model.forms.ChannelFormTO
 import de.maggiwuerze.xdccwebloader.persistence.ChannelRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -29,9 +29,9 @@ class ChannelService(val channelRepository: ChannelRepository) {
         } ?: HttpStatus.BAD_REQUEST
     }
 
-    fun update(id: UUID, channelForm: ChannelForm): Channel {
+    fun update(id: UUID, channelFormTO: ChannelFormTO): Channel {
         return findById(id)?.let {
-            it.name = channelForm.name
+            it.name = channelFormTO.name
             channelRepository.save(it)
         } ?: throw IllegalStateException("Channel with id $id not found.")
     }

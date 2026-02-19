@@ -143,7 +143,7 @@ export default function DashboardSidebar({
                             icon={<BarChartIcon/>}
                             href="/reports"
                             selected={!!matchPath('/reports', pathname)}
-                            defaultExpanded={!!matchPath('/reports', pathname)}
+                            defaultExpanded={!!matchPath('/downloads', pathname)}
                             expanded={expandedItemIds.includes('reports')}
                             nestedNavigation={
                                 <List
@@ -193,14 +193,14 @@ export default function DashboardSidebar({
                             title="All Downloads"
                             icon={<DownloadIcon/>}
                             href="/downloads"
-                            selected={!!matchPath('/downloads/*', pathname) || pathname === '/'}
+                            selected={!!matchPath('/downloads/', pathname) || pathname === '/'}
                         />
                         <DashboardSidebarPageItem
-                            id="running-downloads"
-                            title="Running"
+                            id="active-downloads"
+                            title="Active"
                             icon={<RunningIcon/>}
-                            href="/downloads/running"
-                            selected={!!matchPath('/downloads/running/*', pathname)}
+                            href="/downloads/active"
+                            selected={!!matchPath('/downloads/active/*', pathname)}
                         />
                         <DashboardSidebarPageItem
                             id="finished-downloads"

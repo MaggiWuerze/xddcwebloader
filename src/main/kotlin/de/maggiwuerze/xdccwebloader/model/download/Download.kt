@@ -30,8 +30,15 @@ class Download(var bot: Bot, var fileRefId: String) {
     @JsonIgnore
     var progressWatcher: FileTransferProgressWatcher? = null
 
-    fun toTO() = DownloadTO(id, bot, filename, filesize)
+    fun toTO() = DownloadTO(id, filename, filesize, status.name, averageSpeed, timeRemaining)
 }
 
 @Schema(name = "DownloadTO", requiredProperties = ["id", "bot", "filename", "filesize"])
-data class DownloadTO(val id: UUID, val bot: Bot, val filename: String, val filesize: String)
+data class DownloadTO(
+    val id: UUID,
+    val filename: String,
+    val filesize: String,
+    val status: String,
+    val averageSpeed: String,
+    val timeRemaining: String
+)

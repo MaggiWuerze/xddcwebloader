@@ -8,10 +8,10 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate} from 'react-router';
-import {ServerTO} from "../../../api/rest";
+import {ServerFormTO} from "../../../api/rest";
 
 export interface ServerFormState {
-    values: Partial<Omit<ServerTO, 'id'>>;
+    values: Partial<Omit<ServerFormTO, 'id'>>;
     errors: Partial<Record<keyof ServerFormState['values'], string>>;
 }
 

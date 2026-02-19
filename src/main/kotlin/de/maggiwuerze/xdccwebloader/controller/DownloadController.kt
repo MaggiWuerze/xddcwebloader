@@ -1,11 +1,10 @@
 package de.maggiwuerze.xdccwebloader.controller
 
-import de.maggiwuerze.xdccwebloader.events.SocketEvents
 import de.maggiwuerze.xdccwebloader.events.SocketEvents.DELETED_DOWNLOAD
 import de.maggiwuerze.xdccwebloader.model.download.Download
 import de.maggiwuerze.xdccwebloader.model.download.DownloadState
 import de.maggiwuerze.xdccwebloader.model.download.DownloadTO
-import de.maggiwuerze.xdccwebloader.model.forms.DownloadForm
+import de.maggiwuerze.xdccwebloader.model.forms.DownloadFormTO
 import de.maggiwuerze.xdccwebloader.service.BotService
 import de.maggiwuerze.xdccwebloader.service.DownloadService
 import de.maggiwuerze.xdccwebloader.service.EventService
@@ -65,27 +64,7 @@ class DownloadController(
     }
 
     @PostMapping("/downloads/")
-    fun addDownload(@RequestBody downloadForm: DownloadForm): ResponseEntity<*> {
-        botService.findById(downloadForm.targetBotId)?.let { bot ->
-            val fileRefId: String = downloadForm.fileRefId
-            if (fileRefId.contains(",")) {
-                for (id in fileRefId.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
-                    val download: Download = Download(bot, id)
-                    downloadService.addDownloadToBotQueue(download)
-                    eventService.publishEvent(SocketEvents.NEW_DOWNLOAD, download)
-                }
-            } else {
-                val download: Download = Download(bot, fileRefId)
-                downloadService.addDownloadToBotQueue(download)
-                eventService.publishEvent(SocketEvents.NEW_DOWNLOAD, download)
-            }
-
-            return ResponseEntity("Download(s) added succcessfully.", HttpStatus.OK)
-        }
-
-        return ResponseEntity(
-            "Illegal Arguments in Request",
-            HttpStatus.BAD_REQUEST
-        )
+    fun addDownload(@RequestBody downloadFormTO: DownloadFormTO): ResponseEntity<List<DownloadTO>> {
+        return ResponseEntity(downloadService.create(downloadFormTO).map(Download::toTO), HttpStatus.OK)
     }
 }

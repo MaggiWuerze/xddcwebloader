@@ -1,26 +1,23 @@
 import * as React from 'react';
 import {useNavigate} from 'react-router';
 import useNotifications from '../../../hooks/useNotifications/useNotifications';
-import {BotRepository as repository} from '../../../data/botRepository';
-import BotForm, {type BotFormState, type FormFieldValue,} from './BotForm';
+import {DownloadRepository as repository} from '../../../data/downloadRepository';
+import DownloadForm, {type DownloadFormState, type FormFieldValue,} from './DownloadForm';
 import PageContainer from '../../pagecontainer/PageContainer';
-import {BotTO} from "../../../api/rest";
+import {DownloadFormTO} from "../../../api/rest";
 
-const INITIAL_FORM_VALUES: Partial<BotFormState['values']> = {
-    name: '',
-    pattern: '',
-    maxParallelDownloads: 3,
-    serverId: undefined,
-    channelId: undefined,
+const INITIAL_FORM_VALUES: Partial<DownloadFormState['values']> = {
+    fileRefId: '',
+    targetBotId: undefined,
 
 };
 
-export default function BotCreate() {
+export default function DownloadCreate() {
     const navigate = useNavigate();
 
     const notifications = useNotifications();
 
-    const [formState, setFormState] = React.useState<BotFormState>(() => ({
+    const [formState, setFormState] = React.useState<DownloadFormState>(() => ({
         values: INITIAL_FORM_VALUES,
         errors: {},
     }));
@@ -28,7 +25,7 @@ export default function BotCreate() {
     const formErrors = formState.errors;
 
     const setFormValues = React.useCallback(
-        (newFormValues: Partial<BotFormState['values']>) => {
+        (newFormValues: Partial<DownloadFormState['values']>) => {
             setFormState((previousState) => ({
                 ...previousState,
                 values: newFormValues,
@@ -38,7 +35,7 @@ export default function BotCreate() {
     );
 
     const setFormErrors = React.useCallback(
-        (newFormErrors: Partial<BotFormState['errors']>) => {
+        (newFormErrors: Partial<DownloadFormState['errors']>) => {
             setFormState((previousState) => ({
                 ...previousState,
                 errors: newFormErrors,
@@ -48,8 +45,8 @@ export default function BotCreate() {
     );
 
     const handleFormFieldChange = React.useCallback(
-        (name: keyof BotFormState['values'], value: FormFieldValue) => {
-            const validateField = async (values: Partial<BotFormState['values']>) => {
+        (name: keyof DownloadFormState['values'], value: FormFieldValue) => {
+            const validateField = async (values: Partial<DownloadFormState['values']>) => {
                 const {issues} = repository.validate(values);
                 setFormErrors({
                     ...formErrors,
@@ -70,11 +67,8 @@ export default function BotCreate() {
     }, [setFormValues]);
 
     const handleFormSubmit = React.useCallback(async () => {
-        console.log("creating bot")
-        console.log(formValues)
         const {issues} = repository.validate(formValues);
         if (issues && issues.length > 0) {
-            console.log(issues)
             setFormErrors(
                 Object.fromEntries(issues.map((issue) => [issue.path?.[0], issue.message])),
             );
@@ -83,16 +77,16 @@ export default function BotCreate() {
         setFormErrors({});
 
         try {
-            await repository.create(formValues as Omit<BotTO, 'id'>);
-            notifications.show('Bot created successfully.', {
+            await repository.create(formValues as Omit<DownloadFormTO, 'id'>);
+            notifications.show('Employee created successfully.', {
                 severity: 'success',
                 autoHideDuration: 3000,
             });
 
-            navigate('/bot');
+            navigate('/employees');
         } catch (createError) {
             notifications.show(
-                `Failed to create Bot. Reason: ${(createError as Error).message}`,
+                `Failed to create employee. Reason: ${(createError as Error).message}`,
                 {
                     severity: 'error',
                     autoHideDuration: 3000,
@@ -104,10 +98,10 @@ export default function BotCreate() {
 
     return (
         <PageContainer
-            title="New Bot"
-            breadcrumbs={[{title: 'Bots', path: '/bot'}, {title: 'New'}]}
+            title="New Download"
+            breadcrumbs={[{title: 'Downloads', path: '/downloads/all'}, {title: 'New'}]}
         >
-            <BotForm
+            <DownloadForm
                 formState={formState}
                 onFieldChange={handleFormFieldChange}
                 onSubmit={handleFormSubmit}

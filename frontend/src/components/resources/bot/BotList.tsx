@@ -215,8 +215,7 @@ export default function BotList() {
 
     const columns = React.useMemo<GridColDef[]>(
         () => [
-            {field: 'id', headerName: 'ID'},
-            {field: 'name', headerName: 'Name', width: 140},
+            {field: 'name', headerName: 'Name', flex: 1, minWidth: 80, headerAlign: 'center', align: 'center'},
             {
                 field: 'actions',
                 type: 'actions',

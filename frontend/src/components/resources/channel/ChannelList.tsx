@@ -215,20 +215,13 @@ export default function ChannelList() {
 
     const columns = React.useMemo<GridColDef[]>(
         () => [
-            {field: 'id', headerName: 'ID'},
-            {field: 'name', headerName: 'Name', width: 140},
-            {
-                field: 'createDate',
-                headerName: 'Create date',
-                type: 'date',
-                valueGetter: (value) => value && new Date(value),
-                width: 140,
-            },
+            {field: 'name', headerName: 'Name', flex: 1, minWidth: 140, headerAlign: 'center', align: 'center'},
             {
                 field: 'actions',
                 type: 'actions',
                 flex: 1,
                 align: 'right',
+                minWidth: 140,
                 getActions: ({row}) => [
                     <GridActionsCellItem
                         key="edit-item"

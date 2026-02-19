@@ -2,7 +2,7 @@ package de.maggiwuerze.xdccwebloader.controller
 
 import de.maggiwuerze.xdccwebloader.model.entity.UserSettings
 import de.maggiwuerze.xdccwebloader.model.entity.UserSettingsTO
-import de.maggiwuerze.xdccwebloader.model.forms.UserSettingsForm
+import de.maggiwuerze.xdccwebloader.model.forms.UserSettingsFormTO
 import de.maggiwuerze.xdccwebloader.service.UserSettingsService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -21,11 +21,11 @@ class UserController(val userSettingsService: UserSettingsService) {
 
     @PostMapping(value = ["/usersettings"])
     fun updateSetting(
-        @RequestBody userSettingsForm: UserSettingsForm
+        @RequestBody userSettingsFormTO: UserSettingsFormTO
     ): ResponseEntity<*> {
         val userSettingsById: UserSettings = userSettingsService.getUserSettings()
-        userSettingsById.downloadSortBy = userSettingsForm.downloadSortBy
-        userSettingsById.sessionTimeout = userSettingsForm.sessionTimeout
+        userSettingsById.downloadSortBy = userSettingsFormTO.downloadSortBy
+        userSettingsById.sessionTimeout = userSettingsFormTO.sessionTimeout
         userSettingsService.saveUserSettings(userSettingsById)
 
         return ResponseEntity("UserSettings updated successfully.", HttpStatus.OK)

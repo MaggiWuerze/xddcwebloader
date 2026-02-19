@@ -1,6 +1,6 @@
 package de.maggiwuerze.xdccwebloader.model.forms
 
-class ServerForm(
+class ServerFormTO(
     val name: String,
     val serverUrl: String
 )

@@ -1,9 +1,9 @@
 import type {GridFilterModel, GridPaginationModel, GridSortModel} from '@mui/x-data-grid';
-import {DownloadControllerApi, DownloadTO} from '../api/rest';
+import {DownloadControllerApi, DownloadFormTO, DownloadTO} from '../api/rest';
 
 const api = new DownloadControllerApi();
 
-type ValidationResult = { issues: { message: string; path: (keyof DownloadTO)[] }[] };
+type ValidationResult = { issues: { message: string; path: (keyof DownloadFormTO)[] }[] };
 /**
  * Bot repository:
  * - T = BotTO (read model)
@@ -12,19 +12,15 @@ type ValidationResult = { issues: { message: string; path: (keyof DownloadTO)[] 
  */
 export const DownloadRepository = {
 
-    validate(download: Partial<DownloadTO>): ValidationResult {
+    validate(download: Partial<DownloadFormTO>): ValidationResult {
         let issues: ValidationResult['issues'] = [];
 
-        if (!download.bot) {
-            issues = [...issues, {message: 'Bot is required', path: ['bot']}];
+        if (!download.fileRefId) {
+            issues = [...issues, {message: 'Bot is required', path: ['fileRefId']}];
         }
 
-        if (!download.filename) {
-            issues = [...issues, {message: 'Filename is required', path: ['filename']}];
-        }
-
-        if (!download.filesize) {
-            issues = [...issues, {message: 'FileSize is required', path: ['filesize']}];
+        if (!download.targetBotId) {
+            issues = [...issues, {message: 'Filename is required', path: ['targetBotId']}];
         }
 
         return {issues};
@@ -39,7 +35,7 @@ export const DownloadRepository = {
         sortModel: GridSortModel;
         filterModel: GridFilterModel;
     }): Promise<{ items: DownloadTO[]; itemCount: number }> {
-        const bots = await api.getActiveDownloads(true).then((rs) => rs.data);
+        const bots = await api.listDownloads().then((rs) => rs.data);
 
         let filteredBots = [...bots];
 
@@ -104,5 +100,9 @@ export const DownloadRepository = {
             items: paginatedBots,
             itemCount: filteredBots.length,
         };
-    }
+    },
+
+    async create(data: Omit<DownloadFormTO, 'id'>): Promise<DownloadTO[]> {
+        return await api.addDownload({...data}).then((res) => res.data);
+    },
 };

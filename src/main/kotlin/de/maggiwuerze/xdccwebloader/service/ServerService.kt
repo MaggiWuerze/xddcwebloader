@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccwebloader.service
 
 import de.maggiwuerze.xdccwebloader.model.entity.Server
-import de.maggiwuerze.xdccwebloader.model.forms.ServerForm
+import de.maggiwuerze.xdccwebloader.model.forms.ServerFormTO
 import de.maggiwuerze.xdccwebloader.persistence.ServerRepository
 import org.springframework.stereotype.Service
 import java.util.*
@@ -26,10 +26,10 @@ class ServerService(private val serverRepository: ServerRepository) {
         serverRepository.deleteById(serverId)
     }
 
-    fun update(id: UUID, serverForm: ServerForm): Server {
+    fun update(id: UUID, serverFormTO: ServerFormTO): Server {
         return serverRepository.findById(id).getOrNull()?.let {
-            it.name = serverForm.name
-            it.serverUrl = serverForm.serverUrl
+            it.name = serverFormTO.name
+            it.serverUrl = serverFormTO.serverUrl
             serverRepository.save(it)
         } ?: throw IllegalStateException("Server with id $id not found.")
     }

@@ -14,6 +14,14 @@ type ValidationResult = { issues: { message: string; path: (keyof ServerTO)[] }[
  */
 export const ServerRepository: BaseRepository<ServerTO, BotForm> = {
 
+    async listAll(): Promise<ServerTO[]> {
+        return await this.list({
+            paginationModel: {page: 0, pageSize: 1000},
+            sortModel: [],
+            filterModel: {items: []},
+        }).then(server => server.items);
+    },
+
     validate(bot: Partial<ServerTO>): ValidationResult {
         let issues: ValidationResult['issues'] = [];
 
@@ -25,17 +33,17 @@ export const ServerRepository: BaseRepository<ServerTO, BotForm> = {
     },
 
     async list({
-                   paginationModel,
-                   filterModel,
-                   sortModel,
+                   paginationModel = {page: 0, pageSize: 1000},
+                   sortModel = [],
+                   filterModel = {items: []},
                }: {
-        paginationModel: GridPaginationModel;
-        sortModel: GridSortModel;
-        filterModel: GridFilterModel;
+        paginationModel?: GridPaginationModel;
+        sortModel?: GridSortModel;
+        filterModel?: GridFilterModel;
     }): Promise<{ items: ServerTO[]; itemCount: number }> {
-        const bots = await api.listServers().then((rs) => rs.data);
+        const servers = await api.listServers().then((rs) => rs.data);
 
-        let filteredBots = [...bots];
+        let filteredServers = [...servers];
 
         // Apply filters (same style as bot.ts)
         if (filterModel?.items?.length) {
@@ -44,7 +52,7 @@ export const ServerRepository: BaseRepository<ServerTO, BotForm> = {
                     return;
                 }
 
-                filteredBots = filteredBots.filter((bot) => {
+                filteredServers = filteredServers.filter((bot) => {
                     const botValue = bot[field as keyof ServerTO];
 
                     switch (operator) {
@@ -69,7 +77,7 @@ export const ServerRepository: BaseRepository<ServerTO, BotForm> = {
 
         // Apply sorting (same style as bot.ts)
         if (sortModel?.length) {
-            filteredBots.sort((a, b) => {
+            filteredServers.sort((a, b) => {
                 for (const {field, sort} of sortModel) {
                     const botA = a[field as keyof ServerTO];
                     const botB = b[field as keyof ServerTO];
@@ -92,11 +100,11 @@ export const ServerRepository: BaseRepository<ServerTO, BotForm> = {
         // Apply pagination (same style as bot.ts)
         const start = paginationModel.page * paginationModel.pageSize;
         const end = start + paginationModel.pageSize;
-        const paginatedBots = filteredBots.slice(start, end);
+        const paginatedServers = filteredServers.slice(start, end);
 
         return {
-            items: paginatedBots,
-            itemCount: filteredBots.length,
+            items: paginatedServers,
+            itemCount: filteredServers.length,
         };
     },
 

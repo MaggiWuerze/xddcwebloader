@@ -8,16 +8,20 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate} from 'react-router';
-import {BotTO} from "../../../api/rest";
+import {BotFormTO} from "../../../api/rest";
+import {ServerRepository as serverRepository} from "../../../data/serverRepository";
+import {ChannelRepository as channelRepository} from "../../../data/channelRepository";
+import {ServerSelect} from "../server/ServerSelect";
+import {ChannelSelect} from "../channel/ChannelSelect";
 
 export interface BotFormState {
-    values: Partial<Omit<BotTO, 'id'>>;
+    values: Partial<Omit<BotFormTO, 'id'>>;
     errors: Partial<Record<keyof BotFormState['values'], string>>;
 }
 
 export type FormFieldValue = string | string[] | number | boolean | File | null;
 
-export interface EmployeeFormProps {
+export interface BotFormProps {
     formState: BotFormState;
     onFieldChange: (
         name: keyof BotFormState['values'],
@@ -29,7 +33,7 @@ export interface EmployeeFormProps {
     backButtonPath?: string;
 }
 
-export default function BotForm(props: EmployeeFormProps) {
+export default function BotForm(props: BotFormProps) {
     const {
         formState,
         onFieldChange,
@@ -80,15 +84,9 @@ export default function BotForm(props: EmployeeFormProps) {
         [onFieldChange],
     );
 
-    const handleCheckboxFieldChange = React.useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-            onFieldChange(event.target.name as keyof BotFormState['values'], checked);
-        },
-        [onFieldChange],
-    );
-
     const handleSelectFieldChange = React.useCallback(
         (event: SelectChangeEvent) => {
+            console.log(event.target.value);
             onFieldChange(
                 event.target.name as keyof BotFormState['values'],
                 event.target.value,
@@ -124,6 +122,7 @@ export default function BotForm(props: EmployeeFormProps) {
                             onChange={handleTextFieldChange}
                             name="name"
                             label="Name"
+                            placeholder="Ginpachi-Sensei"
                             error={!!formErrors.name}
                             helperText={formErrors.name ?? ' '}
                             fullWidth
@@ -131,14 +130,41 @@ export default function BotForm(props: EmployeeFormProps) {
                     </Grid>
                     <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
                         <TextField
-                            type="number"
                             value={formValues.pattern ?? ''}
-                            onChange={handleNumberFieldChange}
+                            onChange={handleTextFieldChange}
                             name="pattern"
                             label="Pattern"
+                            placeholder="A message template that will be used to send messages, e.g. 'xdcc send %s'"
                             error={!!formErrors.pattern}
                             helperText={formErrors.pattern ?? ' '}
                             fullWidth
+                        />
+                    </Grid>
+                    <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
+                        <TextField
+                            type="number"
+                            value={formValues.maxParallelDownloads ?? ''}
+                            onChange={handleNumberFieldChange}
+                            name="maxParallelDownloads"
+                            label="Max Parallel Downloads"
+                            placeholder="Max number of parallel downloads"
+                            error={!!formErrors.maxParallelDownloads}
+                            helperText={formErrors.maxParallelDownloads ?? ' '}
+                            fullWidth
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} sx={{mb: 2, width: '100%'}}>
+                    <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
+                        <ServerSelect
+                            serverSelectValues={serverRepository.listAll()}
+                            onChange={(serverId) => formValues.serverId = serverId}
+                        />
+                    </Grid>
+                    <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
+                        <ChannelSelect
+                            channelSelectValues={channelRepository.listAll()}
+                            onChange={(channelId) => formValues.channelId = channelId}
                         />
                     </Grid>
                 </Grid>

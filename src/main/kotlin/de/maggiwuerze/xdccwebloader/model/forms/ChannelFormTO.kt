@@ -1,6 +1,6 @@
 package de.maggiwuerze.xdccwebloader.model.forms
 
-class ChannelForm(
+class ChannelFormTO(
     val name: String, val bla: String
 )
 
