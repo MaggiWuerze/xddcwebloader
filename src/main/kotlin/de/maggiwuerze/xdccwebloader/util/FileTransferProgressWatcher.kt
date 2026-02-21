@@ -34,25 +34,26 @@ class FileTransferProgressWatcher(
         if (fileTransfer == null) throw IllegalStateException("FileTransfer is null for Download with id: $downloadId")
 
         log.info("starting progress watcher for download with id :" + downloadId)
-        downloadService.getById(downloadId).status = DownloadState.TRANSMITTING
-        applicationEventPublisher.publishEvent(DownloadUpdateEvent(this, downloadId))
-        schedulerResult = exec.scheduleAtFixedRate({
-            try {
-                val download: Download = downloadService.getById(downloadId)
+        downloadService.getOrThrow(downloadId).let { download ->
 
-                if (download.filesize == "-") {
-                    updateFileSize(download)
+            download.status = DownloadState.TRANSMITTING
+            applicationEventPublisher.publishEvent(DownloadUpdateEvent(this, downloadId))
+            schedulerResult = exec.scheduleAtFixedRate({
+                try {
+                    if (download.filesize == "-") {
+                        updateFileSize(download)
+                    }
+
+                    val newProgress = BigDecimal.valueOf(fileTransfer!!.fileTransferStatus.percentageComplete)
+                        .setScale(2, RoundingMode.HALF_UP).toDouble()
+
+                    download.timeRemaining = formatRemainingTime()
+                    checkDownloadProgress(download, newProgress)
+                } catch (e: Exception) {
+                    log.warn("Error in progressWatcher", e)
                 }
-
-                val newProgress = BigDecimal.valueOf(fileTransfer!!.fileTransferStatus.percentageComplete)
-                    .setScale(2, RoundingMode.HALF_UP).toDouble()
-
-                download.timeRemaining = formatRemainingTime()
-                checkDownloadProgress(download, newProgress)
-            } catch (e: Exception) {
-                log.warn("Error in progressWatcher", e)
-            }
-        }, 0, 1, TimeUnit.SECONDS)
+            }, 0, 1, TimeUnit.SECONDS)
+        }
     }
 
     private fun checkDownloadProgress(download: Download, newProgress: Double) {

@@ -23,25 +23,28 @@ class EventPublisher(
         download.status = state
         downloadService.update(download)
 
-        val downloadUpdateEvent: DownloadUpdateEvent = DownloadUpdateEvent(this, download.id)
-        applicationEventPublisher.publishEvent(downloadUpdateEvent)
+        DownloadUpdateEvent(this, download.id).also { downloadUpdateEvent ->
+            applicationEventPublisher.publishEvent(downloadUpdateEvent)
+        }
     }
 
     fun sendWebsocketEvent(event: SocketEvents, payload: Any) {
         this.websocket.convertAndSend(
-            de.maggiwuerze.xdccwebloader.events.EventPublisher.Companion.MESSAGE_PREFIX + event.route, payload
+            MESSAGE_PREFIX + event.route, payload
         )
     }
 
-    fun handleError(bot: IrcBot, exception: java.lang.Exception) {
+    fun handleError(bot: IrcBot, exception: Exception) {
         bot.stopBotReconnect()
-        val download: Download = downloadService.getById(bot.downloadId)
-        val message: String = String.format(DownloadState.ERROR.externalString, exception.message)
-        try {
-            download.statusMessage = message
-            updateDownloadState(DownloadState.ERROR, download)
-        } catch (e: java.lang.Exception) {
-            log.error(e.message)
+        downloadService.getOrThrow(bot.downloadId).let { download ->
+
+            try {
+                download.statusMessage = exception.message ?: "Unknown error"
+                updateDownloadState(DownloadState.ERROR, download)
+            } catch (e: Exception) {
+                log.error(e.message)
+            }
+
         }
     }
 

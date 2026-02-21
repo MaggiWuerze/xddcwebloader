@@ -1,10 +1,10 @@
 import * as React from 'react';
 import type {GridColDef} from '@mui/x-data-grid';
 import {useNavigate} from 'react-router';
-import {BaseList} from '../base/BaseList';
 import {useUrlDataGridState} from '../base/UrlDataGridState';
 import {ChannelRepository} from '../../../data/channelRepository';
 import type {ChannelTO} from '../../../api/rest';
+import {CrudList} from "../base/CrudListWithActions";
 
 export default function ChannelList() {
     const navigate = useNavigate();
@@ -18,14 +18,5 @@ export default function ChannelList() {
         [],
     );
 
-    return (
-        <BaseList<ChannelTO>
-            title="Channels"
-            columns={columns}
-            gridState={gridState}
-            load={(params) => ChannelRepository.list(params)}
-            onRowClick={(row) => navigate(`/channel/${row.id}`)}
-            onCreateClick={() => navigate('/channel/new')}
-        />
-    );
+    return <CrudList<ChannelTO> resource="channel" title="Channels" columns={columns} repository={ChannelRepository}/>;
 }

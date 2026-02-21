@@ -26,6 +26,28 @@ export type BaseListLoadParams = {
     filterModel: GridFilterModel;
 };
 
+export type BaseListApi<T extends GridValidRowModel = GridValidRowModel> = {
+    reload: () => void;
+
+    /**
+     * Merge a partial update into a row if it exists in the current page.
+     * Returns true if row was found and patched; false otherwise.
+     */
+    patchRow: (id: string | number, patch: Partial<T>) => boolean;
+
+    /**
+     * Remove a row from the current page if present.
+     * Returns true if row was found and removed; false otherwise.
+     */
+    removeRow: (id: string | number) => boolean;
+
+    /**
+     * Insert if missing, otherwise patch. (Only affects current page.)
+     * Returns 'inserted' | 'patched'.
+     */
+    upsertRow: (row: T) => 'inserted' | 'patched';
+};
+
 type DefaultActionsContext = {
     refresh: () => void;
     isLoading: boolean;
@@ -54,12 +76,9 @@ type Props<T extends GridValidRowModel> = {
     createLabel?: string;
     pageSizeOptions?: number[];
 
-    /**
-     * Optional override for the PageContainer actions area.
-     * If provided, BaseList will render this instead of the default Refresh+Create buttons.
-     * You still get access to BaseList's refresh() and isLoading state.
-     */
     actions?: (ctx: DefaultActionsContext) => React.ReactNode;
+
+    apiRef?: React.MutableRefObject<BaseListApi<T> | null>;
 };
 
 const INITIAL_PAGE_SIZE = 10;
@@ -77,6 +96,7 @@ export function BaseList<T extends GridValidRowModel>(props: Props<T>) {
         createLabel = 'Create',
         pageSizeOptions = [5, INITIAL_PAGE_SIZE, 25],
         actions,
+        apiRef,
     } = props;
 
     const [rowsState, setRowsState] = React.useState<{ rows: T[]; rowCount: number }>({
@@ -86,6 +106,11 @@ export function BaseList<T extends GridValidRowModel>(props: Props<T>) {
 
     const [isLoading, setIsLoading] = React.useState(true);
     const [error, setError] = React.useState<Error | null>(null);
+
+    const getId = React.useCallback(
+        (row: T) => (getRowId ? getRowId(row) : (row as any).id) as string | number,
+        [getRowId],
+    );
 
     const loadData = React.useCallback(async () => {
         setError(null);
@@ -107,6 +132,82 @@ export function BaseList<T extends GridValidRowModel>(props: Props<T>) {
     React.useEffect(() => {
         loadData();
     }, [loadData]);
+
+    const patchRow = React.useCallback(
+        (id: string | number, patch: Partial<T>) => {
+            let didPatch = false;
+
+            setRowsState(prev => {
+                const idx = prev.rows.findIndex(r => getId(r) === id);
+                if (idx < 0) return prev;
+
+                const nextRows = prev.rows.slice();
+                nextRows[idx] = {...nextRows[idx], ...patch};
+
+                didPatch = true;
+                return {...prev, rows: nextRows};
+            });
+
+            return didPatch;
+        },
+        [getId],
+    );
+
+    const removeRow = React.useCallback(
+        (id: string | number) => {
+            let didRemove = false;
+
+            setRowsState(prev => {
+                const idx = prev.rows.findIndex(r => getId(r) === id);
+                if (idx < 0) return prev;
+
+                const nextRows = prev.rows.slice();
+                nextRows.splice(idx, 1);
+
+                didRemove = true;
+                return {rows: nextRows, rowCount: Math.max(0, prev.rowCount - 1)};
+            });
+
+            return didRemove;
+        },
+        [getId],
+    );
+
+    const upsertRow = React.useCallback(
+        (row: T) => {
+            const id = getId(row);
+            let result: 'inserted' | 'patched' = 'inserted';
+
+            setRowsState(prev => {
+                const idx = prev.rows.findIndex(r => getId(r) === id);
+
+                // patch existing
+                if (idx >= 0) {
+                    const nextRows = prev.rows.slice();
+                    nextRows[idx] = {...nextRows[idx], ...row};
+                    result = 'patched';
+                    return {...prev, rows: nextRows};
+                }
+
+                // insert into current page (NOTE: may violate server sort; use with care)
+                const nextRows = [row, ...prev.rows];
+                return {rows: nextRows, rowCount: prev.rowCount + 1};
+            });
+
+            return result;
+        },
+        [getId],
+    );
+
+    React.useEffect(() => {
+        if (apiRef) {
+            apiRef.current = {reload: loadData, patchRow, removeRow, upsertRow};
+            return () => {
+                apiRef.current = null;
+            };
+        }
+        return;
+    }, [apiRef, loadData, patchRow, removeRow, upsertRow]);
 
     const handleRefresh = React.useCallback(() => {
         if (!isLoading) loadData();

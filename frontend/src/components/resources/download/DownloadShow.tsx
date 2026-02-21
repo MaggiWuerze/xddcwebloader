@@ -8,90 +8,70 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate, useParams} from 'react-router';
 import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
 import useNotifications from '../../../hooks/useNotifications/useNotifications';
-import {deleteOne as deleteEmployee, type Employee, getOne as getEmployee,} from '../../../data/bot';
+import {DownloadRepository} from '../../../data/downloadRepository';
 import PageContainer from '../../pagecontainer/PageContainer';
+import {DownloadTO} from "../../../api/rest";
+import CancelledIcon from "@mui/icons-material/Cancel";
+import {downloadUpdatesClient} from "../../../api/stomp/DownloadUpdatesClient";
 
 export default function DownloadShow() {
-    const {employeeId} = useParams();
+    const {downloadId} = useParams();
     const navigate = useNavigate();
 
     const dialogs = useDialogs();
     const notifications = useNotifications();
 
-    const [employee, setEmployee] = React.useState<Employee | null>(null);
+    const [download, setDownload] = React.useState<DownloadTO | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
     const [error, setError] = React.useState<Error | null>(null);
 
     const loadData = React.useCallback(async () => {
+        if (!downloadId) return
         setError(null);
         setIsLoading(true);
 
         try {
-            const showData = await getEmployee(Number(employeeId));
-
-            setEmployee(showData);
+            const data = await DownloadRepository.get(downloadId);
+            setDownload(data);
         } catch (showDataError) {
             setError(showDataError as Error);
         }
         setIsLoading(false);
-    }, [employeeId]);
+    }, [downloadId]);
 
     React.useEffect(() => {
         loadData();
     }, [loadData]);
 
     const handleEmployeeEdit = React.useCallback(() => {
-        navigate(`/employees/${employeeId}/edit`);
-    }, [navigate, employeeId]);
-
-    const handleEmployeeDelete = React.useCallback(async () => {
-        if (!employee) {
-            return;
-        }
-
-        const confirmed = await dialogs.confirm(
-            `Do you wish to delete ${employee.name}?`,
-            {
-                title: `Delete employee?`,
-                severity: 'error',
-                okText: 'Delete',
-                cancelText: 'Cancel',
-            },
-        );
-
-        if (confirmed) {
-            setIsLoading(true);
-            try {
-                await deleteEmployee(Number(employeeId));
-
-                navigate('/employees');
-
-                notifications.show('Employee deleted successfully.', {
-                    severity: 'success',
-                    autoHideDuration: 3000,
-                });
-            } catch (deleteError) {
-                notifications.show(
-                    `Failed to delete employee. Reason:' ${(deleteError as Error).message}`,
-                    {
-                        severity: 'error',
-                        autoHideDuration: 3000,
-                    },
-                );
-            }
-            setIsLoading(false);
-        }
-    }, [employee, dialogs, employeeId, navigate, notifications]);
+        navigate(`/download/${downloadId}/edit`);
+    }, [navigate, downloadId]);
 
     const handleBack = React.useCallback(() => {
-        navigate('/employees');
+        navigate('/download');
     }, [navigate]);
+
+    React.useEffect(() => {
+        if (!downloadId) return;
+
+        const sub = downloadUpdatesClient.subscribeDownloadEvents(`download-show-${downloadId}`, (evt) => {
+            const payloadId = evt.payload?.id;
+            if (!payloadId || payloadId !== downloadId) return;
+
+            if (evt.type === 'delete') {
+                navigate('/download');
+                return;
+            }
+
+            setDownload(prev => (prev ? ({...prev, ...evt.payload} as DownloadTO) : prev));
+        });
+
+        return () => sub.unsubscribe();
+    }, [downloadId, navigate]);
 
     const renderShow = React.useMemo(() => {
         if (isLoading) {
@@ -119,38 +99,46 @@ export default function DownloadShow() {
             );
         }
 
-        return employee ? (
+        return download ? (
             <Box sx={{flexGrow: 1, width: '100%'}}>
                 <Grid container spacing={2} sx={{width: '100%'}}>
                     <Grid size={{xs: 12, sm: 6}}>
                         <Paper sx={{px: 2, py: 1}}>
-                            <Typography variant="overline">Name</Typography>
+                            <Typography variant="overline">File Name</Typography>
                             <Typography variant="body1" sx={{mb: 1}}>
-                                {employee.name}
+                                {download.filename}
                             </Typography>
                         </Paper>
                     </Grid>
                     <Grid size={{xs: 12, sm: 6}}>
                         <Paper sx={{px: 2, py: 1}}>
-                            <Typography variant="overline">Age</Typography>
+                            <Typography variant="overline">File Size</Typography>
                             <Typography variant="body1" sx={{mb: 1}}>
-                                {employee.age}
+                                {download.filesize}
                             </Typography>
                         </Paper>
                     </Grid>
                     <Grid size={{xs: 12, sm: 6}}>
                         <Paper sx={{px: 2, py: 1}}>
-                            <Typography variant="overline">Department</Typography>
+                            <Typography variant="overline">Status</Typography>
                             <Typography variant="body1" sx={{mb: 1}}>
-                                {employee.role}
+                                {download.status}
                             </Typography>
                         </Paper>
                     </Grid>
                     <Grid size={{xs: 12, sm: 6}}>
                         <Paper sx={{px: 2, py: 1}}>
-                            <Typography variant="overline">Full-time</Typography>
+                            <Typography variant="overline">Avergae Speed</Typography>
                             <Typography variant="body1" sx={{mb: 1}}>
-                                {employee.isFullTime ? 'Yes' : 'No'}
+                                {download.averageSpeed}
+                            </Typography>
+                        </Paper>
+                    </Grid>
+                    <Grid size={{xs: 12, sm: 6}}>
+                        <Paper sx={{px: 2, py: 1}}>
+                            <Typography variant="overline">Time Remaining</Typography>
+                            <Typography variant="body1" sx={{mb: 1}}>
+                                {download.timeRemaining}
                             </Typography>
                         </Paper>
                     </Grid>
@@ -167,18 +155,10 @@ export default function DownloadShow() {
                     <Stack direction="row" spacing={2}>
                         <Button
                             variant="contained"
-                            startIcon={<EditIcon/>}
+                            startIcon={<CancelledIcon/>}
                             onClick={handleEmployeeEdit}
                         >
                             Edit
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="error"
-                            startIcon={<DeleteIcon/>}
-                            onClick={handleEmployeeDelete}
-                        >
-                            Delete
                         </Button>
                     </Stack>
                 </Stack>
@@ -187,19 +167,18 @@ export default function DownloadShow() {
     }, [
         isLoading,
         error,
-        employee,
+        download,
         handleBack,
         handleEmployeeEdit,
-        handleEmployeeDelete,
     ]);
 
-    const pageTitle = `Employee ${employeeId}`;
+    const pageTitle = `Employee ${downloadId}`;
 
     return (
         <PageContainer
             title={pageTitle}
             breadcrumbs={[
-                {title: 'Employees', path: '/employees'},
+                {title: 'Employees', path: '/download'},
                 {title: pageTitle},
             ]}
         >

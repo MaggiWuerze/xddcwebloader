@@ -19,7 +19,7 @@ import PageContainer from '../../pagecontainer/PageContainer';
 import {ChannelTO} from "../../../api/rest";
 
 export default function ChannelShow() {
-    const {employeeId} = useParams();
+    const {channelId} = useParams();
     const navigate = useNavigate();
 
     const dialogs = useDialogs();
@@ -30,37 +30,37 @@ export default function ChannelShow() {
     const [error, setError] = React.useState<Error | null>(null);
 
     const loadData = React.useCallback(async () => {
-        if (!employeeId) return
+        if (!channelId) return
         setError(null);
         setIsLoading(true);
 
         try {
-            const showData = await repository.get(employeeId);
+            const showData = await repository.get(channelId);
 
             setChannel(showData);
         } catch (showDataError) {
             setError(showDataError as Error);
         }
         setIsLoading(false);
-    }, [employeeId]);
+    }, [channelId]);
 
     React.useEffect(() => {
         loadData();
     }, [loadData]);
 
-    const handleEmployeeEdit = React.useCallback(() => {
-        navigate(`/employees/${employeeId}/edit`);
-    }, [navigate, employeeId]);
+    const handleChannelEdit = React.useCallback(() => {
+        navigate(`/channel/${channelId}/edit`);
+    }, [navigate, channelId]);
 
     const handleEmployeeDelete = React.useCallback(async () => {
-        if (!channel || !employeeId) {
+        if (!channel || !channelId) {
             return;
         }
 
         const confirmed = await dialogs.confirm(
             `Do you wish to delete ${channel.name}?`,
             {
-                title: `Delete employee?`,
+                title: `Delete Channel?`,
                 severity: 'error',
                 okText: 'Delete',
                 cancelText: 'Cancel',
@@ -70,9 +70,9 @@ export default function ChannelShow() {
         if (confirmed) {
             setIsLoading(true);
             try {
-                await repository.delete(employeeId);
+                await repository.delete(channelId);
 
-                navigate('/employees');
+                navigate('/channel');
 
                 notifications.show('Employee deleted successfully.', {
                     severity: 'success',
@@ -80,7 +80,7 @@ export default function ChannelShow() {
                 });
             } catch (deleteError) {
                 notifications.show(
-                    `Failed to delete employee. Reason:' ${(deleteError as Error).message}`,
+                    `Failed to delete Channel. Reason:' ${(deleteError as Error).message}`,
                     {
                         severity: 'error',
                         autoHideDuration: 3000,
@@ -89,10 +89,10 @@ export default function ChannelShow() {
             }
             setIsLoading(false);
         }
-    }, [channel, dialogs, employeeId, navigate, notifications]);
+    }, [channel, dialogs, channelId, navigate, notifications]);
 
     const handleBack = React.useCallback(() => {
-        navigate('/employees');
+        navigate('/channel');
     }, [navigate]);
 
     const renderShow = React.useMemo(() => {
@@ -146,7 +146,7 @@ export default function ChannelShow() {
                         <Button
                             variant="contained"
                             startIcon={<EditIcon/>}
-                            onClick={handleEmployeeEdit}
+                            onClick={handleChannelEdit}
                         >
                             Edit
                         </Button>
@@ -167,17 +167,17 @@ export default function ChannelShow() {
         error,
         channel,
         handleBack,
-        handleEmployeeEdit,
+        handleChannelEdit,
         handleEmployeeDelete,
     ]);
 
-    const pageTitle = `Employee ${employeeId}`;
+    const pageTitle = `Channel ${channelId}`;
 
     return (
         <PageContainer
             title={pageTitle}
             breadcrumbs={[
-                {title: 'Employees', path: '/employees'},
+                {title: 'Channel', path: '/Channel'},
                 {title: pageTitle},
             ]}
         >

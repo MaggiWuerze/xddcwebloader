@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("/bots/")
+@RequestMapping("bot/")
 class BotController
     (
     private val botService: BotService,
@@ -57,6 +57,5 @@ class BotController
     @PutMapping("{id}")
     fun updateBot(@PathVariable id: UUID, @RequestBody botFormTO: BotFormTO): ResponseEntity<BotTO> =
         ResponseEntity(botService.update(id, botFormTO).toTO(), HttpStatus.OK)
-
-
+    
 }

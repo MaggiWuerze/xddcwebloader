@@ -49,11 +49,11 @@ export default function ServerShow() {
         loadData();
     }, [loadData]);
 
-    const handleEmployeeEdit = React.useCallback(() => {
-        navigate(`/employees/${serverId}/edit`);
+    const handleServerEdit = React.useCallback(() => {
+        navigate(`/server/${serverId}/edit`);
     }, [navigate, serverId]);
 
-    const handleEmployeeDelete = React.useCallback(async () => {
+    const handleServerDelete = React.useCallback(async () => {
         if (!server || !serverId) {
             return;
         }
@@ -61,7 +61,7 @@ export default function ServerShow() {
         const confirmed = await dialogs.confirm(
             `Do you wish to delete ${server.name}?`,
             {
-                title: `Delete employee?`,
+                title: `Delete Server?`,
                 severity: 'error',
                 okText: 'Delete',
                 cancelText: 'Cancel',
@@ -73,15 +73,15 @@ export default function ServerShow() {
             try {
                 await repository.delete(serverId);
 
-                navigate('/employees');
+                navigate('/server');
 
-                notifications.show('Employee deleted successfully.', {
+                notifications.show('Server deleted successfully.', {
                     severity: 'success',
                     autoHideDuration: 3000,
                 });
             } catch (deleteError) {
                 notifications.show(
-                    `Failed to delete employee. Reason:' ${(deleteError as Error).message}`,
+                    `Failed to delete Server. Reason:' ${(deleteError as Error).message}`,
                     {
                         severity: 'error',
                         autoHideDuration: 3000,
@@ -93,7 +93,7 @@ export default function ServerShow() {
     }, [server, dialogs, serverId, navigate, notifications]);
 
     const handleBack = React.useCallback(() => {
-        navigate('/employees');
+        navigate('/server');
     }, [navigate]);
 
     const renderShow = React.useMemo(() => {
@@ -155,7 +155,7 @@ export default function ServerShow() {
                         <Button
                             variant="contained"
                             startIcon={<EditIcon/>}
-                            onClick={handleEmployeeEdit}
+                            onClick={handleServerEdit}
                         >
                             Edit
                         </Button>
@@ -163,7 +163,7 @@ export default function ServerShow() {
                             variant="contained"
                             color="error"
                             startIcon={<DeleteIcon/>}
-                            onClick={handleEmployeeDelete}
+                            onClick={handleServerDelete}
                         >
                             Delete
                         </Button>
@@ -176,8 +176,8 @@ export default function ServerShow() {
         error,
         server,
         handleBack,
-        handleEmployeeEdit,
-        handleEmployeeDelete,
+        handleServerEdit,
+        handleServerDelete,
     ]);
 
     const pageTitle = `Server ${serverId}`;
@@ -186,7 +186,7 @@ export default function ServerShow() {
         <PageContainer
             title={pageTitle}
             breadcrumbs={[
-                {title: 'Servers', path: '/servers'},
+                {title: 'Servers', path: '/server'},
                 {title: pageTitle},
             ]}
         >

@@ -14,15 +14,17 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
+@RequestMapping("server/")
 internal class ServerController(private val serverService: ServerService) {
 
     val log = LoggerFactory.getLogger(this.javaClass.name)
 
-    @GetMapping("/servers/")
+    @GetMapping
     fun listServers(): ResponseEntity<List<ServerTO>> {
         return ResponseEntity(serverService.list().map { it.toTO() }.toList(), HttpStatus.OK)
     }
@@ -35,7 +37,7 @@ internal class ServerController(private val serverService: ServerService) {
         return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 
-    @PostMapping("/servers/")
+    @PostMapping
     fun createServer(@RequestBody serverFormTO: ServerFormTO): ResponseEntity<ServerTO> {
         try {
             serverService.save(Server(name = serverFormTO.name, serverUrl = serverFormTO.serverUrl)).let { server ->
@@ -51,10 +53,10 @@ internal class ServerController(private val serverService: ServerService) {
     fun updateServer(@PathVariable id: UUID, @RequestBody serverFormTO: ServerFormTO): ResponseEntity<ServerTO> =
         serverService.update(id, serverFormTO).toTO().let { ResponseEntity(it, HttpStatus.OK) }
 
-    @DeleteMapping("/servers/")
-    fun deleteServer(serverId: UUID): ResponseEntity<*> {
+    @DeleteMapping("{id}")
+    fun deleteServer(@PathVariable id: UUID): ResponseEntity<*> {
         try {
-            serverService.delete(serverId)
+            serverService.delete(id)
             return ResponseEntity("Server deleted successfully.", HttpStatus.OK)
         } catch (e: Exception) {
             return ResponseEntity("Server could not be deleted", HttpStatus.CONFLICT)

@@ -1,7 +1,6 @@
 package de.maggiwuerze.xdccwebloader.irc
 
 import de.maggiwuerze.xdccwebloader.events.EventPublisher
-import de.maggiwuerze.xdccwebloader.model.download.Download
 import de.maggiwuerze.xdccwebloader.model.download.DownloadState
 import de.maggiwuerze.xdccwebloader.model.entity.Bot
 import de.maggiwuerze.xdccwebloader.service.DownloadService
@@ -34,17 +33,19 @@ class IrcEventListener(val eventPublisher: EventPublisher, val downloadService: 
     }
 
     override fun onConnect(event: ConnectEvent) {
-        val bot: IrcBot = event.getBot()
-        val download: Download = downloadService.getById(bot.downloadId)
-        val targetBot: Bot = download.bot
-        val message: String? = java.lang.String.format(targetBot.pattern, download.fileRefId)
-        bot.sendIRC().message(targetBot.name, message)
+        (event.getBot() as IrcBot).let { bot ->
+            downloadService.getOrThrow(bot.downloadId).let { download ->
+                val targetBot: Bot = download.bot
+                val message: String? = java.lang.String.format(targetBot.pattern, download.fileRefId)
+                bot.sendIRC().message(targetBot.name, message)
+            }
+        }
     }
 
     override fun onConnectAttemptFailed(event: ConnectAttemptFailedEvent) {
         //TODO: handle errors better... if possible
         if (event.getRemainingAttempts() <= 0) {
-            downloadService.getById((event.getBot() as IrcBot).downloadId).let { download ->
+            downloadService.getOrThrow((event.getBot() as IrcBot).downloadId).let { download ->
                 download.status = DownloadState.ERROR
                 download.statusMessage = event.connectExceptions.get<Serializable, Exception>(0)?.localizedMessage
                     ?: "Couldn't determine cause"
@@ -66,51 +67,55 @@ class IrcEventListener(val eventPublisher: EventPublisher, val downloadService: 
     override fun onIncomingFileTransfer(event: IncomingFileTransferEvent) {
         super.onIncomingFileTransfer(event)
         val bot: IrcBot = event.getBot()
-        val download: Download = downloadService.getById(bot.downloadId)
-        download.filename = event.getSafeFilename()
-        //		String path = DL_PATH + File.separatorChar + event.getSafeFilename();
-        val path: java.nio.file.Path =
-            java.nio.file.Paths.get(IrcEventListener.Companion.DL_PATH + java.io.File.separatorChar + event.getSafeFilename())
+        downloadService.getOrThrow(bot.downloadId).let { download ->
 
-        //Receive the file from the user
-        // If the file exists, resume from a position
-//		File downloadFile = new File(path);
-        val fileTransfer: ReceiveFileTransfer = if (path.toFile().exists()) {
-            // Use BasicFileAttributes to find position to resume
-            event.acceptResume(
-                path.toFile(),
-                java.nio.file.Files.readAttributes(path, BasicFileAttributes::class.java).size()
-            )
-        } else {
-            event.accept(path.toFile())
-        }
+            download.filename = event.getSafeFilename()
+            //		String path = DL_PATH + File.separatorChar + event.getSafeFilename();
+            val path: java.nio.file.Path =
+                java.nio.file.Paths.get(IrcEventListener.Companion.DL_PATH + java.io.File.separatorChar + event.getSafeFilename())
 
-        download.progressWatcher?.fileTransfer = fileTransfer
-        val taskExecutor: TaskExecutor = SimpleAsyncTaskExecutor(event.getBot<PircBotX>().getNick() + " transfer")
-
-        taskExecutor.execute {
-            if (fileTransfer.getFileTransferStatus().getDccState() !== DccState.CONNECTING) {
-                fileTransfer.transfer()
+            //Receive the file from the user
+            // If the file exists, resume from a position
+            //		File downloadFile = new File(path);
+            val fileTransfer: ReceiveFileTransfer = if (path.toFile().exists()) {
+                // Use BasicFileAttributes to find position to resume
+                event.acceptResume(
+                    path.toFile(),
+                    java.nio.file.Files.readAttributes(path, BasicFileAttributes::class.java).size()
+                )
+            } else {
+                event.accept(path.toFile())
             }
-        }
 
-        download.progressWatcher?.run()
+            download.progressWatcher?.fileTransfer = fileTransfer
+            val taskExecutor: TaskExecutor = SimpleAsyncTaskExecutor(event.getBot<PircBotX>().getNick() + " transfer")
+
+            taskExecutor.execute {
+                if (fileTransfer.getFileTransferStatus().getDccState() !== DccState.CONNECTING) {
+                    fileTransfer.transfer()
+                }
+            }
+
+            download.progressWatcher?.run()
+        }
     }
 
     override fun onFileTransferComplete(event: FileTransferCompleteEvent) {
-        val bot: IrcBot = event.getBot()
-        val download: Download = downloadService.getById(bot.downloadId)
-
-        if (event.getTransferStatus().getDccState().equals(DccState.ERROR)) {
-            download.statusMessage = event.getTransferStatus().getException().localizedMessage
-            eventPublisher.updateDownloadState(DownloadState.ERROR, download)
-            log.error(java.lang.String.format("error on filetransfer for fileID %s", download.fileRefId))
-            log.error(event.getTransferStatus().getException().toString())
-        } else {
-            //TODO: should be in FINALIZING when entering here. will have to possibly do stuff set up in configuration before setting to done
-            eventPublisher.updateDownloadState(DownloadState.DONE, download)
-            log.info(java.lang.String.format("filetransfer completed for %s", download.fileRefId))
+        (event.getBot() as? IrcBot)?.let { bot ->
+            downloadService.getOrThrow(bot.downloadId).let { download ->
+                if (event.getTransferStatus().getDccState().equals(DccState.ERROR)) {
+                    download.statusMessage = event.getTransferStatus().getException().localizedMessage
+                    eventPublisher.updateDownloadState(DownloadState.ERROR, download)
+                    log.error(java.lang.String.format("error on filetransfer for fileID %s", download.fileRefId))
+                    log.error(event.getTransferStatus().getException().toString())
+                } else {
+                    //TODO: should be in FINALIZING when entering here. will have to possibly do stuff set up in configuration before setting to done
+                    eventPublisher.updateDownloadState(DownloadState.DONE, download)
+                    log.info(java.lang.String.format("filetransfer completed for %s", download.fileRefId))
+                }
+            }
         }
+
     }
 
     override fun onListenerException(event: ListenerExceptionEvent) {

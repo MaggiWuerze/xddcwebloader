@@ -6,11 +6,13 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
+@RequestMapping("/")
 class MainController(private val userSettingsService: UserSettingsService) {
 
-    @GetMapping("/")
+    @GetMapping
     fun index(): String = "index"
 
     @get:GetMapping("/initialized")
@@ -20,7 +22,7 @@ class MainController(private val userSettingsService: UserSettingsService) {
             return ResponseEntity<Boolean>(userSettingsService.getUserSettings().initialized, HttpStatus.OK)
         }
 
-    @PostMapping("/initialized/")
+    @PostMapping("initialized/")
     fun setInitialized(): ResponseEntity<*> {
         userSettingsService.setInitialized()
 

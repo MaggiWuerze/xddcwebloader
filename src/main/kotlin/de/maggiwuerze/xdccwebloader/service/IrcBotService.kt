@@ -18,7 +18,7 @@ class IrcBotService(private val ircEventListener: IrcEventListener) {
     }
 
     fun getNewBot(download: Download): IrcBot {
-        val username = "${Random.nextInt(10)}${randomString()}"
+        val username = "${randomString()}_${Random.nextInt(10)}"
         val targetBot: Bot = download.bot
 
         val configuration: Configuration = Configuration.Builder()

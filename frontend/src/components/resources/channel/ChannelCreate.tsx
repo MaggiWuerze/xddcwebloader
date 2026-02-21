@@ -76,15 +76,15 @@ export default function ChannelCreate() {
 
         try {
             await repository.create(formValues as Omit<ChannelTO, 'id'>);
-            notifications.show('Employee created successfully.', {
+            notifications.show('Channel created successfully.', {
                 severity: 'success',
                 autoHideDuration: 3000,
             });
 
-            navigate('/employees');
+            navigate('/bot');
         } catch (createError) {
             notifications.show(
-                `Failed to create employee. Reason: ${(createError as Error).message}`,
+                `Failed to create Channel. Reason: ${(createError as Error).message}`,
                 {
                     severity: 'error',
                     autoHideDuration: 3000,
@@ -96,8 +96,8 @@ export default function ChannelCreate() {
 
     return (
         <PageContainer
-            title="New Employee"
-            breadcrumbs={[{title: 'Employees', path: '/employees'}, {title: 'New'}]}
+            title="New Channel"
+            breadcrumbs={[{title: 'Channel', path: '/channel'}, {title: 'New'}]}
         >
             <ChannelForm
                 formState={formState}

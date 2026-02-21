@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("channels/")
+@RequestMapping("channel/")
 class ChannelController(val channelService: ChannelService) {
 
     /**

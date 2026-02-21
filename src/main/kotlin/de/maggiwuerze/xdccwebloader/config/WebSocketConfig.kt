@@ -10,8 +10,9 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 class WebSocketConfig : WebSocketMessageBrokerConfigurer {
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
-        registry.addEndpoint("/downloads").withSockJS()
-        registry.addEndpoint("/bots").withSockJS()
+        registry.addEndpoint("/ws/downloads")
+            .setAllowedOriginPatterns("http://localhost:3000")
+            .withSockJS()
     }
 
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {

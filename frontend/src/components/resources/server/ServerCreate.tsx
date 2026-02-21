@@ -1,112 +1,59 @@
 import * as React from 'react';
-import {useNavigate} from 'react-router';
-import useNotifications from '../../../hooks/useNotifications/useNotifications';
-import ServerForm, {type FormFieldValue, type ServerFormState,} from './ServerForm';
-import PageContainer from '../../pagecontainer/PageContainer';
-import {ServerRepository as repository} from '../../../data/serverRepository';
-import {ServerTO} from "../../../api/rest";
+import {ServerRepository} from '../../../data/serverRepository';
+import {ServerFormTO, ServerTO} from "../../../api/rest";
+import {CrudForm} from "../base/CrudFormHandler";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import FormGroup from "@mui/material/FormGroup";
+import Box from '@mui/material/Box';
 
-const INITIAL_FORM_VALUES: Partial<ServerFormState['values']> = {
-    name: '',
-    serverUrl: '',
-};
 
 export default function ServerCreate() {
-    const navigate = useNavigate();
-
-    const notifications = useNotifications();
-
-    const [formState, setFormState] = React.useState<ServerFormState>(() => ({
-        values: INITIAL_FORM_VALUES,
-        errors: {},
-    }));
-    const formValues = formState.values;
-    const formErrors = formState.errors;
-
-    const setFormValues = React.useCallback(
-        (newFormValues: Partial<ServerFormState['values']>) => {
-            setFormState((previousState) => ({
-                ...previousState,
-                values: newFormValues,
-            }));
-        },
-        [],
-    );
-
-    const setFormErrors = React.useCallback(
-        (newFormErrors: Partial<ServerFormState['errors']>) => {
-            setFormState((previousState) => ({
-                ...previousState,
-                errors: newFormErrors,
-            }));
-        },
-        [],
-    );
-
-    const handleFormFieldChange = React.useCallback(
-        (name: keyof ServerFormState['values'], value: FormFieldValue) => {
-            const validateField = async (values: Partial<ServerFormState['values']>) => {
-                const {issues} = repository.validate(values);
-                setFormErrors({
-                    ...formErrors,
-                    [name]: issues?.find((issue) => issue.path?.[0] === name)?.message,
-                });
-            };
-
-            const newFormValues = {...formValues, [name]: value};
-
-            setFormValues(newFormValues);
-            validateField(newFormValues);
-        },
-        [formValues, formErrors, setFormErrors, setFormValues],
-    );
-
-    const handleFormReset = React.useCallback(() => {
-        setFormValues(INITIAL_FORM_VALUES);
-    }, [setFormValues]);
-
-    const handleFormSubmit = React.useCallback(async () => {
-        const {issues} = repository.validate(formValues);
-        if (issues && issues.length > 0) {
-            setFormErrors(
-                Object.fromEntries(issues.map((issue) => [issue.path?.[0], issue.message])),
-            );
-            return;
-        }
-        setFormErrors({});
-
-        try {
-            await repository.create(formValues as Omit<ServerTO, 'id'>);
-            notifications.show('Employee created successfully.', {
-                severity: 'success',
-                autoHideDuration: 3000,
-            });
-
-            navigate('/employees');
-        } catch (createError) {
-            notifications.show(
-                `Failed to create employee. Reason: ${(createError as Error).message}`,
-                {
-                    severity: 'error',
-                    autoHideDuration: 3000,
-                },
-            );
-            throw createError;
-        }
-    }, [formValues, navigate, notifications, setFormErrors]);
-
     return (
-        <PageContainer
-            title="New Server"
-            breadcrumbs={[{title: 'Servers', path: '/server'}, {title: 'New'}]}
-        >
-            <ServerForm
-                formState={formState}
-                onFieldChange={handleFormFieldChange}
-                onSubmit={handleFormSubmit}
-                onReset={handleFormReset}
-                submitButtonLabel="Create"
-            />
-        </PageContainer>
+        <CrudForm<ServerFormTO, ServerTO>
+            resource="server"
+            mode="create"
+            idParam="serverId"
+            repository={ServerRepository}
+            submitLabel="Create"
+            initialValues={{name: '', serverUrl: ''}}
+            renderFields={({values, errors, onFieldChange}) => (
+                <Box
+                    component="form"
+                    noValidate
+                    autoComplete="off"
+                    sx={{width: '100%'}}
+                >
+                    <FormGroup>
+                        <Grid container spacing={2} sx={{mb: 2, width: '100%'}}>
+                            <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
+                                <TextField
+                                    type="text"
+                                    value={values.name ?? ''}
+                                    onChange={(e) => onFieldChange('name', e.target.value)}
+                                    name="name"
+                                    label="Name"
+                                    error={!!errors.name}
+                                    helperText={errors.name ?? ' '}
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid size={{xs: 12, sm: 6}} sx={{display: 'flex'}}>
+                                <TextField
+                                    type="text"
+                                    value={values.serverUrl ?? ''}
+                                    onChange={(e) => onFieldChange('serverUrl', e.target.value)}
+                                    name="serverUrl"
+                                    label="Server URL"
+                                    error={!!errors.serverUrl}
+                                    helperText={errors.serverUrl ?? ' '}
+                                    fullWidth
+                                />
+                            </Grid>
+                        </Grid>
+                    </FormGroup>
+                </Box>
+            )}
+        />
     );
 }

@@ -26,6 +26,22 @@ export const DownloadRepository = {
         return {issues};
     },
 
+    async cancel(id: string) {
+        return await api.removeDownload(id);
+    },
+
+    async get(id: string): Promise<DownloadTO> {
+        return await api.getDownload(id).then((res) => res.data);
+    },
+
+    async listAll(): Promise<DownloadTO[]> {
+        return await this.list({
+            paginationModel: {page: 0, pageSize: 1000},
+            sortModel: [],
+            filterModel: {items: []},
+        }).then(server => server.items);
+    },
+
     async list({
                    paginationModel,
                    filterModel,

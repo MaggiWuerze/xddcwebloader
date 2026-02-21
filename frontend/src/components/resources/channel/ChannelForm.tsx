@@ -17,7 +17,7 @@ export interface ChannelFormState {
 
 export type FormFieldValue = string | string[] | number | boolean | File | null;
 
-export interface EmployeeFormProps {
+export interface ChannelFormProps {
     formState: ChannelFormState;
     onFieldChange: (
         name: keyof ChannelFormState['values'],
@@ -29,7 +29,7 @@ export interface EmployeeFormProps {
     backButtonPath?: string;
 }
 
-export default function ChannelForm(props: EmployeeFormProps) {
+export default function ChannelForm(props: ChannelFormProps) {
     const {
         formState,
         onFieldChange,
@@ -104,7 +104,7 @@ export default function ChannelForm(props: EmployeeFormProps) {
     }, [formValues, onReset]);
 
     const handleBack = React.useCallback(() => {
-        navigate(backButtonPath ?? '/employees');
+        navigate(backButtonPath ?? '/channel');
     }, [navigate, backButtonPath]);
 
     return (

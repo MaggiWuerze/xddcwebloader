@@ -78,7 +78,7 @@ export default function DownloadCreate() {
 
         try {
             await repository.create(formValues as Omit<DownloadFormTO, 'id'>);
-            notifications.show('Employee created successfully.', {
+            notifications.show('Download created successfully.', {
                 severity: 'success',
                 autoHideDuration: 3000,
             });

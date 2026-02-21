@@ -27,8 +27,12 @@ class DownloadService(val botService: BotService, val eventService: EventService
         downloads[download.id] = download
     }
 
-    fun getById(id: UUID): Download {
-        return downloads[id] ?: throw IllegalArgumentException("Download with id $id does not exist.")
+    fun getOrThrow(id: UUID): Download {
+        return downloads[id] ?: throw RuntimeException("Download not found")
+    }
+
+    fun getById(id: UUID): Download? {
+        return downloads[id]
     }
 
     fun remove(id: UUID) {

@@ -10,16 +10,18 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
+@RequestMapping("/")
 class UserController(val userSettingsService: UserSettingsService) {
 
-    @GetMapping(value = ["/usersettings"])
+    @GetMapping(value = ["usersettings"])
     fun getSetting(): ResponseEntity<UserSettingsTO> =
         ResponseEntity(userSettingsService.getUserSettings().toTO(), HttpStatus.OK)
 
 
-    @PostMapping(value = ["/usersettings"])
+    @PostMapping(value = ["usersettings"])
     fun updateSetting(
         @RequestBody userSettingsFormTO: UserSettingsFormTO
     ): ResponseEntity<*> {

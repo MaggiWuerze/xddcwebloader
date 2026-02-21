@@ -50,11 +50,11 @@ export default function BotShow() {
         loadData();
     }, [loadData]);
 
-    const handleEmployeeEdit = React.useCallback(() => {
+    const handleBotEdit = React.useCallback(() => {
         navigate(`/bot/${botId}/edit`);
     }, [navigate, botId]);
 
-    const handleEmployeeDelete = React.useCallback(async () => {
+    const handleBotDelete = React.useCallback(async () => {
         if (!bot) {
             return;
         }
@@ -62,7 +62,7 @@ export default function BotShow() {
         const confirmed = await dialogs.confirm(
             `Do you wish to delete ${bot.name}?`,
             {
-                title: `Delete employee?`,
+                title: `Delete Bot?`,
                 severity: 'error',
                 okText: 'Delete',
                 cancelText: 'Cancel',
@@ -77,7 +77,7 @@ export default function BotShow() {
 
                 navigate('/bot');
 
-                notifications.show('Employee deleted successfully.', {
+                notifications.show('Bot deleted successfully.', {
                     severity: 'success',
                     autoHideDuration: 3000,
                 });
@@ -165,7 +165,7 @@ export default function BotShow() {
                         <Button
                             variant="contained"
                             startIcon={<EditIcon/>}
-                            onClick={handleEmployeeEdit}
+                            onClick={handleBotEdit}
                         >
                             Edit
                         </Button>
@@ -173,7 +173,7 @@ export default function BotShow() {
                             variant="contained"
                             color="error"
                             startIcon={<DeleteIcon/>}
-                            onClick={handleEmployeeDelete}
+                            onClick={handleBotDelete}
                         >
                             Delete
                         </Button>
@@ -186,8 +186,8 @@ export default function BotShow() {
         error,
         bot,
         handleBack,
-        handleEmployeeEdit,
-        handleEmployeeDelete,
+        handleBotEdit,
+        handleBotDelete,
     ]);
 
     const pageTitle = `Bot ${botId}`;

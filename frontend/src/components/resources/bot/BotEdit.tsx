@@ -9,14 +9,14 @@ import BotForm, {type BotFormState, type FormFieldValue,} from './BotForm';
 import PageContainer from '../../pagecontainer/PageContainer';
 import {BotTO} from "../../../api/rest";
 
-function EmployeeEditForm({
-                              initialValues,
-                              onSubmit,
-                          }: {
+function BotEditForm({
+                         initialValues,
+                         onSubmit,
+                     }: {
     initialValues: Partial<BotFormState['values']>;
     onSubmit: (formValues: Partial<BotFormState['values']>) => Promise<void>;
 }) {
-    const {employeeId} = useParams();
+    const {botId} = useParams();
     const navigate = useNavigate();
 
     const notifications = useNotifications();
@@ -87,7 +87,7 @@ function EmployeeEditForm({
 
         try {
             await onSubmit(formValues);
-            notifications.show('Employee edited successfully.', {
+            notifications.show('Bot edited successfully.', {
                 severity: 'success',
                 autoHideDuration: 3000,
             });
@@ -95,7 +95,7 @@ function EmployeeEditForm({
             navigate('/bot');
         } catch (editError) {
             notifications.show(
-                `Failed to edit employee. Reason: ${(editError as Error).message}`,
+                `Failed to edit Bot. Reason: ${(editError as Error).message}`,
                 {
                     severity: 'error',
                     autoHideDuration: 3000,
@@ -112,7 +112,7 @@ function EmployeeEditForm({
             onSubmit={handleFormSubmit}
             onReset={handleFormReset}
             submitButtonLabel="Save"
-            backButtonPath={`/bot/${employeeId}`}
+            backButtonPath={`/bot/${botId}`}
         />
     );
 }
@@ -120,7 +120,7 @@ function EmployeeEditForm({
 export default function BotEdit() {
     const {botId} = useParams();
 
-    const [employee, setEmployee] = React.useState<BotTO | null>(null);
+    const [bot, setBot] = React.useState<BotTO | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
     const [error, setError] = React.useState<Error | null>(null);
 
@@ -132,7 +132,7 @@ export default function BotEdit() {
         try {
             const showData = await repository.get(botId);
 
-            setEmployee(showData);
+            setBot(showData);
         } catch (showDataError) {
             setError(showDataError as Error);
         }
@@ -147,7 +147,7 @@ export default function BotEdit() {
         async (formValues: Partial<BotFormState['values']>) => {
             if (!botId) return;
             const updatedData = await repository.update(botId, formValues);
-            setEmployee(updatedData);
+            setBot(updatedData);
         },
         [botId],
     );
@@ -178,17 +178,17 @@ export default function BotEdit() {
             );
         }
 
-        return employee ? (
-            <EmployeeEditForm initialValues={employee} onSubmit={handleSubmit}/>
+        return bot ? (
+            <BotEditForm initialValues={bot} onSubmit={handleSubmit}/>
         ) : null;
-    }, [isLoading, error, employee, handleSubmit]);
+    }, [isLoading, error, bot, handleSubmit]);
 
     return (
         <PageContainer
-            title={`Edit Employee ${botId}`}
+            title={`Edit ${bot?.name}`}
             breadcrumbs={[
-                {title: 'Employees', path: '/bot'},
-                {title: `Employee ${botId}`, path: `/bot/${botId}`},
+                {title: 'Bots', path: '/bot'},
+                {title: `${bot?.name}`, path: `/bot/${botId}`},
                 {title: 'Edit'},
             ]}
         >

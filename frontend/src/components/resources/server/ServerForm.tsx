@@ -104,7 +104,7 @@ export default function ServerForm(props: EmployeeFormProps) {
     }, [formValues, onReset]);
 
     const handleBack = React.useCallback(() => {
-        navigate(backButtonPath ?? '/employees');
+        navigate(backButtonPath ?? '/server');
     }, [navigate, backButtonPath]);
 
     return (

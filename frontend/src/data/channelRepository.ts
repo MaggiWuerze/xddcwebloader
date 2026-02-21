@@ -1,6 +1,6 @@
 import type {GridFilterModel, GridPaginationModel, GridSortModel} from '@mui/x-data-grid';
 import type {BaseRepository} from './base/baseRepository';
-import {ChannelControllerApi, type ChannelForm, type ChannelTO} from '../api/rest';
+import {ChannelControllerApi, type ChannelFormTO, type ChannelTO} from '../api/rest';
 
 
 const api = new ChannelControllerApi();
@@ -12,7 +12,7 @@ type ValidationResult = { issues: { message: string; path: (keyof ChannelTO)[] }
  * - F = TargetBotForm (write model)
  * - ID = string (UUID)
  */
-export const ChannelRepository: BaseRepository<ChannelTO, ChannelForm> = {
+export const ChannelRepository: BaseRepository<ChannelTO, ChannelFormTO> = {
 
     validate(channel: Partial<ChannelTO>): ValidationResult {
         let issues: ValidationResult['issues'] = [];
@@ -112,11 +112,11 @@ export const ChannelRepository: BaseRepository<ChannelTO, ChannelForm> = {
         return await api.getChannel(id).then((res) => res.data);
     },
 
-    async create(data: Omit<ChannelForm, 'id'>): Promise<ChannelTO> {
+    async create(data: Omit<ChannelFormTO, 'id'>): Promise<ChannelTO> {
         return await api.createChannel({...data}).then((res) => res.data);
     },
 
-    async update(_id: string, _data: Partial<Omit<ChannelForm, 'id'>>): Promise<ChannelTO> {
+    async update(_id: string, _data: Partial<Omit<ChannelFormTO, 'id'>>): Promise<ChannelTO> {
         return await api.updateChannel(_id, _data).then((res) => res.data);
     },
 

@@ -27,13 +27,13 @@ class DatabaseLoader(
         val userSettings: UserSettings = userSettingsRepository.save(UserSettings())
         this.settingsRepository.save(userSettings)
 
-        val server: Server = serverRepository.save(Server(name = "Rizon", serverUrl = "irc.rizon.net"))
-        val channel: Channel = channelRepository.save(Channel(name = "#subsplease"))
+        val server: Server = serverRepository.save(Server(name = "Abjects", serverUrl = "irc.abjects.net"))
+        val channel: Channel = channelRepository.save(Channel(name = "#beast-xdcc"))
         this.ircUserRepository.save(
             Bot(
                 server = server,
                 channel = channel,
-                name = "Ginpachi-Sensei",
+                name = "BEAST-X-CHEDDAR",
                 pattern = "xdcc send #%s",
                 maxParallelDownloads = 3L
             )
@@ -42,7 +42,7 @@ class DatabaseLoader(
             Bot(
                 server = server,
                 channel = channel,
-                name = "CR-ARUTHA-IPv6|NEW",
+                name = "BEAST-X-REDRUNTZ",
                 pattern = "xdcc send #%s",
                 maxParallelDownloads = 3L
             )
