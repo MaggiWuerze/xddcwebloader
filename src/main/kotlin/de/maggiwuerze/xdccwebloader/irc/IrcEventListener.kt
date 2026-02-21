@@ -33,10 +33,12 @@ class IrcEventListener(val eventPublisher: EventPublisher, val downloadService: 
     }
 
     override fun onConnect(event: ConnectEvent) {
+        super.onConnect(event)
         (event.getBot() as IrcBot).let { bot ->
             downloadService.getOrThrow(bot.downloadId).let { download ->
                 val targetBot: Bot = download.bot
                 val message: String? = java.lang.String.format(targetBot.pattern, download.fileRefId)
+                bot.sendIRC().joinChannel(targetBot.channel.name)
                 bot.sendIRC().message(targetBot.name, message)
             }
         }

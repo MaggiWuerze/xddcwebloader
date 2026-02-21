@@ -86,7 +86,7 @@ class FileTransferProgressWatcher(
             val averageSpeed: String = FilesizeFormatter.createAutoReadableString(
                 fileTransfer!!.getFileTransferStatus().getAverageBytesPerSecond()
             )
-            download.averageSpeed = averageSpeed
+            download.averageSpeed = "${averageSpeed}/s"
             applicationEventPublisher.publishEvent(DownloadUpdateEvent(this, download.id))
         }
     }

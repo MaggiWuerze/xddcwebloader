@@ -23,8 +23,8 @@ class IrcBotService(private val ircEventListener: IrcEventListener) {
 
         val configuration: Configuration = Configuration.Builder()
             .setName(username) //Set the nick of the bot. CHANGE IN YOUR CODE
+            .setOnJoinWhoEnabled(false)
             .addServer(targetBot.server.serverUrl) //Join the freenode network
-            .addAutoJoinChannel(targetBot.channel.name) //Join the official #pircbotx channel
             .setAutoReconnect(true)
             .setAutoReconnectAttempts(5)
             .setAutoNickChange(true) //Automatically change nick when the current one is in use
@@ -32,10 +32,11 @@ class IrcBotService(private val ircEventListener: IrcEventListener) {
             .setDccPublicAddress(IpHelper.publicIp)
             .buildConfiguration()
 
-        val bot: IrcBot = IrcBot(configuration, download.id)
-        activeBots[targetBot] = bot
+        IrcBot(configuration, download.id).let { bot ->
+            activeBots[targetBot] = bot
+            return bot
+        }
 
-        return bot
     }
 
     val charPool: List<Char> = ('a'..'z') + ('A'..'Z')

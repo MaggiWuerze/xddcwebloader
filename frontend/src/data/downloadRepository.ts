@@ -4,6 +4,15 @@ import {DownloadControllerApi, DownloadFormTO, DownloadTO} from '../api/rest';
 const api = new DownloadControllerApi();
 
 type ValidationResult = { issues: { message: string; path: (keyof DownloadFormTO)[] }[] };
+
+
+export enum ListTypes {
+    ALL,
+    ACTIVE,
+    FINISHED,
+    CANCELLED
+}
+
 /**
  * Bot repository:
  * - T = BotTO (read model)
@@ -39,7 +48,7 @@ export const DownloadRepository = {
             paginationModel: {page: 0, pageSize: 1000},
             sortModel: [],
             filterModel: {items: []},
-        }).then(server => server.items);
+        }, ListTypes.ALL).then(server => server.items);
     },
 
     async list({
@@ -50,10 +59,26 @@ export const DownloadRepository = {
         paginationModel: GridPaginationModel;
         sortModel: GridSortModel;
         filterModel: GridFilterModel;
-    }): Promise<{ items: DownloadTO[]; itemCount: number }> {
-        const bots = await api.listDownloads().then((rs) => rs.data);
+    }, listType: ListTypes): Promise<{ items: DownloadTO[]; itemCount: number }> {
+        let botData;
 
-        let filteredBots = [...bots];
+        switch (listType) {
+            case ListTypes.ALL:
+                botData = await api.listDownloads().then((rs) => rs.data);
+                break;
+            case ListTypes.ACTIVE:
+                botData = await api.getActiveDownloads(true).then((rs) => rs.data);
+                break;
+            case ListTypes.FINISHED:
+                botData = await api.getActiveDownloads(false).then((rs) => rs.data);
+                break;
+            case ListTypes.CANCELLED:
+                botData = await api.failedDownloads().then((rs) => rs.data);
+                break;
+
+        }
+
+        let filteredBots = [...botData];
 
         // Apply filters (same style as bot.ts)
         if (filterModel?.items?.length) {

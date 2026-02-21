@@ -66,8 +66,8 @@ class DownloadController(
     @DeleteMapping("{id}")
     fun removeDownload(@PathVariable id: UUID): ResponseEntity<*> {
         return downloadService.getById(id)?.let { download ->
-            download.status = DownloadState.STOPPED
             download.progressWatcher?.cancel(true)
+            download.status = DownloadState.STOPPED
             eventService.publishEvent(DELETED_DOWNLOAD, download)
 
             ResponseEntity("Download marked for deletion", HttpStatus.OK)

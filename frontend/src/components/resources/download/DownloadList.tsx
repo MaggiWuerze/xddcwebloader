@@ -13,7 +13,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import {DownloadState} from "../../../data/DownloadState";
-import {DownloadRepository} from "../../../data/downloadRepository";
+import {DownloadRepository, ListTypes} from "../../../data/downloadRepository";
 import Box from "@mui/material/Box";
 import {styled} from '@mui/material/styles';
 import {linearProgressClasses} from "@mui/material";
@@ -120,20 +120,20 @@ export default function DownloadList(state: DownloadState) {
     function determineLoadFunction(state: DownloadState): DownloadLoadFn {
         switch (state) {
             case DownloadState.all:
-                return (params) => DownloadRepository.list(params);
+                return (params) => DownloadRepository.list(params, ListTypes.ALL);
 
             case DownloadState.active:
                 // If you have a dedicated endpoint, call it here; otherwise reuse list() for now.
-                return (params) => DownloadRepository.list(params);
+                return (params) => DownloadRepository.list(params, ListTypes.ACTIVE);
 
             case DownloadState.finished:
-                return (params) => DownloadRepository.list(params);
+                return (params) => DownloadRepository.list(params, ListTypes.FINISHED);
 
             case DownloadState.cancelled:
-                return (params) => DownloadRepository.list(params);
+                return (params) => DownloadRepository.list(params, ListTypes.CANCELLED);
 
             default:
-                return (params) => DownloadRepository.list(params);
+                return (params) => DownloadRepository.list(params, ListTypes.ALL);
         }
     }
 

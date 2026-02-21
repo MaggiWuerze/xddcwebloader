@@ -108,7 +108,7 @@ export default function DownloadForm(props: EmployeeFormProps) {
                             onChange={handleTextFieldChange}
                             name="fileRefId"
                             label="FileRefId"
-                            placeholder="#1234"
+                            placeholder="1234"
                             error={!!formErrors.fileRefId}
                             helperText={formErrors.fileRefId ?? ' '}
                             fullWidth
