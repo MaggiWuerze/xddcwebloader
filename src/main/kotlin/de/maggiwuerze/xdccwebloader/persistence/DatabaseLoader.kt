@@ -1,9 +1,9 @@
 package de.maggiwuerze.xdccwebloader.persistence
 
-import de.maggiwuerze.xdccwebloader.model.entity.Bot
-import de.maggiwuerze.xdccwebloader.model.entity.Channel
-import de.maggiwuerze.xdccwebloader.model.entity.Server
-import de.maggiwuerze.xdccwebloader.model.entity.UserSettings
+import de.maggiwuerze.xdccwebloader.persistence.entity.Bot
+import de.maggiwuerze.xdccwebloader.persistence.entity.Channel
+import de.maggiwuerze.xdccwebloader.persistence.entity.Server
+import de.maggiwuerze.xdccwebloader.persistence.entity.UserSettings
 import jakarta.transaction.Transactional
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component

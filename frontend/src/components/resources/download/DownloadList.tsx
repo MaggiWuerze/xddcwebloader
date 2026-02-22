@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {GridActionsCellItem, GridColDef, GridEventListener, GridRenderCellParams} from '@mui/x-data-grid';
-import {useNavigate} from 'react-router';
+import {useLocation, useNavigate} from 'react-router';
 import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
 import useNotifications from '../../../hooks/useNotifications/useNotifications';
 import {BaseList, BaseListApi, BaseListLoadParams} from '../base/BaseList';
@@ -72,7 +72,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
     );
 }
 
-export default function DownloadList(state: DownloadState) {
+export default function DownloadList() {
     const navigate = useNavigate();
     const gridState = useUrlDataGridState(10);
 
@@ -81,6 +81,8 @@ export default function DownloadList(state: DownloadState) {
 
     const [isLoading, setIsLoading] = React.useState(true);
     const [error, setError] = React.useState<Error | null>(null);
+
+    const {pathname} = useLocation();
 
     const apiRef = React.useRef<BaseListApi<DownloadTO> | null>(null);
 
@@ -115,29 +117,33 @@ export default function DownloadList(state: DownloadState) {
         return () => sub.unsubscribe();
     }, []);
 
-    type DownloadLoadFn = (params: BaseListLoadParams) => Promise<{ items: DownloadTO[]; itemCount: number }>;
+    function loadData(params: BaseListLoadParams) {
 
-    function determineLoadFunction(state: DownloadState): DownloadLoadFn {
+        const segment = pathname.split("/")[2] ?? ""; // "active" | "finished" | "cancelled" | "new"
+        const state: DownloadState =
+            segment === "active" ? DownloadState.active :
+                segment === "finished" ? DownloadState.finished :
+                    segment === "cancelled" ? DownloadState.cancelled :
+                        DownloadState.all;
+
         switch (state) {
             case DownloadState.all:
-                return (params) => DownloadRepository.list(params, ListTypes.ALL);
+                return DownloadRepository.list(params, ListTypes.ALL);
 
             case DownloadState.active:
                 // If you have a dedicated endpoint, call it here; otherwise reuse list() for now.
-                return (params) => DownloadRepository.list(params, ListTypes.ACTIVE);
+                return DownloadRepository.list(params, ListTypes.ACTIVE);
 
             case DownloadState.finished:
-                return (params) => DownloadRepository.list(params, ListTypes.FINISHED);
+                return DownloadRepository.list(params, ListTypes.FINISHED);
 
             case DownloadState.cancelled:
-                return (params) => DownloadRepository.list(params, ListTypes.CANCELLED);
+                return DownloadRepository.list(params, ListTypes.CANCELLED);
 
             default:
-                return (params) => DownloadRepository.list(params, ListTypes.ALL);
+                return DownloadRepository.list(params, ListTypes.ALL);
         }
     }
-
-    const load = React.useMemo(() => determineLoadFunction(state), [state]);
 
     const handleRowClick = React.useCallback<GridEventListener<'rowClick'>>(
         ({row}) => {
@@ -174,7 +180,7 @@ export default function DownloadList(state: DownloadState) {
                         severity: 'success',
                         autoHideDuration: 3000,
                     });
-                    await load({
+                    await loadData({
                         paginationModel: {page: 0, pageSize: 1000},
                         sortModel: [],
                         filterModel: {items: []},
@@ -191,7 +197,7 @@ export default function DownloadList(state: DownloadState) {
                 setIsLoading(false);
             }
         },
-        [dialogs, notifications, load],
+        [dialogs, notifications, loadData],
     );
 
     const columns = React.useMemo<GridColDef<DownloadTO>[]>(
@@ -292,7 +298,7 @@ export default function DownloadList(state: DownloadState) {
             title="Downloads"
             columns={columns}
             gridState={gridState}
-            load={load}
+            load={loadData}
             onRowClick={(row) => navigate(`/downloads/${row.id}`)}
             apiRef={apiRef}
             actions={({refresh, isLoading}) => (

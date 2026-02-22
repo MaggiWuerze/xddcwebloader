@@ -1,5 +1,6 @@
 package de.maggiwuerze.xdccwebloader.events
 
+import de.maggiwuerze.xdccwebloader.events.download.DownloadCancelEvent
 import de.maggiwuerze.xdccwebloader.events.download.DownloadCreationEvent
 import de.maggiwuerze.xdccwebloader.events.download.DownloadDeleteEvent
 import de.maggiwuerze.xdccwebloader.events.download.DownloadDoneEvent
@@ -29,7 +30,7 @@ class CustomSpringEventListener(
 
     @EventListener
     fun onDownloadCreationEvent(event: DownloadCreationEvent) {
-        downloadService.getOrThrow(event.payload).let { download ->
+        downloadService.getOrThrow(event.downloadId).let { download ->
             eventPublisher.updateDownloadState(DownloadState.PREPARING, download)
             //Create our bot with the configuration
             download.progressWatcher = progressWatcherFactory.getProgressWatcher(download.id)
@@ -54,16 +55,23 @@ class CustomSpringEventListener(
 
     @EventListener
     fun onDownloadUpdateEvent(event: DownloadUpdateEvent) {
-        downloadService.getOrThrow(event.payload).let { download ->
+        downloadService.getOrThrow(event.downloadId).let { download ->
             eventPublisher.sendWebsocketEvent(SocketEvents.UPDATED_DOWNLOAD, download)
         }
     }
 
     @EventListener
     fun onDownloadDeleteEvent(event: DownloadDeleteEvent) {
-        downloadService.getOrThrow(event.payload).let { download ->
+        downloadService.getOrThrow(event.downloadId).let { download ->
             eventPublisher.sendWebsocketEvent(SocketEvents.DELETED_DOWNLOAD, download)
-            downloadService.remove(event.payload)
+            downloadService.remove(event.downloadId)
+        }
+    }
+
+    @EventListener
+    fun onDownloadCancelEvent(event: DownloadCancelEvent) {
+        downloadService.getOrThrow(event.downloadId).let { download ->
+            eventPublisher.sendWebsocketEvent(SocketEvents.CANCELLED_DOWNLOAD, download)
         }
     }
 
@@ -71,7 +79,7 @@ class CustomSpringEventListener(
     fun onDownloadDoneEvent(event: DownloadDoneEvent) {
         //Do some stuff here before setting to done!
 
-        downloadService.getOrThrow(event.payload).let { download ->
+        downloadService.getOrThrow(event.downloadId).let { download ->
             download.status = DownloadState.DONE
             downloadService.update(download)
 

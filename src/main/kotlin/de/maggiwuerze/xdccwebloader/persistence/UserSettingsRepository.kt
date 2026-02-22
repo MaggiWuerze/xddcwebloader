@@ -1,6 +1,6 @@
 package de.maggiwuerze.xdccwebloader.persistence
 
-import de.maggiwuerze.xdccwebloader.model.entity.UserSettings
+import de.maggiwuerze.xdccwebloader.persistence.entity.UserSettings
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import java.util.*

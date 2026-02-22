@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**targetBotId** | **string** |  | [optional] [default to undefined]
-**fileRefId** | **string** |  | [optional] [default to undefined]
+**targetBotId** | **string** |  | [default to undefined]
+**fileRefId** | **string** |  | [default to undefined]
 
 ## Example
 

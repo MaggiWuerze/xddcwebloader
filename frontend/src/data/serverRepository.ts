@@ -1,6 +1,6 @@
 import type {GridFilterModel, GridPaginationModel, GridSortModel} from '@mui/x-data-grid';
 import type {BaseRepository} from './base/baseRepository';
-import {type BotForm, ServerControllerApi, ServerTO} from '../api/rest';
+import {ServerControllerApi, type ServerFormTO, ServerTO} from '../api/rest';
 
 
 const api = new ServerControllerApi();
@@ -12,7 +12,7 @@ type ValidationResult = { issues: { message: string; path: (keyof ServerTO)[] }[
  * - F = TargetBotForm (write model)
  * - ID = string (UUID)
  */
-export const ServerRepository: BaseRepository<ServerTO, BotForm> = {
+export const ServerRepository: BaseRepository<ServerTO, ServerFormTO> = {
 
     async listAll(): Promise<ServerTO[]> {
         return await this.list({
@@ -112,11 +112,11 @@ export const ServerRepository: BaseRepository<ServerTO, BotForm> = {
         return await api.getServer(id).then((res) => res.data);
     },
 
-    async create(data: Omit<BotForm, 'id'>): Promise<ServerTO> {
+    async create(data: Omit<ServerFormTO, 'id'>): Promise<ServerTO> {
         return await api.createServer({...data}).then((res) => res.data);
     },
 
-    async update(_id: string, _data: Partial<Omit<BotForm, 'id'>>): Promise<ServerTO> {
+    async update(_id: string, _data: Partial<Omit<ServerFormTO, 'id'>>): Promise<ServerTO> {
         return await api.updateServer(_id, _data).then((res) => res.data);
     },
 

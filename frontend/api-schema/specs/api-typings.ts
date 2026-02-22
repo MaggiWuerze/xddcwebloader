@@ -9,6 +9,11 @@ export interface paths {
     put: operations["updateServer"];
     delete: operations["deleteServer"];
   };
+  "/download/{id}": {
+    get: operations["getDownload"];
+    put: operations["cancelDownload"];
+    delete: operations["removeDownload"];
+  };
   "/channel/{id}": {
     get: operations["getChannel"];
     put: operations["updateChannel"];
@@ -23,6 +28,10 @@ export interface paths {
     get: operations["listServers"];
     post: operations["createServer"];
   };
+  "/search/": {
+    get: operations["listSearchProviders"];
+    post: operations["startDownloadFromSearchResult"];
+  };
   "/download/": {
     get: operations["listDownloads"];
     post: operations["addDownload"];
@@ -35,9 +44,8 @@ export interface paths {
     get: operations["listBots"];
     post: operations["createBot"];
   };
-  "/download/{id}": {
-    get: operations["getDownload"];
-    delete: operations["removeDownload"];
+  "/search/{providerName}/{query}": {
+    get: operations["searchWithProvider"];
   };
   "/download/failed": {
     get: operations["failedDownloads"];
@@ -50,8 +58,8 @@ export interface paths {
 export interface components {
   schemas: {
     ServerFormTO: {
-      name?: string;
-      serverUrl?: string;
+      name: string;
+      serverUrl: string;
     };
     ServerTO: {
       /** Format: uuid */
@@ -62,8 +70,8 @@ export interface components {
       creationDate: string;
     };
     ChannelFormTO: {
-      name?: string;
-      bla?: string;
+      name: string;
+      bla: string;
     };
     ChannelTO: {
       /** Format: uuid */
@@ -73,12 +81,12 @@ export interface components {
       date: string;
     };
     BotFormTO: {
-      name?: string;
-      pattern?: string;
+      name: string;
+      pattern: string;
       /** Format: uuid */
-      serverId?: string;
+      serverId: string;
       /** Format: uuid */
-      channelId?: string;
+      channelId: string;
       /** Format: int64 */
       maxParallelDownloads?: number;
     };
@@ -96,27 +104,31 @@ export interface components {
     };
     Channel: {
       /** Format: uuid */
-      id?: string;
-      name?: string;
+      id: string;
+      name: string;
       /** Format: date-time */
-      date?: string;
+      date: string;
     };
     Server: {
       /** Format: uuid */
-      id?: string;
-      name?: string;
-      serverUrl?: string;
+      id: string;
+      name: string;
+      serverUrl: string;
       /** Format: date-time */
-      creationDate?: string;
+      creationDate: string;
     };
-    DownloadFormTO: {
-      /** Format: uuid */
-      targetBotId?: string;
-      fileRefId?: string;
+    SearchResultItem: {
+      fileRefId: string;
+      fileName: string;
+      fileSize: string;
+      server: string;
+      channel: string;
+      bot: string;
     };
     /** @enum {string} */
     DownloadState:
       | "Connecting"
+      | "Waiting for a Response"
       | "Done"
       | "Error"
       | "Finalizing"
@@ -132,14 +144,22 @@ export interface components {
       id: string;
       filename: string;
       filesize: string;
-      status?: components["schemas"]["DownloadState"];
-      statusMessage?: string;
+      status: components["schemas"]["DownloadState"];
+      statusMessage: string;
       /** Format: double */
-      progress?: number;
-      averageSpeed?: string;
-      timeRemaining?: string;
+      progress: number;
+      averageSpeed: string;
+      timeRemaining: string;
     } & {
       bot: unknown;
+    };
+    DownloadFormTO: {
+      /** Format: uuid */
+      targetBotId: string;
+      fileRefId: string;
+    };
+    SearchEngineTO: {
+      name: string;
     };
   };
 }
@@ -181,6 +201,51 @@ export interface operations {
     };
   };
   deleteServer: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "*/*": { [key: string]: unknown };
+        };
+      };
+    };
+  };
+  getDownload: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["DownloadTO"];
+        };
+      };
+    };
+  };
+  cancelDownload: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "*/*": { [key: string]: unknown };
+        };
+      };
+    };
+  };
+  removeDownload: {
     parameters: {
       path: {
         id: string;
@@ -448,6 +513,31 @@ export interface operations {
       };
     };
   };
+  listSearchProviders: {
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["SearchEngineTO"][];
+        };
+      };
+    };
+  };
+  startDownloadFromSearchResult: {
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["DownloadTO"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["SearchResultItem"];
+      };
+    };
+  };
   listDownloads: {
     responses: {
       /** OK */
@@ -523,32 +613,18 @@ export interface operations {
       };
     };
   };
-  getDownload: {
+  searchWithProvider: {
     parameters: {
       path: {
-        id: string;
+        providerName: string;
+        query: string;
       };
     };
     responses: {
       /** OK */
       200: {
         content: {
-          "*/*": components["schemas"]["DownloadTO"];
-        };
-      };
-    };
-  };
-  removeDownload: {
-    parameters: {
-      path: {
-        id: string;
-      };
-    };
-    responses: {
-      /** OK */
-      200: {
-        content: {
-          "*/*": { [key: string]: unknown };
+          "*/*": components["schemas"]["SearchResultItem"][];
         };
       };
     };

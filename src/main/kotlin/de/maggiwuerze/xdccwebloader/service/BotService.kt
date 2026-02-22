@@ -1,10 +1,10 @@
 package de.maggiwuerze.xdccwebloader.service
 
-import de.maggiwuerze.xdccwebloader.model.entity.Bot
-import de.maggiwuerze.xdccwebloader.model.entity.Channel
-import de.maggiwuerze.xdccwebloader.model.entity.Server
 import de.maggiwuerze.xdccwebloader.model.forms.BotFormTO
 import de.maggiwuerze.xdccwebloader.persistence.TargetBotRepository
+import de.maggiwuerze.xdccwebloader.persistence.entity.Bot
+import de.maggiwuerze.xdccwebloader.persistence.entity.Channel
+import de.maggiwuerze.xdccwebloader.persistence.entity.Server
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.util.*
@@ -19,6 +19,10 @@ class BotService(
 
     fun list(): List<Bot> {
         return targetBotRepository.findAll()
+    }
+
+    fun save(bot: Bot): Bot {
+        return targetBotRepository.save(bot)
     }
 
     fun save(form: BotFormTO): Bot {
@@ -39,6 +43,10 @@ class BotService(
 
     fun findById(botId: UUID): Bot? {
         return targetBotRepository.findById(botId).orElse(null)
+    }
+
+    fun findByName(botName: String): Bot? {
+        return targetBotRepository.findByName(botName)
     }
 
     fun delete(id: UUID): HttpStatus {

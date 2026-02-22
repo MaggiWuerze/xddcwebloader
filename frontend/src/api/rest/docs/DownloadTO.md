@@ -8,11 +8,11 @@ Name | Type | Description | Notes
 **id** | **string** |  | [default to undefined]
 **filename** | **string** |  | [default to undefined]
 **filesize** | **string** |  | [default to undefined]
-**status** | [**DownloadState**](DownloadState.md) |  | [optional] [default to undefined]
-**statusMessage** | **string** |  | [optional] [default to undefined]
-**progress** | **number** |  | [optional] [default to undefined]
-**averageSpeed** | **string** |  | [optional] [default to undefined]
-**timeRemaining** | **string** |  | [optional] [default to undefined]
+**status** | [**DownloadState**](DownloadState.md) |  | [default to undefined]
+**statusMessage** | **string** |  | [default to undefined]
+**progress** | **number** |  | [default to undefined]
+**averageSpeed** | **string** |  | [default to undefined]
+**timeRemaining** | **string** |  | [default to undefined]
 
 ## Example
 

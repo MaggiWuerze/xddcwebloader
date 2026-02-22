@@ -88,7 +88,7 @@ export default function DownloadForm(props: EmployeeFormProps) {
     }, [formValues, onReset]);
 
     const handleBack = React.useCallback(() => {
-        navigate(backButtonPath ?? '/bot');
+        navigate(backButtonPath ?? '/download/');
     }, [navigate, backButtonPath]);
 
     return (

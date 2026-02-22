@@ -25,10 +25,10 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-webmvc")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("tools.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.1")
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
@@ -43,8 +43,9 @@ dependencies {
     runtimeOnly("com.h2database:h2")
 
     //XDCC
-    implementation("com.github.pircbotx:pircbotx:2.3.1")
-    //implementation("com.github.pircbotx:pircbotx:-SNAPSHOT")
+    //implementation("com.github.pircbotx:pircbotx:2.3.1")
+    //implementation("com.github.pircbotx:pircbotx:2.3-SNAPSHOT")
+    implementation("com.github.pircbotx:pircbotx:master-SNAPSHOT")
 
     // JAX-B dependencies (Jakarta namespace) for Spring Boot 4 / Jakarta EE
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")

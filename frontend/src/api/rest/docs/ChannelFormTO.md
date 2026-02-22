@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **string** |  | [optional] [default to undefined]
-**bla** | **string** |  | [optional] [default to undefined]
+**name** | **string** |  | [default to undefined]
+**bla** | **string** |  | [default to undefined]
 
 ## Example
 

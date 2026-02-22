@@ -4,12 +4,16 @@ import de.maggiwuerze.xdccwebloader.events.SocketEvents
 import de.maggiwuerze.xdccwebloader.model.download.Download
 import de.maggiwuerze.xdccwebloader.model.download.DownloadState
 import de.maggiwuerze.xdccwebloader.model.download.DownloadTO
-import de.maggiwuerze.xdccwebloader.model.entity.Bot
 import de.maggiwuerze.xdccwebloader.model.forms.DownloadFormTO
+import de.maggiwuerze.xdccwebloader.model.search.SearchResultItem
+import de.maggiwuerze.xdccwebloader.persistence.entity.Bot
+import de.maggiwuerze.xdccwebloader.persistence.entity.Channel
+import de.maggiwuerze.xdccwebloader.persistence.entity.Server
 import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.io.File
+import java.time.LocalDateTime
 import java.util.*
 import java.util.Collections.synchronizedMap
 
@@ -17,7 +21,11 @@ import java.util.Collections.synchronizedMap
  * Service for adding Downloads to the queue and retrieving them
  */
 @Service
-class DownloadService(val botService: BotService, val eventService: EventService) {
+class DownloadService(
+    val botService: BotService, val eventService: EventService,
+    private val channelService: ChannelService,
+    private val serverService: ServerService
+) {
     private val downloads: MutableMap<UUID, Download> = synchronizedMap(HashMap())
     private val bots: MutableMap<Bot, List<Download>> = synchronizedMap(HashMap())
     private var downloadFolderReady = false
@@ -44,18 +52,19 @@ class DownloadService(val botService: BotService, val eventService: EventService
         return downloads.values.sortedBy { it.progress }.toList()
     }
 
-    fun findAllActive(): List<DownloadTO> {
+    fun findAllInactive(): List<DownloadTO> {
         return listOf(DownloadState.UNKNOWN, DownloadState.DONE).let {
             findAllByStatusInOrderByProgress(it).map { it.toTO() }
         }
     }
 
-    fun findAllInactive(): List<DownloadTO> {
+    fun findAllActive(): List<DownloadTO> {
         return listOf(
             DownloadState.PREPARING,
             DownloadState.PREPARED,
             DownloadState.READY,
             DownloadState.CONNECTING,
+            DownloadState.WAITING,
             DownloadState.TRANSMITTING,
             DownloadState.FINALIZING
         ).let {
@@ -77,8 +86,36 @@ class DownloadService(val botService: BotService, val eventService: EventService
             .sortedBy { it.progress }.toList()
     }
 
-    fun update(download: Download) = download.id.let { downloads.replace(it, download) }
+    fun update(download: Download) = download.id.let {
+        downloads.replace(it, download)
+        eventService.publishEvent(SocketEvents.UPDATED_DOWNLOAD, download)
+    }
 
+
+    fun create(searchResultItem: SearchResultItem): Download {
+
+        val channel = channelService.findByName(searchResultItem.channel) ?: channelService.save(
+            Channel(name = searchResultItem.channel)
+        )
+        val server = serverService.findByName(searchResultItem.server) ?: serverService.save(
+            Server(name = searchResultItem.server, serverUrl = searchResultItem.server)
+        )
+        val bot = botService.findByName(searchResultItem.bot) ?: botService.save(
+            Bot(
+                server = server,
+                channel = channel,
+                name = searchResultItem.bot,
+                pattern = "xdcc send %s",
+                creationDate = LocalDateTime.now(),
+                maxParallelDownloads = 3
+            )
+        )
+
+        return Download(bot, searchResultItem.fileRefId).also { download ->
+            addDownloadToBotQueue(download)
+            eventService.publishEvent(SocketEvents.NEW_DOWNLOAD, download)
+        }
+    }
 
     /**
      * creating download folder if necessary

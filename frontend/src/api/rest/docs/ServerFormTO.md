@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **string** |  | [optional] [default to undefined]
-**serverUrl** | **string** |  | [optional] [default to undefined]
+**name** | **string** |  | [default to undefined]
+**serverUrl** | **string** |  | [default to undefined]
 
 ## Example
 

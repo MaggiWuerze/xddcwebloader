@@ -1,8 +1,8 @@
 package de.maggiwuerze.xdccwebloader.service
 
-import de.maggiwuerze.xdccwebloader.model.entity.Channel
 import de.maggiwuerze.xdccwebloader.model.forms.ChannelFormTO
 import de.maggiwuerze.xdccwebloader.persistence.ChannelRepository
+import de.maggiwuerze.xdccwebloader.persistence.entity.Channel
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.util.*
@@ -20,6 +20,10 @@ class ChannelService(val channelRepository: ChannelRepository) {
 
     fun findById(channelId: UUID): Channel? {
         return channelRepository.findById(channelId).get()
+    }
+
+    fun findByName(name: String): Channel? {
+        return channelRepository.findByName(name)
     }
 
     fun delete(id: UUID): HttpStatus {

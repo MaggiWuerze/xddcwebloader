@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **string** |  | [optional] [default to undefined]
-**name** | **string** |  | [optional] [default to undefined]
-**serverUrl** | **string** |  | [optional] [default to undefined]
-**creationDate** | **string** |  | [optional] [default to undefined]
+**id** | **string** |  | [default to undefined]
+**name** | **string** |  | [default to undefined]
+**serverUrl** | **string** |  | [default to undefined]
+**creationDate** | **string** |  | [default to undefined]
 
 ## Example
 

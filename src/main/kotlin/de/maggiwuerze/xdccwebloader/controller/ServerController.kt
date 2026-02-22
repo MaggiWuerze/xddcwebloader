@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccwebloader.controller
 
-import de.maggiwuerze.xdccwebloader.model.entity.Server
-import de.maggiwuerze.xdccwebloader.model.entity.ServerTO
+import de.maggiwuerze.xdccwebloader.persistence.entity.Server
+import de.maggiwuerze.xdccwebloader.persistence.entity.ServerTO
 import de.maggiwuerze.xdccwebloader.model.forms.ServerFormTO
 import de.maggiwuerze.xdccwebloader.service.ServerService
 import jakarta.validation.ConstraintViolationException

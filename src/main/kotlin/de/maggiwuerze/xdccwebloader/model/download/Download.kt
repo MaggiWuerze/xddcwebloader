@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccwebloader.model.download
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import de.maggiwuerze.xdccwebloader.model.entity.Bot
+import de.maggiwuerze.xdccwebloader.persistence.entity.Bot
 import de.maggiwuerze.xdccwebloader.util.FileTransferProgressWatcher
 import io.swagger.v3.oas.annotations.media.Schema
 import java.util.*

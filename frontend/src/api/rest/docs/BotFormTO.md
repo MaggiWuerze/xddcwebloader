@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **string** |  | [optional] [default to undefined]
-**pattern** | **string** |  | [optional] [default to undefined]
-**serverId** | **string** |  | [optional] [default to undefined]
-**channelId** | **string** |  | [optional] [default to undefined]
+**name** | **string** |  | [default to undefined]
+**pattern** | **string** |  | [default to undefined]
+**serverId** | **string** |  | [default to undefined]
+**channelId** | **string** |  | [default to undefined]
 **maxParallelDownloads** | **number** |  | [optional] [default to undefined]
 
 ## Example

@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccwebloader.controller
 
-import de.maggiwuerze.xdccwebloader.model.entity.UserSettings
-import de.maggiwuerze.xdccwebloader.model.entity.UserSettingsTO
+import de.maggiwuerze.xdccwebloader.persistence.entity.UserSettings
+import de.maggiwuerze.xdccwebloader.persistence.entity.UserSettingsTO
 import de.maggiwuerze.xdccwebloader.model.forms.UserSettingsFormTO
 import de.maggiwuerze.xdccwebloader.service.UserSettingsService
 import org.springframework.http.HttpStatus

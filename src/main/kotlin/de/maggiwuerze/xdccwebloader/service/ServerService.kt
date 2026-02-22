@@ -1,8 +1,8 @@
 package de.maggiwuerze.xdccwebloader.service
 
-import de.maggiwuerze.xdccwebloader.model.entity.Server
 import de.maggiwuerze.xdccwebloader.model.forms.ServerFormTO
 import de.maggiwuerze.xdccwebloader.persistence.ServerRepository
+import de.maggiwuerze.xdccwebloader.persistence.entity.Server
 import org.springframework.stereotype.Service
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
@@ -20,6 +20,10 @@ class ServerService(private val serverRepository: ServerRepository) {
 
     fun findById(serverId: UUID): Server? {
         return serverRepository.findById(serverId).orElse(null)
+    }
+
+    fun findByName(name: String): Server? {
+        return serverRepository.findByName(name)
     }
 
     fun delete(serverId: UUID) {

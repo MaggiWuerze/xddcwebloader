@@ -1,7 +1,7 @@
 package de.maggiwuerze.xdccwebloader.controller
 
-import de.maggiwuerze.xdccwebloader.model.entity.Channel
-import de.maggiwuerze.xdccwebloader.model.entity.ChannelTO
+import de.maggiwuerze.xdccwebloader.persistence.entity.Channel
+import de.maggiwuerze.xdccwebloader.persistence.entity.ChannelTO
 import de.maggiwuerze.xdccwebloader.model.forms.ChannelFormTO
 import de.maggiwuerze.xdccwebloader.service.ChannelService
 import org.springframework.http.HttpStatus

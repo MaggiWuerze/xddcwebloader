@@ -1,6 +1,6 @@
 package de.maggiwuerze.xdccwebloader.service
 
-import de.maggiwuerze.xdccwebloader.model.entity.UserSettings
+import de.maggiwuerze.xdccwebloader.persistence.entity.UserSettings
 import de.maggiwuerze.xdccwebloader.persistence.IrcUserRepository
 import de.maggiwuerze.xdccwebloader.persistence.UserSettingsRepository
 import org.springframework.stereotype.Service

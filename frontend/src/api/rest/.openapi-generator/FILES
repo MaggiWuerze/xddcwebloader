@@ -15,6 +15,9 @@ docs/DownloadControllerApi.md
 docs/DownloadFormTO.md
 docs/DownloadState.md
 docs/DownloadTO.md
+docs/SearchControllerApi.md
+docs/SearchEngineTO.md
+docs/SearchResultItem.md
 docs/Server.md
 docs/ServerControllerApi.md
 docs/ServerFormTO.md

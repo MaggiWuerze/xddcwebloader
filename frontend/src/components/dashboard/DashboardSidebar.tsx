@@ -187,6 +187,14 @@ export default function DashboardSidebar({
                             }
                         />
                         <DashboardSidebarDividerItem/>
+                        <DashboardSidebarPageItem
+                            id="search"
+                            title="Search"
+                            icon={<SearchIcon/>}
+                            href="/search"
+                            selected={!!matchPath('/search/', pathname)}
+                        />
+                        <DashboardSidebarDividerItem/>
                         <DashboardSidebarHeaderItem>Downloads</DashboardSidebarHeaderItem>
                         <DashboardSidebarPageItem
                             id="downloads"

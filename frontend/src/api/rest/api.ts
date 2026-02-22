@@ -24,10 +24,10 @@ import type { RequestArgs } from './base';
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
 export interface BotFormTO {
-    'name'?: string;
-    'pattern'?: string;
-    'serverId'?: string;
-    'channelId'?: string;
+    'name': string;
+    'pattern': string;
+    'serverId': string;
+    'channelId': string;
     'maxParallelDownloads'?: number;
 }
 export interface BotTO {
@@ -40,13 +40,13 @@ export interface BotTO {
     'maxParallelDownloads': number;
 }
 export interface Channel {
-    'id'?: string;
-    'name'?: string;
-    'date'?: string;
+    'id': string;
+    'name': string;
+    'date': string;
 }
 export interface ChannelFormTO {
-    'name'?: string;
-    'bla'?: string;
+    'name': string;
+    'bla': string;
 }
 export interface ChannelTO {
     'id': string;
@@ -54,12 +54,13 @@ export interface ChannelTO {
     'date': string;
 }
 export interface DownloadFormTO {
-    'targetBotId'?: string;
-    'fileRefId'?: string;
+    'targetBotId': string;
+    'fileRefId': string;
 }
 
 export const DownloadState = {
     Connecting: 'Connecting',
+    WaitingForAResponse: 'Waiting for a Response',
     Done: 'Done',
     Error: 'Error',
     Finalizing: 'Finalizing',
@@ -79,23 +80,34 @@ export interface DownloadTO {
     'id': string;
     'filename': string;
     'filesize': string;
-    'status'?: DownloadState;
-    'statusMessage'?: string;
-    'progress'?: number;
-    'averageSpeed'?: string;
-    'timeRemaining'?: string;
+    'status': DownloadState;
+    'statusMessage': string;
+    'progress': number;
+    'averageSpeed': string;
+    'timeRemaining': string;
 }
 
 
+export interface SearchEngineTO {
+    'name': string;
+}
+export interface SearchResultItem {
+    'fileRefId': string;
+    'fileName': string;
+    'fileSize': string;
+    'server': string;
+    'channel': string;
+    'bot': string;
+}
 export interface Server {
-    'id'?: string;
-    'name'?: string;
-    'serverUrl'?: string;
-    'creationDate'?: string;
+    'id': string;
+    'name': string;
+    'serverUrl': string;
+    'creationDate': string;
 }
 export interface ServerFormTO {
-    'name'?: string;
-    'serverUrl'?: string;
+    'name': string;
+    'serverUrl': string;
 }
 export interface ServerTO {
     'id': string;
@@ -855,6 +867,39 @@ export const DownloadControllerApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelDownload: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cancelDownload', 'id', id)
+            const localVarPath = `/download/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Accept'] = '*/*';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1036,6 +1081,18 @@ export const DownloadControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cancelDownload(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelDownload(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DownloadControllerApi.cancelDownload']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1112,6 +1169,15 @@ export const DownloadControllerApiFactory = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelDownload(id: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.cancelDownload(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1172,6 +1238,16 @@ export class DownloadControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public cancelDownload(id: string, options?: RawAxiosRequestConfig) {
+        return DownloadControllerApiFp(this.configuration).cancelDownload(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -1216,6 +1292,232 @@ export class DownloadControllerApi extends BaseAPI {
      */
     public removeDownload(id: string, options?: RawAxiosRequestConfig) {
         return DownloadControllerApiFp(this.configuration).removeDownload(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * SearchControllerApi - axios parameter creator
+ */
+export const SearchControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSearchProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/search/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Accept'] = '*/*';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} providerName 
+         * @param {string} query 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchWithProvider: async (providerName: string, query: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'providerName' is not null or undefined
+            assertParamExists('searchWithProvider', 'providerName', providerName)
+            // verify required parameter 'query' is not null or undefined
+            assertParamExists('searchWithProvider', 'query', query)
+            const localVarPath = `/search/{providerName}/{query}`
+                .replace(`{${"providerName"}}`, encodeURIComponent(String(providerName)))
+                .replace(`{${"query"}}`, encodeURIComponent(String(query)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Accept'] = '*/*';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {SearchResultItem} searchResultItem 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startDownloadFromSearchResult: async (searchResultItem: SearchResultItem, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'searchResultItem' is not null or undefined
+            assertParamExists('startDownloadFromSearchResult', 'searchResultItem', searchResultItem)
+            const localVarPath = `/search/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = '*/*';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(searchResultItem, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SearchControllerApi - functional programming interface
+ */
+export const SearchControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SearchControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listSearchProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SearchEngineTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSearchProviders(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SearchControllerApi.listSearchProviders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} providerName 
+         * @param {string} query 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchWithProvider(providerName: string, query: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SearchResultItem>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchWithProvider(providerName, query, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SearchControllerApi.searchWithProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {SearchResultItem} searchResultItem 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startDownloadFromSearchResult(searchResultItem: SearchResultItem, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DownloadTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startDownloadFromSearchResult(searchResultItem, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SearchControllerApi.startDownloadFromSearchResult']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * SearchControllerApi - factory interface
+ */
+export const SearchControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SearchControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSearchProviders(options?: RawAxiosRequestConfig): AxiosPromise<Array<SearchEngineTO>> {
+            return localVarFp.listSearchProviders(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} providerName 
+         * @param {string} query 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchWithProvider(providerName: string, query: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SearchResultItem>> {
+            return localVarFp.searchWithProvider(providerName, query, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {SearchResultItem} searchResultItem 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startDownloadFromSearchResult(searchResultItem: SearchResultItem, options?: RawAxiosRequestConfig): AxiosPromise<DownloadTO> {
+            return localVarFp.startDownloadFromSearchResult(searchResultItem, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SearchControllerApi - object-oriented interface
+ */
+export class SearchControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public listSearchProviders(options?: RawAxiosRequestConfig) {
+        return SearchControllerApiFp(this.configuration).listSearchProviders(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} providerName 
+     * @param {string} query 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public searchWithProvider(providerName: string, query: string, options?: RawAxiosRequestConfig) {
+        return SearchControllerApiFp(this.configuration).searchWithProvider(providerName, query, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {SearchResultItem} searchResultItem 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public startDownloadFromSearchResult(searchResultItem: SearchResultItem, options?: RawAxiosRequestConfig) {
+        return SearchControllerApiFp(this.configuration).startDownloadFromSearchResult(searchResultItem, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -1,12 +1,15 @@
-package de.maggiwuerze.xdccwebloader.model.entity
+package de.maggiwuerze.xdccwebloader.persistence.entity
 
 import de.maggiwuerze.xdccwebloader.model.download.DownloadSort
 import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
+import java.time.LocalDateTime
 import java.util.*
 
-@jakarta.persistence.Entity
+@Entity
 
 
 class UserSettings(
@@ -17,10 +20,10 @@ class UserSettings(
     var initialized: Boolean = false,
 
     @Column(nullable = false)
-    var creationDate: java.time.LocalDateTime = java.time.LocalDateTime.now(),
+    var creationDate: LocalDateTime = LocalDateTime.now(),
 
     @Column(nullable = false)
-    @Enumerated(jakarta.persistence.EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     var downloadSortBy: DownloadSort? = DownloadSort.PROGRESS,
 
     @Column(nullable = false)

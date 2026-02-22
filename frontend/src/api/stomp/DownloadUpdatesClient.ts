@@ -7,7 +7,7 @@ export type DownloadSocketPayload = {
     [key: string]: unknown;
 };
 
-export type DownloadEventType = 'new' | 'update' | 'delete';
+export type DownloadEventType = 'new' | 'update' | 'delete' | 'cancel';
 
 export type DownloadSocketEvent<T = DownloadSocketPayload> = {
     type: DownloadEventType;
@@ -120,6 +120,12 @@ class DownloadUpdatesClient {
         subs.push(
             this.subscribe<DownloadSocketPayload>(`${keyPrefix}-delete`, '/topic/deleteDownload', payload => {
                 onEvent({type: 'delete', payload});
+            }),
+        );
+
+        subs.push(
+            this.subscribe<DownloadSocketPayload>(`${keyPrefix}-cancel`, '/topic/cancelDownload', payload => {
+                onEvent({type: 'cancel', payload});
             }),
         );
 

@@ -5,6 +5,8 @@
 
 * `Connecting` (value: `'Connecting'`)
 
+* `WaitingForAResponse` (value: `'Waiting for a Response'`)
+
 * `Done` (value: `'Done'`)
 
 * `Error` (value: `'Error'`)

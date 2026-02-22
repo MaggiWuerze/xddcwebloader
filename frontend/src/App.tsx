@@ -19,13 +19,7 @@ import ServerList from "./components/resources/server/ServerList";
 import ServerShow from "./components/resources/server/ServerShow";
 import ServerCreate from "./components/resources/server/ServerCreate";
 import DownloadCreate from "./components/resources/download/DownloadCreate";
-import {DownloadState} from "./data/DownloadState";
-
-const AllDownloadsRoute = () => <DownloadList state={DownloadState.all}/>;
-const ActiveDownloadsRoute = () => <DownloadList state={DownloadState.active}/>;
-const FinishedDownloadsRoute = () => <DownloadList state={DownloadState.finished}/>;
-const CancelledDownloadsRoute = () => <DownloadList state={DownloadState.cancelled}/>;
-
+import SearchList from "./components/resources/search/SearchList";
 
 const router = createHashRouter([
     {
@@ -85,24 +79,29 @@ const router = createHashRouter([
             //download routes
             {
                 path: '/downloads/active',
-                Component: ActiveDownloadsRoute,
+                Component: DownloadList,
             },
             {
                 path: '/downloads/finished',
-                Component: FinishedDownloadsRoute,
+                Component: DownloadList,
             },
             {
                 path: '/downloads/cancelled',
-                Component: CancelledDownloadsRoute,
+                Component: DownloadList,
             },
             {
                 path: '/downloads/new',
                 Component: DownloadCreate,
             },
+            //Search routes
+            {
+                path: '/search',
+                Component: SearchList,
+            },
             // Fallback route for the example routes in dashboard sidebar items
             {
                 path: '*',
-                Component: AllDownloadsRoute,
+                Component: DownloadList,
             },
         ],
     },

@@ -3,7 +3,7 @@ package de.maggiwuerze.xdccwebloader.service
 import de.maggiwuerze.xdccwebloader.irc.IrcBot
 import de.maggiwuerze.xdccwebloader.irc.IrcEventListener
 import de.maggiwuerze.xdccwebloader.model.download.Download
-import de.maggiwuerze.xdccwebloader.model.entity.Bot
+import de.maggiwuerze.xdccwebloader.persistence.entity.Bot
 import de.maggiwuerze.xdccwebloader.util.IpHelper
 import org.pircbotx.Configuration
 import org.springframework.stereotype.Service
@@ -25,6 +25,7 @@ class IrcBotService(private val ircEventListener: IrcEventListener) {
             .setName(username) //Set the nick of the bot. CHANGE IN YOUR CODE
             .setOnJoinWhoEnabled(false)
             .addServer(targetBot.server.serverUrl) //Join the freenode network
+            .addAutoJoinChannel(targetBot.channel.name) //Join the official #pircbotx channel
             .setAutoReconnect(true)
             .setAutoReconnectAttempts(5)
             .setAutoNickChange(true) //Automatically change nick when the current one is in use

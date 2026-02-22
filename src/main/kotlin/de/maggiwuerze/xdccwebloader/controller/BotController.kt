@@ -1,7 +1,6 @@
 package de.maggiwuerze.xdccwebloader.controller
 
-import de.maggiwuerze.xdccwebloader.events.SocketEvents
-import de.maggiwuerze.xdccwebloader.model.entity.BotTO
+import de.maggiwuerze.xdccwebloader.persistence.entity.BotTO
 import de.maggiwuerze.xdccwebloader.model.forms.BotFormTO
 import de.maggiwuerze.xdccwebloader.service.BotService
 import de.maggiwuerze.xdccwebloader.service.EventService
@@ -30,7 +29,6 @@ class BotController
     @Schema(name = "Create Bot", description = "Creates a new bot")
     fun createBot(@RequestBody form: BotFormTO): ResponseEntity<BotTO> {
         botService.save(form).let {
-            eventService.publishEvent(SocketEvents.NEW_SERVER, it)
             return ResponseEntity(it.toTO(), HttpStatus.OK)
         }
     }
@@ -57,5 +55,5 @@ class BotController
     @PutMapping("{id}")
     fun updateBot(@PathVariable id: UUID, @RequestBody botFormTO: BotFormTO): ResponseEntity<BotTO> =
         ResponseEntity(botService.update(id, botFormTO).toTO(), HttpStatus.OK)
-    
+
 }

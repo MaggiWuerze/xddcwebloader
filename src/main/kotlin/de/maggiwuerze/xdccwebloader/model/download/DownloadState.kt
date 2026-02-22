@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 @Schema(enumAsRef = true)
 enum class DownloadState(externalString: String) {
     CONNECTING("Connecting"),
+    WAITING("Waiting for a Response"),
     DONE("Done"),
     ERROR("Error"),
     FINALIZING("Finalizing"),

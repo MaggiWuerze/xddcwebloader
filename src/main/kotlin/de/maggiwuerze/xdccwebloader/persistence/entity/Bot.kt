@@ -1,4 +1,4 @@
-package de.maggiwuerze.xdccwebloader.model.entity
+package de.maggiwuerze.xdccwebloader.persistence.entity
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column

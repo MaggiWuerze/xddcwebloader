@@ -1,9 +1,11 @@
 package de.maggiwuerze.xdccwebloader.service
 
 import de.maggiwuerze.xdccwebloader.events.SocketEvents
+import de.maggiwuerze.xdccwebloader.events.SocketEvents.CANCELLED_DOWNLOAD
 import de.maggiwuerze.xdccwebloader.events.SocketEvents.DELETED_DOWNLOAD
 import de.maggiwuerze.xdccwebloader.events.SocketEvents.NEW_DOWNLOAD
 import de.maggiwuerze.xdccwebloader.events.SocketEvents.UPDATED_DOWNLOAD
+import de.maggiwuerze.xdccwebloader.events.download.DownloadCancelEvent
 import de.maggiwuerze.xdccwebloader.events.download.DownloadCreationEvent
 import de.maggiwuerze.xdccwebloader.events.download.DownloadDeleteEvent
 import de.maggiwuerze.xdccwebloader.events.download.DownloadUpdateEvent
@@ -39,6 +41,12 @@ class EventService(
                 DELETED_DOWNLOAD -> {
                     DownloadDeleteEvent(this, downloadId).let { downloadDeleteEvent ->
                         applicationEventPublisher.publishEvent(downloadDeleteEvent)
+                    }
+                }
+
+                CANCELLED_DOWNLOAD -> {
+                    DownloadCancelEvent(this, downloadId).let { downloadCancelEvent ->
+                        applicationEventPublisher.publishEvent(downloadCancelEvent)
                     }
                 }
 

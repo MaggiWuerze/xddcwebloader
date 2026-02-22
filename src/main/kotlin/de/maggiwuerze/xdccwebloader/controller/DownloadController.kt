@@ -1,5 +1,6 @@
 package de.maggiwuerze.xdccwebloader.controller
 
+import de.maggiwuerze.xdccwebloader.events.SocketEvents.CANCELLED_DOWNLOAD
 import de.maggiwuerze.xdccwebloader.events.SocketEvents.DELETED_DOWNLOAD
 import de.maggiwuerze.xdccwebloader.model.download.Download
 import de.maggiwuerze.xdccwebloader.model.download.DownloadState
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -77,5 +79,16 @@ class DownloadController(
     @PostMapping
     fun addDownload(@RequestBody downloadFormTO: DownloadFormTO): ResponseEntity<List<DownloadTO>> {
         return ResponseEntity(downloadService.create(downloadFormTO).map(Download::toTO), HttpStatus.OK)
+    }
+
+    @PutMapping("{id}")
+    fun cancelDownload(@PathVariable id: UUID): ResponseEntity<*> {
+        return downloadService.getById(id)?.let { download ->
+            download.progressWatcher?.cancel(true)
+            download.status = DownloadState.STOPPED
+            eventService.publishEvent(CANCELLED_DOWNLOAD, download)
+
+            ResponseEntity("Download marked for deletion", HttpStatus.OK)
+        } ?: ResponseEntity("Download not found", HttpStatus.NOT_FOUND)
     }
 }

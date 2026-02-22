@@ -83,10 +83,10 @@ export default function DownloadCreate() {
                 autoHideDuration: 3000,
             });
 
-            navigate('/employees');
+            navigate('/download/');
         } catch (createError) {
             notifications.show(
-                `Failed to create employee. Reason: ${(createError as Error).message}`,
+                `Failed to create Download. Reason: ${(createError as Error).message}`,
                 {
                     severity: 'error',
                     autoHideDuration: 3000,

@@ -2,7 +2,7 @@ package de.maggiwuerze.xdccwebloader.irc
 
 import de.maggiwuerze.xdccwebloader.events.EventPublisher
 import de.maggiwuerze.xdccwebloader.model.download.DownloadState
-import de.maggiwuerze.xdccwebloader.model.entity.Bot
+import de.maggiwuerze.xdccwebloader.persistence.entity.Bot
 import de.maggiwuerze.xdccwebloader.service.DownloadService
 import org.pircbotx.PircBotX
 import org.pircbotx.dcc.DccState
@@ -10,12 +10,15 @@ import org.pircbotx.dcc.ReceiveFileTransfer
 import org.pircbotx.hooks.ListenerAdapter
 import org.pircbotx.hooks.events.BanListEvent
 import org.pircbotx.hooks.events.ConnectAttemptFailedEvent
-import org.pircbotx.hooks.events.ConnectEvent
+import org.pircbotx.hooks.events.DisconnectEvent
 import org.pircbotx.hooks.events.ExceptionEvent
 import org.pircbotx.hooks.events.FileTransferCompleteEvent
 import org.pircbotx.hooks.events.IncomingFileTransferEvent
+import org.pircbotx.hooks.events.JoinEvent
 import org.pircbotx.hooks.events.ListenerExceptionEvent
+import org.pircbotx.hooks.events.MessageEvent
 import org.pircbotx.hooks.events.OutputEvent
+import org.pircbotx.hooks.types.GenericMessageEvent
 import org.slf4j.LoggerFactory
 import org.springframework.core.task.SimpleAsyncTaskExecutor
 import org.springframework.core.task.TaskExecutor
@@ -28,20 +31,42 @@ class IrcEventListener(val eventPublisher: EventPublisher, val downloadService: 
 
     val log = LoggerFactory.getLogger(this.javaClass.name)
 
+
     override fun onBanList(event: BanListEvent) {
         log.info(java.lang.String.format("Nick %s was banned", (event.getBot() as PircBotX).nick))
     }
 
-    override fun onConnect(event: ConnectEvent) {
-        super.onConnect(event)
+    override fun onJoin(event: JoinEvent) {
+        super.onJoin(event)
         (event.getBot() as IrcBot).let { bot ->
+            //ignore if not own join
+            if (event.user?.nick.equals(bot.nick).not()) return
+            //TODO: handle second trigger after download completes
+            //ignore if download is already done
+            if (downloadService.getOrThrow(bot.downloadId).status == DownloadState.DONE) return
+
+            log.info("Bot ${bot.nick} joined channel ${event.channel.name}")
             downloadService.getOrThrow(bot.downloadId).let { download ->
                 val targetBot: Bot = download.bot
                 val message: String? = java.lang.String.format(targetBot.pattern, download.fileRefId)
-                bot.sendIRC().joinChannel(targetBot.channel.name)
                 bot.sendIRC().message(targetBot.name, message)
+
+                download.status = DownloadState.WAITING
+                downloadService.update(download)
             }
         }
+    }
+
+    override fun onDisconnect(event: DisconnectEvent) {
+        super.onDisconnect(event)
+    }
+
+    override fun onGenericMessage(event: GenericMessageEvent) {
+        event.message
+    }
+
+    override fun onMessage(event: MessageEvent) {
+        event.message
     }
 
     override fun onConnectAttemptFailed(event: ConnectAttemptFailedEvent) {
@@ -64,6 +89,7 @@ class IrcEventListener(val eventPublisher: EventPublisher, val downloadService: 
 
     override fun onException(event: ExceptionEvent) {
         eventPublisher.handleError(event.getBot(), event.getException())
+        event.getBot<IrcBot>().sendIRC().quitServer()
     }
 
     override fun onIncomingFileTransfer(event: IncomingFileTransferEvent) {
@@ -116,6 +142,7 @@ class IrcEventListener(val eventPublisher: EventPublisher, val downloadService: 
                     log.info(java.lang.String.format("filetransfer completed for %s", download.fileRefId))
                 }
             }
+            bot.sendIRC().quitServer()
         }
 
     }

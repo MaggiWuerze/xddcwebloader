@@ -36,6 +36,7 @@ class EventPublisher(
 
     fun handleError(bot: IrcBot, exception: Exception) {
         bot.stopBotReconnect()
+        bot.sendIRC().quitServer()
         downloadService.getOrThrow(bot.downloadId).let { download ->
 
             try {
