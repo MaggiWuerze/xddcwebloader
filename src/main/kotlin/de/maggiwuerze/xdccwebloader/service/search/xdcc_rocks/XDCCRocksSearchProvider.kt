@@ -21,33 +21,6 @@ class XDCCRocksSearchProvider(
 
     var url: String = "https://xdcc.rocks/search/?searchword=%s&page=1"
 
-    /**
-     * search contains a list of servers, each containing a list of channels, each containing a list of bots, which in turn contain a list of files
-     * search (servers[])
-     *    └─ channels[]
-     *       └─ bots[]
-     *         └─ files[]
-     */
-
-    //server fields
-    var serverHost: String = "serverhost"
-    var channelList: String = "channels"
-    var serverName: String = "servername"
-
-    //channel fields
-    var channelName: String = "channelname"
-    var bots: String = "bots"
-
-    //bot fields
-    var files: String = "files"
-    var botName: String = "botname"
-    var fileRefId: String = "packnumber"
-
-    //files fiels
-    var file: String = "file"
-    var fileName: String = "filename"
-    var fileSize: String = "filesize"
-
     override fun search(searchTerm: String, pageable: Pageable): List<SearchResultItem> {
 
         val result = searchClient.searchRaw(
