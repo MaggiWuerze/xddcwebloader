@@ -29,42 +29,38 @@ class XDCCRocksSearchProvider(
             limitResults = pageable.pageSize,
             page = pageable.pageNumber
         )
-        val dto: Model.SearchResponse = objectMapper.readValue(result, Model.SearchResponse::class.java)
-
-
         val resultItems = mutableListOf<SearchResultItem>()
 
-        dto.results.forEach { jsonServer ->
-            jsonServer.channels.forEach { jsonChannel ->
-                jsonChannel.bots.forEach { jsonBot ->
-                    jsonBot.files.forEach { jsonFile ->
+        jacksonObjectMapper().readValue(result, Model.SearchResponse::class.java).let { result ->
+            result.results.forEach { jsonServer ->
+                jsonServer.channels.forEach { jsonChannel ->
+                    jsonChannel.bots.forEach { jsonBot ->
+                        jsonBot.files.forEach { jsonFile ->
 
-                        val server = Server(name = jsonServer.servername, serverUrl = jsonServer.serverhost)
-                        val channel = Channel(name = jsonChannel.channelname)
-                        val bot = Bot(
-                            name = jsonBot.botname,
-                            server = server,
-                            channel = channel,
-                            pattern = "xdcc send %s"
-                        )
-
-                        (resultItems).add(
-                            SearchResultItem(
-                                fileRefId = jsonFile.packnumber,
-                                fileName = jsonFile.file.filename,
-                                fileSize = jsonFile.file.filesize,
-                                server = server.name,
-                                channel = channel.name,
-                                bot = bot.name
+                            val server = Server(name = jsonServer.servername, serverUrl = jsonServer.serverhost)
+                            val channel = Channel(name = jsonChannel.channelname)
+                            val bot = Bot(
+                                name = jsonBot.botname,
+                                server = server,
+                                channel = channel,
+                                pattern = "xdcc send %s"
                             )
-                        )
+
+                            (resultItems).add(
+                                SearchResultItem(
+                                    fileRefId = jsonFile.packnumber,
+                                    fileName = jsonFile.file.filename,
+                                    fileSize = jsonFile.file.filesize,
+                                    server = server.name,
+                                    channel = channel.name,
+                                    bot = bot.name
+                                )
+                            )
+                        }
                     }
-
                 }
-
             }
         }
-
         return resultItems
     }
 

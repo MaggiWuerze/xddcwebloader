@@ -1,5 +1,6 @@
 package de.maggiwuerze.xdccwebloader.service.search.skullxdcc
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.maggiwuerze.xdccwebloader.model.search.SearchResultItem
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchClient
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngine
@@ -15,38 +16,29 @@ class SkullXDCCSearchProvider(
 
     var url: String = "https://skullxdcc.com/ws.php?sterm=%s&"
 
-    //result fields
-    var botName: String = "bot"
-    var fileRefId: String = "packnum"
-    var fileName: String = "fname"
-    var fileSize: String = "fsize"
-    var channelName: String = "channel"
-    var serverName: String = "network"
-
     override fun search(searchTerm: String, pageable: Pageable): List<SearchResultItem> {
 
-        val result = searchClient.search(
+        val result = searchClient.searchRaw(
             baseUrlTemplate = url,
             searchTerm = searchTerm,
             limitResults = pageable.pageSize,
             page = pageable.pageNumber
         )
-        val resultItems = mutableListOf<SearchResultItem>()
 
-        result["data"].values().forEach {
-            resultItems.add(
+        jacksonObjectMapper().readValue(result, Model.SearchResponse::class.java).let { result ->
+
+            return result.data.map {
                 SearchResultItem(
-                    server = it[serverName].asText(),
-                    channel = it[channelName].asText(),
-                    bot = it[botName].asText(),
-                    fileRefId = it[fileRefId].asText(),
-                    fileName = it[fileName].asText(),
-                    fileSize = it[fileSize].asText(),
+                    server = it.network,
+                    channel = it.channel,
+                    bot = it.bot,
+                    fileRefId = it.packnum,
+                    fileName = it.fname,
+                    fileSize = it.fsize,
                 )
-            )
-        }
 
-        return resultItems
+            }
+        }
     }
 
     override fun toTO(): SearchEngineTO {
