@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {GridActionsCellItem, GridColDef} from '@mui/x-data-grid';
+import {GridActionsCellItem, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
 import {useNavigate} from 'react-router';
 import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
 import useNotifications from '../../../hooks/useNotifications/useNotifications';
 import {BaseList, BaseListApi, BaseListLoadParams} from '../base/BaseList';
 import {useUrlDataGridState} from '../base/UrlDataGridState';
-import type {SearchResultItem} from '../../../api/rest';
+import type {DownloadTO, SearchResultItem} from '../../../api/rest';
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -16,7 +16,8 @@ import SearchIcon from '@mui/icons-material/SearchOffOutlined';
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import {SearchProviderSelect} from "./SearchProviderSelect";
-import CancelledIcon from "@mui/icons-material/Cancel";
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import {DownloadRepository} from "../../../data/downloadRepository";
 
 export default function SearchList() {
     const navigate = useNavigate();
@@ -31,24 +32,51 @@ export default function SearchList() {
     const [error, setError] = React.useState<Error | null>(null);
 
     const apiRef = React.useRef<BaseListApi<SearchResultItem> | null>(null);
+    const debouncedQuery = useDebouncedValue(query, 350);
 
 
     function loadData(params: BaseListLoadParams) {
 
-        if (!query || !provider) {
+        if (!debouncedQuery || !provider) {
             let emptyResult: SearchResultItem[] = [];
             return Promise.resolve({items: emptyResult, itemCount: 0});
         }
 
-        return SearchRepository.search(params, query, "");
+        return SearchRepository.search(params, debouncedQuery, provider);
     }
 
     const handleRowAdd = React.useCallback(
-        (searchResult: SearchResultItem) => () => {
-            SearchRepository.createFromSearchResult(searchResult);
+        (searchResult: SearchResultItem) => async () => {
+
+            try {
+                await SearchRepository.createFromSearchResult(searchResult);
+                notifications.show('Download added successfully.', {
+                    severity: 'success',
+                    autoHideDuration: 3000,
+                });
+            } catch (deleteError) {
+                notifications.show(
+                    `Failed to add Download. Reason:' ${(deleteError as Error).message}`,
+                    {
+                        severity: 'error',
+                        autoHideDuration: 3000,
+                    },
+                );
+            }
         },
         [],
     );
+
+    function useDebouncedValue<T>(value: T, delayMs: number): T {
+        const [debounced, setDebounced] = React.useState(value);
+
+        React.useEffect(() => {
+            const id = window.setTimeout(() => setDebounced(value), delayMs);
+            return () => window.clearTimeout(id);
+        }, [value, delayMs]);
+
+        return debounced;
+    }
 
     const columns = React.useMemo<GridColDef<SearchResultItem>[]>(
         () => [
@@ -87,7 +115,7 @@ export default function SearchList() {
                 getActions: ({row}) => [
                     <GridActionsCellItem
                         key="edit-item"
-                        icon={<CancelledIcon/>}
+                        icon={<DownloadForOfflineIcon/>}
                         label="Cancel"
                         onClick={handleRowAdd(row)}
                     />
@@ -105,6 +133,9 @@ export default function SearchList() {
             gridState={gridState}
             load={loadData}
             apiRef={apiRef}
+            getRowId={(row) => {
+                return row.channel + row.fileRefId
+            }}
             actions={({refresh, isLoading}) => (
 
                 <Stack direction="row" alignItems="center" spacing={1}>

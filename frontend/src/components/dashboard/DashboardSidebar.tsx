@@ -13,8 +13,8 @@ import ServerIcon from '@mui/icons-material/Public';
 import BarChartIcon from '@mui/icons-material/BarChart';
 //Download Icons
 import DownloadIcon from '@mui/icons-material/Download';
-import RunningIcon from '@mui/icons-material/Download';
-import FinishedIcon from '@mui/icons-material/Check';
+import RunningIcon from '@mui/icons-material/Downloading';
+import FinishedIcon from '@mui/icons-material/DownloadDone';
 import CancelledIcon from '@mui/icons-material/Cancel';
 import {matchPath, useLocation} from 'react-router';
 import DashboardSidebarContext from '../../context/DashboardSidebarContext';

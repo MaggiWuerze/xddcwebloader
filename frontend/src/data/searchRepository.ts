@@ -109,7 +109,7 @@ export const SearchRepository = {
         sortModel: GridSortModel;
         filterModel: GridFilterModel;
     }, query: string, provider: string): Promise<{ items: SearchResultItem[]; itemCount: number }> {
-        let searchData = await api.searchWithProvider(query, provider).then((rs) => rs.data);
+        let searchData = await api.searchWithProvider(provider,query).then((rs) => rs.data);
 
         let filteredSearchResults = [...searchData];
 

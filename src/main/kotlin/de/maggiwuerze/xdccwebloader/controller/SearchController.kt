@@ -44,8 +44,8 @@ internal class SearchController(
         @PathVariable query: String
     ): ResponseEntity<List<SearchResultItem>> {
 
-        searchProviders.firstOrNull { it.name == providerName }?.let { searchEngine ->
-            return ResponseEntity(searchEngine.search(query), HttpStatus.NOT_FOUND)
+         searchProviders.firstOrNull { it.name == providerName }?.let { searchEngine ->
+           return ResponseEntity(searchEngine.search(query), HttpStatus.OK)
         }
 
         return ResponseEntity(HttpStatus.NOT_FOUND)
