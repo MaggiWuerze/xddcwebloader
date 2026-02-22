@@ -61,4 +61,47 @@ class SearchClient {
 
         return objectMapper.readTree(response.body())
     }
+
+    /**
+     * Calls an endpoint like:
+     * https://skullxdcc.com/ws.php?sterm=BEAST-X-CHEDDAR&limit_results=25&page=1
+     *
+     * @param baseUrlTemplate e.g. "https://skullxdcc.com/ws.php?sterm=%s&"
+     */
+    fun searchRaw(
+        baseUrlTemplate: String,
+        searchTerm: String,
+        limitResults: Int = 25,
+        page: Int = 1
+    ): String? {
+        val encodedTerm = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8)
+        val base = if (baseUrlTemplate.contains("%s")) {
+            baseUrlTemplate.format(encodedTerm)
+        } else {
+            val joiner = if (baseUrlTemplate.contains("?")) "&" else "?"
+            "${baseUrlTemplate}${joiner}sterm=$encodedTerm&"
+        }
+
+        val url =
+            "${base}limit_results=${URLEncoder.encode(limitResults.toString(), StandardCharsets.UTF_8)}" +
+                    "&page=${URLEncoder.encode(page.toString(), StandardCharsets.UTF_8)}"
+
+        val request = HttpRequest.newBuilder()
+            .uri(URI.create(url))
+            .timeout(Duration.ofSeconds(20))
+            .header("Accept", "application/json")
+            .GET()
+            .build()
+
+        val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
+
+        if (response.statusCode() !in 200..299) {
+            throw IllegalStateException(
+                "Search request failed: HTTP ${response.statusCode()} (url=$url, body=${response.body().take(500)})"
+            )
+        }
+
+        return response.body()
+    }
+
 }

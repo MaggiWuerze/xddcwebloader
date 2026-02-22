@@ -1,23 +1,17 @@
 import * as React from 'react';
-import {GridActionsCellItem, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
+import {GridActionsCellItem, GridColDef} from '@mui/x-data-grid';
 import {useNavigate} from 'react-router';
 import {useDialogs} from '../../../hooks/useDialogs/useDialogs';
 import useNotifications from '../../../hooks/useNotifications/useNotifications';
 import {BaseList, BaseListApi, BaseListLoadParams} from '../base/BaseList';
 import {useUrlDataGridState} from '../base/UrlDataGridState';
-import type {DownloadTO, SearchResultItem} from '../../../api/rest';
+import type {SearchResultItem} from '../../../api/rest';
 import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import Button from "@mui/material/Button";
 import {SearchRepository} from "../../../data/searchRepository";
-import SearchIcon from '@mui/icons-material/SearchOffOutlined';
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import {SearchProviderSelect} from "./SearchProviderSelect";
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
-import {DownloadRepository} from "../../../data/downloadRepository";
+import Paper from "@mui/material/Paper";
+import {InputBase} from "@mui/material";
 
 export default function SearchList() {
     const navigate = useNavigate();
@@ -32,8 +26,7 @@ export default function SearchList() {
     const [error, setError] = React.useState<Error | null>(null);
 
     const apiRef = React.useRef<BaseListApi<SearchResultItem> | null>(null);
-    const debouncedQuery = useDebouncedValue(query, 350);
-
+    const debouncedQuery = useDebouncedValue(query, 500);
 
     function loadData(params: BaseListLoadParams) {
 
@@ -136,34 +129,25 @@ export default function SearchList() {
             getRowId={(row) => {
                 return row.channel + row.fileRefId
             }}
-            actions={({refresh, isLoading}) => (
+            actions={() => (
 
-                <Stack direction="row" alignItems="center" spacing={1}>
-                    <Box sx={{display: 'flex', alignItems: 'center'}}>
+                <Stack direction="row" alignItems="center" spacing={1} width={"100%"}>
+                    <Paper
+                        component="form"
+                        sx={{p: '2px 4px', display: 'flex', alignItems: 'center', width: 400}}
+                    >
+                        <InputBase
+                            sx={{ml: 1, flex: 1}}
+                            placeholder="Search"
+                            inputProps={{'aria-label': 'search'}}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
                         <SearchProviderSelect
-                            serverSelectValues={SearchRepository.listAll()}
+                            searchSelectValues={SearchRepository.listAll()}
                             onChange={(serverId) => setProvider(serverId)}>
 
                         </SearchProviderSelect>
-                    </Box>
-                    <Box sx={{display: 'flex', alignItems: 'center', width: '400px'}}>
-                        <SearchIcon sx={{color: 'action.active', mr: 1, my: 0.5}}/>
-                        <TextField label="Search" variant="standard" fullWidth size="small" sx={{ml: 1}}
-                                   onChange={(e) => setQuery(e.target.value)}
-                        />
-                    </Box>
-                    <Tooltip title="Search again" placement="right" enterDelay={1000}>
-                        <div>
-                            <IconButton size="small" aria-label="refresh" onClick={refresh} disabled={isLoading}>
-                                <RefreshIcon/>
-                            </IconButton>
-                        </div>
-                    </Tooltip>
-
-                    <Button variant="outlined" onClick={() => {/* e.g. cancelAll */
-                    }}>
-                        Search
-                    </Button>
+                    </Paper>
                 </Stack>
             )}
         />
