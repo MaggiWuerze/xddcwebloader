@@ -116,7 +116,7 @@ export const ChannelRepository: BaseRepository<ChannelTO, ChannelFormTO> = {
         return await api.createChannel({...data}).then((res) => res.data);
     },
 
-    async update(_id: string, _data: Partial<Omit<ChannelFormTO, 'id'>>): Promise<ChannelTO> {
+    async update(_id: string, _data: Omit<ChannelFormTO, 'id'>): Promise<ChannelTO> {
         return await api.updateChannel(_id, _data).then((res) => res.data);
     },
 

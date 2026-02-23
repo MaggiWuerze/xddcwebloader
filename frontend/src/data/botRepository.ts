@@ -131,7 +131,7 @@ export const BotRepository: BaseRepository<BotTO, BotFormTO> = {
         return await api.createBot({...data}).then((res) => res.data);
     },
 
-    async update(_id: string, _data: Partial<Omit<BotFormTO, 'id'>>): Promise<BotTO> {
+    async update(_id: string, _data: Omit<BotFormTO, 'id'>): Promise<BotTO> {
         return await api.updateBot(_id, _data).then((res) => res.data);
     },
 

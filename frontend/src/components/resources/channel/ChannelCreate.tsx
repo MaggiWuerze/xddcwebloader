@@ -4,7 +4,7 @@ import useNotifications from '../../../hooks/useNotifications/useNotifications';
 import ChannelForm, {type ChannelFormState, type FormFieldValue,} from './ChannelForm';
 import PageContainer from '../../pagecontainer/PageContainer';
 import {ChannelRepository as repository} from '../../../data/channelRepository';
-import {ChannelTO} from "../../../api/rest";
+import {ChannelFormTO} from "../../../api/rest";
 
 const INITIAL_FORM_VALUES: Partial<ChannelFormState['values']> = {
     name: '',
@@ -75,7 +75,7 @@ export default function ChannelCreate() {
         setFormErrors({});
 
         try {
-            await repository.create(formValues as Omit<ChannelTO, 'id'>);
+            await repository.create(formValues as Omit<ChannelFormTO, 'id'>);
             notifications.show('Channel created successfully.', {
                 severity: 'success',
                 autoHideDuration: 3000,

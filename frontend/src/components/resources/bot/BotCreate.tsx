@@ -4,7 +4,7 @@ import useNotifications from '../../../hooks/useNotifications/useNotifications';
 import {BotRepository as repository} from '../../../data/botRepository';
 import BotForm, {type BotFormState, type FormFieldValue,} from './BotForm';
 import PageContainer from '../../pagecontainer/PageContainer';
-import {BotTO} from "../../../api/rest";
+import {BotFormTO} from "../../../api/rest";
 
 const INITIAL_FORM_VALUES: Partial<BotFormState['values']> = {
     name: '',
@@ -83,7 +83,7 @@ export default function BotCreate() {
         setFormErrors({});
 
         try {
-            await repository.create(formValues as Omit<BotTO, 'id'>);
+            await repository.create(formValues as Omit<BotFormTO, 'id'>);
             notifications.show('Bot created successfully.', {
                 severity: 'success',
                 autoHideDuration: 3000,

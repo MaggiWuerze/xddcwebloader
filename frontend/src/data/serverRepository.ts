@@ -116,7 +116,7 @@ export const ServerRepository: BaseRepository<ServerTO, ServerFormTO> = {
         return await api.createServer({...data}).then((res) => res.data);
     },
 
-    async update(_id: string, _data: Partial<Omit<ServerFormTO, 'id'>>): Promise<ServerTO> {
+    async update(_id: string, _data: Omit<ServerFormTO, 'id'>): Promise<ServerTO> {
         return await api.updateServer(_id, _data).then((res) => res.data);
     },
 
