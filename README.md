@@ -11,15 +11,17 @@ Releases and executables can be found here:
 
 ### The Main Download View
 
-![image](https://user-images.githubusercontent.com/9729962/184309789-07bce483-73ec-4159-aaac-4b8e75598cef.png)
+<img width="1652" height="1285" alt="Download Overview" src="https://github.com/user-attachments/assets/d29280f2-576e-42b1-ad2a-640d7170112c" />
 
 ### Configuring Bots for different Servers and Channels
 
-<img src="https://user-images.githubusercontent.com/9729962/184310278-6973ae76-a08e-43f4-93d4-0776c8d0a078.png" width="15%"></img> <img src="https://user-images.githubusercontent.com/9729962/184310219-024bc28c-7226-4aa0-bb75-1be2e3efec65.png" width="15%"></img> <img src="https://user-images.githubusercontent.com/9729962/184310113-8230d5ec-4824-4e36-83a0-0ec65a902819.png" width="15%"></img>
+<img width="1652" height="1285" alt="Resources Management" src="https://github.com/user-attachments/assets/ec31ec1a-282e-416a-a897-b8876293c0c0" />
 
-### Settings page
+### Popular Searches directly integrated
 
-![image](https://user-images.githubusercontent.com/9729962/184346810-f5fb1803-664d-43dc-9b40-1c684ffc290e.png)
+Popular search machines for xdcc are directly integrated and allow seamless starts of Downloads, directly from the Search page
+
+<img width="1652" height="1285" alt="Search Page" src="https://github.com/user-attachments/assets/22388101-9716-4efa-8853-4fadac7e4ee2" />
 
 # Running The App
 
