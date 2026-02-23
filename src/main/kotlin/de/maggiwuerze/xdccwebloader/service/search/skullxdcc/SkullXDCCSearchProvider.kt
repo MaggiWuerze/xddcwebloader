@@ -3,8 +3,8 @@ package de.maggiwuerze.xdccwebloader.service.search.skullxdcc
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.maggiwuerze.xdccwebloader.model.search.SearchResultItem
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchClient
-import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngine
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngineTO
+import de.maggiwuerze.xdccwebloader.service.search.base.SearchProvider
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 
@@ -12,33 +12,35 @@ import org.springframework.stereotype.Component
 class SkullXDCCSearchProvider(
     override val searchClient: SearchClient,
     override val name: String = "Skull XDCC"
-) : SearchEngine {
+) : SearchProvider {
 
     var url: String = "https://skullxdcc.com/ws.php?sterm=%s&"
 
     override fun search(searchTerm: String, pageable: Pageable): List<SearchResultItem> {
 
-        val result = searchClient.searchRaw(
+        searchClient.searchRaw(
             baseUrlTemplate = url,
             searchTerm = searchTerm,
             limitResults = pageable.pageSize,
             page = pageable.pageNumber
-        )
+        ).let { result ->
 
-        jacksonObjectMapper().readValue(result, Model.SearchResponse::class.java).let { result ->
-
-            return result.data.map {
-                SearchResultItem(
-                    server = it.network,
-                    channel = it.channel,
-                    bot = it.bot,
-                    fileRefId = it.packnum,
-                    fileName = it.fname,
-                    fileSize = it.fsize,
-                )
-
+            jacksonObjectMapper().readValue(result, Model.SearchResponse::class.java).let { result ->
+                return result.data.map {
+                    SearchResultItem(
+                        server = it.network,
+                        serverUrl = it.network,
+                        channel = it.channel,
+                        bot = it.bot,
+                        fileRefId = it.packnum,
+                        fileName = it.fname,
+                        fileSize = it.fsize,
+                    )
+                }
             }
+
         }
+
     }
 
     override fun toTO(): SearchEngineTO {

@@ -96,6 +96,7 @@ export interface SearchResultItem {
     'fileName': string;
     'fileSize': string;
     'server': string;
+    'serverUrl': string;
     'channel': string;
     'bot': string;
 }

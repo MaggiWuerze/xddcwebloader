@@ -5,6 +5,7 @@ class SearchResultItem(
     val fileName: String,
     val fileSize: String,
     var server: String,
+    var serverUrl: String,
     var channel: String,
     var bot: String
 )

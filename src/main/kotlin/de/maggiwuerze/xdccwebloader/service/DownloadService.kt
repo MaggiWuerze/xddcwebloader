@@ -98,7 +98,7 @@ class DownloadService(
             Channel(name = searchResultItem.channel)
         )
         val server = serverService.findByName(searchResultItem.server) ?: serverService.save(
-            Server(name = searchResultItem.server, serverUrl = searchResultItem.server)
+            Server(name = searchResultItem.server, serverUrl = searchResultItem.serverUrl)
         )
         val bot = botService.findByName(searchResultItem.bot) ?: botService.save(
             Bot(

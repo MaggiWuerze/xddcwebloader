@@ -6,8 +6,8 @@ import de.maggiwuerze.xdccwebloader.persistence.entity.Bot
 import de.maggiwuerze.xdccwebloader.persistence.entity.Channel
 import de.maggiwuerze.xdccwebloader.persistence.entity.Server
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchClient
-import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngine
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngineTO
+import de.maggiwuerze.xdccwebloader.service.search.base.SearchProvider
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component
 class XDCCRocksSearchProvider(
     override val searchClient: SearchClient,
     override val name: String = "XDCC.Rocks"
-) : SearchEngine {
+) : SearchProvider {
 
     private val objectMapper = jacksonObjectMapper()
 
@@ -46,12 +46,15 @@ class XDCCRocksSearchProvider(
                                 pattern = "xdcc send %s"
                             )
 
+                            //TODO: change SearchResultItem to return an actual ServerTO,
+                            // to allow displaying the name in the table while returning the url with the download request
                             (resultItems).add(
                                 SearchResultItem(
                                     fileRefId = jsonFile.packnumber,
                                     fileName = jsonFile.file.filename,
                                     fileSize = jsonFile.file.filesize,
                                     server = server.name,
+                                    serverUrl = server.serverUrl,
                                     channel = channel.name,
                                     bot = bot.name
                                 )

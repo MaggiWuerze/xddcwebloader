@@ -4,7 +4,7 @@ import de.maggiwuerze.xdccwebloader.model.search.SearchResultItem
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.domain.Pageable
 
-interface SearchEngine {
+interface SearchProvider {
     val searchClient: SearchClient
     val name: String
 

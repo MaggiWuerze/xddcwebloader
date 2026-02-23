@@ -10,7 +10,6 @@ import BotIcon from '@mui/icons-material/SmartToy';
 import SearchIcon from '@mui/icons-material/Search';
 import ChannelIcon from '@mui/icons-material/Tag';
 import ServerIcon from '@mui/icons-material/Public';
-import BarChartIcon from '@mui/icons-material/BarChart';
 //Download Icons
 import DownloadIcon from '@mui/icons-material/Download';
 import RunningIcon from '@mui/icons-material/Downloading';
@@ -137,54 +136,28 @@ export default function DashboardSidebar({
                             width: mini ? MINI_DRAWER_WIDTH : 'auto',
                         }}
                     >
+
+                        <DashboardSidebarHeaderItem>Resources</DashboardSidebarHeaderItem>
                         <DashboardSidebarPageItem
-                            id="reports"
-                            title="Resources"
-                            icon={<BarChartIcon/>}
-                            href="/reports"
-                            selected={!!matchPath('/reports', pathname)}
-                            defaultExpanded={!!matchPath('/downloads', pathname)}
-                            expanded={expandedItemIds.includes('reports')}
-                            nestedNavigation={
-                                <List
-                                    dense
-                                    sx={{
-                                        padding: 0,
-                                        my: 1,
-                                        pl: mini ? 0 : 1,
-                                        minWidth: 240,
-                                    }}
-                                >
-                                    <DashboardSidebarPageItem
-                                        id="bots"
-                                        title="Bots"
-                                        icon={<BotIcon/>}
-                                        href="/bot"
-                                        selected={!!matchPath('/bot/*', pathname)}
-                                    />
-                                    <DashboardSidebarPageItem
-                                        id="channels"
-                                        title="Channels"
-                                        icon={<ChannelIcon/>}
-                                        href="/channel"
-                                        selected={!!matchPath('/channel/*', pathname)}
-                                    />
-                                    <DashboardSidebarPageItem
-                                        id="servers"
-                                        title="Servers"
-                                        icon={<ServerIcon/>}
-                                        href="/server"
-                                        selected={!!matchPath('/server/*', pathname)}
-                                    />
-                                    <DashboardSidebarPageItem
-                                        id="search-engines"
-                                        title="Search Engines"
-                                        icon={<SearchIcon/>}
-                                        href="/search-engine"
-                                        selected={!!matchPath('/search-engine/*', pathname)}
-                                    />
-                                </List>
-                            }
+                            id="bots"
+                            title="Bots"
+                            icon={<BotIcon/>}
+                            href="/bot"
+                            selected={!!matchPath('/bot/*', pathname)}
+                        />
+                        <DashboardSidebarPageItem
+                            id="channels"
+                            title="Channels"
+                            icon={<ChannelIcon/>}
+                            href="/channel"
+                            selected={!!matchPath('/channel/*', pathname)}
+                        />
+                        <DashboardSidebarPageItem
+                            id="servers"
+                            title="Servers"
+                            icon={<ServerIcon/>}
+                            href="/server"
+                            selected={!!matchPath('/server/*', pathname)}
                         />
                         <DashboardSidebarDividerItem/>
                         <DashboardSidebarPageItem

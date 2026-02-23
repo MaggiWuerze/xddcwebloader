@@ -3,8 +3,8 @@ package de.maggiwuerze.xdccwebloader.controller
 import de.maggiwuerze.xdccwebloader.model.download.DownloadTO
 import de.maggiwuerze.xdccwebloader.model.search.SearchResultItem
 import de.maggiwuerze.xdccwebloader.service.DownloadService
-import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngine
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngineTO
+import de.maggiwuerze.xdccwebloader.service.search.base.SearchProvider
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("search/")
 internal class SearchController(
-    private val searchProviders: List<SearchEngine>,
+    private val searchProviders: List<SearchProvider>,
     private val downloadService: DownloadService
 ) {
 
@@ -33,8 +33,6 @@ internal class SearchController(
     fun startDownloadFromSearchResult(
         @RequestBody searchResult: SearchResultItem
     ): ResponseEntity<DownloadTO> {
-        //TODO: add the search result as download, creating bots/channel/server if necessary
-
         return ResponseEntity(downloadService.create(searchResult).toTO(), HttpStatus.OK)
     }
 
@@ -44,10 +42,8 @@ internal class SearchController(
         @PathVariable query: String
     ): ResponseEntity<List<SearchResultItem>> {
 
-         searchProviders.firstOrNull { it.name == providerName }?.let { searchEngine ->
-           return ResponseEntity(searchEngine.search(query), HttpStatus.OK)
-        }
-
-        return ResponseEntity(HttpStatus.NOT_FOUND)
+        return searchProviders.firstOrNull { it.name == providerName }?.let { searchEngine ->
+            ResponseEntity(searchEngine.search(query), HttpStatus.OK)
+        } ?: ResponseEntity(HttpStatus.NOT_FOUND)
     }
 }

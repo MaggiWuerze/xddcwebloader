@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **fileName** | **string** |  | [default to undefined]
 **fileSize** | **string** |  | [default to undefined]
 **server** | **string** |  | [default to undefined]
+**serverUrl** | **string** |  | [default to undefined]
 **channel** | **string** |  | [default to undefined]
 **bot** | **string** |  | [default to undefined]
 
@@ -22,6 +23,7 @@ const instance: SearchResultItem = {
     fileName,
     fileSize,
     server,
+    serverUrl,
     channel,
     bot,
 };

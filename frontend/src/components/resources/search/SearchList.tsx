@@ -73,7 +73,14 @@ export default function SearchList() {
 
     const columns = React.useMemo<GridColDef<SearchResultItem>[]>(
         () => [
-            {field: 'fileName', headerName: 'File name', flex: 1, minWidth: 80, headerAlign: 'center', align: 'center'},
+            {
+                field: 'fileName',
+                headerName: 'File name',
+                flex: 1,
+                minWidth: 400,
+                headerAlign: 'center',
+                align: 'center'
+            },
             {field: 'fileRefId', headerName: 'Pack Nr', flex: 1, minWidth: 80, headerAlign: 'center', align: 'center'},
             {field: 'fileSize', headerName: 'Filesize', flex: 1, minWidth: 80, headerAlign: 'center', align: 'center'},
             {
