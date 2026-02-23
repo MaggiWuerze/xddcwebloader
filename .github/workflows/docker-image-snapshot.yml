@@ -8,16 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up JDK
-        uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
-          java-version: 1.17
-      - name: Checkout project sources
-        uses: actions/checkout@v3
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-      - name: Run build with Gradle Wrapper
-        run: ./gradlew bootJar
+          distribution: temurin
+          java-version: "21"
+      - uses: gradle/actions/setup-gradle@v3
+      - run: ./gradlew bootJar
 
       - name: Copy jar file
         run: cp build/libs/*.jar Docker
