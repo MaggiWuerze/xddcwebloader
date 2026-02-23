@@ -1,0 +1,1 @@
+export enum DownloadState { "all", "active", "finished", "cancelled"}
