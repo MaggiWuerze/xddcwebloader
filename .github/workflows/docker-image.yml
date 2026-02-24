@@ -3,11 +3,12 @@ name: Docker Image CI
 on:
   release:
     types: [ published ]
-    branches: [ main ]
 
 jobs:
 
   build:
+    if: github.event.release.target_commitish == 'main'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install docker cli (Alpine vs Debian differs)
