@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("bot/")
+@RequestMapping("/api/v1/bot/")
 class BotController
     (
     private val botService: BotService,

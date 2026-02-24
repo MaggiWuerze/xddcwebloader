@@ -2,31 +2,61 @@ name: Docker Snapshot Image CI
 
 on:
   push:
-
+    branches:
+      - master
 jobs:
 
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-      - uses: gradle/actions/setup-gradle@v3
-      - run: ./gradlew bootJar
 
-      - name: Copy jar file
-        run: cp build/libs/*.jar Docker
-
-      - name: 'Login to GitHub Container Registry'
-        uses: docker/login-action@v1
+      - name: Install docker cli (Alpine vs Debian differs)
+        run: |
+          apt-get update
+          apt-get install -y docker.io
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          registry: ghcr.io
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
+          node-version: "24"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: 'Build Latest Image'
         run: |
-          docker build . --tag ghcr.io/maggiwuerze/xdccwebloader:snapshot -f Docker/Dockerfile
-          docker push ghcr.io/maggiwuerze/xdccwebloader:snapshot
+          docker build . --tag docker.io/maggiwuerze/xdccwebloader:snapshot -f ./Dockerfile
+          docker push docker.io/maggiwuerze/xdccwebloader:snapshot
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install docker cli (Alpine vs Debian differs)
+        run: |
+          apt-get update
+          apt-get install -y docker.io
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: docker.io/maggiwuerze/xdccwebloader-frontend:snapshot

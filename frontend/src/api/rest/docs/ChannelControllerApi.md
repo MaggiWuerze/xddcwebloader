@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost:8080*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**createChannel**](#createchannel) | **POST** /channel/ | |
-|[**deleteChannel**](#deletechannel) | **DELETE** /channel/{id} | |
-|[**getChannel**](#getchannel) | **GET** /channel/{id} | |
-|[**listChannels**](#listchannels) | **GET** /channel/ | |
-|[**updateChannel**](#updatechannel) | **PUT** /channel/{id} | |
+|[**createChannel**](#createchannel) | **POST** /api/v1/channel/ | |
+|[**deleteChannel**](#deletechannel) | **DELETE** /api/v1/channel/{id} | |
+|[**getChannel**](#getchannel) | **GET** /api/v1/channel/{id} | |
+|[**listChannels**](#listchannels) | **GET** /api/v1/channel/ | |
+|[**updateChannel**](#updatechannel) | **PUT** /api/v1/channel/{id} | |
 
 # **createChannel**
 > ChannelTO createChannel(channelFormTO)

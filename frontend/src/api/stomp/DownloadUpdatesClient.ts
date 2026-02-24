@@ -1,6 +1,7 @@
 // frontend/src/api/stomp/downloadUpdatesClient.ts
 import {Client, IMessage, StompSubscription} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import {EnvironmentService} from "../../data/environmentService";
 
 export type DownloadSocketPayload = {
     id: string;
@@ -14,6 +15,8 @@ export type DownloadSocketEvent<T = DownloadSocketPayload> = {
     payload: T;
 };
 
+const baseUrl = EnvironmentService.getWSBaseUrl();
+
 type SubscriptionHandle = { unsubscribe: () => void };
 
 class DownloadUpdatesClient {
@@ -24,8 +27,11 @@ class DownloadUpdatesClient {
     connect() {
         if (this.client) return;
 
+        console.log(EnvironmentService.getEnvironment())
+
         this.client = new Client({
-            webSocketFactory: () => new SockJS('http://localhost:8080/ws/downloads'),
+            //webSocketFactory: () => new SockJS(baseUrl+'/downloads'),
+            webSocketFactory: () => new SockJS(baseUrl),
             reconnectDelay: 5000,
             heartbeatIncoming: 10000,
             heartbeatOutgoing: 10000,

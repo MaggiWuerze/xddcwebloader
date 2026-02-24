@@ -28,7 +28,6 @@ class SpringSecurityConfig : WebMvcConfigurer {
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                     .requestMatchers(
                         "/",
-                        "/webjars/**",
                         "/resources/**",
                         "/swagger/**",
                         "/swagger-ui/**",

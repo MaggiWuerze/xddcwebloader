@@ -11,6 +11,7 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import Stack from '@mui/material/Stack';
 import {Link} from 'react-router';
 import ThemeSwitcher from '../themeswitcher/ThemeSwitcher';
+import { EnvironmentService } from "../../data/environmentService";
 
 const AppBar = styled(MuiAppBar)(({theme}) => ({
     borderWidth: 0,
@@ -103,8 +104,9 @@ export default function DashboardHeader({
                                             lineHeight: 1,
                                         }}
                                     >
-                                        {title}
+                                        {title} { EnvironmentService.getEnvironment()  === "production" ? "" : " - DEV" }
                                     </Typography>
+
                                 ) : null}
                             </Stack>
                         </Link>

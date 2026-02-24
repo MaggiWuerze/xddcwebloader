@@ -13,11 +13,12 @@ class CorsConfig {
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
-        val cfg = CorsConfiguration()
-        cfg.setAllowedOrigins(List.of("http://localhost:3000")); // adjust to your UI dev server
-        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        cfg.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
-        cfg.setAllowCredentials(true); // only if you use cookies/credentials
+        val cfg = CorsConfiguration().apply {
+            allowedOrigins = listOf("http://localhost:3000", "http://frontend:80","http://localhost")
+            allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            allowedHeaders = listOf("Authorization", "Content-Type", "Accept")
+            allowCredentials = true
+        }
 
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", cfg);

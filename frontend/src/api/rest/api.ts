@@ -131,7 +131,7 @@ export const BotControllerApiAxiosParamCreator = function (configuration?: Confi
         createBot: async (botFormTO: BotFormTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'botFormTO' is not null or undefined
             assertParamExists('createBot', 'botFormTO', botFormTO)
-            const localVarPath = `/bot/`;
+            const localVarPath = `/api/v1/bot/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -165,7 +165,7 @@ export const BotControllerApiAxiosParamCreator = function (configuration?: Confi
         deleteBot: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteBot', 'id', id)
-            const localVarPath = `/bot/{id}`
+            const localVarPath = `/api/v1/bot/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -198,7 +198,7 @@ export const BotControllerApiAxiosParamCreator = function (configuration?: Confi
         getBot: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getBot', 'id', id)
-            const localVarPath = `/bot/{id}`
+            const localVarPath = `/api/v1/bot/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -228,7 +228,7 @@ export const BotControllerApiAxiosParamCreator = function (configuration?: Confi
          * @throws {RequiredError}
          */
         listBots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/bot/`;
+            const localVarPath = `/api/v1/bot/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -263,7 +263,7 @@ export const BotControllerApiAxiosParamCreator = function (configuration?: Confi
             assertParamExists('updateBot', 'id', id)
             // verify required parameter 'botFormTO' is not null or undefined
             assertParamExists('updateBot', 'botFormTO', botFormTO)
-            const localVarPath = `/bot/{id}`
+            const localVarPath = `/api/v1/bot/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -486,7 +486,7 @@ export const ChannelControllerApiAxiosParamCreator = function (configuration?: C
         createChannel: async (channelFormTO: ChannelFormTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'channelFormTO' is not null or undefined
             assertParamExists('createChannel', 'channelFormTO', channelFormTO)
-            const localVarPath = `/channel/`;
+            const localVarPath = `/api/v1/channel/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -520,7 +520,7 @@ export const ChannelControllerApiAxiosParamCreator = function (configuration?: C
         deleteChannel: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteChannel', 'id', id)
-            const localVarPath = `/channel/{id}`
+            const localVarPath = `/api/v1/channel/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -553,7 +553,7 @@ export const ChannelControllerApiAxiosParamCreator = function (configuration?: C
         getChannel: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getChannel', 'id', id)
-            const localVarPath = `/channel/{id}`
+            const localVarPath = `/api/v1/channel/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -583,7 +583,7 @@ export const ChannelControllerApiAxiosParamCreator = function (configuration?: C
          * @throws {RequiredError}
          */
         listChannels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/channel/`;
+            const localVarPath = `/api/v1/channel/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -618,7 +618,7 @@ export const ChannelControllerApiAxiosParamCreator = function (configuration?: C
             assertParamExists('updateChannel', 'id', id)
             // verify required parameter 'channelFormTO' is not null or undefined
             assertParamExists('updateChannel', 'channelFormTO', channelFormTO)
-            const localVarPath = `/channel/{id}`
+            const localVarPath = `/api/v1/channel/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -841,7 +841,7 @@ export const DownloadControllerApiAxiosParamCreator = function (configuration?: 
         addDownload: async (downloadFormTO: DownloadFormTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'downloadFormTO' is not null or undefined
             assertParamExists('addDownload', 'downloadFormTO', downloadFormTO)
-            const localVarPath = `/download/`;
+            const localVarPath = `/api/v1/download/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -875,7 +875,7 @@ export const DownloadControllerApiAxiosParamCreator = function (configuration?: 
         cancelDownload: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cancelDownload', 'id', id)
-            const localVarPath = `/download/{id}`
+            const localVarPath = `/api/v1/download/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -905,7 +905,7 @@ export const DownloadControllerApiAxiosParamCreator = function (configuration?: 
          * @throws {RequiredError}
          */
         failedDownloads: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/download/failed`;
+            const localVarPath = `/api/v1/download/failed`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -937,7 +937,7 @@ export const DownloadControllerApiAxiosParamCreator = function (configuration?: 
         getActiveDownloads: async (active: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'active' is not null or undefined
             assertParamExists('getActiveDownloads', 'active', active)
-            const localVarPath = `/download/active/`;
+            const localVarPath = `/api/v1/download/active/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -973,7 +973,7 @@ export const DownloadControllerApiAxiosParamCreator = function (configuration?: 
         getDownload: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getDownload', 'id', id)
-            const localVarPath = `/download/{id}`
+            const localVarPath = `/api/v1/download/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1003,7 +1003,7 @@ export const DownloadControllerApiAxiosParamCreator = function (configuration?: 
          * @throws {RequiredError}
          */
         listDownloads: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/download/`;
+            const localVarPath = `/api/v1/download/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1035,7 +1035,7 @@ export const DownloadControllerApiAxiosParamCreator = function (configuration?: 
         removeDownload: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('removeDownload', 'id', id)
-            const localVarPath = `/download/{id}`
+            const localVarPath = `/api/v1/download/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1309,7 +1309,7 @@ export const SearchControllerApiAxiosParamCreator = function (configuration?: Co
          * @throws {RequiredError}
          */
         listSearchProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/search/`;
+            const localVarPath = `/api/v1/search/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1344,7 +1344,7 @@ export const SearchControllerApiAxiosParamCreator = function (configuration?: Co
             assertParamExists('searchWithProvider', 'providerName', providerName)
             // verify required parameter 'query' is not null or undefined
             assertParamExists('searchWithProvider', 'query', query)
-            const localVarPath = `/search/{providerName}/{query}`
+            const localVarPath = `/api/v1/search/{providerName}/{query}`
                 .replace(`{${"providerName"}}`, encodeURIComponent(String(providerName)))
                 .replace(`{${"query"}}`, encodeURIComponent(String(query)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1378,7 +1378,7 @@ export const SearchControllerApiAxiosParamCreator = function (configuration?: Co
         startDownloadFromSearchResult: async (searchResultItem: SearchResultItem, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchResultItem' is not null or undefined
             assertParamExists('startDownloadFromSearchResult', 'searchResultItem', searchResultItem)
-            const localVarPath = `/search/`;
+            const localVarPath = `/api/v1/search/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1538,7 +1538,7 @@ export const ServerControllerApiAxiosParamCreator = function (configuration?: Co
         createServer: async (serverFormTO: ServerFormTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'serverFormTO' is not null or undefined
             assertParamExists('createServer', 'serverFormTO', serverFormTO)
-            const localVarPath = `/server/`;
+            const localVarPath = `/api/v1/server/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1572,7 +1572,7 @@ export const ServerControllerApiAxiosParamCreator = function (configuration?: Co
         deleteServer: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteServer', 'id', id)
-            const localVarPath = `/server/{id}`
+            const localVarPath = `/api/v1/server/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1605,7 +1605,7 @@ export const ServerControllerApiAxiosParamCreator = function (configuration?: Co
         getServer: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getServer', 'id', id)
-            const localVarPath = `/server/{id}`
+            const localVarPath = `/api/v1/server/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1635,7 +1635,7 @@ export const ServerControllerApiAxiosParamCreator = function (configuration?: Co
          * @throws {RequiredError}
          */
         listServers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/server/`;
+            const localVarPath = `/api/v1/server/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1670,7 +1670,7 @@ export const ServerControllerApiAxiosParamCreator = function (configuration?: Co
             assertParamExists('updateServer', 'id', id)
             // verify required parameter 'serverFormTO' is not null or undefined
             assertParamExists('updateServer', 'serverFormTO', serverFormTO)
-            const localVarPath = `/server/{id}`
+            const localVarPath = `/api/v1/server/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

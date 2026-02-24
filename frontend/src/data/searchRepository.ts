@@ -1,8 +1,15 @@
 import type {GridFilterModel, GridPaginationModel, GridSortModel} from '@mui/x-data-grid';
-import {DownloadTO, SearchControllerApi, SearchEngineTO, SearchResultItem} from '../api/rest';
+import {
+    Configuration,
+    DownloadTO,
+    SearchControllerApi,
+    SearchEngineTO,
+    SearchResultItem
+} from '../api/rest';
+import {EnvironmentService} from "./environmentService";
 
-const api = new SearchControllerApi();
-
+const baseUrl = EnvironmentService.getBaseUrl();
+const api = new SearchControllerApi(new Configuration({ basePath: baseUrl }));
 
 /**
  * Bot repository:

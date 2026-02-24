@@ -1,7 +1,9 @@
 import type {GridFilterModel, GridPaginationModel, GridSortModel} from '@mui/x-data-grid';
-import {DownloadControllerApi, DownloadFormTO, DownloadTO} from '../api/rest';
+import { Configuration, DownloadControllerApi, DownloadFormTO, DownloadTO} from '../api/rest';
+import {EnvironmentService} from "./environmentService";
 
-const api = new DownloadControllerApi();
+const baseUrl = EnvironmentService.getBaseUrl();
+const api = new DownloadControllerApi(new Configuration({ basePath: baseUrl }));
 
 type ValidationResult = { issues: { message: string; path: (keyof DownloadFormTO)[] }[] };
 

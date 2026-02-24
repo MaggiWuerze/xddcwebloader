@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("download/")
+@RequestMapping("api/v1/download/")
 class DownloadController(
     val downloadService: DownloadService,
     val eventService: EventService

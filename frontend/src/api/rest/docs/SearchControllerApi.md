@@ -4,9 +4,9 @@ All URIs are relative to *http://localhost:8080*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**listSearchProviders**](#listsearchproviders) | **GET** /search/ | |
-|[**searchWithProvider**](#searchwithprovider) | **GET** /search/{providerName}/{query} | |
-|[**startDownloadFromSearchResult**](#startdownloadfromsearchresult) | **POST** /search/ | |
+|[**listSearchProviders**](#listsearchproviders) | **GET** /api/v1/search/ | |
+|[**searchWithProvider**](#searchwithprovider) | **GET** /api/v1/search/{providerName}/{query} | |
+|[**startDownloadFromSearchResult**](#startdownloadfromsearchresult) | **POST** /api/v1/search/ | |
 
 # **listSearchProviders**
 > Array<SearchEngineTO> listSearchProviders()

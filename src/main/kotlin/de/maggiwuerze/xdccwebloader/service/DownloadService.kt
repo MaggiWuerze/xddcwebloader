@@ -122,13 +122,13 @@ class DownloadService(
      */
     @PostConstruct
     private fun createDownloadFolderIfNecessary() {
-        val path = "." + File.separator + "xdcc"
+        val path = "xdcc"
         val customDir = File(path)
 
         if (customDir.exists()) {
-            log.info("download folder exists in " + path)
+            log.info("download folder exists in " + customDir.absolutePath)
         } else if (customDir.mkdirs()) {
-            log.info("download folder was created in " + path)
+            log.info("download folder was created in " + customDir.absolutePath)
         } else {
             throw RuntimeException("target folder" + customDir + "could not be created")
         }

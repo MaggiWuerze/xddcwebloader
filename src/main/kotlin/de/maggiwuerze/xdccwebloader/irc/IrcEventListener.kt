@@ -23,7 +23,10 @@ import org.slf4j.LoggerFactory
 import org.springframework.core.task.SimpleAsyncTaskExecutor
 import org.springframework.core.task.TaskExecutor
 import org.springframework.stereotype.Component
+import java.io.File
 import java.io.Serializable
+import java.nio.file.Path
+import java.nio.file.Paths
 import java.nio.file.attribute.BasicFileAttributes
 
 @Component
@@ -99,8 +102,7 @@ class IrcEventListener(val eventPublisher: EventPublisher, val downloadService: 
 
             download.filename = event.getSafeFilename()
             //		String path = DL_PATH + File.separatorChar + event.getSafeFilename();
-            val path: java.nio.file.Path =
-                java.nio.file.Paths.get(IrcEventListener.Companion.DL_PATH + java.io.File.separatorChar + event.getSafeFilename())
+            val path: Path = Paths.get(DL_PATH + File.separatorChar + event.getSafeFilename())
 
             //Receive the file from the user
             // If the file exists, resume from a position
@@ -157,6 +159,6 @@ class IrcEventListener(val eventPublisher: EventPublisher, val downloadService: 
 
     companion object {
         //    final String DL_PATH = File.separator + "opt" + File.separator + "xdcc" + File.separator + "data";
-        private val DL_PATH = "." + java.io.File.separator + "xdcc"
+        private const val DL_PATH = "xdcc"
     }
 }

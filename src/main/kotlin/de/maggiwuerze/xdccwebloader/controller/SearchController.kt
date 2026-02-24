@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("search/")
+@RequestMapping("api/v1/search/")
 internal class SearchController(
     private val searchProviders: List<SearchProvider>,
     private val downloadService: DownloadService

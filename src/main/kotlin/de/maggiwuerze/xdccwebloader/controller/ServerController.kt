@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("server/")
+@RequestMapping("api/v1/server/")
 internal class ServerController(private val serverService: ServerService) {
 
     val log = LoggerFactory.getLogger(this.javaClass.name)

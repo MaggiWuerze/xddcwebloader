@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost:8080*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**createBot**](#createbot) | **POST** /bot/ | |
-|[**deleteBot**](#deletebot) | **DELETE** /bot/{id} | |
-|[**getBot**](#getbot) | **GET** /bot/{id} | |
-|[**listBots**](#listbots) | **GET** /bot/ | |
-|[**updateBot**](#updatebot) | **PUT** /bot/{id} | |
+|[**createBot**](#createbot) | **POST** /api/v1/bot/ | |
+|[**deleteBot**](#deletebot) | **DELETE** /api/v1/bot/{id} | |
+|[**getBot**](#getbot) | **GET** /api/v1/bot/{id} | |
+|[**listBots**](#listbots) | **GET** /api/v1/bot/ | |
+|[**updateBot**](#updatebot) | **PUT** /api/v1/bot/{id} | |
 
 # **createBot**
 > BotTO createBot(botFormTO)

@@ -1,0 +1,32 @@
+networks:
+    backend:
+        external: false
+services:
+    backend:
+        image: maggiwuerze/xdccwebloader:snapshot
+        container_name: xdcc_webloader
+        restart: unless-stopped
+        volumes:
+            - 'path/to/your/xdcc/downloads:/xdcc_webloader/xdcc'
+            - 'path/to/your/xdcc/data:/xdcc_webloader/data'
+        expose:
+            - 8080
+        environment:
+            - XDCC_DB_TYPE=org.hibernate.dialect.PostgreSQLDialect
+            - XDCC_DB_URL=postgresql://mediaserver:49153/postgres
+            - XDCC_DB_USER=sa
+            - XDCC_DB_PASSWORD=sa
+        networks:
+            - backend
+
+    frontend:
+        image: maggiwuerze/xdccwebloader-frontend:snapshot
+        container_name: xdcc_webloader_fe
+        restart: unless-stopped
+        environment:
+            - API_BASE_URL=http://xdcc_webloader:8080
+        ports:
+            - '9999:80'
+        networks:
+            - backend
+            - default

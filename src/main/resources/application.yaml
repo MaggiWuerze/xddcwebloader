@@ -3,7 +3,7 @@ spring:
     name: xdccwebloader
   data:
     rest:
-      base-path: /api
+      base-path: /
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: false

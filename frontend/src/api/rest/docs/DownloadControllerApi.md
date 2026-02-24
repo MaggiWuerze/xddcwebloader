@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost:8080*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**addDownload**](#adddownload) | **POST** /download/ | |
-|[**cancelDownload**](#canceldownload) | **PUT** /download/{id} | |
-|[**failedDownloads**](#faileddownloads) | **GET** /download/failed | |
-|[**getActiveDownloads**](#getactivedownloads) | **GET** /download/active/ | |
-|[**getDownload**](#getdownload) | **GET** /download/{id} | |
-|[**listDownloads**](#listdownloads) | **GET** /download/ | |
-|[**removeDownload**](#removedownload) | **DELETE** /download/{id} | |
+|[**addDownload**](#adddownload) | **POST** /api/v1/download/ | |
+|[**cancelDownload**](#canceldownload) | **PUT** /api/v1/download/{id} | |
+|[**failedDownloads**](#faileddownloads) | **GET** /api/v1/download/failed | |
+|[**getActiveDownloads**](#getactivedownloads) | **GET** /api/v1/download/active/ | |
+|[**getDownload**](#getdownload) | **GET** /api/v1/download/{id} | |
+|[**listDownloads**](#listdownloads) | **GET** /api/v1/download/ | |
+|[**removeDownload**](#removedownload) | **DELETE** /api/v1/download/{id} | |
 
 # **addDownload**
 > Array<DownloadTO> addDownload(downloadFormTO)

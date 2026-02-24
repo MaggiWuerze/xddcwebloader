@@ -1,9 +1,11 @@
 import type {GridFilterModel, GridPaginationModel, GridSortModel} from '@mui/x-data-grid';
 import type {BaseRepository} from './base/baseRepository';
-import {ServerControllerApi, type ServerFormTO, ServerTO} from '../api/rest';
+import { Configuration, ServerControllerApi, type ServerFormTO, ServerTO} from '../api/rest';
+import {EnvironmentService} from "./environmentService";
 
 
-const api = new ServerControllerApi();
+const baseUrl = EnvironmentService.getBaseUrl();
+const api = new ServerControllerApi(new Configuration({ basePath: baseUrl }));
 
 type ValidationResult = { issues: { message: string; path: (keyof ServerTO)[] }[] };
 /**

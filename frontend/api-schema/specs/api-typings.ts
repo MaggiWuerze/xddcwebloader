@@ -4,53 +4,53 @@
  */
 
 export interface paths {
-  "/server/{id}": {
+  "/api/v1/server/{id}": {
     get: operations["getServer"];
     put: operations["updateServer"];
     delete: operations["deleteServer"];
   };
-  "/download/{id}": {
+  "/api/v1/download/{id}": {
     get: operations["getDownload"];
     put: operations["cancelDownload"];
     delete: operations["removeDownload"];
   };
-  "/channel/{id}": {
+  "/api/v1/channel/{id}": {
     get: operations["getChannel"];
     put: operations["updateChannel"];
     delete: operations["deleteChannel"];
   };
-  "/bot/{id}": {
+  "/api/v1/bot/{id}": {
     get: operations["getBot"];
     put: operations["updateBot"];
     delete: operations["deleteBot"];
   };
-  "/server/": {
+  "/api/v1/server/": {
     get: operations["listServers"];
     post: operations["createServer"];
   };
-  "/search/": {
+  "/api/v1/search/": {
     get: operations["listSearchProviders"];
     post: operations["startDownloadFromSearchResult"];
   };
-  "/download/": {
+  "/api/v1/download/": {
     get: operations["listDownloads"];
     post: operations["addDownload"];
   };
-  "/channel/": {
+  "/api/v1/channel/": {
     get: operations["listChannels"];
     post: operations["createChannel"];
   };
-  "/bot/": {
+  "/api/v1/bot/": {
     get: operations["listBots"];
     post: operations["createBot"];
   };
-  "/search/{providerName}/{query}": {
+  "/api/v1/search/{providerName}/{query}": {
     get: operations["searchWithProvider"];
   };
-  "/download/failed": {
+  "/api/v1/download/failed": {
     get: operations["failedDownloads"];
   };
-  "/download/active/": {
+  "/api/v1/download/active/": {
     get: operations["getActiveDownloads"];
   };
 }

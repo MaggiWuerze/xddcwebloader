@@ -1,8 +1,11 @@
 import type {GridFilterModel, GridPaginationModel, GridSortModel} from '@mui/x-data-grid';
 import type {BaseRepository} from './base/baseRepository';
-import {BotControllerApi, type BotFormTO, type BotTO} from '../api/rest';
+import {BotControllerApi, type BotFormTO, type BotTO, Configuration} from '../api/rest';
+import {EnvironmentService} from "./environmentService";
 
-const api = new BotControllerApi();
+const baseUrl = EnvironmentService.getBaseUrl();
+
+const api = new BotControllerApi(new Configuration({ basePath: baseUrl }));
 
 type ValidationResult = { issues: { message: string; path: (keyof BotTO)[] }[] };
 /**
@@ -56,6 +59,7 @@ export const BotRepository: BaseRepository<BotTO, BotFormTO> = {
         sortModel?: GridSortModel;
         filterModel?: GridFilterModel;
     }): Promise<{ items: BotTO[]; itemCount: number }> {
+
         const bots = await api.listBots().then((rs) => rs.data);
 
         let filteredBots = [...bots];

@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost:8080*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**createServer**](#createserver) | **POST** /server/ | |
-|[**deleteServer**](#deleteserver) | **DELETE** /server/{id} | |
-|[**getServer**](#getserver) | **GET** /server/{id} | |
-|[**listServers**](#listservers) | **GET** /server/ | |
-|[**updateServer**](#updateserver) | **PUT** /server/{id} | |
+|[**createServer**](#createserver) | **POST** /api/v1/server/ | |
+|[**deleteServer**](#deleteserver) | **DELETE** /api/v1/server/{id} | |
+|[**getServer**](#getserver) | **GET** /api/v1/server/{id} | |
+|[**listServers**](#listservers) | **GET** /api/v1/server/ | |
+|[**updateServer**](#updateserver) | **PUT** /api/v1/server/{id} | |
 
 # **createServer**
 > ServerTO createServer(serverFormTO)
