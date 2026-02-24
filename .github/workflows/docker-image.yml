@@ -7,7 +7,7 @@ on:
 jobs:
 
   build:
-    if: github.event.release.target_commitish == 'main'
+    if: forgejo.ref_name == 'main'
 
     runs-on: ubuntu-latest
     steps:
