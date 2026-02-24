@@ -2,7 +2,10 @@ name: Docker Image CI
 
 on:
   release:
-    types: [ published, edited, deleted ]
+    types:
+      - published
+      - edited
+      - created
 
 jobs:
 
@@ -13,6 +16,8 @@ jobs:
         run: |
           apt-get update
           apt-get install -y docker.io
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -26,11 +31,17 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: 'Build version tagged Image'
-        run: |
-          docker build . --tag docker.io/maggiwuerze/xdccwebloader:${{ github.event.release.tag_name }} -f ./Dockerfile
-          docker push docker.io/maggiwuerze/xdccwebloader:${{ github.event.release.tag_name }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./Dockerfile
+          push: true
+          tags: docker.io/maggiwuerze/xdccwebloader:${{ github.event.release.tag_name }}
 
       - name: 'Build Latest Image'
-        run: |
-          docker build . --tag docker.io/maggiwuerze/xdccwebloader::latest -f ./Dockerfile
-          docker build . --tag docker.io/maggiwuerze/xdccwebloader:latest
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./Dockerfile
+          push: true
+          tags: docker.io/maggiwuerze/xdccwebloader:latest
