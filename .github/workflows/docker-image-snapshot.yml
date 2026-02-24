@@ -3,7 +3,7 @@ name: Docker Snapshot Image CI
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
 
   build:
