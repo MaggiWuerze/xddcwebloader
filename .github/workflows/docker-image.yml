@@ -7,8 +7,6 @@ on:
 jobs:
 
   build:
-    if: forgejo.ref_name == 'main'
-
     runs-on: ubuntu-latest
     steps:
       - name: Install docker cli (Alpine vs Debian differs)
