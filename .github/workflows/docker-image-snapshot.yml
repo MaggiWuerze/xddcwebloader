@@ -28,10 +28,14 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 'Build Latest Image'
-        run: |
-          docker build . --tag docker.io/maggiwuerze/xdccwebloader:snapshot -f ./Dockerfile
-          docker push docker.io/maggiwuerze/xdccwebloader:snapshot
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          tags: docker.io/maggiwuerze/xdccwebloader:snapshot
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -61,4 +65,5 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
           tags: docker.io/maggiwuerze/xdccwebloader-frontend:snapshot
