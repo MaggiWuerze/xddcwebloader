@@ -9,7 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Install docker cli (Alpine vs Debian differs)
         run: |
           apt-get update
