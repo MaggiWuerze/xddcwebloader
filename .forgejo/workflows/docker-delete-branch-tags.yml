@@ -1,0 +1,46 @@
+name: Delete Docker Hub tag when branch is deleted
+
+on:
+  delete:
+
+jobs:
+
+  delete-stale-tag:
+    # Only for branch deletions (ignore tag deletions)
+    if: ${{ github.event.ref_type == 'branch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compute Docker tag from deleted branch name
+        id: tag
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BRANCH="${{ github.event.ref }}"
+
+          # Convert branch name to a Docker-tag-friendly format:
+          # - lowercase
+          # - replace anything not in [a-z0-9._-] with '-'
+          TAG="$(echo "$BRANCH" \
+            | tr '[:upper:]' '[:lower:]' \
+            | sed -E 's#[^a-z0-9._-]+#-#g')"
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Deleting Docker Hub tag: $TAG"
+      # Delete tags
+      - name: Delete Backend tag
+        uses: joshbeard/hub-tag-delete@v1
+        with:
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          dockerhub_repository: maggiwuerze/xdccwebloader
+          json_file: ${{ steps.tag.outputs.tag }}
+
+      - name: Delete Frontend tag
+        uses: joshbeard/hub-tag-delete@v1
+        with:
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          dockerhub_repository: maggiwuerze/xdccwebloader-frontend
+          json_file: ${{ steps.tag.outputs.tag }}
+
