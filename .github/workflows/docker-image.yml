@@ -36,7 +36,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64, windows/amd64
           tags: docker.io/maggiwuerze/xdccwebloader:${{ github.event.release.tag_name }},docker.io/maggiwuerze/xdccwebloader:latest
 
   build-frontend:
@@ -67,5 +67,5 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64, windows/amd64
           tags: docker.io/maggiwuerze/xdccwebloader-frontend:${{ github.event.release.tag_name }},docker.io/maggiwuerze/xdccwebloader-frontend:latest
