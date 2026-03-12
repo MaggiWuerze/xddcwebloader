@@ -47,23 +47,23 @@ two docker images available, which can be found here:
 </p>
 
 <div align="center">
-    <a href="https://hub.docker.com/r/maggiwuerze/xdccwebloader">Backend</a>
-    <br>
-    <a href="https://hub.docker.com/r/maggiwuerze/xdccwebloader-frontend">Frontend</a>
+  <a href="https://hub.docker.com/r/maggiwuerze/xdccwebloader"> Backend </a>
+  <br>
+  <a href="https://hub.docker.com/r/maggiwuerze/xdccwebloader-frontend"> Frontend </a>
+  <br>
 </div>
 
-<p align="center">
-- The <code>snapshot</code> image is based on the current master branch and is build at every push to master.
-- The <code>latest</code> image is always based on the latest release and is updated automatically when a new release is issued.
-- Versions tagged with <code>vX.x</code> are created when a new versioned release is issued. They are usually more stable and
-  don't change that frequently.
-</p>
+<div align="center">
+  <span>- The <code>snapshot</code> image is based on the current master branch and is build at every push to main.</span>
+  <br>
+  <span>- Versions tagged with <code>vX.x</code> are created when a new versioned release is issued. They are usually more stable and don't change that frequently. The <br><code>latest</code> image is always based on the latest release.</span>
+</div>
 
 
 <h3 align="center">Locally</h3>
 
 <p align="center">
-You can also simply execute the jar from the [releases](https://github.com/MaggiWuerze/xddcwebloader/releases) section.
+You can also simply execute the jar from the <a href="https://git.maggiwuerze.de/maggiwuerze/xdcwebloader/releases">releases</a> section.
 it packs everything except a java runtime, so as long as you have java you can run it and start right away.
 </p>
 
