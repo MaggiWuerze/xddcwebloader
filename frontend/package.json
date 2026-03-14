@@ -30,7 +30,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "openapi-typescript": "^5.4.2"
+    "openapi-typescript": "^7.13.0"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
