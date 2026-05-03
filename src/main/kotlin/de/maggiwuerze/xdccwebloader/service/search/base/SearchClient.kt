@@ -41,7 +41,7 @@ class SearchClient {
         }
 
         val url =
-            "${base}limit_results=${URLEncoder.encode(limitResults.toString(), StandardCharsets.UTF_8)}" +
+            "${base}&limit_results=${URLEncoder.encode(limitResults.toString(), StandardCharsets.UTF_8)}" +
                     "&page=${URLEncoder.encode(page.toString(), StandardCharsets.UTF_8)}"
 
         val request = HttpRequest.newBuilder()
@@ -83,7 +83,7 @@ class SearchClient {
         }
 
         val url =
-            "${base}limit_results=${URLEncoder.encode(limitResults.toString(), StandardCharsets.UTF_8)}" +
+            "${base}&limit_results=${URLEncoder.encode(limitResults.toString(), StandardCharsets.UTF_8)}" +
                     "&page=${URLEncoder.encode(page.toString(), StandardCharsets.UTF_8)}"
 
         val request = HttpRequest.newBuilder()

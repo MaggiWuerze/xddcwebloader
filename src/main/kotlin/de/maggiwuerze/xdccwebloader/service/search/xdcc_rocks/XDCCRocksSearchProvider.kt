@@ -1,6 +1,7 @@
 package de.maggiwuerze.xdccwebloader.service.search.xdcc_rocks
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import de.maggiwuerze.xdccwebloader.model.search.SearchResult
 import de.maggiwuerze.xdccwebloader.model.search.SearchResultItem
 import de.maggiwuerze.xdccwebloader.persistence.entity.Bot
 import de.maggiwuerze.xdccwebloader.persistence.entity.Channel
@@ -21,7 +22,7 @@ class XDCCRocksSearchProvider(
 
     var url: String = "https://xdcc.rocks/search/?searchword=%s&page=1"
 
-    override fun search(searchTerm: String, pageable: Pageable): List<SearchResultItem> {
+    override fun search(searchTerm: String, pageable: Pageable): SearchResult {
 
         val result = searchClient.searchRaw(
             baseUrlTemplate = url,
@@ -64,7 +65,7 @@ class XDCCRocksSearchProvider(
                 }
             }
         }
-        return resultItems
+        return getPaginatedResult(resultItems, pageable)
     }
 
     override fun toTO(): SearchEngineTO {

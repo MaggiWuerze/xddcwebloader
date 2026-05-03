@@ -44,7 +44,7 @@ export interface paths {
     get: operations["listBots"];
     post: operations["createBot"];
   };
-  "/api/v1/search/{providerName}/{query}": {
+  "/api/v1/search/{providerName}/{query}/{page}/{pageSize}": {
     get: operations["searchWithProvider"];
   };
   "/api/v1/download/failed": {
@@ -158,6 +158,11 @@ export interface components {
       /** Format: uuid */
       targetBotId: string;
       fileRefId: string;
+    };
+    SearchResult: {
+      /** Format: int32 */
+      totalItems: number;
+      results: components["schemas"]["SearchResultItem"][];
     };
     SearchEngineTO: {
       name: string;
@@ -619,13 +624,15 @@ export interface operations {
       path: {
         providerName: string;
         query: string;
+        page: number;
+        pageSize: number;
       };
     };
     responses: {
       /** OK */
       200: {
         content: {
-          "*/*": components["schemas"]["SearchResultItem"][];
+          "*/*": components["schemas"]["SearchResult"];
         };
       };
     };

@@ -39,8 +39,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     //DATABASE
-    runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("com.h2database:h2")
+    implementation("org.postgresql:postgresql")
+    implementation("com.h2database:h2")
 
     //XDCC
     //implementation("com.github.pircbotx:pircbotx:2.3.1")

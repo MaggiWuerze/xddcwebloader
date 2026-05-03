@@ -1,11 +1,14 @@
 package de.maggiwuerze.xdccwebloader.controller
 
 import de.maggiwuerze.xdccwebloader.model.download.DownloadTO
+import de.maggiwuerze.xdccwebloader.model.search.SearchResult
 import de.maggiwuerze.xdccwebloader.model.search.SearchResultItem
 import de.maggiwuerze.xdccwebloader.service.DownloadService
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngineTO
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchProvider
 import org.slf4j.LoggerFactory
+import org.springdoc.core.annotations.ParameterObject
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -36,14 +39,15 @@ internal class SearchController(
         return ResponseEntity(downloadService.create(searchResult).toTO(), HttpStatus.OK)
     }
 
-    @GetMapping("{providerName}/{query}")
+    @GetMapping("{providerName}/{query}/{page}/{pageSize}")
     fun searchWithProvider(
         @PathVariable providerName: String,
-        @PathVariable query: String
-    ): ResponseEntity<List<SearchResultItem>> {
-
+        @PathVariable query: String,
+        @PathVariable page : Int = 1,
+        @PathVariable pageSize: Int = 25
+    ): ResponseEntity<SearchResult> {
         return searchProviders.firstOrNull { it.name == providerName }?.let { searchEngine ->
-            ResponseEntity(searchEngine.search(query), HttpStatus.OK)
+            ResponseEntity(searchEngine.search(query, Pageable.ofSize(pageSize).withPage(page)), HttpStatus.OK)
         } ?: ResponseEntity(HttpStatus.NOT_FOUND)
     }
 }

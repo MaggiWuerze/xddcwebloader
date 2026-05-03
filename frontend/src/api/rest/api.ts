@@ -91,6 +91,10 @@ export interface DownloadTO {
 export interface SearchEngineTO {
     'name': string;
 }
+export interface SearchResult {
+    'totalItems': number;
+    'results': Array<SearchResultItem>;
+}
 export interface SearchResultItem {
     'fileRefId': string;
     'fileName': string;
@@ -1336,17 +1340,25 @@ export const SearchControllerApiAxiosParamCreator = function (configuration?: Co
          * 
          * @param {string} providerName 
          * @param {string} query 
+         * @param {number} page 
+         * @param {number} pageSize 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchWithProvider: async (providerName: string, query: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchWithProvider: async (providerName: string, query: string, page: number, pageSize: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'providerName' is not null or undefined
             assertParamExists('searchWithProvider', 'providerName', providerName)
             // verify required parameter 'query' is not null or undefined
             assertParamExists('searchWithProvider', 'query', query)
-            const localVarPath = `/api/v1/search/{providerName}/{query}`
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('searchWithProvider', 'page', page)
+            // verify required parameter 'pageSize' is not null or undefined
+            assertParamExists('searchWithProvider', 'pageSize', pageSize)
+            const localVarPath = `/api/v1/search/{providerName}/{query}/{page}/{pageSize}`
                 .replace(`{${"providerName"}}`, encodeURIComponent(String(providerName)))
-                .replace(`{${"query"}}`, encodeURIComponent(String(query)));
+                .replace(`{${"query"}}`, encodeURIComponent(String(query)))
+                .replace(`{${"page"}}`, encodeURIComponent(String(page)))
+                .replace(`{${"pageSize"}}`, encodeURIComponent(String(pageSize)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1427,11 +1439,13 @@ export const SearchControllerApiFp = function(configuration?: Configuration) {
          * 
          * @param {string} providerName 
          * @param {string} query 
+         * @param {number} page 
+         * @param {number} pageSize 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchWithProvider(providerName: string, query: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SearchResultItem>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchWithProvider(providerName, query, options);
+        async searchWithProvider(providerName: string, query: string, page: number, pageSize: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchWithProvider(providerName, query, page, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SearchControllerApi.searchWithProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1469,11 +1483,13 @@ export const SearchControllerApiFactory = function (configuration?: Configuratio
          * 
          * @param {string} providerName 
          * @param {string} query 
+         * @param {number} page 
+         * @param {number} pageSize 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchWithProvider(providerName: string, query: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SearchResultItem>> {
-            return localVarFp.searchWithProvider(providerName, query, options).then((request) => request(axios, basePath));
+        searchWithProvider(providerName: string, query: string, page: number, pageSize: number, options?: RawAxiosRequestConfig): AxiosPromise<SearchResult> {
+            return localVarFp.searchWithProvider(providerName, query, page, pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1504,11 +1520,13 @@ export class SearchControllerApi extends BaseAPI {
      * 
      * @param {string} providerName 
      * @param {string} query 
+     * @param {number} page 
+     * @param {number} pageSize 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public searchWithProvider(providerName: string, query: string, options?: RawAxiosRequestConfig) {
-        return SearchControllerApiFp(this.configuration).searchWithProvider(providerName, query, options).then((request) => request(this.axios, this.basePath));
+    public searchWithProvider(providerName: string, query: string, page: number, pageSize: number, options?: RawAxiosRequestConfig) {
+        return SearchControllerApiFp(this.configuration).searchWithProvider(providerName, query, page, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

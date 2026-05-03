@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost:8080*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**listSearchProviders**](#listsearchproviders) | **GET** /api/v1/search/ | |
-|[**searchWithProvider**](#searchwithprovider) | **GET** /api/v1/search/{providerName}/{query} | |
+|[**searchWithProvider**](#searchwithprovider) | **GET** /api/v1/search/{providerName}/{query}/{page}/{pageSize} | |
 |[**startDownloadFromSearchResult**](#startdownloadfromsearchresult) | **POST** /api/v1/search/ | |
 
 # **listSearchProviders**
@@ -52,7 +52,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **searchWithProvider**
-> Array<SearchResultItem> searchWithProvider()
+> SearchResult searchWithProvider()
 
 
 ### Example
@@ -68,10 +68,14 @@ const apiInstance = new SearchControllerApi(configuration);
 
 let providerName: string; // (default to undefined)
 let query: string; // (default to undefined)
+let page: number; // (default to undefined)
+let pageSize: number; // (default to undefined)
 
 const { status, data } = await apiInstance.searchWithProvider(
     providerName,
-    query
+    query,
+    page,
+    pageSize
 );
 ```
 
@@ -81,11 +85,13 @@ const { status, data } = await apiInstance.searchWithProvider(
 |------------- | ------------- | ------------- | -------------|
 | **providerName** | [**string**] |  | defaults to undefined|
 | **query** | [**string**] |  | defaults to undefined|
+| **page** | [**number**] |  | defaults to undefined|
+| **pageSize** | [**number**] |  | defaults to undefined|
 
 
 ### Return type
 
-**Array<SearchResultItem>**
+**SearchResult**
 
 ### Authorization
 

@@ -1,5 +1,6 @@
 package de.maggiwuerze.xdccwebloader.service.search.xdcc_eu
 
+import de.maggiwuerze.xdccwebloader.model.search.SearchResult
 import de.maggiwuerze.xdccwebloader.model.search.SearchResultItem
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchClient
 import de.maggiwuerze.xdccwebloader.service.search.base.SearchEngineTO
@@ -8,6 +9,8 @@ import org.apache.commons.lang3.StringUtils
 import org.jsoup.Jsoup
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.to
 
 
 @Component
@@ -18,18 +21,24 @@ class XDCCEUSearchProvider(
 
     var url: String = "https://www.xdcc.eu/search.php?searchkey=%s"
 
-    override fun search(searchTerm: String, pageable: Pageable): List<SearchResultItem> {
+    val cache = ConcurrentHashMap<String, List<SearchResultItem>>()
 
-        searchClient.searchRaw(
+    override fun search(searchTerm: String, pageable: Pageable): SearchResult {
+
+        cache[searchTerm]?.let {
+
+            return getPaginatedResult(it, pageable)
+
+        } ?: searchClient.searchRaw(
             baseUrlTemplate = url,
             searchTerm = searchTerm,
             limitResults = pageable.pageSize,
             page = pageable.pageNumber
-        ).let { result ->
+        )?.let { html ->
 
-            Jsoup.connect(url).get().let { html ->
+            val result = Jsoup.parse(html).let { parsedHtml ->
 
-                return html.select(".pinakaki tbody tr").map { tablerow ->
+                val result = parsedHtml.select(".pinakaki tbody tr").map { tablerow ->
                     val serverName = tablerow.children()[0].text()
                     val serverURL = tablerow.children()[1].children()[1].attr("href")
                     val channelname = tablerow.children()[1].text()
@@ -48,8 +57,14 @@ class XDCCEUSearchProvider(
                         bot = botname
                     )
                 }
+                return@let result
             }
+
+            cache[searchTerm] = result
+            return@let getPaginatedResult(result, pageable)
         }
+
+        return SearchResult()
     }
 
     override fun toTO(): SearchEngineTO {
